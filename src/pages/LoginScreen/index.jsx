@@ -84,27 +84,27 @@ const LoginScreenPage = () => {
         toast.error("Something went Wrong!");
       });
   }
-  function input(data) {
-    const req = { data: { email: data?.email, password: data?.password } };
+  // function input(data) {
+  //   const req = { data: { email: data?.email, password: data?.password } };
 
-    postLoginUser(req)
-      .then((res) => {
-        setLoginUser1(res?.data);
+  //   postLoginUser(req)
+  //     .then((res) => {
+  //       setLoginUser1(res?.data);
 
-        localStorage.setItem("ID", JSON.stringify(res?.data?.user?.id));
+  //       localStorage.setItem("ID", JSON.stringify(res?.data?.user?.id));
 
-        localStorage.setItem(
-          "Role",
-          JSON.stringify(res?.data?.user?.["role_id"]),
-        );
+  //       localStorage.setItem(
+  //         "Role",
+  //         JSON.stringify(res?.data?.user?.["role_id"]),
+  //       );
 
-        toast.success("good");
-      })
-      .catch((err) => {
-        console.error(err);
-        toast.error("bad");
-      });
-  }
+  //       toast.success("good");
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //       toast.error("bad");
+  //     });
+  // }
 
   return (
     <>
@@ -147,7 +147,7 @@ const LoginScreenPage = () => {
                     errors={form1?.errors?.email}
                     value={form1?.values?.email}
                     onClick={() => {
-                      form1.handleSubmit(input);
+                      form1.handleSubmit(login);
                     }}
                     shape="round"
                     color="gray_200"

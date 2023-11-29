@@ -17,8 +17,8 @@ const ProjectRoutes = () => {
        
         <Mysidebar>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="*" element={<NotFound />} />
+         
+         
           {/* <Route path="/loginscreen" element={<LoginScreen />} />
           <Route path="/signup" element={<SignUp />} /> */}
           <Route path="/dashboard" element={<Dashboard />} />
