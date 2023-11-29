@@ -6,6 +6,7 @@ const API_URLS = {
   GET_VENUE_TYPE: `${COMMON_URL}venueType`,
   POST_SIGNUP_USER: `${COMMON_URL}signupUser`,
   POST_LOGIN_USER: `${COMMON_URL}loginUser`,
+  POST_ADD_VENUE: `${COMMON_URL}venue`,
 };
 
 export const getVenueType = (payload) =>
@@ -19,6 +20,13 @@ export const postSignupUser = (payload) =>
 
 export const postLoginUser = (payload) =>
   apis.post(API_URLS.POST_LOGIN_USER, {
+    ...payload,
+    headers: { "Content-type": "application/json", ...payload?.headers },
+  });
+
+
+  export const postAddVenue = (payload) =>
+  apis.post(API_URLS.POST_ADD_VENUE, {
     ...payload,
     headers: { "Content-type": "application/json", ...payload?.headers },
   });

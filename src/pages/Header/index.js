@@ -57,6 +57,10 @@ function Header() {
         </button>
       </div>
     );
+    const logout=()=>{
+      localStorage.clear();
+      window.location.href = "/";
+    }
   return (
     <div>
         
@@ -130,12 +134,14 @@ function Header() {
               >
                 ReactJS Dropdown 1
               </a>
-              <a
-                href="#"
-                className="block px-4 py-2 text-sm text-gray-500 rounded-lg hover:bg-gray-50 hover:text-gray-700"
-              >
-                ReactJS Dropdown 2
-              </a>
+              <Button
+                              className="cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm "
+                              color="indigo_A400"
+                              size="sm"
+                              onClick={logout}
+                            >
+                              Logout
+                            </Button>
              
                             
             </div>

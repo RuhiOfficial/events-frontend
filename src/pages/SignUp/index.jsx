@@ -94,7 +94,7 @@ const SignUpPage = () => {
 
         toast.success("You are Registered Succesfully!");
         setTimeout(() => {
-          navigate("/loginScreen")
+          window.location.href = "/";
         }, 3000);
         
       })
