@@ -1,6 +1,6 @@
 import { apis } from "service";
 
-const COMMON_URL = `https://event-backend.isdemo.in/public/api/v1/`;
+const COMMON_URL = `https://event-backend.isdemo.in/api/v1/`;
 
 const API_URLS = {
   GET_VENUE_TYPE: `${COMMON_URL}venueType`,
