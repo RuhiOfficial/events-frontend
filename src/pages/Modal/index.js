@@ -355,7 +355,7 @@ import { Button, Img, Input, Text } from "components";
 
 const Modal = ({ isOpen, onClose }) => {
   return (
-    <div className={`modal ${isOpen ? 'flex' : 'hidden'}`}>
+    <div className={`modal ${isOpen ? 'flex' : 'hidden'}`}>  
       <div className="modal-overlay " onClick={onClose}></div>
       <div className="modal-container fixed top-0 left-0 h-screen w-screen flex items-center justify-center overflow-auto">
         <div className="modal-content bg-white p-4 rounded-lg shadow-md w-full sm:w-1/2 max-h-screen overflow-auto">
