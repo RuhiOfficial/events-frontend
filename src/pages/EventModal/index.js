@@ -153,12 +153,15 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
             <div className="bg-no-repeat flex flex-col items-center justify-start p-10 md:p-5 w-full">
               <div className="bg-[#292e34] flex flex-col items-start justify-start max-w-[716px] p-[3.5rem] rounded-[24px] w-full ">
                 <div className='text-center w-full flex justify-between items-center'>
-                <Text
-                  className=" md:text-3xl  text-[32px] text-white-A700 text-center"
-                  size="txtPoppins"
-                >
-                  Add Event
-                </Text>
+                <div className="flex flex-col items-center justify-center w-[534px] sm:w-full">
+                  <Text
+                    className="md:text-3xl sm:text-[28px] text-[32px] text-white-A700 w-auto"
+                    size="txtPoppins"
+                  >
+                    Add Event
+                  </Text>
+                </div>
+            
                 <span className="modal-close" style={{color:"white",fontSize:"xx-large"}}  onClick={onEventClose}>
             &times;
           </span>

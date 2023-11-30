@@ -153,12 +153,14 @@ const Modal = ({ isOpen, onClose }) => {
             <div className="bg-no-repeat flex flex-col items-center justify-start p-10 md:p-5 w-full">
               <div className="bg-[#292e34] flex flex-col items-start justify-start max-w-[716px] p-[3.5rem] rounded-[24px] w-full ">
                 <div className='text-center w-full flex justify-between items-center'>
-                <Text
-                  className=" md:text-3xl  text-[32px] text-white-A700 text-center"
-                  size="txtPoppins"
-                >
-                  Add Venue
-                </Text>
+                <div className="flex flex-col items-center justify-center w-[534px] sm:w-full">
+                  <Text
+                    className="md:text-3xl sm:text-[28px] text-[32px] text-white-A700 w-auto"
+                    size="txtPoppins"
+                  >
+                    Add Venue
+                  </Text>
+                </div>
                 <span className="modal-close" style={{color:"white",fontSize:"xx-large"}}  onClick={onClose}>
             &times;
           </span>
@@ -169,9 +171,9 @@ const Modal = ({ isOpen, onClose }) => {
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
                         name="input"
-                        placeholder="Name"
+                        placeholder=" Event Name"
                         className="capitalize font-roboto p-0  placeholder-white-900 text-base text-left w-full"
-                        wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                        wrapClassName="common-pointer border-b  border-white-700_99 border-solid w-full bg-[#292e34]"
                         style={{color:"white"}}
                         onChange={(e) => {
                           form.handleChange("name", e);
