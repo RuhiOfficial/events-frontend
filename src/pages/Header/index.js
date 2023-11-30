@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import "../Custom.css"
 import 'react-datepicker/dist/react-datepicker.css';
+import { Link } from 'react-router-dom';
+
 import { Button, Img, Line, List, Text } from "components";
 
 
@@ -67,7 +69,7 @@ function Header() {
          <header className="bg-gray-900_01 flex  flex-row md:gap-5 items-center  w-[100] justify-between ">
             
             <div style={{display:"flex",alignItems:"center"}}>
-            <h1 style={{padding:"15px",color:"white",fontSize:"xx-large",marginRight:"20px"}} >eQ</h1>
+            <h1 style={{padding:"15px",color:"white",fontSize:"xx-large",marginRight:"20px"}} > <Link to="/" className='eqlogo'>eQ</Link></h1>
             <DatePicker
         selected={selectedDate}
         onChange={handleDateChange}

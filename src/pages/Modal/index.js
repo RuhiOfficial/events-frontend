@@ -1,9 +1,7 @@
-
-
 // Modal.js
 import React from 'react';
 import * as yup from "yup";
-import { Button, Img, Input, Text } from "components";
+import { Button, Input, Text } from "components";
 import useForm from "hooks/useForm";
 
 const Modal = ({ isOpen, onClose }) => {
@@ -108,7 +106,7 @@ const Modal = ({ isOpen, onClose }) => {
         <div className="modal-content bg-white p-4 rounded-lg shadow-md w-full sm:w-1/2 max-h-screen overflow-auto">
           
 
-          {/* Your modal content */}
+          {/* {/ Your modal content /} */}
           <div className="flex flex-col font-poppins items-center justify-start mx-auto w-full ">
            
           <div className="flex flex-col font-poppins items-center justify-start mx-auto w-full ">
@@ -145,7 +143,7 @@ const Modal = ({ isOpen, onClose }) => {
                         variant="fill"
                 />
 
-                  {/* Add more input fields as needed */}
+                  {/* {/ Add more input fields as needed /} */}
                 </div>
                
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
@@ -165,7 +163,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+                  {/* {/ Add more input fields as needed /} */}
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -184,7 +182,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+                  {/* {/ Add more input fields as needed /} */}
                 </div>
                 
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
@@ -203,7 +201,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+                  {/* {/ Add more input fields as needed /} */}
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -221,7 +219,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+                  {/* {/ Add more input fields as needed /} */}
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -239,7 +237,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+                  {/* {/ Add more input fields as needed /} */}
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -257,7 +255,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+                  {/* {/ Add more input fields as needed /} */}
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -275,7 +273,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+                  {/* {/ Add more input fields as needed /} */}
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -293,7 +291,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+                 
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -311,7 +309,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+                  {/* {/ Add more input fields as needed /} */}
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -329,7 +327,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+                  {/* {/ Add more input fields as needed /} */}
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -347,7 +345,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+                  {/* {/ Add more input fields as needed /} */}
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -365,7 +363,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+                  {/* {/ Add more input fields as needed /} */}
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -383,7 +381,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+                  {/* {/ Add more input fields as needed /} */}
                 </div>
                 
 
