@@ -79,16 +79,12 @@ const LoginScreenPage = () => {
           className="bg-cover bg-no-repeat flex flex-col h-[1117px] items-center justify-start p-[246px] md:px-10 sm:px-5 w-full"
           style={{ backgroundImage: "url('images/img_group2.png')" }}
         >
-<<<<<<< HEAD
-          <div className=" bg-white-A700 flex flex-col items-start justify-start max-w-[661px] p-12 md:px-10 sm:px-5 rounded-[24px] w-full">
-=======
           <div className=" bg-white-A700 flex flex-col items-start justify-start max-w-[661px] p-12 md:px-10 sm:px-5 rounded-[24px] w-full h-full">
 
          
 
          
 
->>>>>>> origin/Sukh30-1
             <Text
               className="mt-[22px] md:text-3xl sm:text-[28px] text-[32px] text-blue_gray-900 text-center"
               size="txtPoppinsBold32"
