@@ -9,7 +9,7 @@ import {postAddVenue } from "service/api";
 import {  ToastContainer,toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-const Modal = ({ isOpen, onClose }) => {
+const EventModal = ({ isEventOpen, onEventClose }) => {
   
  const cid= localStorage.getItem("LoginId");
  console.log(cid,"customer id is ===>>>")
@@ -140,8 +140,8 @@ const Modal = ({ isOpen, onClose }) => {
       }
 
   return (
-    <div className={`modal ${isOpen ? 'flex' : 'hidden'}`}>  
-      <div className="modal-overlay " onClick={onClose}></div>
+    <div className={`modal ${isEventOpen ? 'flex' : 'hidden'}`}>  
+      <div className="modal-overlay " onClick={onEventClose}></div>
       <div className="modal-container fixed top-0 left-0 h-screen w-screen flex items-center justify-center overflow-auto">
         <div className="modal-content bg-white p-4 rounded-lg shadow-md w-full sm:w-1/2 max-h-screen overflow-auto">
           
@@ -157,9 +157,9 @@ const Modal = ({ isOpen, onClose }) => {
                   className=" md:text-3xl  text-[32px] text-white-A700 text-center"
                   size="txtPoppins"
                 >
-                  Add Venue
+                  Add Event
                 </Text>
-                <span className="modal-close" style={{color:"white",fontSize:"xx-large"}}  onClick={onClose}>
+                <span className="modal-close" style={{color:"white",fontSize:"xx-large"}}  onClick={onEventClose}>
             &times;
           </span>
 
@@ -453,4 +453,4 @@ const Modal = ({ isOpen, onClose }) => {
   );
 };
 
-export default Modal;
+export default EventModal;
