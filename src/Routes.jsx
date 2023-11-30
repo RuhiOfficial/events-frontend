@@ -22,8 +22,8 @@ const ProjectRoutes = () => {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/*" element={<NotFound />} />
               
-{/*               
-              {/ <Route path="/modal" element={<Modal />} /> /} */}
+              
+              {/* <Route path="/modal" element={<Modal />} /> */}
             </Routes>
           </Mysidebar>
         ) : (

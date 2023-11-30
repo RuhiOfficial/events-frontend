@@ -58,13 +58,9 @@ function Header() {
         </button>
       </div>
     );
-
-
     const logout=()=>{
-     localStorage.clear();
-     Navigate("/loginScreen")
-
-
+      localStorage.clear();
+      window.location.href = "/";
     }
   return (
     <div>

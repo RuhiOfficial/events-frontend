@@ -1,6 +1,7 @@
 import React from "react";
 
 import { useNavigate } from "react-router-dom";
+
 import { ToastContainer, toast } from "react-toastify";
 
 import { postLoginUser } from "service/api";
@@ -59,35 +60,16 @@ const LoginScreenPage = () => {
           "Token",
           JSON.stringify(res?.data?.authorisation?.token),
         );
-    console.log()
-    window.location.href = "/dashboard";
+        const auth= localStorage.getItem("Name");
+        console.log(auth,"from login===>>")
+        window.location.href = "/dashboard";
       })
       .catch((err) => {
         console.error(err);
         toast.error("Something went Wrong!");
       });
   }
-  // function input(data) {
-  //   const req = { data: { email: data?.email, password: data?.password } };
-
-  //   postLoginUser(req)
-  //     .then((res) => {
-  //       setLoginUser1(res?.data);
-
-  //       localStorage.setItem("ID", JSON.stringify(res?.data?.user?.id));
-
-  //       localStorage.setItem(
-  //         "Role",
-  //         JSON.stringify(res?.data?.user?.["role_id"]),
-  //       );
-
-  //       toast.success("good");
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //       toast.error("bad");
-  //     });
-  // }
+  
 
   return (
     <>
