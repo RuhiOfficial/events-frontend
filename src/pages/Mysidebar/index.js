@@ -5,6 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import { Menu , MenuItem, Sidebar } from "react-pro-sidebar";
 import Header from 'pages/Header';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Dash from "../../assets/images/dashboard.png"
 import customers from "../../assets/images/customer.png"
@@ -16,6 +17,8 @@ import inventory from "../../assets/images/Group7.png"
 
 
 function Mysidebar({children}) {
+  const auth= localStorage.getItem('user')
+  const navigate = useNavigate();
     const sideBarMenu = [
         {
           imgSrc: Dash, // Assuming Dash is the import of your image file
@@ -56,6 +59,9 @@ function Mysidebar({children}) {
       ]
     
   return (
+    <>
+    
+    {auth?
     <div>
   <Header/>
     
@@ -88,6 +94,8 @@ function Mysidebar({children}) {
             
    </div>
    </div>
+  :null}
+  </>
   )
 }
 

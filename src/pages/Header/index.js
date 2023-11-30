@@ -3,13 +3,14 @@ import DatePicker from 'react-datepicker';
 import "../Custom.css"
 import 'react-datepicker/dist/react-datepicker.css';
 import { Button, Img, Line, List, Text } from "components";
+import { useNavigate } from 'react-router-dom';
 
 
 function Header() {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [isDropdownOpen, setDropdownOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const Navigate= useNavigate();
     const openModal = () => {
     setIsModalOpen(true);
     };
@@ -57,6 +58,14 @@ function Header() {
         </button>
       </div>
     );
+
+
+    const logout=()=>{
+     localStorage.clear();
+     Navigate("/loginScreen")
+
+
+    }
   return (
     <div>
         
@@ -130,12 +139,14 @@ function Header() {
               >
                 ReactJS Dropdown 1
               </a>
-              <a
-                href="#"
-                className="block px-4 py-2 text-sm text-gray-500 rounded-lg hover:bg-gray-50 hover:text-gray-700"
-              >
-                ReactJS Dropdown 2
-              </a>
+              <Button
+                              className="cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm "
+                              color="indigo_A400"
+                              size="sm"
+                              onClick={logout}
+                            >
+                              Logout
+                            </Button>
              
                             
             </div>
