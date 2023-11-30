@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import "../Custom.css"
 import 'react-datepicker/dist/react-datepicker.css';
 import Modal from 'pages/Modal';
+
 import { Button, Img, Line, List, Text } from "components";
 
 
