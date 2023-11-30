@@ -79,11 +79,6 @@ const LoginScreenPage = () => {
           style={{ backgroundImage: "url('images/img_group2.png')" }}
         >
           <div className=" bg-white-A700 flex flex-col items-start justify-start max-w-[661px] p-12 md:px-10 sm:px-5 rounded-[24px] w-full">
-
-         
-
-         
-
             <Text
               className="mt-[22px] md:text-3xl sm:text-[28px] text-[32px] text-blue_gray-900 text-center"
               size="txtPoppinsBold32"
