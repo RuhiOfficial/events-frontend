@@ -4,6 +4,7 @@ import "../Custom.css"
 import 'react-datepicker/dist/react-datepicker.css';
 
 import Modal from 'pages/Modal';
+import EventModal from 'pages/EventModal';
 
 
 
@@ -13,6 +14,7 @@ import { Button, Img, Line, List, Text } from "components";
 
 const DashboardPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEventModalOpen,setIsEventModalOpen]=useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -42,11 +44,20 @@ const DashboardPage = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+  const openEventModal = () => {
+    console.log("event modal opens")
+    setIsEventModalOpen(true);
+  };
+
+  const closeEventModal = () => {
+    console.log("event modal close")
+    setIsEventModalOpen(false);
+  };
 
   
   return (
     <>
-    < div className={`relative ${isModalOpen ? 'filter blur' : ''}`}>
+    < div className={`relative ${isModalOpen || isEventModalOpen ? 'filter blur' : ''}`}>
       <div className="flex flex-col font-roboto items-center justify-start mx-auto w-full">
         <div className="backdrop-opacity-[0.5] bg-gray-900  flex flex-col items-center justify-end   w-full">
           <div className="flex md:flex-col flex-row  items-start justify-between mx-auto md:px-5 w-full">
@@ -244,6 +255,7 @@ const DashboardPage = () => {
                               className="cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm"
                               color="indigo_A400"
                               size="sm"
+                              onClick={openEventModal}
                             >
                               + Add Event
                             </Button>
@@ -698,6 +710,7 @@ const DashboardPage = () => {
       </div>
     </div>
     <Modal isOpen={isModalOpen} onClose={closeModal} />
+    <EventModal isEventOpen={isEventModalOpen} onEventClose={closeEventModal} />
     </>
   );
 };
