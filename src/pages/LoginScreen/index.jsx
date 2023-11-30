@@ -21,6 +21,7 @@ const LoginScreenPage = () => {
   const form1ValidationSchema = yup.object().shape({
     email: yup
       .string()
+      
       .required("Email is required")
       .matches(
         /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
@@ -62,7 +63,7 @@ const LoginScreenPage = () => {
         );
         const auth= localStorage.getItem("Name");
         console.log(auth,"from login===>>")
-        window.location.href = "/dashboard";
+        window.location.href = "/";
       })
       .catch((err) => {
         console.error(err);
@@ -78,7 +79,7 @@ const LoginScreenPage = () => {
           className="bg-cover bg-no-repeat flex flex-col h-[1117px] items-center justify-start p-[246px] md:px-10 sm:px-5 w-full"
           style={{ backgroundImage: "url('images/img_group2.png')" }}
         >
-          <div className=" bg-white-A700 flex flex-col items-start justify-start max-w-[661px] p-12 md:px-10 sm:px-5 rounded-[24px] w-full">
+          <div className=" bg-white-A700 flex flex-col items-start justify-start max-w-[661px] p-12 md:px-10 sm:px-5 rounded-[24px] w-full h-full">
 
          
 
@@ -102,7 +103,7 @@ const LoginScreenPage = () => {
                   <Input
                     name="input"
                     placeholder="Email"
-                    className="capitalize font-roboto p-0 placeholder:text-black-900_87 text-base text-left w-full" 
+                    className=" font-roboto p-0 placeholder:text-black-900_87 text-base text-left w-full" 
                     wrapClassName="common-pointer border border-gray-700_99 border-solid w-full w-[558px]"
                     type="email"
                     onChange={(e) => {
@@ -169,17 +170,14 @@ const LoginScreenPage = () => {
                   >
                     Log In
                   </Button>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col items-center justify-between mb-[27px] mt-[43px] p-0.5 w-[459px] sm:w-full">
+                  <div className="flex flex-col items-center justify-between mb-[27px] mt-[43px] p-0.5 w-full sm:w-full">
               <Text
-                className="common-pointer text-base text-center text-gray-700 underline w-auto mt-8"
+                className="common-pointer text-base text-center text-gray-700 underline w-auto  "
                 size="txtPoppinsRegular16"
                 onClick={() => navigate("/signup")}
               >
                 <span className="text-indigo-900_01 font-poppins font-semibold">
-                  New Venue?
+                  Sign up?
                 </span>
                 <span className="text-gray-700 font-poppins font-normal">
                   {" "}
@@ -187,6 +185,10 @@ const LoginScreenPage = () => {
                 </span>
               </Text>
             </div>
+                </div>
+              </div>
+            </div>
+      
           </div>
         </div>
       </div>

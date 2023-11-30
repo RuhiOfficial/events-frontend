@@ -22,8 +22,8 @@ function Mysidebar({children}) {
     const sideBarMenu = [
         {
           imgSrc: Dash, // Assuming Dash is the import of your image file
-          href: "/dashboard",
-          active: window.location.pathname === "/dashboard",
+          href: "/",
+          active: window.location.pathname === "/",
           altText: "Dashboard", // Add alt text for accessibility
         },
         {

@@ -156,7 +156,7 @@ const handleVenueTypeChange = (selectedOption) => {
     <>
       <div className="bg-black-900 flex flex-col font-poppins items-center justify-start mx-auto w-full">
         <div
-          className="bg-cover bg-no-repeat flex flex-col h-[1117px] items-center justify-start p-[53px] md:px-10 sm:px-5 w-full"
+          className="bg-cover bg-no-repeat flex flex-col h-full items-center justify-start p-[53px] md:px-10 sm:px-5 w-full"
           style={{ backgroundImage: "url('images/img_group2.png')" }}
         >
           <div className="flex flex-col items-center justify-start mb-2.5 w-[41%] md:w-full">
@@ -410,9 +410,25 @@ const handleVenueTypeChange = (selectedOption) => {
                 >
                   Create an account
                 </Button>
+                <div className="flex flex-col items-center justify-center  p-0.5 w-full sm:w-full">
+              <Text
+                className="common-pointer text-base text-center text-gray-700 underline w-auto "
+                size="txtPoppinsRegular16"
+                onClick={() => navigate("/")}
+              >
+                <span className="text-indigo-900_01 font-poppins font-semibold">
+                  Login?
+                </span>
+                <span className="text-gray-700 font-poppins font-normal">
+                  {" "}
+                  Click here to get started.
+                </span>
+              </Text>
+            </div>
               </div>
             </div>
           </div>
+          
         </div>
       </div>
       <ToastContainer />

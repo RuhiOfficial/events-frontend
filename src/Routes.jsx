@@ -19,7 +19,7 @@ const ProjectRoutes = () => {
         {auth ? (
           <Mysidebar>
             <Routes>
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/" element={<Dashboard />} />
               <Route path="/*" element={<NotFound />} />
               
               
