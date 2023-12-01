@@ -174,7 +174,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                         name="input"
                         placeholder="Name"
                         className="capitalize font-roboto p-0  placeholder-white-900 text-base text-left w-full"
-                        wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                        wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                         style={{color:"white"}}
                         onChange={(e) => {
                           form.handleChange("name", e);
@@ -194,7 +194,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     name="input"
                     placeholder="Email"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     type="email"
                     onChange={(e) => {
                       form.handleChange("email", e);
@@ -213,7 +213,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     name="input"
                     placeholder="Contact No"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     type="tel"
                     onChange={(e) => {
                       form.handleChange("phone", e);
@@ -233,7 +233,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     name="input"
                     placeholder="Country"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
                       form.handleChange("country_id", e);
@@ -251,7 +251,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     name="input"
                     placeholder="State"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
                       form.handleChange("state_id", e);
@@ -269,7 +269,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     name="input"
                     placeholder="City"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
                       form.handleChange("city_id", e);
@@ -287,7 +287,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     name="input"
                     placeholder="Zipcode"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
                       form.handleChange("zipcode", e);
@@ -305,7 +305,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     name="input"
                     placeholder="Address"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
                       form.handleChange("address", e);
@@ -323,7 +323,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     name="input"
                     placeholder="Tax"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
                       form.handleChange("tax", e);
@@ -341,7 +341,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     name="input"
                     placeholder="Venue Type"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full "
-                    wrapClassName=" common-pointer border border-white-700_99 border-solid w-full bg-[#292e34] "
+                    wrapClassName=" common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34] "
                     
                     onChange={(e) => {
                       form.handleChange("venue_type", e);
@@ -359,7 +359,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     name="input"
                     placeholder="Timezone"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
                       form.handleChange("timezone", e);
@@ -377,7 +377,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     name="input"
                     placeholder="Website"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
                       form.handleChange("website", e);
@@ -395,7 +395,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     name="input"
                     placeholder="Currency"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
                       form.handleChange("currency", e);
@@ -413,7 +413,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     name="input"
                     placeholder="Capacity"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
                       form.handleChange("capacity", e);
