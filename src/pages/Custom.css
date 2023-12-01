@@ -46,14 +46,12 @@
 
 .menu-item {
     padding: 0;
-    padding-left: 10px;
-    padding-right: 3px;
-    flex-direction: column;
+    padding-left: 5px;
     color: #ffffff;
     font-size: 16px;
     padding-top: 5px;
     padding-bottom: 5px;
-    border-radius: 20%; /* This creates a circular background */
+    border-radius: 20%; 
   }
   .eqlogo{
     padding: 13px 18px;
@@ -132,3 +130,5 @@
   border-color: #1e4a9d;
 }
 
+
+  
