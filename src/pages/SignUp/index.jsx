@@ -123,7 +123,7 @@ const SignUpPage = () => {
             },
           ];
         } else {
-          // If there are multiple items, map the array to options
+         
           options = res.data.data.map((item) => ({
             label: item.name,
             value: item.id,

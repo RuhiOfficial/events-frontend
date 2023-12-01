@@ -1,16 +1,20 @@
 // Modal.js
-import React from 'react';
+import React ,{useState,useEffect} from 'react';
 import * as yup from "yup";
-import { Button, Input, Text } from "components";
+import { Button, Input, Text ,SelectBox} from "components";
 import useForm from "hooks/useForm";
-import {postAddVenue } from "service/api";
+import {getStates, postAddVenue } from "service/api";
 import {  ToastContainer,toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+
 
 const Modal = ({ isOpen, onClose }) => {
   
  const cid= localStorage.getItem("LoginId");
  console.log(cid,"customer id is ===>>>")
+ const [stateList, setStateList] = useState([]);
+  const [selectedState, setSelectedState] = useState(null);
+  const [state, setState] = React.useState();
 
   /////////// Validations ////////////////
       const formValidationSchema = yup.object().shape({
@@ -62,35 +66,7 @@ const Modal = ({ isOpen, onClose }) => {
         },
       );
 
-      // const formInitialState = {
-      //   name: "",
-      //   email: "",
-      //   phone: "",
-      //   country_id: "",
-      //   state_id: "",
-      //   city_id: "",
-      //   zipcode: "",
-      //   address: "",
-      //   tax: "",
-      //   venue_type: "",
-      //   timezone: "",
-      //   website: "",
-      //   currency: "",
-      //   capacity: "",
-      // };
-      // const form = useForm(
-      //   { ...formInitialState },
-      //   {
-      //     validate: true,
-      //     validateSchema: formValidationSchema,
-      //     validationOnChange: true,
-      //   }
-      // );
-
-      // const resetForm = () => {
-      //   form.setValues({ ...formInitialState });
-      //   form.setErrors({})
-      // };
+      
 
 
      async function addvenue(data) {
@@ -123,7 +99,7 @@ const Modal = ({ isOpen, onClose }) => {
           .then((res) => {
             console.log(res)
             
-           // // setSignupUser(res?.data);
+         
             
             toast.success("Venue is added Succesfully!");
             setTimeout(() => {
@@ -136,6 +112,51 @@ const Modal = ({ isOpen, onClose }) => {
             toast.error("Something Went Wrong!");
           });
       }
+
+
+      useEffect(()=>{
+        states();
+      
+      },[])
+
+      async function states() {
+        const req = {};
+      
+        await getStates(req)
+          .then((res) => {
+            console.log(res, "response is state");
+            setState(res.data.data);
+            
+      
+            let options;
+      
+            if (res.data.data.length === 1) {
+             
+              options = [
+                {
+                  label: res.data.data[0].name,
+                  value: res.data.data[0].id,
+                },
+              ];
+            } else {
+              // If there are multiple items, map the array to options
+              options = res.data.data.map((item) => ({
+                label: item.name,
+                value: item.id,
+              }));
+            }
+      
+            setStateList(options);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+
+      const handleStateChange = (selectedOption) => {
+        // Update the state with the selected value
+        setSelectedState(selectedOption);
+      };
 
   return (
     <div className={`modal ${isOpen ? 'flex' : 'hidden'}`}>  
@@ -241,25 +262,21 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* {/ Add more input fields as needed /} */}
+                  
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  <Input
-                    name="input"
-                    placeholder="State"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
-                    
-                    onChange={(e) => {
-                      form.handleChange("state_id", e);
-                    }}
-                    errors={form?.errors?.["state_id"]}
-                    value={form?.values?.["state_id"]}
-                    style={{color:"white"}}
-                    size="md"
-                    variant="fill"
-                  />
-                  {/* {/ Add more input fields as needed /} */}
+                <SelectBox
+                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
+                    placeholderClassName="text-gray-600"
+                  
+                  isMulti={false}
+                  name="select"
+                   options={stateList}
+                  isSearchable={true}
+                  placeholder="Select State..."
+                   onChange={handleStateChange}
+                  style={{ color: 'text-white-A700' }} 
+/> 
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -277,7 +294,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* {/ Add more input fields as needed /} */}
+                 
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -295,7 +312,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* {/ Add more input fields as needed /} */}
+                  
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -313,7 +330,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* {/ Add more input fields as needed /} */}
+                  
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -334,23 +351,23 @@ const Modal = ({ isOpen, onClose }) => {
                  
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  <Input
-                    name="input"
-                    placeholder="Venue Type"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full "
-                    wrapClassName=" common-pointer border border-white-700_99 border-solid w-full bg-[#292e34] "
-                    
-                    onChange={(e) => {
-                      form.handleChange("venue_type", e);
-                    }}
-                    errors={form?.errors?.["venue_type"]}
-                    value={form?.values?.["venue_type"]}
-                    style={{color:"white"}}
-                    size="md"
-                    variant="fill"
-                  />
-                  {/* {/ Add more input fields as needed /} */}
-                </div>
+                    <SelectBox
+                      className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border border-white-700_99 border-solid w-full bg-[#292e3"
+                      placeholderClassName="text-gray-600"
+                      // indicator={
+                      //   <Img
+                      //     className="h-11 mr-[0] w-7"
+                      //     src="images/img_div.svg"
+                      //     alt="div"
+                      //   />
+                      // }
+                      isMulti={false}
+                      name="div"
+                      // options={divOptionsList}
+                      isSearchable={true}
+                      placeholder="Select..."
+                    />
+                  </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
                     name="input"
@@ -367,7 +384,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* {/ Add more input fields as needed /} */}
+                  
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -385,7 +402,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* {/ Add more input fields as needed /} */}
+                  
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -403,7 +420,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* {/ Add more input fields as needed /} */}
+                  
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -421,7 +438,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* {/ Add more input fields as needed /} */}
+                  
                 </div>
                 
 
