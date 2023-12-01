@@ -61,7 +61,7 @@ function Mysidebar({children}) {
     
    <div  style={{display:"flex"}}>
      <Sidebar className="!sticky !w-[70px] bg-gray-900_01 flex h-auto justify-start  overflow-auto top-[0] ">
-            {/* <h1 style={{padding:"13px",color:"white",textAlign:"center",fontSize:"xx-large"}} >eQ</h1> */}
+            {
               <Menu
                 menuItemStyles={{
                   button: {
@@ -82,7 +82,7 @@ function Mysidebar({children}) {
                   </MenuItem>
                 ))}
               </Menu>
-            </Sidebar>
+}</Sidebar>
             
               <main style={{width:"100%"}}>{children}</main>
             

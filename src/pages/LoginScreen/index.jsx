@@ -15,25 +15,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 const LoginScreenPage = () => {
   const [loginUser, setLoginUser] = React.useState();
-  const [loginUser1, setLoginUser1] = React.useState();
-  // const formValidationSchema = yup.object().shape({
-  //   email: yup
-  //     .string()
-  //     .required("Email is required")
-  //     .matches(
-  //       /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
-  //       "Email is not in correct format",
-  //     ),
-  //   password: yup.string(),
-  // });
-  // const form = useForm(
-  //   { email: "", password: "" },
-  //   {
-  //     validate: true,
-  //     validateSchema: formValidationSchema,
-  //     validationOnChange: true,
-  //   },
-  // );
+
+  
   const navigate = useNavigate();
   const form1ValidationSchema = yup.object().shape({
     email: yup
@@ -64,7 +47,7 @@ const LoginScreenPage = () => {
     postLoginUser(req)
       .then((res) => {
         setLoginUser(res?.data);
-
+        
         localStorage.setItem("Name", JSON.stringify(res?.data?.user?.name));
 
         localStorage.setItem("LoginId", JSON.stringify(res?.data?.user?.id));

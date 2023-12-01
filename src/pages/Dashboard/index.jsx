@@ -2,17 +2,15 @@ import React, { useState,useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import "../Custom.css"
 import 'react-datepicker/dist/react-datepicker.css';
-
 import Modal from 'pages/Modal';
 import EventModal from 'pages/EventModal';
-
-
 
 import { Button, Img, Line, List, Text } from "components";
 
 
 
 const DashboardPage = () => {
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEventModalOpen,setIsEventModalOpen]=useState(false);
   const [data, setData] = useState([]);
@@ -34,6 +32,7 @@ const DashboardPage = () => {
 
     fetchData();
   }, []);
+
 
 
 
