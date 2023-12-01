@@ -171,9 +171,9 @@ const Modal = ({ isOpen, onClose }) => {
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
                         name="input"
-                        placeholder=" Event Name"
+                        placeholder=" Name"
                         className="capitalize font-roboto p-0  placeholder-white-900 text-base text-left w-full"
-                        wrapClassName="common-pointer border-b  border-white-700_99 border-solid w-full bg-[#292e34]"
+                        wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
                         style={{color:"white"}}
                         onChange={(e) => {
                           form.handleChange("name", e);
