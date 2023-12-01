@@ -119,7 +119,7 @@ const SignUpPage = () => {
             },
           ];
         } else {
-        
+         
           options = res.data.data.map((item) => ({
             label: item.name,
             value: item.id,
