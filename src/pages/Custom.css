@@ -86,49 +86,20 @@
   z-index: 1000;
 }
 
-/* TimeRangePicker.css */
-.react-time-picker {
-  font-family: 'Arial', sans-serif;
-  background-color: rgba(0, 0, 0, 0.8); /* Dark background with transparency */
-  color: white;
-  border-radius: 0.375rem;
+/* styles.css */
+.custom-timepicker {
+  border:1px solid white
+  /* Your custom styles for the entire time picker component */
 }
 
-.react-time-picker__inputGroup {
-  display: flex;
+.custom-timepicker .react-time-picker-dropdown-icon {
+  fill: grey; /* Icon color */
 }
 
-.react-time-picker__inputGroup__input {
-  width: 100%;
-  padding: 0.375rem 0.75rem;
-  border: none;
-  border-bottom: 1px solid #4a5568;
-  outline: none;
-  color: white;
-  background-color: transparent; /* Keep the input background transparent */
+.custom-timepicker .react-time-picker-dropdown-clock {
+  color: grey; /* Clock color */
 }
 
-.react-time-picker__inputGroup__divider {
-  width: 1px;
-  background-color: #4a5568;
-  margin: 0 0.5rem;
+.custom-timepicker .react-time-picker-dropdown-clock-selected {
+  color: white; /* Selected time color */
 }
-
-.react-time-picker__clear-button {
-  color: #cbd5e0;
-  margin-left: 0.5rem;
-  cursor: pointer;
-}
-
-.react-time-picker__inputGroup__input::placeholder {
-  background: transparent;
-  color: rgb(10, 10, 10); /* Placeholder text color */
-}
-
-.react-time-picker__inputGroup__input:focus,
-.react-time-picker__inputGroup__divider:focus {
-  border-color: #1e4a9d;
-}
-
-
-  

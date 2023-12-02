@@ -9,9 +9,13 @@ import {postAddVenue } from "service/api";
 import {  ToastContainer,toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import DateRangePicker from 'components/DateRangePicker';
-import TimeRangePicker from 'components/TimeRangePicker';
-import InputMask from 'react-input-mask';
-
+import
+TimePicker
+from
+"@ashwinthomas/react-time-picker-dropdown"
+;
+import "../../pages/Custom.css"
+import ImageUploader from 'components/ImageUploader'
 
 const EventModal = ({ isEventOpen, onEventClose }) => {
   const [startTime, setStartTime] = useState(new Date());
@@ -75,36 +79,6 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
           validationOnChange: true,
         },
       );
-
-      // const formInitialState = {
-      //   name: "",
-      //   email: "",
-      //   phone: "",
-      //   country_id: "",
-      //   state_id: "",
-      //   city_id: "",
-      //   zipcode: "",
-      //   address: "",
-      //   tax: "",
-      //   venue_type: "",
-      //   timezone: "",
-      //   website: "",
-      //   currency: "",
-      //   capacity: "",
-      // };
-      // const form = useForm(
-      //   { ...formInitialState },
-      //   {
-      //     validate: true,
-      //     validateSchema: formValidationSchema,
-      //     validationOnChange: true,
-      //   }
-      // );
-
-      // const resetForm = () => {
-      //   form.setValues({ ...formInitialState });
-      //   form.setErrors({})
-      // };
 
 
      async function addvenue(data) {
@@ -210,8 +184,13 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
 
                   {/* Add more input fields as needed */}
                 </div>
+               <div className="flex flex-row items-start justify-start mt-[38px] w-full">
+
+               <ImageUploader/>
+               <div >
+
                
-                <div className="flex flex-col items-start justify-start mt-[38px] w-full
+                <div className="flex flex-col items-start justify-start w-full
                 border-b border-white-700_99 border-solid ">
               
                   <DateRangePicker startDate={startDate} endDate={endDate} onChange={handleDateChange}
@@ -219,68 +198,31 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                   
                
                 </div>
-                <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  {/* <Input
-                    name="date_to"
-                    placeholder="Date To"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
-                    type="date"
-                    onChange={(e) => {
-                      form.handleChange("phone", e);
-                    }}
-                    errors={form?.errors?.phone}
-                    value={form?.values?.phone}
-                    style={{color:"white"}}
-                   
-                    size="md"
-                    variant="fill"
-                  /> */}
-                  {/* Add more input fields as needed */}
-                  <TimeRangePicker startTime={startTime} endTime={endTime} onChange={handleTimeChange} />
-                </div>
                 
-                <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  <Input
-                    name="time_from"
-                    placeholder="Time From"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
-                    
-                    onChange={(e) => {
-                      form.handleChange("country_id", e);
-                    }}
-                    errors={form?.errors?.["country_id"]}
-                    value={form?.values?.["country_id"]}
-                    style={{color:"white"}}
-                    size="md"
-                    variant="fill"
-                  />
-                  {/* Add more input fields as needed */}
-                </div>
-                <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                <InputMask
-  mask="99:99 AM"
-  maskChar="_"
-  value={form?.values?.["state_id"]}
-  onChange={(e) => {
-    form.handleChange("state_id", e);
-  }}
-  className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-  placeholder="Time To"
-  style={{
-    color: "white",
-    background: "transparent",
-    border: "none",
-    outline: "none",
-    caretColor: "white",  // Set caret color for cursor
-  }}
-  size="md"
-  variant="fill"
-/>
+                <div className="flex flex-row justify-between mt-[38px] w-full border-b border-white-700_99 border-solid">
+                <TimePicker className="custom-timepicker" style={{border:"1px solid white"}}
+                
+                placeholder="Time From" 
+                onTimeChange
+                =
+                {
+                handleTimeChange
+                }
+                />
 
-                  {/* Add more input fields as needed */}
+                <TimePicker
+                placeholder="Time To"
+                onTimeChange
+                =
+                {
+                handleTimeChange
+                }
+                />
+
                 </div>
+                </div>
+                </div>
+
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
                     name="event_type"
@@ -372,7 +314,8 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                   {/* Add more input fields as needed */}
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  <Input
+               
+                  {/* <Input
                     name="featured_image"
                     placeholder="Featured Images"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
@@ -386,7 +329,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     style={{color:"white"}}
                     size="md"
                     variant="fill"
-                  />
+                  /> */}
                   {/* Add more input fields as needed */}
                 </div>
             
