@@ -8,6 +8,7 @@ const API_URLS = {
   POST_SIGNUP_USER: `${COMMON_URL}signupUser`,
   POST_LOGIN_USER: `${COMMON_URL}loginUser`,
   POST_ADD_VENUE: `${COMMON_URL}venue`,
+  POST_ADD_EVENT: `${COMMON_URL}event`,
   GET_TIMEZONE: `${COMMON_URL}timezone`,
   GET_COUNTRIES: `${COMMON_URL}list_countries`,
   GET_CITY: `${COMMON_URL}list_cities`,
@@ -46,6 +47,12 @@ export const postLoginUser = (payload) =>
 
   export const postAddVenue = (payload) =>
   apis.post(API_URLS.POST_ADD_VENUE, {
+    ...payload,
+    headers: { "Content-type": "application/json", ...payload?.headers },
+  });
+
+  export const postAddEvent = (payload) =>
+  apis.post(API_URLS.POST_ADD_EVENT, {
     ...payload,
     headers: { "Content-type": "application/json", ...payload?.headers },
   });
