@@ -5,7 +5,7 @@ import React,{useState} from 'react';
 import * as yup from "yup";
 import { Button, Img, Input, Text } from "components";
 import useForm from "hooks/useForm";
-import {postAddVenue } from "service/api";
+import {postAddEvent } from "service/api";
 import {  ToastContainer,toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import DateRangePicker from 'components/DateRangePicker';
@@ -20,10 +20,52 @@ import ImageUploader from 'components/ImageUploader'
 const EventModal = ({ isEventOpen, onEventClose }) => {
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
 
-  const handleTimeChange = (start, end) => {
+
+  console.log(selectedImage,"selected image is ")
+  const handleImageSelect = (imageUrl) => {
+    setSelectedImage(imageUrl);
+  
+    // Convert data URL to Blob
+    const blob = dataURLtoBlob(imageUrl);
+  
+    // Convert Blob to a readable URL
+    const imageUrlReadable = URL.createObjectURL(blob);
+  
+    
+  };
+  
+  // Function to convert data URL to Blob
+  function dataURLtoBlob(dataURL) {
+    const arr = dataURL.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+  
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+  
+    return new Blob([u8arr], { type: mime });
+  }
+  
+
+  const handleDateChange = (start, end) => {
+    setStartDate(start);
+    setEndDate(end);
+  };
+
+  const handleTimeChange = (start) => {
     setStartTime(start);
+    
+  };
+  const handleTimeToChange = (end) => {
     setEndTime(end);
+    
   };
 
   
@@ -33,45 +75,34 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
   /////////// Validations ////////////////
       const formValidationSchema = yup.object().shape({
       name: yup.string().required("Name is required"),
-      email: yup
-      .string()
-      .required("Email is required")
-      .matches(
-      /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
-      "Email is not in correct format",
-      ),
-      phone: yup
-      .string()
-      .required("Contact Number is required")
-      .matches(/^\d{10}$/, "Contact Number must be 10 digits"),
-      country_id: yup.string().required("Country No. is required"),
-      state_id: yup.string().required("State is required"),
-      city_id: yup.string().required("City is required"),
-      zipcode: yup.string().required("Zipcode is required"),
-      address: yup.string().required("Address is required"),
-      venue_type: yup.string().required("Venue Type is required"),
-      website: yup.string().required("Website is required"),
-      currency: yup.string().required("Currency is required"),
-      capacity: yup.string().required("Capacity is required")
+    
+      
+      date_from: yup.string().required("Date is required"),
+      date_to: yup.string().required("Date is required"),
+      time_from: yup.string().required("Time is required"),
+      time_to: yup.string().required("Time is required"),
+      event_type: yup.string().required("Event type is required"),
+      event_organiser: yup.string().required("Event Organiser is required"),
+      featured_image: yup.string().required("Image is required"),
+      event_desc: yup.string().required("Description is required"),
+      event_status: yup.string().required("Status is required")
 
       });
 
       const form = useForm(
         {
+        
           name: "",
-          email: "",
-          phone: "",
-          country_id:"",
-          state_id: "",
-          city_id:"",
-          zipcode: "",
-          address: "",
-          tax: "",
-          venue_type: "",
-          timezone:"",
-          website: "",
-          currency:"",
-          capacity: "",
+          featured_image: "",
+          date_from: "",
+          date_to:"",
+          time_from: "",
+          time_to:"",
+          event_type: "",
+          event_organiser: "",
+          event_desc: "",
+          facebook_event_url: "",
+          event_status:"",
         },
         {
           validate: true,
@@ -81,39 +112,36 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
       );
 
 
-     async function addvenue(data) {
+     async function event(data) {
+      console.log("addevent called ==>>")
 
-      console.log(data);
         const req = {
     
           data: {
+            venue_id:1,
             name: data?.name,
-            email: data?.email,
-            phone: data?.phone,
-            cid: cid,
-            country_id: data?.country_id,
-            state_id:data?.state_id,
-            city_id:data?.city_id,
-            zipcode: data?.zipcode,
-            address: data?.address,
-            tax: data?.tax,
-            venue_type: data?.venue_type,
-            timezone: data?.timezone,
-            website:data?.website,
-            currency:data?.currency,
-            capacity: data?.capacity,
+          featured_image: selectedImage,
+          date_from: startDate,
+          date_to:endDate,
+          time_from: startTime,
+          time_to:endTime,
+          event_type: data?.event_type,
+          event_organiser: data?.event_organiser,
+          event_desc: data?.event_desc,
+          facebook_event_url: data?.facebook_event_url,
+          event_status:data?.eve
     
           },
     
         };
     console.log(req,"req is ======>>>")
-     await   postAddVenue(req)
+     await   postAddEvent(req)
           .then((res) => {
             console.log(res)
             
            // // setSignupUser(res?.data);
             
-            toast.success("Venue is added Succesfully!");
+            toast.success("Event is added Succesfully!");
             setTimeout(() => {
               window.location.href="/"
             }, 3000);
@@ -125,13 +153,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
           });
       }
 
-      const [startDate, setStartDate] = useState(null);
-      const [endDate, setEndDate] = useState(null);
-    
-      const handleDateChange = (start, end) => {
-        setStartDate(start);
-        setEndDate(end);
-      };
+   
     
    
 
@@ -186,7 +208,8 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                 </div>
                <div className="flex flex-row items-start justify-start mt-[38px] w-full">
 
-               <ImageUploader/>
+               <ImageUploader onChange={handleImageSelect} />
+              
                <div >
 
                
@@ -215,7 +238,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                 onTimeChange
                 =
                 {
-                handleTimeChange
+                handleTimeToChange
                 }
                 />
 
@@ -231,10 +254,10 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
-                      form.handleChange("city_id", e);
+                      form.handleChange("event_type", e);
                     }}
-                    errors={form?.errors?.["city_id"]}
-                    value={form?.values?.["city_id"]}
+                    errors={form?.errors?.["event_type"]}
+                    value={form?.values?.["event_type"]}
                     style={{color:"white"}}
                     size="md"
                     variant="fill"
@@ -249,10 +272,10 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
-                      form.handleChange("zipcode", e);
+                      form.handleChange("event_organiser", e);
                     }}
-                    errors={form?.errors?.zipcode}
-                    value={form?.values?.zipcode}
+                    errors={form?.errors?.["event_organiser"]}
+                    value={form?.values?.["event_organiser"]}
                     style={{color:"white"}}
                     size="md"
                     variant="fill"
@@ -267,10 +290,10 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
-                      form.handleChange("address", e);
+                      form.handleChange("event_desc", e);
                     }}
-                    errors={form?.errors?.address}
-                    value={form?.values?.address}
+                    errors={form?.errors?.["event_desc"]}
+                    value={form?.values?.["event_desc"]}
                     style={{color:"white"}}
                     size="md"
                     variant="fill"
@@ -285,10 +308,10 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
-                      form.handleChange("tax", e);
+                      form.handleChange("facebook_event_url", e);
                     }}
-                    errors={form?.errors?.tax}
-                    value={form?.values?.tax}
+                    errors={form?.errors?.["facebook_event_url"]}
+                    value={form?.values?.["facebook_event_url"]}
                     style={{color:"white"}}
                     size="md"
                     variant="fill"
@@ -303,10 +326,10 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     wrapClassName=" common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34] "
                     
                     onChange={(e) => {
-                      form.handleChange("venue_type", e);
+                      form.handleChange("event_status", e);
                     }}
-                    errors={form?.errors?.["venue_type"]}
-                    value={form?.values?.["venue_type"]}
+                    errors={form?.errors?.["event_status"]}
+                    value={form?.values?.["event_status"]}
                     style={{color:"white"}}
                     size="md"
                     variant="fill"
@@ -336,14 +359,14 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                 
 
                 <div className="flex flex-col items-start justify-start w-full mt-20">
-                  <Button
+                <Button
                     className="common-pointer cursor-pointer font-bold leading-[normal] min-w-[459px] sm:min-w-full text-center text-xl w-full"
                     shape="round"
                     size="md"
                     variant="gradient"
                     color="blue_600_indigo_900"
                     onClick={() => {
-                      form.handleSubmit(addvenue);
+                      form.handleSubmit(event);
                     }}
                   >
                     Add 
