@@ -2,23 +2,27 @@
 import React, { useState } from 'react';
 import { FiCamera } from 'react-icons/fi';
 
-const ImageUploader = () => {
+const ImageUploader = ({ onChange }) => {
   const [image, setImage] = useState(null);
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
-
+  
+    console.log('Selected File:', file);
+  
     if (file) {
       const reader = new FileReader();
-
+  
       reader.onload = () => {
-        setImage(reader.result);
+        console.log('Reader Result:', reader.result);
+        const imageUrl = reader.result;
+        setImage(imageUrl);
+        onChange(imageUrl);
       };
-
+  
       reader.readAsDataURL(file);
     }
   };
-
   return (
     <div>
       <style>
