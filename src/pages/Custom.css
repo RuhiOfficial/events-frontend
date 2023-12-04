@@ -103,3 +103,7 @@ color: grey; /* Clock color */
 .custom-timepicker .react-time-picker-dropdown-clock-selected {
 color: white; /* Selected time color */
 }
+
+input.tp_inputBox{
+  color: white !important; /* Selected time color */
+}
