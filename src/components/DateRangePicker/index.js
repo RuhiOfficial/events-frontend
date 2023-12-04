@@ -11,6 +11,7 @@ const DateRangePicker = ({ startDate, endDate, onChange }) => {
   const handleStartDateChange = (date) => {
     setSelectedStartDate(date);
     onChange(date, selectedEndDate);
+    
   };
 
   const handleEndDateChange = (date) => {
@@ -19,7 +20,7 @@ const DateRangePicker = ({ startDate, endDate, onChange }) => {
   };
 
   return (
-    <div className="flex justify-between w-[600px]">
+    <div className="flex justify-between">
       <DatePicker
         selected={selectedStartDate}
         onChange={handleStartDateChange}

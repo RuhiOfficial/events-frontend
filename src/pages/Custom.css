@@ -1,15 +1,15 @@
 /* MyDatePicker.css */
 
 .custom-datepicker {
-    color:white !important;
-    border:1px solid white !important;
-    text-align: center;
-    border-radius: 20px;
-  }
-  
+  color:white !important;
+  border:1px solid white !important;
+  text-align: center;
+  border-radius: 20px;
+}
+
 
 /*======================
-    404 page
+  404 page
 =======================*/
 
 
@@ -19,116 +19,91 @@
 .page_404  img{ width:100%;}
 
 .four_zero_four_bg{
- 
- background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
-    height: 400px;
-    background-position: center;
- }
- 
- 
- .four_zero_four_bg h1{
- font-size:80px;
- }
- 
-  .four_zero_four_bg h3{
-			 font-size:80px;
-			 }
-			 
-			 .link_404{			 
-	color: #fff!important;
-    padding: 10px 20px;
-    background: #39ac31;
-    margin: 20px 0;
-    display: inline-block;}
-	.contant_box_404{ margin-top:-50px;}
 
-    /* Mysidebar.css */
+background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+  height: 400px;
+  background-position: center;
+}
+
+
+.four_zero_four_bg h1{
+font-size:80px;
+}
+
+.four_zero_four_bg h3{
+     font-size:80px;
+     }
+     
+     .link_404{			 
+color: #fff!important;
+  padding: 10px 20px;
+  background: #39ac31;
+  margin: 20px 0;
+  display: inline-block;}
+.contant_box_404{ margin-top:-50px;}
+
+  /* Mysidebar.css */
 
 .menu-item {
-    padding: 0;
-    padding-left: 5px;
-    color: #ffffff;
-    font-size: 16px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    border-radius: 20%; 
-  }
-  .eqlogo{
-    padding: 13px 18px;
-  }
-  
-  .active-menu {
-    background-color: #3F51B5;
-  }
-  
-  /* DateRangePicker.css */
+  padding: 0;
+  padding-left: 5px;
+  color: #ffffff;
+  font-size: 16px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 20%; 
+}
+.eqlogo{
+  padding: 13px 18px;
+}
+
+.active-menu {
+  background-color: #3F51B5;
+}
+
+/* DateRangePicker.css */
 .react-datepicker {
-  font-family: 'Arial', sans-serif;
-  
-  
+font-family: 'Arial', sans-serif;
+
+
 }
 
 .react-datepicker__input-container {
-  display: inline-block;
-  width: 100%; /* Ensure the date picker takes full width */
-  padding: 11px 17px 11px;
+display: inline-block;
+width: 100%; /* Ensure the date picker takes full width */
+padding: 11px 17px 11px;
 }
 
 .react-datepicker__input-container input {
-  width: 100%;
-  padding: 0.375rem 0.75rem;
-  color:#ffffff ;
-  border-bottom: 1px solid #d2d6dc; /* Add a bottom border */
-  outline: none;
+width: 100%;
+padding: 0.375rem 0.75rem;
+color:#ffffff ;
+border-bottom: 1px solid #d2d6dc; /* Add a bottom border */
+outline: none;
 }
 
 .react-datepicker-popper {
-  z-index: 1000;
+z-index: 1000;
 }
 
-/* TimeRangePicker.css */
-.react-time-picker {
-  font-family: 'Arial', sans-serif;
-  background-color: rgba(0, 0, 0, 0.8); /* Dark background with transparency */
-  color: white;
-  border-radius: 0.375rem;
+/* styles.css */
+.custom-timepicker {
+border:1px solid white
+/* Your custom styles for the entire time picker component */
 }
 
-.react-time-picker__inputGroup {
-  display: flex;
+.custom-timepicker .react-time-picker-dropdown-icon {
+fill: grey; /* Icon color */
 }
 
-.react-time-picker__inputGroup__input {
-  width: 100%;
-  padding: 0.375rem 0.75rem;
-  border: none;
-  border-bottom: 1px solid #4a5568;
-  outline: none;
-  color: white;
-  background-color: transparent; /* Keep the input background transparent */
+.custom-timepicker .react-time-picker-dropdown-clock {
+color: grey; /* Clock color */
 }
 
-.react-time-picker__inputGroup__divider {
-  width: 1px;
-  background-color: #4a5568;
-  margin: 0 0.5rem;
+.custom-timepicker .react-time-picker-dropdown-clock-selected {
+color: white; /* Selected time color */
 }
 
-.react-time-picker__clear-button {
-  color: #cbd5e0;
-  margin-left: 0.5rem;
-  cursor: pointer;
+input.tp_inputBox{
+  color: white !important; /* Selected time color */
 }
-
-.react-time-picker__inputGroup__input::placeholder {
-  background: transparent;
-  color: rgb(10, 10, 10); /* Placeholder text color */
-}
-
-.react-time-picker__inputGroup__input:focus,
-.react-time-picker__inputGroup__divider:focus {
-  border-color: #1e4a9d;
-}
-
-
-  
