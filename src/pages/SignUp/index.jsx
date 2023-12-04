@@ -2,7 +2,7 @@ import React,{useEffect,useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 
-import { getVenueType, postSignupUser } from "service/api";
+import { getVenueType, postSignupUser,getTimezone } from "service/api";
 import * as yup from "yup";
 
 import { Button, Img, Input, SelectBox, Text } from "components";
@@ -26,12 +26,9 @@ const SignUpPage = () => {
   const [signupUser, setSignupUser] = React.useState();
 
 
-  // const [venueTypeData, setVenueTypeData] = useState([]);
+  
   const [venueTypeList, setVenueTypeList] = useState([]);
   const [selectedVenueType, setSelectedVenueType] = useState(null);
-
-
-
   const [venueType, setVenueType] = React.useState();
   
   const formValidationSchema = yup.object().shape({
@@ -46,10 +43,7 @@ const SignUpPage = () => {
       ),
     password: yup.string().required("Password is required"),
     venue_name: yup.string().required("Venue Name is required"),
-    // phone: yup
-    //   .string()
-    //   .required("Contact Number is required")
-    //   .matches(/^\d{10}$/, "Contact Number must be 10 digits"),
+   
   });
   
   const form = useForm(
@@ -62,6 +56,7 @@ const SignUpPage = () => {
       venue_name: "",
       venue_type:"",
       website: "",
+      timezone:"",
     },
     {
       validate: true,
@@ -83,6 +78,7 @@ const SignUpPage = () => {
         phone:data?.phone,
         venue_type: selectedVenueType,
         website: data?.website,
+        timezone: selectedTimeZoneType,
 
       },
 
@@ -115,7 +111,7 @@ const SignUpPage = () => {
         let options;
   
         if (res.data.data.length === 1) {
-          // If there's only one item, create an option directly
+          
           options = [
             {
               label: res.data.data[0].name,
@@ -123,7 +119,7 @@ const SignUpPage = () => {
             },
           ];
         } else {
-          // If there are multiple items, map the array to options
+         
           options = res.data.data.map((item) => ({
             label: item.name,
             value: item.id,
@@ -146,11 +142,59 @@ useEffect(()=>{
  console.log(venueTypeList,"type of venue ")
 
 
-// Function to handle dropdown value change
+
 const handleVenueTypeChange = (selectedOption) => {
-  // Update the state with the selected value
+
   setSelectedVenueType(selectedOption);
 };
+
+  
+  const [timezoneType, setTimezoneType] = React.useState();
+  const [timeZoneList, setTimeZoneList] = useState([]);
+  const [selectedTimeZoneType, setSelectTimeZoneType] = useState(null);
+
+  async function fetchTimezones() {
+    try {
+      const req = {};
+      const res = await getTimezone(req);
+      console.log(res.data.data, "response is");
+
+      setTimezoneType(res.data.data);
+
+      let options;
+
+      if (res.data.data.length === 1) {
+        options = [
+          {
+            label: res.data.data[0].name,
+            value: res.data.data[0].id,
+          },
+        ];
+      } else {
+        options = res.data.data.map((item) => ({
+          label: item.name,
+          value: item.id,
+        }));
+      }
+
+      setTimeZoneList(options);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  console.log(timeZoneList,"type of timezone")
+ 
+  useEffect(() => {
+   
+    fetchTimezones();
+  }, []);
+
+  const handleTimeZoneTypeChange = (selectedOption) => {
+   
+    setSelectTimeZoneType(selectedOption);
+  };
+
+
 
   return (
     <>
@@ -322,7 +366,6 @@ const handleVenueTypeChange = (selectedOption) => {
                     options={venueTypeList}
                     isSearchable={true}
                     placeholder="Select..."
-                    
                    onChange={handleVenueTypeChange}
                   
                   />
@@ -370,9 +413,11 @@ const handleVenueTypeChange = (selectedOption) => {
                       }
                       isMulti={false}
                       name="div"
-                      options={divOptionsList}
+                      options={timeZoneList}
                       isSearchable={true}
                       placeholder="Select..."
+                      onChange={handleTimeZoneTypeChange}
+
                     />
                   </div>
                 </div>
