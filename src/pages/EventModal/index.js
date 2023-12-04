@@ -177,15 +177,7 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
           });
       }
 
-      const [startDate, setStartDate] = useState(null);
-      const [endDate, setEndDate] = useState(null);
-    
-      const handleDateChange = (start, end) => {
-        setStartDate(start);
-        setEndDate(end);
-      };
-    
-   
+      
 
   return (
     <div className={`modal ${isEventOpen ? 'flex' : 'hidden'}`}>  
