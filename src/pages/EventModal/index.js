@@ -1,15 +1,27 @@
 
 
 // Modal.js
-import React from 'react';
+import React,{useState} from 'react';
 import * as yup from "yup";
 import { Button, Img, Input, Text } from "components";
 import useForm from "hooks/useForm";
 import {postAddVenue } from "service/api";
 import {  ToastContainer,toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import DateRangePicker from 'components/DateRangePicker';
+import TimeRangePicker from 'components/TimeRangePicker';
+import InputMask from 'react-input-mask';
+
 
 const EventModal = ({ isEventOpen, onEventClose }) => {
+  const [startTime, setStartTime] = useState(new Date());
+  const [endTime, setEndTime] = useState(new Date());
+
+  const handleTimeChange = (start, end) => {
+    setStartTime(start);
+    setEndTime(end);
+  };
+
   
  const cid= localStorage.getItem("LoginId");
  console.log(cid,"customer id is ===>>>")
@@ -139,6 +151,16 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
           });
       }
 
+      const [startDate, setStartDate] = useState(null);
+      const [endDate, setEndDate] = useState(null);
+    
+      const handleDateChange = (start, end) => {
+        setStartDate(start);
+        setEndDate(end);
+      };
+    
+   
+
   return (
     <div className={`modal ${isEventOpen ? 'flex' : 'hidden'}`}>  
       <div className="modal-overlay " onClick={onEventClose}></div>
@@ -171,10 +193,10 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                 
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
-                        name="input"
-                        placeholder="Name"
+                        name="name"
+                        placeholder=" Event Name"
                         className="capitalize font-roboto p-0  placeholder-white-900 text-base text-left w-full"
-                        wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                        wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                         style={{color:"white"}}
                         onChange={(e) => {
                           form.handleChange("name", e);
@@ -189,32 +211,21 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                   {/* Add more input fields as needed */}
                 </div>
                
-                <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  <Input
-                    name="input"
-                    placeholder="Email"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
-                    type="email"
-                    onChange={(e) => {
-                      form.handleChange("email", e);
-                    }}
-                    errors={form?.errors?.email}
-                    value={form?.values?.email}
-                    style={{color:"white"}}
-                   
-                    size="md"
-                    variant="fill"
-                  />
-                  {/* Add more input fields as needed */}
+                <div className="flex flex-col items-start justify-start mt-[38px] w-full
+                border-b border-white-700_99 border-solid ">
+              
+                  <DateRangePicker startDate={startDate} endDate={endDate} onChange={handleDateChange}
+                   className=" border-b border-white-700_99 border-solid w-full bg-[#292e34] " />
+                  
+               
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  <Input
-                    name="input"
-                    placeholder="Contact No"
+                  {/* <Input
+                    name="date_to"
+                    placeholder="Date To"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
-                    type="tel"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
+                    type="date"
                     onChange={(e) => {
                       form.handleChange("phone", e);
                     }}
@@ -224,16 +235,17 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                    
                     size="md"
                     variant="fill"
-                  />
+                  /> */}
                   {/* Add more input fields as needed */}
+                  <TimeRangePicker startTime={startTime} endTime={endTime} onChange={handleTimeChange} />
                 </div>
                 
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
-                    name="input"
-                    placeholder="Country"
+                    name="time_from"
+                    placeholder="Time From"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
                       form.handleChange("country_id", e);
@@ -247,29 +259,34 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                   {/* Add more input fields as needed */}
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  <Input
-                    name="input"
-                    placeholder="State"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
-                    
-                    onChange={(e) => {
-                      form.handleChange("state_id", e);
-                    }}
-                    errors={form?.errors?.["state_id"]}
-                    value={form?.values?.["state_id"]}
-                    style={{color:"white"}}
-                    size="md"
-                    variant="fill"
-                  />
+                <InputMask
+  mask="99:99 AM"
+  maskChar="_"
+  value={form?.values?.["state_id"]}
+  onChange={(e) => {
+    form.handleChange("state_id", e);
+  }}
+  className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
+  placeholder="Time To"
+  style={{
+    color: "white",
+    background: "transparent",
+    border: "none",
+    outline: "none",
+    caretColor: "white",  // Set caret color for cursor
+  }}
+  size="md"
+  variant="fill"
+/>
+
                   {/* Add more input fields as needed */}
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
-                    name="input"
-                    placeholder="City"
+                    name="event_type"
+                    placeholder="Event Type"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
                       form.handleChange("city_id", e);
@@ -284,10 +301,10 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
-                    name="input"
-                    placeholder="Zipcode"
+                    name="event_organiser"
+                    placeholder="Event Organiser"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
                       form.handleChange("zipcode", e);
@@ -302,10 +319,10 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
-                    name="input"
-                    placeholder="Address"
+                    name="event_desc"
+                    placeholder="Description"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
                       form.handleChange("address", e);
@@ -320,10 +337,10 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
-                    name="input"
-                    placeholder="Tax"
+                    name="facebook_event_url"
+                    placeholder="Event Facebook URL"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
                       form.handleChange("tax", e);
@@ -338,10 +355,10 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
-                    name="input"
-                    placeholder="Venue Type"
+                    name="event_status"
+                    placeholder="Event Status"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full "
-                    wrapClassName=" common-pointer border border-white-700_99 border-solid w-full bg-[#292e34] "
+                    wrapClassName=" common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34] "
                     
                     onChange={(e) => {
                       form.handleChange("venue_type", e);
@@ -356,10 +373,10 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
-                    name="input"
-                    placeholder="Timezone"
+                    name="featured_image"
+                    placeholder="Featured Images"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
                       form.handleChange("timezone", e);
@@ -372,60 +389,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                   />
                   {/* Add more input fields as needed */}
                 </div>
-                <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  <Input
-                    name="input"
-                    placeholder="Website"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
-                    
-                    onChange={(e) => {
-                      form.handleChange("website", e);
-                    }}
-                    errors={form?.errors?.website}
-                    value={form?.values?.website}
-                    style={{color:"white"}}
-                    size="md"
-                    variant="fill"
-                  />
-                  {/* Add more input fields as needed */}
-                </div>
-                <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  <Input
-                    name="input"
-                    placeholder="Currency"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
-                    
-                    onChange={(e) => {
-                      form.handleChange("currency", e);
-                    }}
-                    errors={form?.errors?.currency}
-                    value={form?.values?.currency}
-                    style={{color:"white"}}
-                    size="md"
-                    variant="fill"
-                  />
-                  {/* Add more input fields as needed */}
-                </div>
-                <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  <Input
-                    name="input"
-                    placeholder="Capacity"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
-                    
-                    onChange={(e) => {
-                      form.handleChange("capacity", e);
-                    }}
-                    errors={form?.errors?.capacity}
-                    value={form?.values?.capacity}
-                    style={{color:"white"}}
-                    size="md"
-                    variant="fill"
-                  />
-                  {/* Add more input fields as needed */}
-                </div>
+            
                 
 
                 <div className="flex flex-col items-start justify-start w-full mt-20">
