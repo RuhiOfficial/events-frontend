@@ -431,7 +431,7 @@ const Modal = ({ isOpen, onClose }) => {
                   {/* {/ Add more input fields as needed /} */}
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  {/* <Input
+                  <Input
                     name="input"
                     placeholder="City"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
@@ -445,8 +445,8 @@ const Modal = ({ isOpen, onClose }) => {
                     style={{color:"white"}}
                     size="md"
                     variant="fill"
-                  /> */}
-                           <SelectBox
+                  />
+                           {/* <SelectBox
           className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
           placeholderClassName="text-gray-600"
           isMulti={false}
@@ -462,7 +462,7 @@ const Modal = ({ isOpen, onClose }) => {
                   
                   
 />
-
+ */}
 
 
 

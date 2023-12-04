@@ -176,7 +176,11 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
             toast.error("Something Went Wrong!");
           });
       }
-
+      const selectOptionsList = [
+        { label: "India", value: "1" },
+        { label: "America", value: "2" },
+        { label: "Pakistan", value: "3" },
+      ];
       
 
   return (

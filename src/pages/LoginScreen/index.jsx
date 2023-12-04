@@ -103,7 +103,7 @@ const LoginScreenPage = () => {
                   <Input
                     name="input"
                     placeholder="Email"
-                    className=" font-roboto p-0 placeholder:text-black-900_87 text-base text-left w-full" 
+                    className=" font-roboto p-0 placeholder:text-black-900_87 text-base text-left w-full h-[50px] pl-4" 
                     wrapClassName="common-pointer border border-gray-700_99 border-solid w-full w-[558px]"
                     type="email"
                     onChange={(e) => {
@@ -131,7 +131,7 @@ const LoginScreenPage = () => {
                   <Input
                     name="input_One"
                     placeholder="Password"
-                    className="!placeholder:text-black-900_87 !text-black-900_87 font-roboto p-0 text-base text-left w-full"
+                    className="!placeholder:text-black-900_87 !text-black-900_87 font-roboto p-0 text-base text-left w-full h-[50px] pl-4"
                     wrapClassName="border-2 border-gray-700_66 border-solid flex rounded-[12px] w-full w-[558px]"
                     type="password"
                     onChange={(e) => {
