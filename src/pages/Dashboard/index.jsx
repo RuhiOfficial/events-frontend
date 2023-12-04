@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import "../Custom.css"
 import 'react-datepicker/dist/react-datepicker.css';
 import Modal from 'pages/Modal';
+import EventModal from 'pages/EventModal';
 
 import { Button, Img, Line, List, Text } from "components";
 
@@ -11,6 +12,28 @@ import { Button, Img, Line, List, Text } from "components";
 const DashboardPage = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEventModalOpen,setIsEventModalOpen]=useState(false);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("https://jsonplaceholder.typicode.com/users");
+        const result = await response.json();
+        setData(result.slice(0, 2)); // Limit to the first 2 items for this example
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
 
 
   const openModal = () => {
@@ -20,12 +43,20 @@ const DashboardPage = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-  
+  const openEventModal = () => {
+    console.log("event modal opens")
+    setIsEventModalOpen(true);
+  };
+
+  const closeEventModal = () => {
+    console.log("event modal close")
+    setIsEventModalOpen(false);
+  };
 
   
   return (
     <>
-    < div className={`relative ${isModalOpen ? 'filter blur' : ''}`}>
+    < div className={`relative ${isModalOpen || isEventModalOpen ? 'filter blur' : ''}`}>
       <div className="flex flex-col font-roboto items-center justify-start mx-auto w-full">
         <div className="backdrop-opacity-[0.5] bg-gray-900  flex flex-col items-center justify-end   w-full">
           <div className="flex md:flex-col flex-row  items-start justify-between mx-auto md:px-5 w-full">
@@ -200,6 +231,13 @@ const DashboardPage = () => {
                             </div>
                           </div>
                         </div>
+
+
+
+
+
+
+
                       </div>
                       <div className="bg-blue_gray-900_01 flex flex-col font-poppins  justify-start sm:px-5 px-[26px] rounded shadow-bs1 w-full">
                         <div className="flex flex-col gap-10  justify-start py-9 w-full">
@@ -216,11 +254,12 @@ const DashboardPage = () => {
                               className="cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm"
                               color="indigo_A400"
                               size="sm"
+                              onClick={openEventModal}
                             >
                               + Add Event
                             </Button>
                           </div>
-                          <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mb-[33px] w-full">
+                          {/* <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mb-[33px] w-full">
                             <List
                               className="flex-1 sm:flex-col flex-row gap-[31px] grid md:grid-cols-1 grid-cols-2 w-full"
                               orientation="horizontal"
@@ -281,6 +320,58 @@ const DashboardPage = () => {
                                 </div>
                               </div>
                             </List>
+                           
+                          </div> */}
+                          <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mb-[33px] w-full">
+                          {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <List
+          className="flex-1 sm:flex-col flex-row gap-[31px] grid md:grid-cols-1 grid-cols-2 w-full"
+          orientation="horizontal"
+        >
+          {data.map((item) => (
+            <div
+              key={item.id}
+              className="bg-black-900_11 border border-blue_gray-800 border-solid hover:cursor-pointer flex flex-1 sm:flex-col flex-row gap-[21px] items-center justify-start sm:ml-[0] hover:mx-0 p-2.5 hover:shadow-bs shadow-bs hover:w-full w-full"
+            >
+              {/* <Img
+                className="sm:flex-1 h-[151px] md:h-auto object-cover w-[21%] sm:w-full"
+                src={item.thumbnailUrl}
+                alt={`Photo ${item.id}`}
+              /> */}
+
+                  <Img
+                                  className="sm:flex-1 h-[151px] md:h-auto object-cover w-[21%] sm:w-full"
+                                  src="images/img_rectangle63.png"
+                                  alt="rectangleSixtyThree"
+                                />
+
+              <div className="flex flex-col items-start justify-start">
+                <Text
+                  className="sm:text-[19px] md:text-[21px] text-[23px] text-white-A700"
+                  size="txtPoppinsSemiBold23"
+                >
+                  {item.title}
+                </Text>
+                <Text
+                  className="text-lg text-white-A700"
+                  size="txtPoppinsMedium18"
+                >
+                  {item.id}
+                </Text>
+                <Text
+                  className="mt-3.5 text-sm text-white-A700"
+                  size="txtPoppinsRegular14"
+                >
+                  {item.albumId}
+                </Text>
+              </div>
+            </div>
+          ))}
+        </List>
+      )}
+    
                            
                           </div>
                         </div>
@@ -618,6 +709,7 @@ const DashboardPage = () => {
       </div>
     </div>
     <Modal isOpen={isModalOpen} onClose={closeModal} />
+    <EventModal isEventOpen={isEventModalOpen} onEventClose={closeEventModal} />
     </>
   );
 };

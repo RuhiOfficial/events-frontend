@@ -1,11 +1,11 @@
-import React from 'react';
-
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import "../Custom.css"
 import 'react-datepicker/dist/react-datepicker.css';
 
 import { Menu , MenuItem, Sidebar } from "react-pro-sidebar";
 import Header from 'pages/Header';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import Dash from "../../assets/images/dashboard.png"
 import customers from "../../assets/images/customer.png"
@@ -17,13 +17,18 @@ import inventory from "../../assets/images/Group7.png"
 
 
 function Mysidebar({children}) {
-  const auth= localStorage.getItem('user')
-  const navigate = useNavigate();
+  const location = useLocation();
+  const [activeMenu, setActiveMenu] = useState("");
+
+  useEffect(() => {
+    setActiveMenu(location.pathname); // Compare with the full path
+  }, [location.pathname]);
+
     const sideBarMenu = [
         {
           imgSrc: Dash, // Assuming Dash is the import of your image file
-          href: "/dashboard",
-          active: window.location.pathname === "/dashboard",
+          href: "/",
+          active: window.location.pathname === "/",
           altText: "Dashboard", // Add alt text for accessibility
         },
         {
@@ -59,43 +64,43 @@ function Mysidebar({children}) {
       ]
     
   return (
-    <>
-    
-    {auth?
     <div>
   <Header/>
     
-   <div  style={{display:"flex"}}>
-     <Sidebar className="!sticky !w-[70px] bg-gray-900_01 flex h-auto justify-start  overflow-auto top-[0] ">
-            {/* <h1 style={{padding:"13px",color:"white",textAlign:"center",fontSize:"xx-large"}} >eQ</h1> */}
+   <div  style={{display:"flex"}} className="bg-gray-900_01">
+     <Sidebar className="!sticky !w-[70px] bg-gray-900_01 flex h-auto justify-start  overflow-auto top-[0] m-[20px]">
+            {
               <Menu
                 menuItemStyles={{
                   button: {
                     padding: 0,
-                    paddingLeft: "13px",
                     flexDirection: "column",
                     color: "#ffffff",
                     fontSize: "16px",
-                    paddingTop: "13px",
-                    paddingBottom: "13px",
+                    paddingTop: "12px",
+                    paddingBottom: "5px",
+                    
                   },
                 }}
                 className="flex flex-col items-center justify-center  mb-[790px] mt-[25px]  w-full"
               >
                 {sideBarMenu?.map((menu, i) => (
-                  <MenuItem key={`sideBarMenuItem${i}`} {...menu}>
-                    <img src={menu.imgSrc} alt={menu.altText} />
-                  </MenuItem>
+             <MenuItem
+             key={`sideBarMenuItem${i}`}
+             className={`menu-item ${activeMenu === menu.href ? 'active-menu' : ''}`}
+           >
+             <Link to={menu.href}>
+               <img src={menu.imgSrc} alt={menu.altText} />
+             </Link>
+           </MenuItem>
                 ))}
               </Menu>
-            </Sidebar>
+}</Sidebar>
             
               <main style={{width:"100%"}}>{children}</main>
             
    </div>
    </div>
-  :null}
-  </>
   )
 }
 

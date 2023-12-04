@@ -1,16 +1,23 @@
-
-
 // Modal.js
-import React from 'react';
+import React ,{useState,useEffect} from 'react';
 import * as yup from "yup";
-import { Button, Img, Input, Text } from "components";
+import { Button, Input, Text,SelectBox ,Img} from "components";
 import useForm from "hooks/useForm";
+import {getStates, postAddVenue } from "service/api";
+import {  ToastContainer,toast } from "react-toastify";
+import { getVenueType,getTimezone,getCountry,getCity } from "service/api";
+import { useNavigate } from "react-router-dom";
+import "../Custom.css"
 
 const Modal = ({ isOpen, onClose }) => {
- const cid= localStorage.getItem("id");
+  
+ const cid= localStorage.getItem("LoginId");
  console.log(cid,"customer id is ===>>>")
+ const [stateList, setStateList] = useState([]);
+  const [selectedState, setSelectedState] = useState(null);
+  const [state, setState] = React.useState();
 
-  /////////// Validations ////////////////
+  
       const formValidationSchema = yup.object().shape({
       name: yup.string().required("Name is required"),
       email: yup
@@ -59,8 +66,12 @@ const Modal = ({ isOpen, onClose }) => {
           validationOnChange: true,
         },
       );
-    
+
+ 
+
+
      async function addvenue(data) {
+
       console.log(data);
         const req = {
     
@@ -75,31 +86,225 @@ const Modal = ({ isOpen, onClose }) => {
             zipcode: data?.zipcode,
             address: data?.address,
             tax: data?.tax,
-            venue_type: data?.venue_type,
-            timezone: data?.timezone,
+          
             website:data?.website,
             currency:data?.currency,
             capacity: data?.capacity,
+            venue_type: selectedVenueType,
+            timezone: selectedTimeZoneType,
     
           },
     
         };
-    
-    //  await   postSignupUser(req)
-    //       .then((res) => {
-    //         setSignupUser(res?.data);
-    
-    //         toast.success("You are Registered Succesfully!");
-    //         setTimeout(() => {
-    //           navigate("/loginScreen")
-    //         }, 3000);
+    console.log(req,"req is ======>>>")
+     await   postAddVenue(req)
+          .then((res) => {
+            console.log(res)
             
-    //       })
-    //       .catch((err) => {
-    //         console.error(err);
-    //         toast.error("Something Went Wrong!");
-    //       });
+        
+            
+            toast.success("Venue is added Succesfully!");
+            setTimeout(() => {
+              window.location.href="/"
+            }, 3000);
+          
+          })
+          .catch((err) => {
+            console.error(err);
+            toast.error("Something Went Wrong!");
+          });
       }
+      const [venueTypeList, setVenueTypeList] = useState([]);
+      const [selectedVenueType, setSelectedVenueType] = useState(null);
+      const [venueType, setVenueType] = React.useState();
+
+      async function select() {
+        const req = {};
+      
+        await getVenueType(req)
+          .then((res) => {
+            console.log(res, "response is");
+            setVenueType(res.data.data);
+            console.log(venueType, "id ==>>>");
+      
+            let options;
+      
+            if (res.data.data.length === 1) {
+             
+              options = [
+                {
+                  label: res.data.data[0].name,
+                  value: res.data.data[0].id,
+                },
+              ];
+            } else {
+             
+              options = res.data.data.map((item) => ({
+                label: item.name,
+                value: item.id,
+              }));
+            }
+      
+            setVenueTypeList(options);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+      
+    
+    useEffect(()=>{
+      select();
+    
+    },[])
+    
+     console.log(venueTypeList,"type of venue ")
+    
+   
+    const handleVenueTypeChange = (selectedOption) => {
+    
+      setSelectedVenueType(selectedOption);
+    };
+     
+  const [timezoneType, setTimezoneType] = React.useState();
+  const [timeZoneList, setTimeZoneList] = useState([]);
+  const [selectedTimeZoneType, setSelectTimeZoneType] = useState(null);
+
+  async function fetchTimezones() {
+    try {
+      const req = {};
+      const res = await getTimezone(req);
+      console.log(res.data.data, "response is");
+
+      setTimezoneType(res.data.data);
+
+      let options;
+
+      if (res.data.data.length === 1) {
+        options = [
+          {
+            label: res.data.data[0].name,
+            value: res.data.data[0].id,
+          },
+        ];
+      } else {
+        options = res.data.data.map((item) => ({
+          label: item.name,
+          value: item.id,
+        }));
+      }
+
+      setTimeZoneList(options);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  console.log(timeZoneList,"type of timezone")
+ 
+  useEffect(() => {
+    
+    fetchTimezones();
+  }, []);
+
+ 
+  const handleTimeZoneTypeChange = (selectedOption) => {
+    // Update the state with the selected value
+    setSelectTimeZoneType(selectedOption);
+  };
+  const [countryType, setCountryType] = useState();
+  const [countryList, setCountryList] = useState([]);
+ 
+
+  async function fetchCountry() {
+    try {
+      const req = {};
+      const res = await getCountry(req);
+      console.log(res.data.data, "response is");
+
+      setCountryType(res.data.data);
+
+      setCountryList(
+        res.data.data.map((item) => ({
+          label: item.name,
+          value: item.id,
+        }))
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  useEffect(() => {
+    fetchCountry();
+  }, []);
+  const [cityList, setCityList] = useState([]);
+  const [selectedCity, setSelectedCity] = useState(null);
+
+  async function fetchCities() {
+    try {
+      const req = {};
+      const res = await getCity(req);
+      console.log(res.data.data, "city response is");
+
+      setCityList(
+        res.data.data.map((item) => ({
+          label: item.name,
+          value: item.id,
+        }))
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  useEffect(() => {
+    fetchCities();
+  }, []);
+
+
+      useEffect(()=>{
+        states();
+      
+      },[])
+
+      async function states() {
+        const req = {};
+      
+        await getStates(req)
+          .then((res) => {
+            console.log(res, "response is state");
+            setState(res.data.data);
+            
+      
+            let options;
+      
+            if (res.data.data.length === 1) {
+             
+              options = [
+                {
+                  label: res.data.data[0].name,
+                  value: res.data.data[0].id,
+                },
+              ];
+            } else {
+              // If there are multiple items, map the array to options
+              options = res.data.data.map((item) => ({
+                label: item.name,
+                value: item.id,
+              }));
+            }
+      
+            setStateList(options);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+
+      const handleStateChange = (selectedOption) => {
+        // Update the state with the selected value
+        setSelectedState(selectedOption);
+      };
 
   return (
     <div className={`modal ${isOpen ? 'flex' : 'hidden'}`}>  
@@ -108,19 +313,21 @@ const Modal = ({ isOpen, onClose }) => {
         <div className="modal-content bg-white p-4 rounded-lg shadow-md w-full sm:w-1/2 max-h-screen overflow-auto">
           
 
-          {/* Your modal content */}
+          {/* {/ Your modal content /} */}
           <div className="flex flex-col font-poppins items-center justify-start mx-auto w-full ">
            
           <div className="flex flex-col font-poppins items-center justify-start mx-auto w-full ">
             <div className="bg-no-repeat flex flex-col items-center justify-start p-10 md:p-5 w-full">
               <div className="bg-[#292e34] flex flex-col items-start justify-start max-w-[716px] p-[3.5rem] rounded-[24px] w-full ">
                 <div className='text-center w-full flex justify-between items-center'>
-                <Text
-                  className=" md:text-3xl  text-[32px] text-white-A700 text-center"
-                  size="txtPoppins"
-                >
-                  Add Venue
-                </Text>
+                <div className="flex flex-col items-center justify-center w-[534px] sm:w-full">
+                  <Text
+                    className="md:text-3xl sm:text-[28px] text-[32px] text-white-A700 w-auto"
+                    size="txtPoppins"
+                  >
+                    Add Venue
+                  </Text>
+                </div>
                 <span className="modal-close" style={{color:"white",fontSize:"xx-large"}}  onClick={onClose}>
             &times;
           </span>
@@ -131,7 +338,7 @@ const Modal = ({ isOpen, onClose }) => {
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
                         name="input"
-                        placeholder="Name"
+                        placeholder=" Name"
                         className="capitalize font-roboto p-0  placeholder-white-900 text-base text-left w-full"
                         wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
                         style={{color:"white"}}
@@ -145,7 +352,7 @@ const Modal = ({ isOpen, onClose }) => {
                         variant="fill"
                 />
 
-                  {/* Add more input fields as needed */}
+                  {/* {/ Add more input fields as needed /} */}
                 </div>
                
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
@@ -165,7 +372,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+                  {/* {/ Add more input fields as needed /} */}
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -184,47 +391,42 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+                  {/* {/ Add more input fields as needed /} */}
                 </div>
                 
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  <Input
-                    name="input"
-                    placeholder="Country"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
-                    
-                    onChange={(e) => {
-                      form.handleChange("country_id", e);
-                    }}
-                    errors={form?.errors?.["country_id"]}
-                    value={form?.values?.["country_id"]}
-                    style={{color:"white"}}
-                    size="md"
-                    variant="fill"
-                  />
-                  {/* Add more input fields as needed */}
+                
+                 <SelectBox
+                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
+                    placeholderClassName="text-gray-600"
+                    isMulti={false}
+                    name="country_id"
+                    options={countryList}
+                    isSearchable={true}
+                    placeholder="Select Country..."
+                    onChange={(selectedOption) => {
+                      form.handleChange("country_id", selectedOption);}}
+                  
+                  
+/>
+                  {/* {/ Add more input fields as needed /} */}
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  <Input
-                    name="input"
-                    placeholder="State"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
-                    
-                    onChange={(e) => {
-                      form.handleChange("state_id", e);
-                    }}
-                    errors={form?.errors?.["state_id"]}
-                    value={form?.values?.["state_id"]}
-                    style={{color:"white"}}
-                    size="md"
-                    variant="fill"
-                  />
-                  {/* Add more input fields as needed */}
+                <SelectBox
+                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
+                    placeholderClassName="text-gray-600"
+                  
+                  isMulti={false}
+                  name="select"
+                   options={stateList}
+                  isSearchable={true}
+                  placeholder="Select State..."
+                   onChange={handleStateChange}
+                  style={{ color: 'text-white-A700' }} 
+/> 
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  <Input
+                  {/* <Input
                     name="input"
                     placeholder="City"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
@@ -238,8 +440,42 @@ const Modal = ({ isOpen, onClose }) => {
                     style={{color:"white"}}
                     size="md"
                     variant="fill"
-                  />
-                  {/* Add more input fields as needed */}
+                  /> */}
+                           <SelectBox
+          className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
+          placeholderClassName="text-gray-600"
+          isMulti={false}
+            name="city_id"
+            options={cityList}
+            isSearchable={true}
+            placeholder="Select City..."
+            onChange={(selectedOption) => {
+              form.handleChange("city_id", selectedOption);
+              setSelectedCity(selectedOption);
+            }}
+            value={selectedCity} 
+                  
+                  
+/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  {/* {/ Add more input fields as needed /} */}
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -257,7 +493,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+                  
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -275,7 +511,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+                  
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -293,43 +529,40 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+                 
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  <Input
-                    name="input"
-                    placeholder="Venue Type"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full "
-                    wrapClassName=" common-pointer border border-white-700_99 border-solid w-full bg-[#292e34] "
-                    
-                    onChange={(e) => {
-                      form.handleChange("venue_type", e);
-                    }}
-                    errors={form?.errors?.["venue_type"]}
-                    value={form?.values?.["venue_type"]}
-                    style={{color:"white"}}
-                    size="md"
-                    variant="fill"
-                  />
-                  {/* Add more input fields as needed */}
+                  <SelectBox
+                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
+                    placeholderClassName="text-gray-600"
+                  
+                  isMulti={false}
+                  name="select"
+                  options={venueTypeList}
+                  isSearchable={true}
+                  placeholder="Select Venue Type..."
+                  onChange={handleVenueTypeChange}
+                  style={{ color: 'text-white-A700' }} 
+/>
+
+                  {/* {/ Add more input fields as needed /} */}
                 </div>
-                <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  <Input
-                    name="input"
-                    placeholder="Timezone"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
-                    
-                    onChange={(e) => {
-                      form.handleChange("timezone", e);
-                    }}
-                    errors={form?.errors?.timezone}
-                    value={form?.values?.timezone}
-                    style={{color:"white"}}
-                    size="md"
-                    variant="fill"
-                  />
-                  {/* Add more input fields as needed */}
+                <div className="flex flex-col items-start justify-start mt-[38px] w-full ">
+                  
+                    <SelectBox
+                      className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
+                      placeholderClassName="text-gray-600"
+                      isMulti={false}
+                      name="div"
+                      options={timeZoneList}
+                      isSearchable={true}
+                      placeholder="Select TimeZone..."
+                      onChange={handleTimeZoneTypeChange}
+                      style={{ color: 'text-white-A700' }} 
+                      
+
+                    />
+                  {/* {/ Add more input fields as needed /} */}
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -347,7 +580,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+                  
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -365,7 +598,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+                  
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -383,7 +616,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+                  
                 </div>
                 
 
@@ -409,7 +642,9 @@ const Modal = ({ isOpen, onClose }) => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
+    
   );
 };
 

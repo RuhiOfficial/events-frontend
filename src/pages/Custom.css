@@ -41,3 +41,65 @@
     margin: 20px 0;
     display: inline-block;}
 	.contant_box_404{ margin-top:-50px;}
+
+    /* Mysidebar.css */
+
+.menu-item {
+    padding: 0;
+    padding-left: 5px;
+    color: #ffffff;
+    font-size: 16px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 20%; 
+  }
+  .eqlogo{
+    padding: 13px 18px;
+  }
+  
+  .active-menu {
+    background-color: #3F51B5;
+  }
+  
+  /* DateRangePicker.css */
+.react-datepicker {
+  font-family: 'Arial', sans-serif;
+  
+  
+}
+
+.react-datepicker__input-container {
+  display: inline-block;
+  width: 100%; /* Ensure the date picker takes full width */
+  padding: 11px 17px 11px;
+}
+
+.react-datepicker__input-container input {
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  color:#ffffff ;
+  border-bottom: 1px solid #d2d6dc; /* Add a bottom border */
+  outline: none;
+}
+
+.react-datepicker-popper {
+  z-index: 1000;
+}
+
+/* styles.css */
+.custom-timepicker {
+  border:1px solid white
+  /* Your custom styles for the entire time picker component */
+}
+
+.custom-timepicker .react-time-picker-dropdown-icon {
+  fill: grey; /* Icon color */
+}
+
+.custom-timepicker .react-time-picker-dropdown-clock {
+  color: grey; /* Clock color */
+}
+
+.custom-timepicker .react-time-picker-dropdown-clock-selected {
+  color: white; /* Selected time color */
+}
