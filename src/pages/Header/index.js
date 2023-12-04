@@ -131,12 +131,12 @@ function Header() {
                 {isDropdownOpen && (
           <div className="absolute right-0 z-10 w-56 mt-4 origin-top-right bg-white border border-gray-100 rounded-md shadow-lg">
             <div className="p-2 flex flex-col items-center">
-              <a
+              {/* <a
                 href="#"
                 className="block px-4 py-2 text-sm text-gray-500 rounded-lg hover:bg-gray-50 hover:text-gray-700"
               >
                 ReactJS Dropdown 1
-              </a>
+              </a> */}
               <Button
                               className="cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm "
                               color="indigo_A400"

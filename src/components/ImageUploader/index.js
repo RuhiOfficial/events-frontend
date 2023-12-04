@@ -50,6 +50,10 @@ const ImageUploader = ({ onChange }) => {
           .hidden-input {
             display: none;
           }
+          .icon{
+            padding:2px;
+            
+          }
         `}
       </style>
 
@@ -59,7 +63,7 @@ const ImageUploader = ({ onChange }) => {
         ) : (
           <div className="camera-icon">
             {/* Use the FiCamera icon from react-icons */}
-            <FiCamera size={150} color="#ffffff" />
+            <FiCamera size={120} color="#ffffff" className='icon'/>
           </div>
         )}
         <input
