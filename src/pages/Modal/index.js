@@ -1,11 +1,11 @@
 // Modal.js
-import React from 'react';
+import React ,{useState,useEffect} from 'react';
 import * as yup from "yup";
-import { Button, Input, Text } from "components";
+import { Button, Input, Text,SelectBox } from "components";
 import useForm from "hooks/useForm";
-import {postAddVenue } from "service/api";
+import {postAddVenue,getCountry, } from "service/api";
 import {  ToastContainer,toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const Modal = ({ isOpen, onClose }) => {
   
@@ -114,6 +114,8 @@ const Modal = ({ isOpen, onClose }) => {
             website:data?.website,
             currency:data?.currency,
             capacity: data?.capacity,
+            // venue_type: selectedVenueType,
+            // timezone: selectedTimeZoneType,
     
           },
     
@@ -137,6 +139,32 @@ const Modal = ({ isOpen, onClose }) => {
           });
       }
 
+  const [countryType, setCountryType] = useState();
+  const [countryList, setCountryList] = useState([]);
+ 
+  async function fetchCountry() {
+    try {
+      const req = {};
+      const res = await getCountry(req);
+      console.log(res.data.data, "response is");
+
+      setCountryType(res.data.data);
+
+      setCountryList(
+        res.data.data.map((item) => ({
+          label: item.name,
+          value: item.id,
+        }))
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  useEffect(() => {
+    fetchCountry();
+  }, []);
+
   return (
     <div className={`modal ${isOpen ? 'flex' : 'hidden'}`}>  
       <div className="modal-overlay " onClick={onClose}></div>
@@ -144,7 +172,7 @@ const Modal = ({ isOpen, onClose }) => {
         <div className="modal-content bg-white p-4 rounded-lg shadow-md w-full sm:w-1/2 max-h-screen overflow-auto">
           
 
-          {/* {/ Your modal content /} */}
+         
           <div className="flex flex-col font-poppins items-center justify-start mx-auto w-full ">
            
           <div className="flex flex-col font-poppins items-center justify-start mx-auto w-full ">
@@ -183,7 +211,7 @@ const Modal = ({ isOpen, onClose }) => {
                         variant="fill"
                 />
 
-                  {/* {/ Add more input fields as needed /} */}
+                 
                 </div>
                
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
@@ -203,7 +231,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* {/ Add more input fields as needed /} */}
+                 
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -222,27 +250,26 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* {/ Add more input fields as needed /} */}
+                 
                 </div>
                 
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  <Input
-                    name="input"
-                    placeholder="Country"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
-                    
-                    onChange={(e) => {
-                      form.handleChange("country_id", e);
-                    }}
-                    errors={form?.errors?.["country_id"]}
-                    value={form?.values?.["country_id"]}
-                    style={{color:"white"}}
-                    size="md"
-                    variant="fill"
-                  />
-                  {/* {/ Add more input fields as needed /} */}
-                </div>
+                
+                <SelectBox
+                   className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
+                   placeholderClassName="text-gray-600"
+                   isMulti={false}
+                   name="country_id"
+                   options={countryList}
+                   isSearchable={true}
+                   placeholder="Select Country..."
+                   onChange={(selectedOption) => {
+                     form.handleChange("country_id", selectedOption);}}
+                 
+                 
+/>
+                
+               </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
                     name="input"
@@ -259,7 +286,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* {/ Add more input fields as needed /} */}
+                 
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -277,7 +304,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* {/ Add more input fields as needed /} */}
+                 
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -295,7 +322,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* {/ Add more input fields as needed /} */}
+                 
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -313,7 +340,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* {/ Add more input fields as needed /} */}
+                 
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -349,7 +376,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* {/ Add more input fields as needed /} */}
+                 
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -367,7 +394,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* {/ Add more input fields as needed /} */}
+                 
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -385,7 +412,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* {/ Add more input fields as needed /} */}
+                 
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -403,7 +430,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* {/ Add more input fields as needed /} */}
+                
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -421,7 +448,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* {/ Add more input fields as needed /} */}
+                  
                 </div>
                 
 
