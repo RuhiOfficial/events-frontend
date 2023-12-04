@@ -4,7 +4,7 @@
 import React,{useState} from 'react';
 import * as yup from "yup";
 import { Button, Img, Input, Text } from "components";
-import useForm from "hooks/useForm";
+import useForm from 'hooks/useForm';
 import {postAddEvent } from "service/api";
 import {  ToastContainer,toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -83,7 +83,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
       time_to: yup.string().required("Time is required"),
       event_type: yup.string().required("Event type is required"),
       event_organiser: yup.string().required("Event Organiser is required"),
-      featured_image: yup.string().required("Image is required"),
+  
       event_desc: yup.string().required("Description is required"),
       event_status: yup.string().required("Status is required")
 
@@ -112,45 +112,46 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
       );
 
 
-     async function event(data) {
+     async function addEvent(data) {
       console.log("addevent called ==>>")
 
-        const req = {
+    //     const req = {
     
-          data: {
-            venue_id:1,
-            name: data?.name,
-          featured_image: selectedImage,
-          date_from: startDate,
-          date_to:endDate,
-          time_from: startTime,
-          time_to:endTime,
-          event_type: data?.event_type,
-          event_organiser: data?.event_organiser,
-          event_desc: data?.event_desc,
-          facebook_event_url: data?.facebook_event_url,
-          event_status:data?.eve
+    //       data: {
+    //         venue_id:1,
+    //         name: data?.name,
+    //       featured_image: selectedImage,
+    //       date_from: startDate,
+    //       date_to:endDate,
+    //       time_from: startTime,
+    //       time_to:endTime,
+    //       event_type: data?.event_type,
+    //       event_organiser: data?.event_organiser,
+    //       event_desc: data?.event_desc,
+    //       facebook_event_url: data?.facebook_event_url,
+    //       event_status:data?.event_status
     
-          },
+    //       },
     
-        };
-    console.log(req,"req is ======>>>")
-     await   postAddEvent(req)
-          .then((res) => {
-            console.log(res)
+    //     };
+    // console.log(req,"req is ======>>>")
+    
+    //  await   postAddEvent(req)
+    //       .then((res) => {
+    //         console.log(res)
             
-           // // setSignupUser(res?.data);
+    //        // // setSignupUser(res?.data);
             
-            toast.success("Event is added Succesfully!");
-            setTimeout(() => {
-              window.location.href="/"
-            }, 3000);
+    //         toast.success("Event is added Succesfully!");
+    //         setTimeout(() => {
+    //           window.location.href="/"
+    //         }, 3000);
           
-          })
-          .catch((err) => {
-            console.error(err);
-            toast.error("Something Went Wrong!");
-          });
+    //       })
+    //       .catch((err) => {
+    //         console.error(err);
+    //         toast.error("Something Went Wrong!");
+    //       });
       }
 
    
@@ -366,7 +367,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     variant="gradient"
                     color="blue_600_indigo_900"
                     onClick={() => {
-                      form.handleSubmit(event);
+                      form.handleSubmit(addEvent);
                     }}
                   >
                     Add 

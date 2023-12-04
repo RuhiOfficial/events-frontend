@@ -11,7 +11,7 @@ const API_URLS = {
   POST_ADD_EVENT: `${COMMON_URL}event`,
   GET_TIMEZONE: `${COMMON_URL}timezone`,
   GET_COUNTRIES: `${COMMON_URL}list_countries`,
-  GET_CITY: `${COMMON_URL}list_cities`,
+  POST_CITY: `${COMMON_URL}list_cities`,
 };
 
 export const getVenueType = (payload) =>
@@ -24,7 +24,10 @@ export const getVenueType = (payload) =>
   apis.get(API_URLS.GET_COUNTRIES, payload);
 
   export const getCity = (payload) =>
-  apis.get(API_URLS.GET_CITY, payload);
+  apis.post(API_URLS.POST_CITY, {
+    ...payload,
+    headers: { "Content-type": "application/json", ...payload?.headers },
+  });
 
   export const getStates = (payload) =>
   apis.post(API_URLS.POST_STATE, {

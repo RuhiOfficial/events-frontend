@@ -12,7 +12,7 @@ import "../Custom.css"
 const Modal = ({ isOpen, onClose }) => {
   
  const cid= localStorage.getItem("LoginId");
- console.log(cid,"customer id is ===>>>")
+//  console.log(cid,"customer id is ===>>>")
  const [stateList, setStateList] = useState([]);
   const [selectedState, setSelectedState] = useState(null);
   const [state, setState] = React.useState();
@@ -36,7 +36,7 @@ const Modal = ({ isOpen, onClose }) => {
       city_id: yup.string().required("City is required"),
       zipcode: yup.string().required("Zipcode is required"),
       address: yup.string().required("Address is required"),
-      venue_type: yup.string().required("Venue Type is required"),
+      // venue_type: yup.string().required("Venue Type is required"),
       website: yup.string().required("Website is required"),
       currency: yup.string().required("Currency is required"),
       capacity: yup.string().required("Capacity is required")
@@ -72,7 +72,7 @@ const Modal = ({ isOpen, onClose }) => {
 
      async function addvenue(data) {
 
-      console.log(data);
+      // console.log(data,"data from modal is ");
         const req = {
     
           data: {
@@ -81,8 +81,8 @@ const Modal = ({ isOpen, onClose }) => {
             phone: data?.phone,
             cid: cid,
             country_id: data?.country_id,
-            state_id:data?.state_id,
-            city_id:data?.city_id,
+            state_id:2,
+            city_id:1,
             zipcode: data?.zipcode,
             address: data?.address,
             tax: data?.tax,
@@ -90,16 +90,16 @@ const Modal = ({ isOpen, onClose }) => {
             website:data?.website,
             currency:data?.currency,
             capacity: data?.capacity,
-            venue_type: selectedVenueType,
-            timezone: selectedTimeZoneType,
+            venue_type: "club",
+            timezone: "america"
     
           },
     
         };
-    console.log(req,"req is ======>>>")
+    // console.log(req,"req is ======>>>")
      await   postAddVenue(req)
           .then((res) => {
-            console.log(res)
+            // console.log(res)
             
         
             
@@ -114,198 +114,211 @@ const Modal = ({ isOpen, onClose }) => {
             toast.error("Something Went Wrong!");
           });
       }
-      const [venueTypeList, setVenueTypeList] = useState([]);
-      const [selectedVenueType, setSelectedVenueType] = useState(null);
-      const [venueType, setVenueType] = React.useState();
+      // const [venueTypeList, setVenueTypeList] = useState([]);
+      // const [selectedVenueType, setSelectedVenueType] = useState(null);
+      // const [venueType, setVenueType] = React.useState();
 
-      async function select() {
-        const req = {};
+      // async function select() {
+      //   const req = {};
       
-        await getVenueType(req)
-          .then((res) => {
-            console.log(res, "response is");
-            setVenueType(res.data.data);
-            console.log(venueType, "id ==>>>");
+      //   await getVenueType(req)
+      //     .then((res) => {
+      //       console.log(res, "response is");
+      //       setVenueType(res.data.data);
+      //       console.log(venueType, "id ==>>>");
       
-            let options;
+      //       let options;
       
-            if (res.data.data.length === 1) {
+      //       if (res.data.data.length === 1) {
              
-              options = [
-                {
-                  label: res.data.data[0].name,
-                  value: res.data.data[0].id,
-                },
-              ];
-            } else {
+      //         options = [
+      //           {
+      //             label: res.data.data[0].name,
+      //             value: res.data.data[0].id,
+      //           },
+      //         ];
+      //       } else {
              
-              options = res.data.data.map((item) => ({
-                label: item.name,
-                value: item.id,
-              }));
-            }
+      //         options = res.data.data.map((item) => ({
+      //           label: item.name,
+      //           value: item.id,
+      //         }));
+      //       }
       
-            setVenueTypeList(options);
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      }
+      //       setVenueTypeList(options);
+      //     })
+      //     .catch((err) => {
+      //       console.error(err);
+      //     });
+      // }
       
     
-    useEffect(()=>{
-      select();
+    // useEffect(()=>{
+    //   select();
     
-    },[])
+    // },[])
     
-     console.log(venueTypeList,"type of venue ")
+    //  console.log(venueTypeList,"type of venue ")
     
    
-    const handleVenueTypeChange = (selectedOption) => {
+    // const handleVenueTypeChange = (selectedOption) => {
     
-      setSelectedVenueType(selectedOption);
-    };
+    //   setSelectedVenueType(selectedOption);
+    // };
      
-  const [timezoneType, setTimezoneType] = React.useState();
-  const [timeZoneList, setTimeZoneList] = useState([]);
-  const [selectedTimeZoneType, setSelectTimeZoneType] = useState(null);
+  // const [timezoneType, setTimezoneType] = React.useState();
+  // const [timeZoneList, setTimeZoneList] = useState([]);
+  // const [selectedTimeZoneType, setSelectTimeZoneType] = useState(null);
 
-  async function fetchTimezones() {
-    try {
-      const req = {};
-      const res = await getTimezone(req);
-      console.log(res.data.data, "response is");
+  // async function fetchTimezones() {
+  //   try {
+  //     const req = {};
+  //     const res = await getTimezone(req);
+  //     console.log(res.data.data, "response is");
 
-      setTimezoneType(res.data.data);
+  //     setTimezoneType(res.data.data);
 
-      let options;
+  //     let options;
 
-      if (res.data.data.length === 1) {
-        options = [
-          {
-            label: res.data.data[0].name,
-            value: res.data.data[0].id,
-          },
-        ];
-      } else {
-        options = res.data.data.map((item) => ({
-          label: item.name,
-          value: item.id,
-        }));
-      }
+  //     if (res.data.data.length === 1) {
+  //       options = [
+  //         {
+  //           label: res.data.data[0].name,
+  //           value: res.data.data[0].id,
+  //         },
+  //       ];
+  //     } else {
+  //       options = res.data.data.map((item) => ({
+  //         label: item.name,
+  //         value: item.id,
+  //       }));
+  //     }
 
-      setTimeZoneList(options);
-    } catch (err) {
-      console.error(err);
-    }
-  }
-  console.log(timeZoneList,"type of timezone")
+  //     setTimeZoneList(options);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
+  // console.log(timeZoneList,"type of timezone")
  
-  useEffect(() => {
+  // useEffect(() => {
     
-    fetchTimezones();
-  }, []);
+  //   // fetchTimezones();
+  // }, []);
 
  
-  const handleTimeZoneTypeChange = (selectedOption) => {
-    // Update the state with the selected value
-    setSelectTimeZoneType(selectedOption);
-  };
-  const [countryType, setCountryType] = useState();
-  const [countryList, setCountryList] = useState([]);
+  // const handleTimeZoneTypeChange = (selectedOption) => {
+  //   // Update the state with the selected value
+  //   setSelectTimeZoneType(selectedOption);
+  // };
+  // const [countryType, setCountryType] = useState();
+  // const [countryList, setCountryList] = useState([]);
  
 
-  async function fetchCountry() {
-    try {
-      const req = {};
-      const res = await getCountry(req);
-      console.log(res.data.data, "response is");
+  // async function fetchCountry() {
+  //   try {
+  //     const req = {};
+  //     const res = await getCountry(req);
+  //     console.log(res.data.data, "response is");
 
-      setCountryType(res.data.data);
+  //     setCountryType(res.data.data);
 
-      setCountryList(
-        res.data.data.map((item) => ({
-          label: item.name,
-          value: item.id,
-        }))
-      );
-    } catch (err) {
-      console.error(err);
-    }
-  }
+  //     setCountryList(
+  //       res.data.data.map((item) => ({
+  //         label: item.name,
+  //         value: item.id,
+  //       }))
+  //     );
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
 
-  useEffect(() => {
-    fetchCountry();
-  }, []);
-  const [cityList, setCityList] = useState([]);
-  const [selectedCity, setSelectedCity] = useState(null);
+  // useEffect(() => {
+  //   fetchCountry();
+  // }, []);
+  // const [cityList, setCityList] = useState([]);
+  // const [selectedCity, setSelectedCity] = useState(null);
 
-  async function fetchCities() {
-    try {
-      const req = {};
-      const res = await getCity(req);
-      console.log(res.data.data, "city response is");
+  // async function fetchCities() {
+  //   try {
+  //     const req = {};
+  //     const res = await getCity(req);
+  //     console.log(res.data.data, "city response is");
 
-      setCityList(
-        res.data.data.map((item) => ({
-          label: item.name,
-          value: item.id,
-        }))
-      );
-    } catch (err) {
-      console.error(err);
-    }
-  }
+  //     setCityList(
+  //       res.data.data.map((item) => ({
+  //         label: item.name,
+  //         value: item.id,
+  //       }))
+  //     );
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
 
-  useEffect(() => {
-    fetchCities();
-  }, []);
+  // useEffect(() => {
+  //   // fetchCities();
+  //   // states();
+  // }, []);
 
 
-      useEffect(()=>{
-        states();
       
-      },[])
 
-      async function states() {
-        const req = {};
+      // async function states() {
+      //   const req = {};
       
-        await getStates(req)
-          .then((res) => {
-            console.log(res, "response is state");
-            setState(res.data.data);
+      //   await getStates(req)
+      //     .then((res) => {
+      //       console.log(res, "response is state");
+      //       setState(res.data.data);
             
       
-            let options;
+      //       let options;
       
-            if (res.data.data.length === 1) {
+      //       if (res.data.data.length === 1) {
              
-              options = [
-                {
-                  label: res.data.data[0].name,
-                  value: res.data.data[0].id,
-                },
-              ];
-            } else {
-              // If there are multiple items, map the array to options
-              options = res.data.data.map((item) => ({
-                label: item.name,
-                value: item.id,
-              }));
-            }
+      //         options = [
+      //           {
+      //             label: res.data.data[0].name,
+      //             value: res.data.data[0].id,
+      //           },
+      //         ];
+      //       } else {
+      //         // If there are multiple items, map the array to options
+      //         options = res.data.data.map((item) => ({
+      //           label: item.name,
+      //           value: item.id,
+      //         }));
+      //       }
       
-            setStateList(options);
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      }
+      //       setStateList(options);
+      //     })
+      //     .catch((err) => {
+      //       console.error(err);
+      //     });
+      // }
 
       const handleStateChange = (selectedOption) => {
         // Update the state with the selected value
         setSelectedState(selectedOption);
       };
 
+
+
+      const submitVenueForm = () => {
+        
+
+        try {
+          // console.log('Clicked and Submitted');
+          form.handleSubmit((data) => {
+            console.log('Form submitted with data:', data);
+            // You can perform further actions with the form data here
+          });
+        } catch (error) {
+          console.error('Form submission error:', error);
+        }
+      };
   return (
     <div className={`modal ${isOpen ? 'flex' : 'hidden'}`}>  
       <div className="modal-overlay " onClick={onClose}></div>
@@ -394,24 +407,8 @@ const Modal = ({ isOpen, onClose }) => {
                   {/* {/ Add more input fields as needed /} */}
                 </div>
                 
-                <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                
-                 <SelectBox
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
-                    placeholderClassName="text-gray-600"
-                    isMulti={false}
-                    name="country_id"
-                    options={countryList}
-                    isSearchable={true}
-                    placeholder="Select Country..."
-                    onChange={(selectedOption) => {
-                      form.handleChange("country_id", selectedOption);}}
-                  
-                  
-/>
-                  {/* {/ Add more input fields as needed /} */}
-                </div>
-                <div className="flex flex-col items-start justify-start mt-[38px] w-full">
+               
+                {/* <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                 <SelectBox
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
                     placeholderClassName="text-gray-600"
@@ -424,7 +421,7 @@ const Modal = ({ isOpen, onClose }) => {
                    onChange={handleStateChange}
                   style={{ color: 'text-white-A700' }} 
 /> 
-                </div>
+                </div> */}
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   {/* <Input
                     name="input"
@@ -441,26 +438,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="fill"
                   /> */}
-                           <SelectBox
-          className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
-          placeholderClassName="text-gray-600"
-          isMulti={false}
-            name="city_id"
-            options={cityList}
-            isSearchable={true}
-            placeholder="Select City..."
-            onChange={(selectedOption) => {
-              form.handleChange("city_id", selectedOption);
-              setSelectedCity(selectedOption);
-            }}
-            value={selectedCity} 
-                  
-                  
-/>
-
-
-
-
+                       
 
 
 
@@ -531,39 +509,8 @@ const Modal = ({ isOpen, onClose }) => {
                   />
                  
                 </div>
-                <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  <SelectBox
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
-                    placeholderClassName="text-gray-600"
-                  
-                  isMulti={false}
-                  name="select"
-                  options={venueTypeList}
-                  isSearchable={true}
-                  placeholder="Select Venue Type..."
-                  onChange={handleVenueTypeChange}
-                  style={{ color: 'text-white-A700' }} 
-/>
-
-                  {/* {/ Add more input fields as needed /} */}
-                </div>
-                <div className="flex flex-col items-start justify-start mt-[38px] w-full ">
-                  
-                    <SelectBox
-                      className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
-                      placeholderClassName="text-gray-600"
-                      isMulti={false}
-                      name="div"
-                      options={timeZoneList}
-                      isSearchable={true}
-                      placeholder="Select TimeZone..."
-                      onChange={handleTimeZoneTypeChange}
-                      style={{ color: 'text-white-A700' }} 
-                      
-
-                    />
-                  {/* {/ Add more input fields as needed /} */}
-                </div>
+                
+              
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
                     name="input"
@@ -627,9 +574,7 @@ const Modal = ({ isOpen, onClose }) => {
                     size="md"
                     variant="gradient"
                     color="blue_600_indigo_900"
-                    onClick={() => {
-                      form.handleSubmit(addvenue);
-                    }}
+                    onClick={submitVenueForm}
                   >
                     Add 
                   </Button>
