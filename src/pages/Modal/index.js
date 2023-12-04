@@ -1,7 +1,7 @@
 // Modal.js
 import React ,{useState,useEffect} from 'react';
 import * as yup from "yup";
-import { Button, Input, Text ,SelectBox} from "components";
+
 import { Button, Input, Text,SelectBox ,Img} from "components";
 import useForm from "hooks/useForm";
 import {getStates, postAddVenue } from "service/api";
