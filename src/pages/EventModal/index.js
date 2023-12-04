@@ -1,61 +1,67 @@
-
-
 // Modal.js
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import * as yup from "yup";
-import { Button, Img, Input, Text } from "components";
+import { Button, Input, Text } from "components";
 import useForm from "hooks/useForm";
-import {postAddVenue } from "service/api";
+import {postAddEvent, postAddVenue } from "service/api";
 import {  ToastContainer,toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import DateRangePicker from 'components/DateRangePicker';
 
-const EventModal = ({ isEventOpen, onEventClose }) => {
+const EventModal = ({ isEventOpen, onEventClose } ) => {
+    const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+
+  const handleDateChange = (start, end) => {
+    setStartDate(start);
+    setEndDate(end);
+  };
   
  const cid= localStorage.getItem("LoginId");
  console.log(cid,"customer id is ===>>>")
 
   /////////// Validations ////////////////
       const formValidationSchema = yup.object().shape({
-      name: yup.string().required("Name is required"),
-      email: yup
-      .string()
-      .required("Email is required")
-      .matches(
-      /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
-      "Email is not in correct format",
-      ),
-      phone: yup
-      .string()
-      .required("Contact Number is required")
-      .matches(/^\d{10}$/, "Contact Number must be 10 digits"),
-      country_id: yup.string().required("Country No. is required"),
-      state_id: yup.string().required("State is required"),
-      city_id: yup.string().required("City is required"),
-      zipcode: yup.string().required("Zipcode is required"),
-      address: yup.string().required("Address is required"),
-      venue_type: yup.string().required("Venue Type is required"),
-      website: yup.string().required("Website is required"),
-      currency: yup.string().required("Currency is required"),
-      capacity: yup.string().required("Capacity is required")
+    //   name: yup.string().required("Name is required"),
+    //   email: yup
+    //   .string()
+    //   .required("Email is required")
+    //   .matches(
+    //   /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+    //   "Email is not in correct format",
+    //   ),
+    //   phone: yup
+    //   .string()
+    //   .required("Contact Number is required")
+    //   .matches(/^\d{10}$/, "Contact Number must be 10 digits"),
+    //   country_id: yup.string().required("Country No. is required"),
+    //   state_id: yup.string().required("State is required"),
+    //   city_id: yup.string().required("City is required"),
+    //   zipcode: yup.string().required("Zipcode is required"),
+    //   address: yup.string().required("Address is required"),
+    //   venue_type: yup.string().required("Venue Type is required"),
+    //   website: yup.string().required("Website is required"),
+    //   currency: yup.string().required("Currency is required"),
+    //   capacity: yup.string().required("Capacity is required")
 
       });
 
       const form = useForm(
         {
-          name: "",
-          email: "",
-          phone: "",
-          country_id:"",
-          state_id: "",
-          city_id:"",
-          zipcode: "",
-          address: "",
-          tax: "",
-          venue_type: "",
-          timezone:"",
-          website: "",
-          currency:"",
-          capacity: "",
+            
+        
+                name: "",
+                featured_image: "",
+                date_from: "",
+                date_to:"",
+                time_from: "",
+                time_to:"",
+                event_type: "",
+                event_organiser: "",
+                event_desc: "",
+                facebook_event_url: "",
+                event_status:"",
+              
         },
         {
           validate: true,
@@ -64,64 +70,33 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
         },
       );
 
-      // const formInitialState = {
-      //   name: "",
-      //   email: "",
-      //   phone: "",
-      //   country_id: "",
-      //   state_id: "",
-      //   city_id: "",
-      //   zipcode: "",
-      //   address: "",
-      //   tax: "",
-      //   venue_type: "",
-      //   timezone: "",
-      //   website: "",
-      //   currency: "",
-      //   capacity: "",
-      // };
-      // const form = useForm(
-      //   { ...formInitialState },
-      //   {
-      //     validate: true,
-      //     validateSchema: formValidationSchema,
-      //     validationOnChange: true,
-      //   }
-      // );
-
-      // const resetForm = () => {
-      //   form.setValues({ ...formInitialState });
-      //   form.setErrors({})
-      // };
-
+     
 
      async function addvenue(data) {
 
       console.log(data);
+      console.log("addevent called ==>>")
+
         const req = {
     
           data: {
+            venue_id:1,
             name: data?.name,
-            email: data?.email,
-            phone: data?.phone,
-            cid: cid,
-            country_id: data?.country_id,
-            state_id:data?.state_id,
-            city_id:data?.city_id,
-            zipcode: data?.zipcode,
-            address: data?.address,
-            tax: data?.tax,
-            venue_type: data?.venue_type,
-            timezone: data?.timezone,
-            website:data?.website,
-            currency:data?.currency,
-            capacity: data?.capacity,
+        //   featured_image: selectedImage,
+          date_from: startDate,
+          date_to:endDate,
+        //   time_from: startTime,
+        //   time_to:endTime,
+        //   event_type: data?.event_type,
+        //   event_organiser: data?.event_organiser,
+        //   event_desc: data?.event_desc,
+        //   facebook_event_url: data?.facebook_event_url,
+        //   event_status:data?.eve
     
           },
-    
         };
     console.log(req,"req is ======>>>")
-     await   postAddVenue(req)
+     await   postAddEvent(req)
           .then((res) => {
             console.log(res)
             
@@ -146,7 +121,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
         <div className="modal-content bg-white p-4 rounded-lg shadow-md w-full sm:w-1/2 max-h-screen overflow-auto">
           
 
-          {/* Your modal content */}
+       
           <div className="flex flex-col font-poppins items-center justify-start mx-auto w-full ">
            
           <div className="flex flex-col font-poppins items-center justify-start mx-auto w-full ">
@@ -158,10 +133,9 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     className="md:text-3xl sm:text-[28px] text-[32px] text-white-A700 w-auto"
                     size="txtPoppins"
                   >
-                    Add Event
+                    Add Venue
                   </Text>
                 </div>
-            
                 <span className="modal-close" style={{color:"white",fontSize:"xx-large"}}  onClick={onEventClose}>
             &times;
           </span>
@@ -171,10 +145,10 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                 
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
-                        name="input"
-                        placeholder="Name"
+                        name="name"
+                        placeholder=" Event Name"
                         className="capitalize font-roboto p-0  placeholder-white-900 text-base text-left w-full"
-                        wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                        wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                         style={{color:"white"}}
                         onChange={(e) => {
                           form.handleChange("name", e);
@@ -188,7 +162,48 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
 
                   {/* Add more input fields as needed */}
                 </div>
-               
+
+
+                <div className="flex flex-row items-start justify-start mt-[38px] w-full">
+
+{/* <ImageUploader onChange={handleImageSelect} /> */}
+
+<div >
+
+
+ <div className="flex flex-col items-start justify-start w-full
+ border-b border-white-700_99 border-solid ">
+
+   <DateRangePicker startDate={startDate} endDate={endDate} onChange={handleDateChange}
+    className=" border-b border-white-700_99 border-solid w-full bg-[#292e34] " />
+   
+
+ </div>
+ 
+ {/* <div className="flex flex-row justify-between mt-[38px] w-full border-b border-white-700_99 border-solid"> */}
+ {/* <TimePicker className="custom-timepicker" style={{border:"1px solid white"}}
+ 
+ placeholder="Time From" 
+ onTimeChange
+ =
+ {
+ handleTimeChange
+ }
+ />
+
+ <TimePicker
+ placeholder="Time To"
+ onTimeChange
+ =
+ {
+ handleTimeToChange
+ }
+ /> */}
+
+ {/* </div> */}
+ </div>
+ </div>
+{/*                
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
                     name="input"
@@ -206,7 +221,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+            
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -225,7 +240,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+             
                 </div>
                 
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
@@ -244,7 +259,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+              
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -262,7 +277,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+                 
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -280,7 +295,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+                
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -298,7 +313,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+                 
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -316,7 +331,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+                 
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -334,7 +349,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+                 
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -352,7 +367,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+              
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -370,7 +385,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+             
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -388,7 +403,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+             
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -406,7 +421,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
+              
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -424,9 +439,9 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                     size="md"
                     variant="fill"
                   />
-                  {/* Add more input fields as needed */}
-                </div>
                 
+                </div>
+                 */}
 
                 <div className="flex flex-col items-start justify-start w-full mt-20">
                   <Button
