@@ -10,6 +10,8 @@ import { useNavigate } from "react-router-dom";
 import "../Custom.css"
 
 const Modal = ({ isOpen, onClose }) => {
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [countryList, setCountryList] = useState([]);
   
  const cid= localStorage.getItem("LoginId");
  console.log(cid,"customer id is ===>>>")
@@ -211,101 +213,53 @@ const Modal = ({ isOpen, onClose }) => {
     // Update the state with the selected value
     setSelectTimeZoneType(selectedOption);
   };
-  const [countryType, setCountryType] = useState();
-  const [countryList, setCountryList] = useState([]);
+  
  
 
-  async function fetchCountry() {
-    try {
-      const req = {};
-      const res = await getCountry(req);
-      console.log(res.data.data, "response is");
+ 
+/////////// DropDowns ///////////
 
-      setCountryType(res.data.data);
+///////////Country///////////////
 
-      setCountryList(
-        res.data.data.map((item) => ({
+const handleCountryChange = (selectedOption) => {
+
+  setSelectedCountry(selectedOption);
+  // states(selectedOption);
+};
+
+async function country() {
+  const req = {};
+
+  await getCountry(req)
+    .then((res) => {
+      console.log(res, "response is");
+      
+
+      let options;
+
+      if (res.data.data.length === 1) {
+        
+        options = [
+          {
+            label: res.data.data[0].name,
+            value: res.data.data[0].id,
+          },
+        ];
+      } else {
+       
+        options = res.data.data.map((item) => ({
           label: item.name,
           value: item.id,
-        }))
-      );
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  useEffect(() => {
-    fetchCountry();
-  }, []);
-  const [cityList, setCityList] = useState([]);
-  const [selectedCity, setSelectedCity] = useState(null);
-
-  async function fetchCities() {
-    try {
-      const req = {};
-      const res = await getCity(req);
-      console.log(res.data.data, "city response is");
-
-      setCityList(
-        res.data.data.map((item) => ({
-          label: item.name,
-          value: item.id,
-        }))
-      );
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  useEffect(() => {
-    fetchCities();
-  }, []);
-
-
-      useEffect(()=>{
-        states();
-      
-      },[])
-
-      async function states() {
-        const req = {};
-      
-        await getStates(req)
-          .then((res) => {
-            console.log(res, "response is state");
-            setState(res.data.data);
-            
-      
-            let options;
-      
-            if (res.data.data.length === 1) {
-             
-              options = [
-                {
-                  label: res.data.data[0].name,
-                  value: res.data.data[0].id,
-                },
-              ];
-            } else {
-              // If there are multiple items, map the array to options
-              options = res.data.data.map((item) => ({
-                label: item.name,
-                value: item.id,
-              }));
-            }
-      
-            setStateList(options);
-          })
-          .catch((err) => {
-            console.error(err);
-          });
+        }));
       }
 
-      const handleStateChange = (selectedOption) => {
-        // Update the state with the selected value
-        setSelectedState(selectedOption);
-      };
-
+      setCountryList(options);
+      
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+}
   return (
     <div className={`modal ${isOpen ? 'flex' : 'hidden'}`}>  
       <div className="modal-overlay " onClick={onClose}></div>
