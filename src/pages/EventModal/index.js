@@ -9,11 +9,11 @@ import {postAddEvent } from "service/api";
 import {  ToastContainer,toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import DateRangePicker from 'components/DateRangePicker';
-import
-TimePicker
-from
-"@ashwinthomas/react-time-picker-dropdown"
-;
+// import
+// TimePicker
+// from
+// "@ashwinthomas/react-time-picker-dropdown"
+// ;
 import "../../pages/Custom.css"
 import ImageUploader from 'components/ImageUploader'
 
@@ -223,7 +223,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                
                 </div>
                 
-                <div className="flex flex-row justify-between mt-[38px] w-full border-b border-white-700_99 border-solid">
+                {/* <div className="flex flex-row justify-between mt-[38px] w-full border-b border-white-700_99 border-solid">
                 <TimePicker className="custom-timepicker" style={{border:"1px solid white"}}
                 
                 placeholder="Time From" 
@@ -243,7 +243,7 @@ const EventModal = ({ isEventOpen, onEventClose }) => {
                 }
                 />
 
-                </div>
+                </div> */}
                 </div>
                 </div>
 
