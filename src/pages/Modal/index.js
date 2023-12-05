@@ -10,8 +10,6 @@ import { useNavigate } from "react-router-dom";
 import "../Custom.css"
 
 const Modal = ({ isOpen, onClose }) => {
-  const [selectedCountry, setSelectedCountry] = useState(null);
-  const [countryList, setCountryList] = useState([]);
   
  const cid= localStorage.getItem("LoginId");
 //  console.log(cid,"customer id is ===>>>")
