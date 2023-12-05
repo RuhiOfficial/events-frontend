@@ -88,22 +88,18 @@ z-index: 1000;
 
 /* styles.css */
 .custom-timepicker {
-border:1px solid white
-/* Your custom styles for the entire time picker component */
+  border:1px solid white
+  /* Your custom styles for the entire time picker component */
 }
 
 .custom-timepicker .react-time-picker-dropdown-icon {
-fill: grey; /* Icon color */
+  fill: grey; /* Icon color */
 }
 
 .custom-timepicker .react-time-picker-dropdown-clock {
-color: grey; /* Clock color */
+  color: grey; /* Clock color */
 }
 
 .custom-timepicker .react-time-picker-dropdown-clock-selected {
-color: white; /* Selected time color */
-}
-
-input.tp_inputBox{
-  color: white !important; /* Selected time color */
+  color: white; /* Selected time color */
 }
