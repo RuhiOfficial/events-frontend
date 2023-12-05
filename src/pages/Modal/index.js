@@ -62,35 +62,7 @@ const Modal = ({ isOpen, onClose }) => {
         },
       );
 
-      // const formInitialState = {
-      //   name: "",
-      //   email: "",
-      //   phone: "",
-      //   country_id: "",
-      //   state_id: "",
-      //   city_id: "",
-      //   zipcode: "",
-      //   address: "",
-      //   tax: "",
-      //   venue_type: "",
-      //   timezone: "",
-      //   website: "",
-      //   currency: "",
-      //   capacity: "",
-      // };
-      // const form = useForm(
-      //   { ...formInitialState },
-      //   {
-      //     validate: true,
-      //     validateSchema: formValidationSchema,
-      //     validationOnChange: true,
-      //   }
-      // );
-
-      // const resetForm = () => {
-      //   form.setValues({ ...formInitialState });
-      //   form.setErrors({})
-      // };
+     
 
 
      async function addvenue(data) {
@@ -198,7 +170,7 @@ const Modal = ({ isOpen, onClose }) => {
                   <Input
                         name="input"
                         placeholder="Name"
-                        className="capitalize font-roboto p-0  placeholder-white-900 text-base text-left w-full"
+                        className="capitalize font-roboto p-0  placeholder-white-900 text-base text-left w-full h-[50px] pl-4 "
                         wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
                         style={{color:"white"}}
                         onChange={(e) => {
@@ -218,7 +190,7 @@ const Modal = ({ isOpen, onClose }) => {
                   <Input
                     name="input"
                     placeholder="Email"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
+                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
                     wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
                     type="email"
                     onChange={(e) => {
@@ -237,7 +209,7 @@ const Modal = ({ isOpen, onClose }) => {
                   <Input
                     name="input"
                     placeholder="Contact No"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
+                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
                     wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
                     type="tel"
                     onChange={(e) => {
@@ -274,7 +246,7 @@ const Modal = ({ isOpen, onClose }) => {
                   <Input
                     name="input"
                     placeholder="State"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
+                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
                     wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
@@ -292,7 +264,7 @@ const Modal = ({ isOpen, onClose }) => {
                   <Input
                     name="input"
                     placeholder="City"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
+                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
                     wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
@@ -310,7 +282,7 @@ const Modal = ({ isOpen, onClose }) => {
                   <Input
                     name="input"
                     placeholder="Zipcode"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
+                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
                     wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
@@ -328,7 +300,7 @@ const Modal = ({ isOpen, onClose }) => {
                   <Input
                     name="input"
                     placeholder="Address"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
+                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
                     wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
@@ -346,7 +318,7 @@ const Modal = ({ isOpen, onClose }) => {
                   <Input
                     name="input"
                     placeholder="Tax"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
+                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
                     wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
@@ -364,7 +336,7 @@ const Modal = ({ isOpen, onClose }) => {
                   <Input
                     name="input"
                     placeholder="Venue Type"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full "
+                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
                     wrapClassName=" common-pointer border border-white-700_99 border-solid w-full bg-[#292e34] "
                     
                     onChange={(e) => {
@@ -382,7 +354,7 @@ const Modal = ({ isOpen, onClose }) => {
                   <Input
                     name="input"
                     placeholder="Timezone"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
+                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
                     wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
@@ -400,7 +372,7 @@ const Modal = ({ isOpen, onClose }) => {
                   <Input
                     name="input"
                     placeholder="Website"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
+                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
                     wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
@@ -418,7 +390,7 @@ const Modal = ({ isOpen, onClose }) => {
                   <Input
                     name="input"
                     placeholder="Currency"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
+                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
                     wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
@@ -436,7 +408,7 @@ const Modal = ({ isOpen, onClose }) => {
                   <Input
                     name="input"
                     placeholder="Capacity"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
+                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
                     wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {

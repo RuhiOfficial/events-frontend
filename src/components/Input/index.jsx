@@ -13,7 +13,7 @@ const shapes = { round: "rounded-[10px]" };
 const sizes = {
   xs: "pb-[35px] pt-px px-px",
   sm: "p-0.5",
-  md: "pb-[17px] pt-[11px] px-[11px]",
+  md: "pb-[1px] pt-[1px] px-[1px]",
 };
 
 const Input = React.forwardRef(

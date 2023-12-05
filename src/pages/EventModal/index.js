@@ -7,42 +7,105 @@ import {postAddEvent, postAddVenue } from "service/api";
 import {  ToastContainer,toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import DateRangePicker from 'components/DateRangePicker';
+import
+TimePicker
+from
+"@ashwinthomas/react-time-picker-dropdown"
+;
+import ImageUploader from 'components/ImageUploader'
 
 const EventModal = ({ isEventOpen, onEventClose } ) => {
     const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [startTime, setStartTime] = useState(new Date());
+  const [endTime, setEndTime] = useState(new Date());
+  const [selectedImage, setSelectedImage] = useState(null);
+  const handleImageSelect = (imageUrl) => {
+    // setSelectedImage(imageUrl);
+  
+    // Convert data URL to Blob
+    const blob = dataURLtoBlob(imageUrl);
+  
+    // Convert Blob to a readable URL
+    const imageUrlReadable = URL.createObjectURL(blob);
+    setSelectedImage(imageUrlReadable)
+  
+    
+  };
+  
+  // Function to convert data URL to Blob
+  function dataURLtoBlob(dataURL) {
+    const arr = dataURL.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+  
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+  
+    return new Blob([u8arr], { type: mime });
+  }
 
   const handleDateChange = (start, end) => {
     setStartDate(start);
     setEndDate(end);
   };
+  const handleTimeChange = (start) => {
+    setStartTime(start);
+    
+  };
+  const handleTimeToChange = (end) => {
+    setEndTime(end);
+    
+  };
+
   
  const cid= localStorage.getItem("LoginId");
  console.log(cid,"customer id is ===>>>")
 
   /////////// Validations ////////////////
       const formValidationSchema = yup.object().shape({
-    //   name: yup.string().required("Name is required"),
-    //   email: yup
+      name: yup.string().required("Name is required"),
+    
+    //   date_from: yup
     //   .string()
-    //   .required("Email is required")
-    //   .matches(
-    //   /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
-    //   "Email is not in correct format",
+    //   .required("Date is required")
+    //   .test(
+    //     "isValidDate",
+    //     "Invalid date format",
+    //     (value) => !isNaN(Date.parse(value))
     //   ),
-    //   phone: yup
+    // date_to: yup
     //   .string()
-    //   .required("Contact Number is required")
-    //   .matches(/^\d{10}$/, "Contact Number must be 10 digits"),
-    //   country_id: yup.string().required("Country No. is required"),
-    //   state_id: yup.string().required("State is required"),
-    //   city_id: yup.string().required("City is required"),
-    //   zipcode: yup.string().required("Zipcode is required"),
-    //   address: yup.string().required("Address is required"),
-    //   venue_type: yup.string().required("Venue Type is required"),
-    //   website: yup.string().required("Website is required"),
-    //   currency: yup.string().required("Currency is required"),
-    //   capacity: yup.string().required("Capacity is required")
+    //   .required("Date is required")
+    //   .test(
+    //     "isValidDate",
+    //     "Invalid date format",
+    //     (value) => !isNaN(Date.parse(value))
+    //   ),
+    // time_from: yup
+    //   .string()
+    //   .required("Time is required")
+    //   .test(
+    //     "isValidTime",
+    //     "Invalid time format",
+    //     (value) => !isNaN(Date.parse(`2000-01-01T${value}`))
+    //   ),
+    // time_to: yup
+    //   .string()
+    //   .required("Time is required")
+    //   .test(
+    //     "isValidTime",
+    //     "Invalid time format",
+    //     (value) => !isNaN(Date.parse(`2000-01-01T${value}`))
+    //   ),
+    event_type: yup.string().required("Event type is required"),
+    event_organiser: yup.string().required("Event Organiser is required"),
+    featured_image: yup.mixed().required("Image is required"),
+    event_desc: yup.string().required("Description is required"),
+    event_status: yup.string().required("Status is required"),
 
       });
 
@@ -82,16 +145,16 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
           data: {
             venue_id:1,
             name: data?.name,
-        //   featured_image: selectedImage,
+         featured_image: selectedImage,
           date_from: startDate,
           date_to:endDate,
-        //   time_from: startTime,
-        //   time_to:endTime,
-        //   event_type: data?.event_type,
-        //   event_organiser: data?.event_organiser,
-        //   event_desc: data?.event_desc,
-        //   facebook_event_url: data?.facebook_event_url,
-        //   event_status:data?.eve
+          time_from: startTime,
+          time_to:endTime,
+          event_type: data?.event_type,
+          event_organiser: data?.event_organiser,
+          event_desc: data?.event_desc,
+          facebook_event_url: data?.facebook_event_url,
+          event_status:data?.event_status
     
           },
         };
@@ -102,7 +165,7 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
             
            // // setSignupUser(res?.data);
             
-            toast.success("Venue is added Succesfully!");
+            toast.success("Event is added Succesfully!");
             setTimeout(() => {
               window.location.href="/"
             }, 3000);
@@ -133,7 +196,7 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
                     className="md:text-3xl sm:text-[28px] text-[32px] text-white-A700 w-auto"
                     size="txtPoppins"
                   >
-                    Add Venue
+                    Add Event
                   </Text>
                 </div>
                 <span className="modal-close" style={{color:"white",fontSize:"xx-large"}}  onClick={onEventClose}>
@@ -147,7 +210,7 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
                   <Input
                         name="name"
                         placeholder=" Event Name"
-                        className="capitalize font-roboto p-0  placeholder-white-900 text-base text-left w-full"
+                        className="capitalize font-roboto p-0  placeholder-white-900 text-base text-left w-full h-[50px] pl-4"
                         wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                         style={{color:"white"}}
                         onChange={(e) => {
@@ -164,9 +227,9 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
                 </div>
 
 
-                <div className="flex flex-row items-start justify-start mt-[38px] w-full">
+                <div className="flex flex-row items-center justify-between mt-[38px] w-full">
 
-{/* <ImageUploader onChange={handleImageSelect} /> */}
+<ImageUploader onChange={handleImageSelect} />
 
 <div >
 
@@ -180,8 +243,8 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
 
  </div>
  
- {/* <div className="flex flex-row justify-between mt-[38px] w-full border-b border-white-700_99 border-solid"> */}
- {/* <TimePicker className="custom-timepicker" style={{border:"1px solid white"}}
+ <div className="flex flex-row justify-between mt-[38px] w-full border-b border-white-700_99 border-solid">
+ <TimePicker className="custom-timepicker" style={{border:"1px solid white"}}
  
  placeholder="Time From" 
  onTimeChange
@@ -198,250 +261,103 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
  {
  handleTimeToChange
  }
- /> */}
+ />
 
- {/* </div> */}
  </div>
  </div>
-{/*                
-                <div className="flex flex-col items-start justify-start mt-[38px] w-full">
+ </div>
+ <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
-                    name="input"
-                    placeholder="Email"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
-                    type="email"
+                    name="event_type"
+                    placeholder="Event Type"
+                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
+                    
                     onChange={(e) => {
-                      form.handleChange("email", e);
+                      form.handleChange("event_type", e);
                     }}
-                    errors={form?.errors?.email}
-                    value={form?.values?.email}
+                    errors={form?.errors?.["event_type"]}
+                    value={form?.values?.["event_type"]}
                     style={{color:"white"}}
-                   
                     size="md"
                     variant="fill"
                   />
-            
-                </div>
-                <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  <Input
-                    name="input"
-                    placeholder="Contact No"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
-                    type="tel"
-                    onChange={(e) => {
-                      form.handleChange("phone", e);
-                    }}
-                    errors={form?.errors?.phone}
-                    value={form?.values?.phone}
-                    style={{color:"white"}}
-                   
-                    size="md"
-                    variant="fill"
-                  />
-             
+                  {/* Add more input fields as needed */}
                 </div>
                 
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
-                    name="input"
-                    placeholder="Country"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    name="event_organiser"
+                    placeholder="Event Organiser"
+                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
-                      form.handleChange("country_id", e);
+                      form.handleChange("event_organiser", e);
                     }}
-                    errors={form?.errors?.["country_id"]}
-                    value={form?.values?.["country_id"]}
+                    errors={form?.errors?.["event_organiser"]}
+                    value={form?.values?.["event_organiser"]}
                     style={{color:"white"}}
                     size="md"
                     variant="fill"
                   />
-              
+                  {/* Add more input fields as needed */}
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
-                    name="input"
-                    placeholder="State"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    name="event_desc"
+                    placeholder="Description"
+                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
-                      form.handleChange("state_id", e);
+                      form.handleChange("event_desc", e);
                     }}
-                    errors={form?.errors?.["state_id"]}
-                    value={form?.values?.["state_id"]}
+                    errors={form?.errors?.["event_desc"]}
+                    value={form?.values?.["event_desc"]}
                     style={{color:"white"}}
                     size="md"
                     variant="fill"
                   />
-                 
+                  {/* Add more input fields as needed */}
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
-                    name="input"
-                    placeholder="City"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    name="facebook_event_url"
+                    placeholder="Event Facebook URL"
+                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
-                      form.handleChange("city_id", e);
+                      form.handleChange("facebook_event_url", e);
                     }}
-                    errors={form?.errors?.["city_id"]}
-                    value={form?.values?.["city_id"]}
+                    errors={form?.errors?.["facebook_event_url"]}
+                    value={form?.values?.["facebook_event_url"]}
                     style={{color:"white"}}
                     size="md"
                     variant="fill"
                   />
-                
+                  {/* Add more input fields as needed */}
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
-                    name="input"
-                    placeholder="Zipcode"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    name="event_status"
+                    placeholder="Event Status"
+                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
+                    wrapClassName=" common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34] "
                     
                     onChange={(e) => {
-                      form.handleChange("zipcode", e);
+                      form.handleChange("event_status", e);
                     }}
-                    errors={form?.errors?.zipcode}
-                    value={form?.values?.zipcode}
+                    errors={form?.errors?.["event_status"]}
+                    value={form?.values?.["event_status"]}
                     style={{color:"white"}}
                     size="md"
                     variant="fill"
                   />
-                 
+                  {/* Add more input fields as needed */}
                 </div>
-                <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  <Input
-                    name="input"
-                    placeholder="Address"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
-                    
-                    onChange={(e) => {
-                      form.handleChange("address", e);
-                    }}
-                    errors={form?.errors?.address}
-                    value={form?.values?.address}
-                    style={{color:"white"}}
-                    size="md"
-                    variant="fill"
-                  />
-                 
-                </div>
-                <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  <Input
-                    name="input"
-                    placeholder="Tax"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
-                    
-                    onChange={(e) => {
-                      form.handleChange("tax", e);
-                    }}
-                    errors={form?.errors?.tax}
-                    value={form?.values?.tax}
-                    style={{color:"white"}}
-                    size="md"
-                    variant="fill"
-                  />
-                 
-                </div>
-                <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  <Input
-                    name="input"
-                    placeholder="Venue Type"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full "
-                    wrapClassName=" common-pointer border border-white-700_99 border-solid w-full bg-[#292e34] "
-                    
-                    onChange={(e) => {
-                      form.handleChange("venue_type", e);
-                    }}
-                    errors={form?.errors?.["venue_type"]}
-                    value={form?.values?.["venue_type"]}
-                    style={{color:"white"}}
-                    size="md"
-                    variant="fill"
-                  />
-              
-                </div>
-                <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  <Input
-                    name="input"
-                    placeholder="Timezone"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
-                    
-                    onChange={(e) => {
-                      form.handleChange("timezone", e);
-                    }}
-                    errors={form?.errors?.timezone}
-                    value={form?.values?.timezone}
-                    style={{color:"white"}}
-                    size="md"
-                    variant="fill"
-                  />
-             
-                </div>
-                <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  <Input
-                    name="input"
-                    placeholder="Website"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
-                    
-                    onChange={(e) => {
-                      form.handleChange("website", e);
-                    }}
-                    errors={form?.errors?.website}
-                    value={form?.values?.website}
-                    style={{color:"white"}}
-                    size="md"
-                    variant="fill"
-                  />
-             
-                </div>
-                <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  <Input
-                    name="input"
-                    placeholder="Currency"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
-                    
-                    onChange={(e) => {
-                      form.handleChange("currency", e);
-                    }}
-                    errors={form?.errors?.currency}
-                    value={form?.values?.currency}
-                    style={{color:"white"}}
-                    size="md"
-                    variant="fill"
-                  />
-              
-                </div>
-                <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  <Input
-                    name="input"
-                    placeholder="Capacity"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
-                    
-                    onChange={(e) => {
-                      form.handleChange("capacity", e);
-                    }}
-                    errors={form?.errors?.capacity}
-                    value={form?.values?.capacity}
-                    style={{color:"white"}}
-                    size="md"
-                    variant="fill"
-                  />
-                
-                </div>
-                 */}
+
 
                 <div className="flex flex-col items-start justify-start w-full mt-20">
                   <Button
