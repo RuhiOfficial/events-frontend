@@ -1,12 +1,14 @@
 // Modal.js
 import React,{useEffect,useState} from 'react';
 import * as yup from "yup";
-import { Button, Img, Input, Text } from "components";
+import { Button, Img, Input, Text,SelectBox } from "components";
 import useForm from 'hooks/useForm';
 import {postAddEvent } from "service/api";
 import {  ToastContainer,toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import DateRangePicker from 'components/DateRangePicker';
+import { getEventType } from 'service/api';
+
 // import
 // TimePicker
 // from
@@ -18,22 +20,24 @@ import ImageUploader from 'components/ImageUploader'
 const EventModal = ({ isEventOpen, onEventClose } ) => {
     const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [startTime, setStartTime] = useState(new Date());
-  const [endTime, setEndTime] = useState(new Date());
+  // const [startTime, setStartTime] = useState(new Date());
+  // const [endTime, setEndTime] = useState(new Date());
   
   const [selectedImage, setSelectedImage] = useState(null);
-
+  const [eventTypeList, setEventTypeList] = useState([]);
+ const [selectedEventType, setSelectedEventType] = useState(null);
+ const vid= localStorage.getItem("Venue");
 
   console.log(selectedImage,"selected image is ")
   const handleImageSelect = (imageUrl) => {
-    setSelectedImage(imageUrl);
+    // setSelectedImage(imageUrl);
   
     // Convert data URL to Blob
     const blob = dataURLtoBlob(imageUrl);
   
     // Convert Blob to a readable URL
     const imageUrlReadable = URL.createObjectURL(blob);
-  
+  setSelectedImage(imageUrlReadable)
     
   };
   
@@ -58,14 +62,14 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
     setEndDate(end);
   };
 
-  const handleTimeChange = (start) => {
-    setStartTime(start);
+  // const handleTimeChange = (start) => {
+  //   setStartTime(start);
     
-  };
-  const handleTimeToChange = (end) => {
-    setEndTime(end);
+  // };
+  // const handleTimeToChange = (end) => {
+  //   setEndTime(end);
     
-  };
+  // };
 
   
  const cid= localStorage.getItem("LoginId");
@@ -76,11 +80,11 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
       name: yup.string().required("Name is required"),
     
       
-      date_from: yup.string().required("Date is required"),
-      date_to: yup.string().required("Date is required"),
-      time_from: yup.string().required("Time is required"),
-      time_to: yup.string().required("Time is required"),
-      event_type: yup.string().required("Event type is required"),
+      // date_from: yup.string().required("Date is required"),
+      // date_to: yup.string().required("Date is required"),
+      // time_from: yup.string().required("Time is required"),
+      // time_to: yup.string().required("Time is required"),
+      // event_type: yup.string().required("Event type is required"),
       event_organiser: yup.string().required("Event Organiser is required"),
   
       event_desc: yup.string().required("Description is required"),
@@ -97,7 +101,8 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
           date_to:"",
           time_from: "",
           time_to:"",
-          event_type: "",
+          event_type:"",
+          event_day:"",
           event_organiser: "",
           event_desc: "",
           facebook_event_url: "",
@@ -114,47 +119,94 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
      async function addEvent(data) {
       console.log("addevent called ==>>")
 
-    //     const req = {
+        const req = {
     
-    //       data: {
-    //         venue_id:1,
-    //         name: data?.name,
-    //       featured_image: selectedImage,
-    //       date_from: startDate,
-    //       date_to:endDate,
-    //       time_from: startTime,
-    //       time_to:endTime,
-    //       event_type: data?.event_type,
-    //       event_organiser: data?.event_organiser,
-    //       event_desc: data?.event_desc,
-    //       facebook_event_url: data?.facebook_event_url,
-    //       event_status:data?.event_status
+          data: {
+            venue_id:vid,
+            name: data?.name,
+          featured_image: selectedImage,
+          date_from: startDate,
+          date_to:endDate,
+          time_from: "09:80",
+          time_to:"09:80",
+          event_type:selectedEventType,
+          event_day:data?.event_day,
+          event_organiser: data?.event_organiser,
+          event_desc: data?.event_desc,
+          facebook_event_url: data?.facebook_event_url,
+          event_status:data?.event_status
     
-    //       },
+          },
     
-    //     };
-    // console.log(req,"req is ======>>>")
+        };
+    console.log(req,"req is ======>>>")
     
-    //  await   postAddEvent(req)
-    //       .then((res) => {
-    //         console.log(res)
+     await   postAddEvent(req)
+          .then((res) => {
+            console.log(res)
             
-    //        // // setSignupUser(res?.data);
+           // // setSignupUser(res?.data);
             
-    //         toast.success("Event is added Succesfully!");
-    //         setTimeout(() => {
-    //           window.location.href="/"
-    //         }, 3000);
+            toast.success("Event is added Succesfully!");
+            // setTimeout(() => {
+            //   window.location.href="/"
+            // }, 3000);
           
-    //       })
-    //       .catch((err) => {
-    //         console.error(err);
-    //         toast.error("Something Went Wrong!");
-    //       });
+          })
+          .catch((err) => {
+            console.error(err);
+            toast.error("Something Went Wrong!");
+          });
       }
 
+useEffect(()=>{
+  eventType();
+},[])
+ /////////Event_Type/////////
+      
+
+
+const handleEventTypeChange = (selectedOption) => {
+
+  setSelectedEventType(selectedOption);
+ 
+};
+
+async function eventType() {
+  const req = {};
+
+  await getEventType(req)
+    .then((res) => {
+      console.log(res, "response is");
+      
+
+      let options;
+
+      if (res.data.data.length === 1) {
+        
+        options = [
+          {
+            label: res.data.data[0].name,
+            value: res.data.data[0].id,
+          },
+        ];
+      } else {
+       
+        options = res.data.data.map((item) => ({
+          label: item.name,
+          value: item.id,
+        }));
+      }
+
+      setEventTypeList(options);
+      
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+}
    
-    
+    console.log(selectedEventType,"selected")
    
 
   return (
@@ -205,7 +257,7 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
 
                   {/* Add more input fields as needed */}
                 </div>
-               <div className="flex flex-row items-start justify-start mt-[38px] w-full">
+               <div className="flex flex-row items-center justify-between mt-[38px] w-full">
 
                <ImageUploader onChange={handleImageSelect} />
               
@@ -246,23 +298,38 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
                 </div>
 
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  <Input
-                    name="event_type"
-                    placeholder="Event Type"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
-                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
-                    
-                    onChange={(e) => {
-                      form.handleChange("event_type", e);
-                    }}
-                    errors={form?.errors?.["event_type"]}
-                    value={form?.values?.["event_type"]}
-                    style={{color:"white"}}
-                    size="md"
-                    variant="fill"
-                  />
+                <SelectBox
+                   className="font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border-b border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
+                   placeholderClassName="text-gray-600"
+                   isMulti={false}
+                   name="eventType"
+                   options={eventTypeList}
+                   isSearchable={true}
+                   placeholder="Select Event Type..."
+                   onChange={handleEventTypeChange}
+                
+                 />
                   {/* Add more input fields as needed */}
                 </div>
+                {selectedEventType == "3"?
+                <div className="flex flex-col items-start justify-start mt-[38px] w-full">
+                <Input
+                  name="event_day"
+                  placeholder="Event Day"
+                  className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
+                  wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
+                  
+                  onChange={(e) => {
+                    form.handleChange("event_day", e);
+                  }}
+                  errors={form?.errors?.["event_day"]}
+                  value={form?.values?.["event_day"]}
+                  style={{color:"white"}}
+                  size="md"
+                  variant="fill"
+                />
+                {/* Add more input fields as needed */}
+              </div>:null}
                 
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input

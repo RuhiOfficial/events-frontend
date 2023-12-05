@@ -40,9 +40,7 @@ const Modal = ({ isOpen, onClose }) => {
       .string()
       .required("Contact Number is required")
       .matches(/^\d{10}$/, "Contact Number must be 10 digits"),
-      country_id: yup.string().required("Country No. is required"),
-      state_id: yup.string().required("State is required"),
-      city_id: yup.string().required("City is required"),
+     
       zipcode: yup.string().required("Zipcode is required"),
       address: yup.string().required("Address is required"),
       // venue_type: yup.string().required("Venue Type is required"),
@@ -76,7 +74,20 @@ const Modal = ({ isOpen, onClose }) => {
         },
       );
 
-     
+     useEffect(() => {
+  const fetchData = async () => {
+    try {
+      await country();
+      await venueType();
+      await timezone();
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  fetchData();
+}, []);
+
 
 
      async function addvenue(data) {
@@ -123,191 +134,7 @@ const Modal = ({ isOpen, onClose }) => {
             toast.error("Something Went Wrong!");
           });
       }
-      // const [venueTypeList, setVenueTypeList] = useState([]);
-      // const [selectedVenueType, setSelectedVenueType] = useState(null);
-      // const [venueType, setVenueType] = React.useState();
-
-      // async function select() {
-      //   const req = {};
-      
-      //   await getVenueType(req)
-      //     .then((res) => {
-      //       console.log(res, "response is");
-      //       setVenueType(res.data.data);
-      //       console.log(venueType, "id ==>>>");
-      
-      //       let options;
-      
-      //       if (res.data.data.length === 1) {
-             
-      //         options = [
-      //           {
-      //             label: res.data.data[0].name,
-      //             value: res.data.data[0].id,
-      //           },
-      //         ];
-      //       } else {
-             
-      //         options = res.data.data.map((item) => ({
-      //           label: item.name,
-      //           value: item.id,
-      //         }));
-      //       }
-      
-      //       setVenueTypeList(options);
-      //     })
-      //     .catch((err) => {
-      //       console.error(err);
-      //     });
-      // }
-      
-    
-    // useEffect(()=>{
-    //   select();
-    
-    // },[])
-    
-    //  console.log(venueTypeList,"type of venue ")
-    
-   
-    // const handleVenueTypeChange = (selectedOption) => {
-    
-    //   setSelectedVenueType(selectedOption);
-    // };
      
-  // const [timezoneType, setTimezoneType] = React.useState();
-  // const [timeZoneList, setTimeZoneList] = useState([]);
-  // const [selectedTimeZoneType, setSelectTimeZoneType] = useState(null);
-
-  // async function fetchTimezones() {
-  //   try {
-  //     const req = {};
-  //     const res = await getTimezone(req);
-  //     console.log(res.data.data, "response is");
-
-  //     setTimezoneType(res.data.data);
-
-  //     let options;
-
-  //     if (res.data.data.length === 1) {
-  //       options = [
-  //         {
-  //           label: res.data.data[0].name,
-  //           value: res.data.data[0].id,
-  //         },
-  //       ];
-  //     } else {
-  //       options = res.data.data.map((item) => ({
-  //         label: item.name,
-  //         value: item.id,
-  //       }));
-  //     }
-
-  //     setTimeZoneList(options);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // }
-  // console.log(timeZoneList,"type of timezone")
- 
-  // useEffect(() => {
-    
-  //   // fetchTimezones();
-  // }, []);
-
- 
-  // const handleTimeZoneTypeChange = (selectedOption) => {
-  //   // Update the state with the selected value
-  //   setSelectTimeZoneType(selectedOption);
-  // };
-  // const [countryType, setCountryType] = useState();
-  // const [countryList, setCountryList] = useState([]);
- 
-
-  // async function fetchCountry() {
-  //   try {
-  //     const req = {};
-  //     const res = await getCountry(req);
-  //     console.log(res.data.data, "response is");
-
-  //     setCountryType(res.data.data);
-
-  //     setCountryList(
-  //       res.data.data.map((item) => ({
-  //         label: item.name,
-  //         value: item.id,
-  //       }))
-  //     );
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   fetchCountry();
-  // }, []);
-  // const [cityList, setCityList] = useState([]);
-  // const [selectedCity, setSelectedCity] = useState(null);
-
-  // async function fetchCities() {
-  //   try {
-  //     const req = {};
-  //     const res = await getCity(req);
-  //     console.log(res.data.data, "city response is");
-
-  //     setCityList(
-  //       res.data.data.map((item) => ({
-  //         label: item.name,
-  //         value: item.id,
-  //       }))
-  //     );
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   // fetchCities();
-  //   // states();
-  // }, []);
-
-
-      
-
-      // async function states() {
-      //   const req = {};
-      
-      //   await getStates(req)
-      //     .then((res) => {
-      //       console.log(res, "response is state");
-      //       setState(res.data.data);
-            
-      
-      //       let options;
-      
-      //       if (res.data.data.length === 1) {
-             
-      //         options = [
-      //           {
-      //             label: res.data.data[0].name,
-      //             value: res.data.data[0].id,
-      //           },
-      //         ];
-      //       } else {
-      //         // If there are multiple items, map the array to options
-      //         options = res.data.data.map((item) => ({
-      //           label: item.name,
-      //           value: item.id,
-      //         }));
-      //       }
-      
-      //       setStateList(options);
-      //     })
-      //     .catch((err) => {
-      //       console.error(err);
-      //     });
-      // }
-
      
 
 
@@ -535,13 +362,7 @@ async function timezone() {
 }
 
 
-useEffect(()=>{
-country();
-venueType();
-timezone();
 
-
-},[])
 
 
 console.log(selectedCountry,"selected country==>>")
