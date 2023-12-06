@@ -1,9 +1,10 @@
 import React, { useState,useEffect } from 'react';
-import DatePicker from 'react-datepicker';
+
 import "../Custom.css"
 import 'react-datepicker/dist/react-datepicker.css';
 import Modal from 'pages/Modal';
 import EventModal from 'pages/EventModal';
+import Cookies from 'js-cookie';
 
 import { Button, Img, Line, List, Text } from "components";
 
@@ -15,9 +16,15 @@ const DashboardPage = () => {
   const [isEventModalOpen,setIsEventModalOpen]=useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const[venueId,setVenueId]=useState("");
 
 
   useEffect(() => {
+   
+      // Read venue ID from the cookie
+      const savedVenueId = Cookies.get('venueId');
+      setVenueId(savedVenueId);
+      
     const fetchData = async () => {
       try {
         const response = await fetch("https://jsonplaceholder.typicode.com/users");
@@ -53,7 +60,7 @@ const DashboardPage = () => {
     setIsEventModalOpen(false);
   };
 
-  
+  console.log(venueId,"venue id from dashboard")
   return (
     <>
     < div className={`relative ${isModalOpen || isEventModalOpen ? 'filter blur' : ''}`}>
@@ -259,69 +266,7 @@ const DashboardPage = () => {
                               + Add Event
                             </Button>
                           </div>
-                          {/* <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mb-[33px] w-full">
-                            <List
-                              className="flex-1 sm:flex-col flex-row gap-[31px] grid md:grid-cols-1 grid-cols-2 w-full"
-                              orientation="horizontal"
-                            >
-                              <div className="bg-black-900_11 border border-blue_gray-800 border-solid hover:cursor-pointer flex flex-1 sm:flex-col flex-row gap-[21px] items-center justify-start sm:ml-[0] hover:mx-0 p-2.5 hover:shadow-bs shadow-bs hover:w-full w-full">
-                                <Img
-                                  className="sm:flex-1 h-[151px] md:h-auto object-cover w-[21%] sm:w-full"
-                                  src="images/img_rectangle63.png"
-                                  alt="rectangleSixtyThree"
-                                />
-                                <div className="flex flex-col items-start justify-start">
-
- <Text
-                                    className="sm:text-[19px] md:text-[21px] text-[23px] text-white-A700"
-                                    size="txtPoppinsSemiBold23"
-                                  >
-                                    Cottontail @ NIGHT | Thursdays
-                                  </Text>
-                                  <Text
-                                    className="text-lg text-white-A700"
-                                    size="txtPoppinsMedium18"
-                                  >
-                                    9:00 pm To 2.00 am
-                                  </Text>
-                                  <Text
-                                    className="mt-3.5 text-sm text-white-A700"
-                                    size="txtPoppinsRegular14"
-                                  >
-                                    Recurring weekly
-                                  </Text>
-                                </div>
-                              </div>
-                              <div className="bg-black-900_11 border border-blue_gray-800 border-solid hover:cursor-pointer flex flex-1 sm:flex-col flex-row gap-[21px] items-center justify-start sm:ml-[0] hover:mx-0 p-2.5 hover:shadow-bs shadow-bs hover:w-full w-full">
-                                <Img
-                                  className="sm:flex-1 h-[151px] md:h-auto object-cover w-[21%] sm:w-full"
-                                  src="images/img_rectangle63.png"
-                                  alt="rectangleSixtyThree"
-                                />
-                                <div className="flex flex-col items-start justify-start">
-                                  <Text
-                                    className="sm:text-[19px] md:text-[21px] text-[23px] text-white-A700"
-                                    size="txtPoppinsSemiBold23"
-                                  >
-                                    Cottontail @ NIGHT | Thursdays
-                                  </Text>
-                                  <Text
-                                    className="text-lg text-white-A700"
-                                    size="txtPoppinsMedium18"
-                                  >
-                                    9:00 pm To 2.00 am
-                                  </Text>
-                                  <Text
-                                    className="mt-3.5 text-sm text-white-A700"
-                                    size="txtPoppinsRegular14"
-                                  >
-                                    Recurring weekly
-                                  </Text>
-                                </div>
-                              </div>
-                            </List>
-                           
-                          </div> */}
+                      
                           <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mb-[33px] w-full">
                           {loading ? (
         <p>Loading...</p>
@@ -352,19 +297,22 @@ const DashboardPage = () => {
                   className="sm:text-[19px] md:text-[21px] text-[23px] text-white-A700"
                   size="txtPoppinsSemiBold23"
                 >
-                  {item.title}
+                  {item.name}
+                  {/* {venueId} */}
                 </Text>
                 <Text
                   className="text-lg text-white-A700"
                   size="txtPoppinsMedium18"
                 >
-                  {item.id}
+                  hello
+                  {/* {item.id} */}
                 </Text>
                 <Text
                   className="mt-3.5 text-sm text-white-A700"
                   size="txtPoppinsRegular14"
                 >
-                  {item.albumId}
+                  how are you 
+                  {/* {item.albumId} */}
                 </Text>
               </div>
             </div>

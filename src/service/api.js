@@ -40,18 +40,22 @@ const COMMON_URL = `https://event-backend.isdemo.in/api/v1/`;
 
 const API_URLS = {
   GET_VENUE_TYPE: `${COMMON_URL}venueType`,
+  GET_TIMEZONE: `${COMMON_URL}timezone`,
+  GET_COUNTRIES: `${COMMON_URL}list_countries`,
+  GET_VENUE: `${COMMON_URL}venue`,
   POST_STATE:`${COMMON_URL}list_states`,
   POST_SIGNUP_USER: `${COMMON_URL}signupUser`,
   POST_LOGIN_USER: `${COMMON_URL}loginUser`,
   POST_ADD_VENUE: `${COMMON_URL}venue`,
   POST_ADD_EVENT: `${COMMON_URL}event`,
-  GET_TIMEZONE: `${COMMON_URL}timezone`,
-  GET_COUNTRIES: `${COMMON_URL}list_countries`,
   POST_CITY: `${COMMON_URL}list_cities`,
 };
 
-export const getVenueType = (payload) =>
+  export const getVenueType = (payload) =>
   apis.get(API_URLS.GET_VENUE_TYPE, payload);
+  
+  export const getVenue = (payload) =>
+  apis.get(API_URLS.GET_VENUE, payload);
   
   export const getTimezone = (payload) =>
   apis.get(API_URLS.GET_TIMEZONE, payload);

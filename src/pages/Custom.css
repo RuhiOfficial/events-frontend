@@ -1,4 +1,4 @@
-/* MyDatePicker.css */
+ /* MyDatePicker.css  */
 
 .custom-datepicker {
   color:white !important;
@@ -70,7 +70,7 @@ font-family: 'Arial', sans-serif;
 
 .react-datepicker__input-container {
 display: inline-block;
-width: 100%; /* Ensure the date picker takes full width */
+width: 100%; /* Ensure the date picker takes full width*/
 padding: 11px 17px 11px;
 }
 
@@ -86,11 +86,7 @@ outline: none;
 z-index: 1000;
 }
 
-/* styles.css */
-.custom-timepicker {
-border:1px solid white
-/* Your custom styles for the entire time picker component */
-}
+
 
 .custom-timepicker .react-time-picker-dropdown-icon {
 fill: grey; /* Icon color */
@@ -101,9 +97,43 @@ color: grey; /* Clock color */
 }
 
 .custom-timepicker .react-time-picker-dropdown-clock-selected {
-color: white; /* Selected time color */
+color: rgb(181, 20, 20); /*Selected time color*/
 }
 
 input.tp_inputBox{
-  color: white !important; /* Selected time color */
+  color: white !important; /*Selected time color */
+}
+/* CustomTimepicker.css */
+.custom-timepicker-wrapper {
+  position: relative;
+}
+
+
+
+/* You can also style the input field itself if needed */
+/* .custom-timepicker {
+  width: 300px;} /* Set the overall width of the time picker */
+
+
+/* Adjust the width of the hour input */
+.custom-timepicker .react-time-picker__inputGroup__hour {
+  width: 80px !important; /* Adjust the width as needed */
+}
+
+/* Adjust the width of the minute input */
+.custom-timepicker .react-time-picker__inputGroup__minute {
+  width: 80px !important; /* Adjust the width as needed */
+}
+.custom-timepicker .rc-time-picker-panel-input-wrap {
+  border: none;
+}
+
+.custom-timepicker .rc-time-picker-input {
+  background-color: transparent;
+  color: white;
+  border: none;
+}
+
+.custom-timepicker .rc-time-picker-clear {
+  color: white;
 }

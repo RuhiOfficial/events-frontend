@@ -1,26 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import "../Custom.css"
 import 'react-datepicker/dist/react-datepicker.css';
 import { Link } from 'react-router-dom';
+import ListModal from 'pages/ListModal';
 
 import { Button, Img, Line, List, Text } from "components";
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 
 function Header() {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [isDropdownOpen, setDropdownOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const Navigate= useNavigate();
+    const[venueId,setVenueId]=useState("");
+     const[data,setData]=useState("");
+
+
+  useEffect(() => {
+   
+      // Read venue ID from the cookie
+      const savedVenueId = Cookies.get('venueId');
+      setVenueId(savedVenueId);
+      
+    const fetchData = async () => {
+      try {
+        const response = await fetch("https://jsonplaceholder.typicode.com/users");
+        const result = await response.json();
+        setData(result.slice(0, 2)); // Limit to the first 2 items for this example
+        
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
     const openModal = () => {
-    setIsModalOpen(true);
+      setIsModalOpen(true);
     };
-
+  
     const closeModal = () => {
-    setIsModalOpen(false);
+      setIsModalOpen(false);
     };
-
   
     const toggleDropdown = () => {
       setDropdownOpen(!isDropdownOpen);
@@ -137,6 +163,18 @@ function Header() {
               >
                 ReactJS Dropdown 1
               </a> */}
+              <div className="p-2 flex flex-col items-center">
+              <Button
+                              className="cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm "
+                              color="indigo_A400"
+                              size="sm"
+                              onClick={openModal}
+                            >
+                              Switch Venue
+                            </Button>
+                            <ListModal isOpen={isModalOpen} onRequestClose={closeModal} />
+
+                            </div>
               <Button
                               className="cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm "
                               color="indigo_A400"

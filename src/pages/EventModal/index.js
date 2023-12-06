@@ -7,6 +7,7 @@ import {postAddEvent, postAddVenue } from "service/api";
 import {  ToastContainer,toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import DateRangePicker from 'components/DateRangePicker';
+import TimePicker from 'components/Timepicker';
 // import
 // TimePicker
 // from
@@ -249,18 +250,20 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
 
  </div>
  
- {/* <div className="flex flex-row justify-between mt-[38px] w-full border-b border-white-700_99 border-solid"> */}
- {/* <TimePicker className="custom-timepicker" style={{border:"1px solid white"}}
- 
- placeholder="Time From" 
- onTimeChange
- =
- {
- handleTimeChange
- }
- />
-
- <TimePicker
+ <div className="flex flex-row justify-between mt-[38px] w-full border-b border-white-700_99 border-solid">
+ <TimePicker 
+          onChange={handleTimeChange}
+          value={startTime}
+        
+          className="custom-timepicker" 
+        />
+        <TimePicker 
+          onChange={handleTimeChange}
+          value={startTime}
+        
+          className="custom-timepicker" 
+        />
+ {/* <TimePicker
  placeholder="Time To"
  onTimeChange
  =
@@ -269,9 +272,11 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
  }
  /> */}
 
- {/* </div> */}
  </div>
  </div>
+ </div>
+
+ 
  <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
                     name="event_type"

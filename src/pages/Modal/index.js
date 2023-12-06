@@ -7,7 +7,7 @@ import {getStates, postAddVenue } from "service/api";
 import {  ToastContainer,toast } from "react-toastify";
 import { getVenueType,getTimezone,getCountry,getCity } from "service/api";
 import { useNavigate } from "react-router-dom";
-import "../Custom.css"
+import "../Custom.css";
 
 const Modal = ({ isOpen, onClose }) => {
   
