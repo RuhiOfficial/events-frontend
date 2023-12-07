@@ -53,6 +53,7 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
     return new Blob([u8arr], { type: mime });
   }
   
+  
 
   const handleDateChange = (start, end) => {
     setStartDate(start);
