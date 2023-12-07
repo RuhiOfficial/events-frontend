@@ -5,14 +5,14 @@ import moment from 'moment';
 
 const Timepicker = ({ value, onChange, placeholder,className }) => {
   // Convert string value to moment object
-  const momentValue = value ? moment(value, 'h:mm a') : null;
+  
 
   return (
     <TimePicker
       onChange={onChange}
-     
+      value={value ? moment(value) : null}
       showSecond={false}
-      format="h:mm a"
+      format="h:mm A"
       use12Hours
       placeholder={placeholder}
       className={`custom-timepicker ${className}`}

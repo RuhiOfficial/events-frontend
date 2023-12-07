@@ -138,19 +138,7 @@ const Modal = ({ isOpen, onClose }) => {
      
 
 
-      const submitVenueForm = () => {
-        
-
-        try {
-          // console.log('Clicked and Submitted');
-          form.handleSubmit((data) => {
-            console.log('Form submitted with data:', data);
-            // You can perform further actions with the form data here
-          });
-        } catch (error) {
-          console.error('Form submission error:', error);
-        }
-      };
+      
 
 /////////// DropDowns ///////////
 

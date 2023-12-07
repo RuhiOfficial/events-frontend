@@ -3,19 +3,22 @@ import React,{useEffect,useState} from 'react';
 import * as yup from "yup";
 import { Button, Img, Input, Text,SelectBox } from "components";
 import useForm from 'hooks/useForm';
-import {postAddEvent } from "service/api";
+import {postAddEvent,getEventType } from "service/api";
 import {  ToastContainer,toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import DateRangePicker from 'components/DateRangePicker';
 import TimePicker from 'components/Timepicker';
+import moment from 'moment';
 
 import ImageUploader from 'components/ImageUploader'
 
 const EventModal = ({ isEventOpen, onEventClose } ) => {
     const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  // const [startTime, setStartTime] = useState(new Date());
-  // const [endTime, setEndTime] = useState(new Date());
+  const [startTime, setStartTime] = useState(null);
+  const [endTime, setEndTime] = useState(null);
+  const [formattedStartTime, setFormattedStartTime] = useState(null);
+  const [formattedEndTime, setFormattedEndTime] = useState(null);
   
   const [selectedImage, setSelectedImage] = useState(null);
   const [eventTypeList, setEventTypeList] = useState([]);
@@ -56,14 +59,17 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
     setEndDate(end);
   };
 
-  // const handleTimeChange = (start) => {
-  //   setStartTime(start);
+  const handleTimeChange = (start) => {
+    const formattedTime = moment(start).format('hh:mm A');
+    setStartTime(start);
+    setFormattedStartTime(formattedTime)
     
-  // };
-  // const handleTimeToChange = (end) => {
-  //   setEndTime(end);
-    
-  // };
+  };
+  const handleTimeToChange = (end) => {
+    const formattedTime = moment(end).format('hh:mm A');
+    setEndTime(end);
+    setFormattedEndTime(formattedTime)
+  };
 
   
  const cid= localStorage.getItem("LoginId");
@@ -121,8 +127,8 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
           featured_image: selectedImage,
           date_from: startDate,
           date_to:endDate,
-          time_from: "09:80",
-          time_to:"09:80",
+          time_from: formattedStartTime,
+          time_to:formattedEndTime,
           event_type:selectedEventType,
           event_day:data?.event_day,
           event_organiser: data?.event_organiser,
@@ -287,24 +293,40 @@ async function eventType() {
  </div>
 
  
+
  <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                  <Input
-                    name="event_type"
-                    placeholder="Event Type"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
-                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
-                    
-                    onChange={(e) => {
-                      form.handleChange("event_type", e);
-                    }}
-                    errors={form?.errors?.["event_type"]}
-                    value={form?.values?.["event_type"]}
-                    style={{color:"white"}}
-                    size="md"
-                    variant="fill"
-                  />
+                <SelectBox
+                   className="font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border-b border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
+                   placeholderClassName="text-gray-600"
+                   isMulti={false}
+                   name="eventType"
+                   options={eventTypeList}
+                   isSearchable={true}
+                   placeholder="Select Event Type..."
+                   onChange={handleEventTypeChange}
+                
+                 />
                   {/* Add more input fields as needed */}
                 </div>
+                {selectedEventType == "3"?
+                <div className="flex flex-col items-start justify-start mt-[38px] w-full">
+                <Input
+                  name="event_day"
+                  placeholder="Event Day"
+                  className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
+                  wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
+                  
+                  onChange={(e) => {
+                    form.handleChange("event_day", e);
+                  }}
+                  errors={form?.errors?.["event_day"]}
+                  value={form?.values?.["event_day"]}
+                  style={{color:"white"}}
+                  size="md"
+                  variant="fill"
+                />
+                {/* Add more input fields as needed */}
+              </div>:null}
                 
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input

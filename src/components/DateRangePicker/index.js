@@ -30,7 +30,7 @@ const DateRangePicker = ({ startDate, endDate, onChange }) => {
         placeholderText="Start Date"
         dateFormat="yyyy-MM-dd"
         className="rounded-l-md px-3 py-2 border-b border-gray-300 focus:outline-none focus:border-blue-500 flex-grow"
-        dateFormat="yyyy-MM-dd"
+    
         showTimeInput={false}
       />
       <DatePicker
@@ -43,7 +43,7 @@ const DateRangePicker = ({ startDate, endDate, onChange }) => {
         placeholderText="End Date"
         dateFormat="yyyy-MM-dd"
         className="rounded-r-md px-3 py-2 border-b border-gray-300 focus:outline-none focus:border-blue-500 flex-grow"
-        dateFormat="yyyy-MM-dd"
+       
         showTimeInput={false}
       />
     </div>
