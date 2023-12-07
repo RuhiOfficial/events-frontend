@@ -8,11 +8,7 @@ import {  ToastContainer,toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import DateRangePicker from 'components/DateRangePicker';
 import TimePicker from 'components/Timepicker';
-// import
-// TimePicker
-// from
-// "@ashwinthomas/react-time-picker-dropdown"
-// ;
+
 import ImageUploader from 'components/ImageUploader'
 
 const EventModal = ({ isEventOpen, onEventClose } ) => {
@@ -254,23 +250,16 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
  <TimePicker 
           onChange={handleTimeChange}
           value={startTime}
-        
+          placeholder="Time From"
           className="custom-timepicker" 
         />
         <TimePicker 
-          onChange={handleTimeChange}
-          value={startTime}
-        
+          onChange={handleTimeToChange}
+          value={endTime}
+          placeholder="Time To"
           className="custom-timepicker" 
         />
- {/* <TimePicker
- placeholder="Time To"
- onTimeChange
- =
- {
- handleTimeToChange
- }
- /> */}
+ 
 
  </div>
  </div>

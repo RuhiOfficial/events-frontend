@@ -3,7 +3,7 @@ import TimePicker from 'rc-time-picker';
 import 'rc-time-picker/assets/index.css';
 import moment from 'moment';
 
-const Timepicker = ({ value, onChange, className }) => {
+const Timepicker = ({ value, onChange, placeholder,className }) => {
   // Convert string value to moment object
   const momentValue = value ? moment(value, 'h:mm a') : null;
 
@@ -14,7 +14,7 @@ const Timepicker = ({ value, onChange, className }) => {
       showSecond={false}
       format="h:mm a"
       use12Hours
-      placeholder="Select Time"
+      placeholder={placeholder}
       className={`custom-timepicker ${className}`}
     />
   );
