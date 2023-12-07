@@ -63,13 +63,16 @@ const API_URLS = {
   export const getCountry = (payload) =>
   apis.get(API_URLS.GET_COUNTRIES, payload);
 
-  export const getCity = (payload) =>
+  export const getEventType = (payload) =>
+  apis.get(API_URLS.GET_EVENT_TYPE, payload);
+
+  export const postCities = (payload) =>
   apis.post(API_URLS.POST_CITY, {
     ...payload,
     headers: { "Content-type": "application/json", ...payload?.headers },
   });
 
-  export const getStates = (payload) =>
+  export const postStates = (payload) =>
   apis.post(API_URLS.POST_STATE, {
     ...payload,
     headers: { "Content-type": "application/json", ...payload?.headers },

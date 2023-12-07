@@ -89,11 +89,11 @@ z-index: 1000;
 
 
 .custom-timepicker .react-time-picker-dropdown-icon {
-fill: grey; /* Icon color */
+  fill: grey; /* Icon color */
 }
 
 .custom-timepicker .react-time-picker-dropdown-clock {
-color: grey; /* Clock color */
+  color: grey; /* Clock color */
 }
 
 .custom-timepicker .react-time-picker-dropdown-clock-selected {
