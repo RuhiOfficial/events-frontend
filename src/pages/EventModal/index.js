@@ -13,11 +13,6 @@ import 'rc-time-picker/assets/index.css';
 import moment from 'moment';
 
 
-// import
-// TimePicker
-// from
-// "@ashwinthomas/react-time-picker-dropdown"
-// ;
 import "../../pages/Custom.css"
 import ImageUploader from 'components/ImageUploader'
 
@@ -126,8 +121,8 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
         const req = {
     
           data: {
-            venue_id:vid,
-            name: data?.name,
+          venue_id:vid,
+          name: data?.name,
           featured_image: selectedImage,
           date_from: startDate,
           date_to:endDate,
@@ -139,7 +134,7 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
           event_desc: data?.event_desc,
           facebook_event_url: data?.facebook_event_url,
           event_status:data?.event_status
-    
+
           },
     
         };
@@ -163,10 +158,10 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
           });
       }
 
-useEffect(()=>{
-  eventType();
-},[])
- /////////Event_Type/////////
+          useEffect(()=>{
+            eventType();
+          },[])
+          /////////Event_Type/////////
       
 
 
