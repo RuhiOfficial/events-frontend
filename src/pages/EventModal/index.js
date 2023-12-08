@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import DateRangePicker from 'components/DateRangePicker';
 import TimePicker from 'components/Timepicker';
 import moment from 'moment';
+import ImageComponent from 'components/ImageComponent.js';
 
 import ImageUploader from 'components/ImageUploader'
 
@@ -27,16 +28,47 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
 
   console.log(selectedImage,"selected image is ")
   const handleImageSelect = (imageUrl) => {
-    // setSelectedImage(imageUrl);
-  
-    // Convert data URL to Blob
-    const blob = dataURLtoBlob(imageUrl);
-  
-    // Convert Blob to a readable URL
-    const imageUrlReadable = URL.createObjectURL(blob);
-  setSelectedImage(imageUrlReadable)
-    
+    try {
+      // Check if the input is a valid data URL
+      if (!imageUrl.startsWith('data:image/jpeg;base64,')) {
+        throw new Error('Invalid data URL');
+      }
+
+      // Remove the data URI prefix if present
+      const base64String = imageUrl.split(',')[1];
+
+      // Check if the base64String is a valid base64-encoded string
+      if (!base64String) {
+        throw new Error('Invalid base64-encoded string');
+      }
+
+      // Decode the Base64 string
+      const decodedImageUrl = atob(base64String);
+
+      // Check if the decodedImageUrl is a valid string
+      if (!decodedImageUrl) {
+        throw new Error('Error decoding image URL');
+      }
+
+      // Extract only the image data (remove metadata)
+      const imageData = decodedImageUrl.split(',').pop();
+
+      // Check if the imageData is a valid string
+      if (!imageData) {
+        throw new Error('Invalid image data');
+      }
+
+      // Use the imageData in the img tag
+      const imgSrc = `data:image/jpeg;base64,${imageData}`;
+
+      // Set the decoded URL as the selected image
+      setSelectedImage(imgSrc);
+    } catch (error) {
+      console.error('Error decoding image URL:', error);
+      // Handle the error gracefully, e.g., display a message to the user
+    }
   };
+
   
   // Function to convert data URL to Blob
   function dataURLtoBlob(dataURL) {
@@ -208,7 +240,9 @@ async function eventType() {
 }
    
     console.log(selectedEventType,"selected")
-   
+    useEffect(() => {
+      console.log(selectedImage,"from useEffect"); // Check the value in the console
+    }, [selectedImage]);
 
   return (
     <div className={`modal ${isEventOpen ? 'flex' : 'hidden'}`}>  
@@ -271,7 +305,7 @@ async function eventType() {
    <DateRangePicker startDate={startDate} endDate={endDate} onChange={handleDateChange}
     className=" border-b border-white-700_99 border-solid w-full bg-[#292e34] " />
    
-
+       
  </div>
  
  <div className="flex flex-row justify-between mt-[38px] w-full border-b border-white-700_99 border-solid">
@@ -288,6 +322,14 @@ async function eventType() {
           className="custom-timepicker" 
         />
  
+ {selectedImage && (
+        <img
+          src={selectedImage}
+          alt="Decoded"
+          style={{ maxWidth: '100%', height: 'auto' }}
+        />
+      )}
+
 
  </div>
  </div>

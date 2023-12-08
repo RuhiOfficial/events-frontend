@@ -119,7 +119,7 @@ const Modal = ({ isOpen, onClose }) => {
     // console.log(req,"req is ======>>>")
      await   postAddVenue(req)
           .then((res) => {
-            console.log(res)
+            // console.log(res)
             
         
             
@@ -155,7 +155,7 @@ async function country() {
 
   await getCountry(req)
     .then((res) => {
-      console.log(res, "response is");
+      // console.log(res, "response is");
       
 
       let options;
@@ -278,7 +278,7 @@ async function venueType() {
 
   await getVenueType(req)
     .then((res) => {
-      console.log(res, "response is");
+      // console.log(res, "response is");
       
 
       let options;
@@ -320,7 +320,7 @@ async function timezone() {
 
   await getTimezone(req)
     .then((res) => {
-      console.log(res, "response is");
+      // console.log(res, "response is");
       
 
       let options;
@@ -353,11 +353,11 @@ async function timezone() {
 
 
 
-console.log(selectedCountry,"selected country==>>")
-console.log(selectedState,"selected State==>>")
-console.log(selectedCity,"selected city")
-console.log(selectedVenueType,"selected venueType")
-console.log(selectedTimezone,"selected Timezone")
+// console.log(selectedCountry,"selected country==>>")
+// console.log(selectedState,"selected State==>>")
+// console.log(selectedCity,"selected city")
+// console.log(selectedVenueType,"selected venueType")
+// console.log(selectedTimezone,"selected Timezone")
 
   return (
     <div className={`modal ${isOpen ? 'flex' : 'hidden'}`}>  

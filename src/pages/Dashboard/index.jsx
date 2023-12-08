@@ -6,6 +6,7 @@ import Modal from 'pages/Modal';
 import EventModal from 'pages/EventModal';
 import Cookies from 'js-cookie';
 import BlobLoader from 'components/BlobLoader';
+import ImageComponent from 'components/ImageComponent.js';
 
 import { Button, Img, Line, List, Text } from "components";
 import { getEvent } from 'service/api';
@@ -286,18 +287,19 @@ const DashboardPage = () => {
               key={item.id}
               className="bg-black-900_11 border border-blue_gray-800 border-solid hover:cursor-pointer flex flex-1 sm:flex-col flex-row gap-[21px] items-center justify-start sm:ml-[0] hover:mx-0 p-2.5 hover:shadow-bs shadow-bs hover:w-full w-full"
             >
-              {/* <BlobLoader blob={item.featured_image} /> */}
+            
               {/* <Img
                 className="sm:flex-1 h-[151px] md:h-auto object-cover w-[21%] sm:w-full"
                 src={item.featured_image}
                 alt={`Photo`}
               /> */}
+              
 
-                  {/* <Img
+                  <Img
                                   className="sm:flex-1 h-[151px] md:h-auto object-cover w-[21%] sm:w-full"
                                   src="images/img_rectangle63.png"
                                   alt="rectangleSixtyThree"
-                                /> */}
+                                />
 
               <div className="flex flex-col items-start justify-start">
                 <Text
