@@ -137,3 +137,64 @@ input.tp_inputBox{
 .custom-timepicker .rc-time-picker-clear {
   color: white;
 }
+
+/* Canvas */
+.drawing-app {
+  width: 100%;
+  height: 100%;
+  background-color: #1f2327;
+  /* background-color: white */
+}
+
+.drawing-canvas {
+  position: relative;
+  overflow: hidden; 
+  height:fit-content;
+  margin-top: 50px;
+  margin-left: 100px;
+  border:2px solid white;
+}
+.myCard{
+border:2px solid  #282c34;
+margin: 25px;
+height:400px;
+}
+.divs{
+
+margin:20px;
+text-align: center;
+justify-content: center;
+}
+.mybuttons{
+ margin: 10px;
+ padding:4px
+
+}
+.inputs{
+margin: 5px;
+border-bottom: #d2d6dc;
+
+}
+.custom-file-input {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.custom-file-input input {
+  position: absolute;
+  font-size: 100px;
+  right: 0;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.file-container {
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+/* Add more styles as needed */
