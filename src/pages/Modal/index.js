@@ -7,7 +7,7 @@ import {postStates, postAddVenue,getCountry,postCities, getVenueType,getTimezone
 import {  ToastContainer,toast } from "react-toastify";
 
 import { useNavigate } from "react-router-dom";
-import "../Custom.css"
+import "../Custom.css";
 
 const Modal = ({ isOpen, onClose }) => {
   
@@ -119,7 +119,7 @@ const Modal = ({ isOpen, onClose }) => {
     // console.log(req,"req is ======>>>")
      await   postAddVenue(req)
           .then((res) => {
-            console.log(res)
+            // console.log(res)
             
         
             
@@ -138,19 +138,7 @@ const Modal = ({ isOpen, onClose }) => {
      
 
 
-      const submitVenueForm = () => {
-        
-
-        try {
-          // console.log('Clicked and Submitted');
-          form.handleSubmit((data) => {
-            console.log('Form submitted with data:', data);
-            // You can perform further actions with the form data here
-          });
-        } catch (error) {
-          console.error('Form submission error:', error);
-        }
-      };
+      
 
 /////////// DropDowns ///////////
 
@@ -167,7 +155,7 @@ async function country() {
 
   await getCountry(req)
     .then((res) => {
-      console.log(res, "response is");
+      // console.log(res, "response is");
       
 
       let options;
@@ -290,7 +278,7 @@ async function venueType() {
 
   await getVenueType(req)
     .then((res) => {
-      console.log(res, "response is");
+      // console.log(res, "response is");
       
 
       let options;
@@ -332,7 +320,7 @@ async function timezone() {
 
   await getTimezone(req)
     .then((res) => {
-      console.log(res, "response is");
+      // console.log(res, "response is");
       
 
       let options;
@@ -365,11 +353,11 @@ async function timezone() {
 
 
 
-console.log(selectedCountry,"selected country==>>")
-console.log(selectedState,"selected State==>>")
-console.log(selectedCity,"selected city")
-console.log(selectedVenueType,"selected venueType")
-console.log(selectedTimezone,"selected Timezone")
+// console.log(selectedCountry,"selected country==>>")
+// console.log(selectedState,"selected State==>>")
+// console.log(selectedCity,"selected city")
+// console.log(selectedVenueType,"selected venueType")
+// console.log(selectedTimezone,"selected Timezone")
 
   return (
     <div className={`modal ${isOpen ? 'flex' : 'hidden'}`}>  

@@ -13,6 +13,7 @@ import reservations from "../../assets/images/Group4.png"
 import setting from "../../assets/images/Group5.png"
 import admissions from "../../assets/images/Group6.png"
 import inventory from "../../assets/images/Group7.png"
+
 // import { children } from 'cheerio/lib/api/traversing';
 
 
@@ -32,17 +33,18 @@ function Mysidebar({children}) {
           altText: "Dashboard", // Add alt text for accessibility
         },
         {
-          imgSrc: customers, // Assuming customers is the import of your image file
-          href: "/customers",
-          active: window.location.pathname === "/customers",
-          altText: "Customers", // Add alt text for accessibility
+          imgSrc: reservations, // Assuming customers is the import of your image file
+          href: "/reservation",
+          active: window.location.pathname === "/reservation",
+          altText: "reservation", // Add alt text for accessibility
         },
         {
-          imgSrc: reservations, // Assuming customers is the import of your image file
-          href: "/reservations",
-          active: window.location.pathname === "/reservations",
-          altText: "reservations", // Add alt text for accessibility
+          imgSrc: customers, // Assuming customers is the import of your image file
+          href: "/canvas",
+          active: window.location.pathname === "/canvas",
+          altText: "Canvas", // Add alt text for accessibility
         },
+        
         {
           imgSrc: setting, // Assuming customers is the import of your image file
           href: "/setting",
