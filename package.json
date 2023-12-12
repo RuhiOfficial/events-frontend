@@ -12,7 +12,8 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^1.6.2",
     "js-cookie": "^3.0.5",
-    "konva": "^9.2.3",
+   
+    "konva": "^8.4.3",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "prop-types": "^15.8.1",
