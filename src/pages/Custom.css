@@ -198,3 +198,21 @@ border-bottom: #d2d6dc;
 }
 
 /* Add more styles as needed */
+
+/* Canvas.css */
+
+.table-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.table-list-item {
+  cursor: pointer;
+  padding: 8px;
+  background-color: #f0f0f0;
+  margin-bottom: 4px;
+}
+
+.table-list-item.selected {
+  background-color: #b3d9ff; /* Change this color as needed */
+}

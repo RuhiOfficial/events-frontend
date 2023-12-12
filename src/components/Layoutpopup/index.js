@@ -148,9 +148,6 @@ function LayoutPopup({ onClose, onBackgroundImageChange,isOpen, onRequestClose }
 </div>
  
 
- 
-               
-
                 <div className="flex flex-col items-start justify-start w-full mt-20">
                 <Button
                     className="common-pointer cursor-pointer font-bold leading-[normal] min-w-[459px] sm:min-w-full text-center text-xl w-full"
