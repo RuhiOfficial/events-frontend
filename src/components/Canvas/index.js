@@ -1,11 +1,7 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import { Stage, Layer, Line, Rect, Circle,Group , Text as KonvaText } from 'react-konva';
-import { AiOutlineMinus } from 'react-icons/ai';
-import { LuRectangleHorizontal } from 'react-icons/lu';
-import { FaRegCircle } from 'react-icons/fa6';
-import { RxText } from 'react-icons/rx';
-import { FaUndoAlt } from 'react-icons/fa';
+
 // Import the LayoutPopup component
 import LayoutPopup from 'components/Layoutpopup';
 import { Button, Img, List, Text } from "components";
@@ -179,6 +175,49 @@ function Canvas() {
           </ul>
         );
       };
+      const saveCanvasImage = () => {
+        const stage = stageRef.current.getStage();
+      
+        if (stage) {
+          // Create a new canvas element
+          const tempCanvas = document.createElement('canvas');
+          tempCanvas.width = stage.width();
+          tempCanvas.height = stage.height();
+      
+          const tempContext = tempCanvas.getContext('2d');
+      
+          // Draw the background image onto the canvas
+          if (backgroundImage) {
+            const backgroundImageElement = new Image();
+            backgroundImageElement.src = URL.createObjectURL(backgroundImage);
+            backgroundImageElement.onload = () => {
+              tempContext.drawImage(backgroundImageElement, 0, 0, stage.width(), stage.height());
+      
+              // Draw the Konva stage onto the canvas
+              const stageData = stage.toDataURL({
+                mimeType: 'image/png',
+                quality: 1,
+                pixelRatio: 1,
+              });
+              const stageImage = new Image();
+              stageImage.src = stageData;
+              stageImage.onload = () => {
+                tempContext.drawImage(stageImage, 0, 0);
+      
+                // Create a link element and trigger a download
+                const a = document.createElement('a');
+                a.href = tempCanvas.toDataURL('image/png');
+                a.download = 'canvas_image.png';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+              };
+            };
+          }
+        }
+      };
+      
+      
 
     return (
       <div className="drawing-app" style={{ display: 'flex' }}>
@@ -212,6 +251,14 @@ function Canvas() {
         onClick={removeSelectedBox}
       >
         Remove Box
+      </Button>
+      <Button
+        className="cursor-pointer font-inter font-semibold leading-[normal] mt-10 min-w-[128px] rounded-lg text-center text-sm"
+        color="indigo_A400"
+        size="sm"
+        onClick={saveCanvasImage}
+      >
+        Save Canvas
       </Button>
         </div>
   
