@@ -194,9 +194,21 @@ import 'tailwindcss/tailwind.css'; // Import Tailwind CSS
 import { Button ,Text} from 'components';
 import Section from 'pages/Section';
 
+const sections = [
+  {
+    id: 1,
+    sectionName: 'Section 1',
+    tables: ['Table 1', 'Table 2', 'Table 3'],
+  },
+  {
+    id: 2,
+    sectionName: 'Section 2',
+    tables: ['Table 4', 'Table 5', 'Table 6'],
+  },
+  // Add more sections as needed
+];
 
-
-// Sample data
+// // Sample data
 const data = [
   { id: 1, name: 'John Doe', age: 25, city: 'New York' },
   { id: 2, name: 'Jane Smith', age: 30, city: 'Los Angeles' },
@@ -304,39 +316,41 @@ function Reservartion() {
     </div>
     </div>
      
-
-      {/* Table */}
-     {/* Table */}
-     <table {...getTableProps()} className="table-auto w-full">
-        {/* Table Header */}
-        <thead className="white">
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()} className="p-2  bg-[#5051f9] grey-border">
-                  {column.render('Header')}
-                </th>
+    <div className=" mx-auto mt-8">
+      {sections.map((section) => (
+        <div key={section.id} className="flex items-center justify-between p-4 border mb-4 grey">
+          <div>
+            <h2 className="text-lg font-bold">{section.sectionName}</h2>
+            <div className="flex mt-2">
+              {section.tables.map((table) => (
+                <span key={table.id} className="mr-4">
+                  {table}
+                </span>
               ))}
-            </tr>
-          ))}
-        </thead>
+            </div>
+          </div>
+          <div className="flex items-center">
+            <button className="mx-2 text-blue-500 hover:text-blue-700">
+              <span role="img" aria-label="Edit">
+                ✏️
+              </span>
+            </button>
+            <button className="mx-2 text-red-500 hover:text-red-700">
+              <span role="img" aria-label="Delete">
+                🗑️
+              </span>
+            </button>
+            <button className="mx-2 text-green-500 hover:text-green-700">
+              <span role="img" aria-label="Add">
+                ➕
+              </span>
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
 
-        {/* Table Body */}
-        <tbody {...getTableBodyProps()}>
-          {memoizedData.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => (
-                  <td {...cell.getCellProps()} className="p-2  grey text-center grey-border">
-                    {cell.render('Cell')}
-                  </td>
-                ))}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+    
 
       {/* Pagination */}
       {/* <div className="mt-4 flex justify-between items-center grey">
