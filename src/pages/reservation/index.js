@@ -193,6 +193,8 @@ import { matchSorter } from 'match-sorter';
 import 'tailwindcss/tailwind.css'; // Import Tailwind CSS
 import { Button ,Text} from 'components';
 import Section from 'pages/Section';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+
 
 const sections = [
   {
@@ -208,21 +210,21 @@ const sections = [
   // Add more sections as needed
 ];
 
-// // Sample data
-const data = [
-  { id: 1, name: 'John Doe', age: 25, city: 'New York' },
-  { id: 2, name: 'Jane Smith', age: 30, city: 'Los Angeles' },
-  // Add more data as needed
-];
+// // // Sample data
+// const data = [
+//   { id: 1, name: 'John Doe', age: 25, city: 'New York' },
+//   { id: 2, name: 'Jane Smith', age: 30, city: 'Los Angeles' },
+//   // Add more data as needed
+// ];
 
-// Define columns for the table
-const columns = [
-  { Header: 'ID', accessor: 'id' },
-  { Header: 'Name', accessor: 'name' },
-  { Header: 'Age', accessor: 'age' },
-  { Header: 'City', accessor: 'city' },
-  // Add more columns as needed
-];
+// // Define columns for the table
+// const columns = [
+//   { Header: 'ID', accessor: 'id' },
+//   { Header: 'Name', accessor: 'name' },
+//   { Header: 'Age', accessor: 'age' },
+//   { Header: 'City', accessor: 'city' },
+//   // Add more columns as needed
+// ];
 
 // Define a global filter function
 const globalFilterFunction = (rows, columns, filterValue) => {
@@ -235,6 +237,31 @@ const globalFilterFunction = (rows, columns, filterValue) => {
 
 function Reservartion() {
   const [isSectionOpen, setIsSectionOpen] = useState(false);
+
+  const [sectionsData, setSectionsData] = useState(sections);
+
+    const onDragEnd = (result) => {
+      if (!result.destination) {
+        return;
+      }
+  
+      const updatedSections = [...sectionsData];
+      const sourceSection = updatedSections.find((section) => section.id.toString() === result.source.droppableId);
+      const destinationSection = updatedSections.find((section) => section.id.toString() === result.destination.droppableId);
+  
+      if (sourceSection && destinationSection) {
+        const [movedTable] = sourceSection.tables.splice(result.source.index, 1);
+        destinationSection.tables.splice(result.destination.index, 0, movedTable);
+  
+        setSectionsData(updatedSections);
+      }
+    };
+  
+  
+  
+
+
+
   const openModal = () => {
     setIsSectionOpen(true);
   };
@@ -243,35 +270,30 @@ function Reservartion() {
     setIsSectionOpen(false);
   };
   // Create a table instance using react-table hooks
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-    state,
-    setGlobalFilter,
-    page,
-    canPreviousPage,
-    canNextPage,
-    nextPage,
-    previousPage,
-  } = useTable(
-    {
-      columns,
-      data,
-    },
-    useGlobalFilter,
-    usePagination
-  );
+  
 
   // Destructure state for easier use
-  const { globalFilter, pageIndex, pageSize } = state;
+  // const { globalFilter, pageIndex, pageSize } = state;
 
-  // Memoize the filtered and paginated data for performance
-  const memoizedData = useMemo(() => {
-    return page;
-  }, [page]);
+
+
+  const DraggableTableName = ({ name, index }) => {
+        return (
+          <Draggable draggableId={name} index={index}>
+            {(provided) => (
+              <div
+                ref={provided.innerRef}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+                className="cursor-move inline-block bg-[#5051f9] text-white p-2 rounded mr-2"
+              >
+                {name}
+              </div>
+            )}
+          </Draggable>
+        );
+      };
+
 
   return (
     <div className='p-[50px] m-[50px] bg-[#1f2327]'>
@@ -286,13 +308,13 @@ function Reservartion() {
       {/* Search Bar */}
     <div className='flex flex-row  items-start justify-end'>
 
-    <input
+    {/* <input
         type="text"
         placeholder="Search..."
         value={globalFilter || ''}
         onChange={(e) => setGlobalFilter(e.target.value)}
         className="white  mb-4 p-2 border rounded-md bg-transparent "
-      />
+      /> */}
     <Button
     className=" ml-3 mr-3 cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm "
     color="indigo_A400"
@@ -301,72 +323,51 @@ function Reservartion() {
     >
     Add Section
     </Button>
+
     <Section isOpen={isSectionOpen} onRequestClose={closeModal} />
-    {/* <Button
-    className="cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm "
-    color="indigo_A400"
-    size="sm"
-    // onClick={logout}
-    >
-    Add Table
-    </Button> */}
-
-    
-
     </div>
     </div>
      
-    <div className=" mx-auto mt-8">
-      {sections.map((section) => (
-        <div key={section.id} className="flex items-center justify-between p-4 border mb-4 grey">
-          <div>
-            <h2 className="text-lg font-bold">{section.sectionName}</h2>
-            <div className="flex mt-2">
-              {section.tables.map((table) => (
-                <span key={table.id} className="mr-4">
-                  {table}
+    <DragDropContext onDragEnd={onDragEnd}>
+           <div className=" mx-auto mt-8 ">
+        {sectionsData.map((section) => (
+          <div key={section.id} className="flex items-center justify-between p-4 border mb-4">
+<div>
+<h2 className="text-lg font-bold white">{section.sectionName}</h2>
+<Droppable droppableId={section.id.toString()} direction="horizontal">
+{(provided) => (
+<div ref={provided.innerRef} {...provided.droppableProps} className="flex mt-2 white ">
+{section.tables.map((table, index) => (
+<DraggableTableName key={index} name={table} index={index} />
+))}
+{provided.placeholder}
+</div>
+)}
+</Droppable>
+</div>
+<div className="flex items-center justify">
+
+              <button className="mx-2 text-blue-500 hover:text-blue-700">
+                <span role="img" aria-label="Edit">
+                  ✏️
                 </span>
-              ))}
-            </div>
-          </div>
-          <div className="flex items-center">
-            <button className="mx-2 text-blue-500 hover:text-blue-700">
-              <span role="img" aria-label="Edit">
-                ✏️
-              </span>
-            </button>
-            <button className="mx-2 text-red-500 hover:text-red-700">
-              <span role="img" aria-label="Delete">
-                🗑️
-              </span>
-            </button>
-            <button className="mx-2 text-green-500 hover:text-green-700">
-              <span role="img" aria-label="Add">
-                ➕
-              </span>
-            </button>
-          </div>
-        </div>
-      ))}
-    </div>
-
-    
-
-      {/* Pagination */}
-      {/* <div className="mt-4 flex justify-between items-center grey">
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          Previous
-        </button>
-        <span>
-          Page{' '}
-          <strong>
-            {pageIndex + 1} of {Math.ceil(rows.length / pageSize)}
-          </strong>{' '}
-        </span>
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
-          Next
-        </button>
-      </div> */}
+              </button>
+              <button className="mx-2 text-red-500 hover:text-red-700">
+                <span role="img" aria-label="Delete">
+                  🗑️
+                </span>
+              </button>
+              <button className="mx-2 text-green-500 hover:text-green-700">
+                <span role="img" aria-label="Add">
+                  ➕
+                </span>
+              </button>
+         
+</div>
+</div>
+))}
+</div>
+</DragDropContext>
     </div>
    
   );

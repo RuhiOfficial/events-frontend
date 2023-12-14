@@ -207,3 +207,172 @@ function Header() {
 }
 
 export default Header
+
+
+
+
+
+// // Import necessary libraries and styles
+// import React, { useMemo,useEffect,useState } from 'react';
+// import { useTable, useGlobalFilter, usePagination } from 'react-table';
+// import { matchSorter } from 'match-sorter';
+// import 'tailwindcss/tailwind.css'; // Import Tailwind CSS
+// import { Button ,Text} from 'components';
+// import Section from 'pages/Section';
+// import { useDrag,useDrop, DndProvider } from 'react-dnd';
+// import { HTML5Backend } from 'react-dnd-html5-backend';
+// import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+
+// const sections = [
+//   {
+//     id: 1,
+//     sectionName: 'Section 1',
+//     tables: ['Table 1', 'Table 2', 'Table 3'],
+//   },
+//   {
+//     id: 2,
+//     sectionName: 'Section 2',
+//     tables: ['Table 4', 'Table 5', 'Table 6'],
+//   },
+//   // Add more sections as needed
+// ];
+
+// // // Sample data
+// const data = [
+//   { id: 1, name: 'John Doe', age: 25, city: 'New York' },
+//   { id: 2, name: 'Jane Smith', age: 30, city: 'Los Angeles' },
+//   // Add more data as needed
+// ];
+
+// // Define columns for the table
+// const columns = [
+//   { Header: 'ID', accessor: 'id' },
+//   { Header: 'Name', accessor: 'name' },
+//   { Header: 'Age', accessor: 'age' },
+//   { Header: 'City', accessor: 'city' },
+//   // Add more columns as needed
+// ];
+
+// // Define a global filter function
+// const globalFilterFunction = (rows, columns, filterValue) => {
+//   const filteredRows = matchSorter(rows, filterValue, {
+//     keys: columns.map((column) => column.id),
+//   });
+
+//   return filteredRows;
+// };
+
+// function Reservartion() {
+
+//   const [isSectionOpen, setIsSectionOpen] = useState(false);
+//   const [sectionsData, setSectionsData] = useState(sections);
+
+//   const onDragEnd = (result) => {
+//     if (!result.destination) {
+//       return;
+//     }
+
+//     const updatedSections = [...sectionsData];
+//     const sourceSection = updatedSections.find((section) => section.id.toString() === result.source.droppableId);
+//     const destinationSection = updatedSections.find((section) => section.id.toString() === result.destination.droppableId);
+
+//     if (sourceSection && destinationSection) {
+//       const [movedTable] = sourceSection.tables.splice(result.source.index, 1);
+//       destinationSection.tables.splice(result.destination.index, 0, movedTable);
+
+//       setSectionsData(updatedSections);
+//     }
+//   };
+
+
+
+
+
+
+//   const openModal = () => {
+//     setIsSectionOpen(true);
+//   };
+
+//   const closeModal = () => {
+//     setIsSectionOpen(false);
+//   };
+//   // Create a table instance using react-table hooks
+//   const {
+//     getTableProps,
+//     getTableBodyProps,
+//     headerGroups,
+//     rows,
+//     prepareRow,
+//     state,
+//     setGlobalFilter,
+//     page,
+//     canPreviousPage,
+//     canNextPage,
+//     nextPage,
+//     previousPage,
+//   } = useTable(
+//     {
+//       columns,
+//       data,
+//     },
+//     useGlobalFilter,
+//     usePagination
+//   );
+
+//   // Destructure state for easier use
+//   const { globalFilter, pageIndex, pageSize } = state;
+
+//   // Memoize the filtered and paginated data for performance
+//   const memoizedData = useMemo(() => {
+//     return page;
+//   }, [page]);
+
+//   const DraggableTableName = ({ name, index }) => {
+//     return (
+//       <Draggable draggableId={name} index={index}>
+//         {(provided) => (
+//           <div
+//             ref={provided.innerRef}
+//             {...provided.draggableProps}
+//             {...provided.dragHandleProps}
+//             className="cursor-move inline-block bg-gray-200 p-2 rounded mr-2"
+//           >
+//             {name}
+//           </div>
+//         )}
+//       </Draggable>
+//     );
+//   };
+
+//   return (
+//     <DragDropContext onDragEnd={onDragEnd}>
+//       <div className=" mx-auto mt-8">
+//         {sectionsData.map((section) => (
+//           <div key={section.id} className="flex items-center justify
+// between p-4 border mb-4">
+// <div>
+// <h2 className="text-lg font-bold">{section.sectionName}</h2>
+// <Droppable droppableId={section.id.toString()} direction="horizontal">
+// {(provided) => (
+// <div ref={provided.innerRef} {...provided.droppableProps} className="flex mt-2">
+// {section.tables.map((table, index) => (
+// <DraggableTableName key={index} name={table} index={index} />
+// ))}
+// {provided.placeholder}
+// </div>
+// )}
+// </Droppable>
+// </div>
+// <div className="flex items-center">
+// {/* Add your buttons here */}
+// </div>
+// </div>
+// ))}
+// </div>
+// </DragDropContext>
+//   );
+// }
+
+// export default Reservartion
+
+
