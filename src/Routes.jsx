@@ -9,7 +9,7 @@ import Home from "pages/Home";
 import NotFound from "pages/NotFound";
 import Layout from "pages/Layout";
 import Modal from "pages/Modal";
-import Canvas from "components/Canvas";
+import Canvas from "pages/Canvas";
 import Reservation from "pages/reservation";
 const ProjectRoutes = () => {
   const auth = localStorage.getItem("Name");
