@@ -216,3 +216,13 @@ border-bottom: #d2d6dc;
 .table-list-item.selected {
   background-color: #b3d9ff; /* Change this color as needed */
 }
+
+.grey{
+  color:#bebcb8
+}
+.white{
+  color:white
+}
+.grey-border{
+  border:1px solid #626262 !important
+}

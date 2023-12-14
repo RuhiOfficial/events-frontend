@@ -48,6 +48,7 @@ const LoginScreenPage = () => {
 
     postLoginUser(req)
       .then((res) => {
+         console.log(res,"response from Login screen ====>>")
         setLoginUser(res?.data);
         
         localStorage.setItem("Name", JSON.stringify(res?.data?.user?.name));
