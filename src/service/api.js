@@ -8,7 +8,6 @@ const API_URLS = {
   GET_EVENT_TYPE: `${COMMON_URL}eventType`,
   GET_TIMEZONE: `${COMMON_URL}timezone`,
   GET_COUNTRIES: `${COMMON_URL}list_countries`,
-  GET_VENUE: `${COMMON_URL}venue`,
   GET_EVENT: `${COMMON_URL}event`,
   POST_STATE:`${COMMON_URL}list_states`,
   POST_SIGNUP_USER: `${COMMON_URL}signupUser`,
@@ -16,19 +15,14 @@ const API_URLS = {
   POST_ADD_VENUE: `${COMMON_URL}venue`,
   POST_ADD_EVENT: `${COMMON_URL}event`,
   POST_CITY: `${COMMON_URL}list_cities`,
+  POST_VENUE: `${COMMON_URL}venue_list_by_company`,
 };
 
   export const getVenueType = (payload) =>
   apis.get(API_URLS.GET_VENUE_TYPE, payload);
   
-  export const getVenue = (payload) =>
-  apis.get(API_URLS.GET_VENUE, payload);
-
   export const getEvent = (payload) =>
   apis.get(`${API_URLS.GET_EVENT}?venue_id=${payload.data.venue_id}`, payload);
-  
-  
- 
   
   export const getTimezone = (payload) =>
   apis.get(API_URLS.GET_TIMEZONE, payload);
@@ -75,3 +69,12 @@ export const postLoginUser = (payload) =>
     ...payload,
     headers: { "Content-type": "application/json", ...payload?.headers },
   });
+
+  export const postVenueList = (payload) =>
+    apis.post(API_URLS.POST_VENUE, {
+      ...payload,
+      headers: { "Content-type": "application/json", ...payload?.headers },
+    });
+
+  
+  

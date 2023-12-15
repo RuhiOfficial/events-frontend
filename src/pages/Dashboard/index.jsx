@@ -21,8 +21,6 @@ const DashboardPage = () => {
   const [loading, setLoading] = useState(false);
   const[venueId,setVenueId]=useState(null);
   const[eventList,setEventList]=useState([]);
-
-  
   useEffect(() => {
     const savedVenueId = Cookies.get('venueId');
     console.log(savedVenueId,"saved venue from cookies")
@@ -32,8 +30,7 @@ const DashboardPage = () => {
     
   }, []);
 
-
-  const fetchData = async (venueId) => {
+const fetchData = async (venueId) => {
     console.log(venueId,"inside function venue id is")
     const req = { 
       data:{venue_id:venueId }};
@@ -327,10 +324,7 @@ const DashboardPage = () => {
             </div>
           ))}
         </List>
-    
-    
-                           
-                          </div>
+ </div>
                         </div>
                       </div>
                     </div>

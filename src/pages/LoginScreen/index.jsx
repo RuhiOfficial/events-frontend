@@ -66,6 +66,7 @@ const LoginScreenPage = () => {
           JSON.stringify(res?.data?.authorisation?.token),
         );
         const auth= localStorage.getItem("Name");
+         Cookies.set('companyId', JSON.stringify(res?.data?.user?.company_id));
          Cookies.set('venueId', JSON.stringify(res?.data?.user?.venue_id));
         console.log(auth,"from login===>>")
         window.location.href = "/";

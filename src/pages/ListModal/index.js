@@ -2,17 +2,22 @@
 import React,{useEffect,useState} from 'react';
 import Modal from 'react-modal';
 import { Button, Img, Line, List, Text } from "components";
-import { getVenue } from 'service/api';
+import { postVenueList } from 'service/api';
 import Cookies from 'js-cookie';
 
 const ListModal = ({ isOpen, onRequestClose }) => {
+  const companyId = Cookies.get('companyId');
+  console.log(companyId,"id if company is ===>>>")
     const [loading, setLoading] = useState(false);
     const [venueList, setVenueList] = useState([]);
  const list=async()=>{
-    const req = {};
-      
-    await getVenue(req)
-      .then((res) => {
+    const req = {
+      data:{
+        id:companyId,
+      }
+    };
+      console.log(req,"req from the header page is ")
+    await postVenueList(req).then((res) => {
         setVenueList(res.data.data);
       })
       .catch((err) => {
@@ -38,13 +43,6 @@ const handleListItemClick = (venueId) => {
     // Add your logic here, e.g., navigate to a different page
   };
  
-
-
-
-
-
-
-
 console.log(venueList,"list is ")
 
 
@@ -84,7 +82,7 @@ console.log(venueList,"list is ")
         <p>Loading...</p>
       ) : (
         <List
-          className="flex-1 sm:flex-col flex-row gap-[31px] grid md:grid-cols-1 grid-cols-2 w-full"
+          className="flex-1 sm:flex-col flex-row gap-[31px] grid md:grid-cols-1 grid-cols-3 w-full "
           orientation="horizontal"
         >
           {venueList.map((item) => (
@@ -100,30 +98,30 @@ console.log(venueList,"list is ")
               /> */}
 
                   <Img
-                                  className="sm:flex-1 h-[151px] md:h-auto object-cover w-[21%] sm:w-full"
+                                  className="sm:flex-1 h-[60px] md:h-auto object-cover w-[30%] sm:w-full"
                                   src="images/img_rectangle63.png"
                                   alt="rectangleSixtyThree"
                                 />
 
               <div className="flex flex-col items-start justify-start">
                 <Text
-                  className="sm:text-[19px] md:text-[21px] text-[23px] text-white-A700"
+                  className="sm:text-[19px] md:text-[21px] text-[17px] text-white-A700"
                   size="txtPoppinsSemiBold23"
                 >
                   {item.name}
                 </Text>
                 <Text
-                  className="text-lg text-white-A700"
-                  size="txtPoppinsMedium18"
+                  className="text-lg text-white-A700 text-[10px]"
+                  size="txtPoppins"
                 >
                   {item.email}
                 </Text>
-                <Text
+                {/* <Text
                   className="mt-3.5 text-sm text-white-A700"
                   size="txtPoppinsRegular14"
                 >
                   {item.albumId}
-                </Text>
+                </Text> */}
               </div>
             </div>
           ))}
