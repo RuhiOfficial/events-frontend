@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 function LayoutPopup({ onClose, onBackgroundImageChange,isOpen, onRequestClose }) {
   const [layoutName, setLayoutName] = useState('');
   const [backgroundImage, setBackgroundImage] = useState(null);
+  localStorage.setItem('layoutImage',backgroundImage)
   if(backgroundImage){
     console.log(backgroundImage.name)
   }
