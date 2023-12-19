@@ -5,8 +5,11 @@ import { Stage, Layer, Line, Rect, Circle,Group , Text as KonvaText } from 'reac
 // Import the LayoutPopup component
 import LayoutPopup from 'components/Layoutpopup';
 import { Button, Img, List, Text } from "components";
+import { useLocation, useHistory } from 'react-router-dom';
 
 function Canvas() {
+  const location = useLocation();
+
     const stageRef = useRef(null);
     const [shapes, setShapes] = useState([]);
     const [newShape, setNewShape] = useState({ tool: 'line', points: [] });
@@ -14,6 +17,7 @@ function Canvas() {
     const [history, setHistory] = useState([]);
     const [historyIndex, setHistoryIndex] = useState(0);
     const [backgroundImage, setBackgroundImage] = useState(null);
+    const [myBackgroundImage, setMyBackgroundImage] = useState(null);
     const [layoutName, setLayoutName] = useState('');
     const [gridSize, setGridSize] = useState(50); // Default grid size
     const [gridVisible, setGridVisible] = useState(true);
@@ -29,23 +33,92 @@ function Canvas() {
     const [droppedTables, setDroppedTables] = useState([]);
     const [activeTables, setActiveTables] = useState([]);
   const [inactiveTables, setInactiveTables] = useState([]);
+  console.log(backgroundImage,"initial")
+  // localStorage.setItem('canvasBackgroundImage', 'https://example.com/path/to/your/image.jpg');
+useEffect(() => {
+  const savedCanvasState = localStorage.getItem('canvasState');
+  console.log(savedCanvasState, "saved canvas state is===>>>");
+
+  if (savedCanvasState) {
+    const loadedBackgroundImage = localStorage.getItem('canvasBackgroundImage');
+    console.log(loadedBackgroundImage, "loaded background is ==>>");
+
+    if (loadedBackgroundImage) {
+      const img = new Image();
+
+      if (loadedBackgroundImage.startsWith('data:image')) {
+        // If it's a base64 string, set it as the src
+        img.src = loadedBackgroundImage;
+
+        img.onload = () => {
+          // Convert the loaded image to a base64 string
+          const canvas = document.createElement('canvas');
+          canvas.width = img.width;
+          canvas.height = img.height;
+          const context = canvas.getContext('2d');
+          context.drawImage(img, 0, 0);
+          const base64String = canvas.toDataURL('image/jpeg').split(',')[1];
+          
+          // Set myBackgroundImage with the base64 string
+          setMyBackgroundImage(base64String);
+        };
+
+        img.onerror = (error) => {
+          console.error('Error loading image:', error);
+        };
+      } else {
+        // If it's a File object, handle it differently
+        const reader = new FileReader();
+        reader.onload = () => {
+          const img = new Image();
+          img.src = reader.result;
+
+          img.onload = () => {
+            setBackgroundImage(img);
+          };
+
+          img.onerror = (error) => {
+            console.error('Error loading image:', error);
+          };
+        };
+
+        // Assuming loadedBackgroundImage is a File object
+        reader.readAsDataURL(loadedBackgroundImage);
+      }
+    }
+
+    const parsedCanvasState = JSON.parse(savedCanvasState);
+    setBoxes(parsedCanvasState.boxes || []);
+    // ... (restore other state variables)
+  } else {
+    console.log("No saved canvas state");
+  }
+}, []);
+
+  
+  
+  
+  
+  
+  
   useEffect(() => {
-    // Load canvas state from local storage when the component mounts
-    const savedCanvasState = localStorage.getItem('canvasState');
-    console.log(savedCanvasState.backgroundImage,"saved canvas state is===>>>")
-    // if (savedCanvasState) {
-    //   console.log(savedCanvasState,"saved canvas state is yessssss")
-    //   const loadedBackgroundImage = localStorage.getItem('canvasBackgroundImage');
-    //   if (loadedBackgroundImage) {
-    //     setBackgroundImage(new Image(loadedBackgroundImage));
-    //   }
-    //   setBoxes(savedCanvasState.boxes || []);
-    //   // ... (restore other state variables)
-    // }
-    // else{
-    //   console.log("no saved canvas state")
-    // }
-  },[]);
+    // Read layout information from URL parameters
+    const params = new URLSearchParams(location.search);
+    const layoutNameParam = params.get('layoutName');
+    const backgroundImageParam = params.get('backgroundImage');
+    const boxesParam = params.get('boxes');
+
+    if (layoutNameParam && backgroundImageParam && boxesParam) {
+      // Convert boxesParam to an array (assuming it's stored as a JSON string in the URL)
+      const parsedBoxes = JSON.parse(boxesParam);
+
+      // Set background image and boxes
+      setBackgroundImage(new Image(backgroundImageParam));
+      setLayoutName(layoutNameParam);
+      setBoxes(parsedBoxes);
+    }
+  }, [location.search]);
+
 
   useEffect(() => {
     // Save canvas state to local storage whenever the background image or boxes change
@@ -55,22 +128,22 @@ function Canvas() {
     );
   }, [backgroundImage, boxes /*, other state variables */]);
   
-    useEffect(() => {
-      if (backgroundImage) {
-        const img = new Image();
-        img.src = URL.createObjectURL(backgroundImage);
-        img.onload = () => {
-          // Once the image has loaded, set the dimensions of the Stage to match the image
-          const stage = stageRef.current;
-          const imageWidth = img.width;
-          const imageHeight = img.height;
-          setGridSize(Math.min(imageWidth, imageHeight) / 20); // Adjust grid size based on the image dimensions
-          stage.width(imageWidth);
-          stage.height(imageHeight);
-          stage.batchDraw(); // Redraw the stage
-        };
-      }
-    }, [backgroundImage]);
+  useEffect(() => {
+    if (backgroundImage || myBackgroundImage) {
+      const img = new Image();
+      img.src = backgroundImage ? URL.createObjectURL(backgroundImage) : `data:image/jpeg;base64,${myBackgroundImage}`;
+      img.onload = () => {
+        const stage = stageRef.current;
+        const imageWidth = img.width;
+        const imageHeight = img.height;
+        const newGridSize = Math.min(imageWidth, imageHeight) / 20; // Adjust factor as needed
+        setGridSize(newGridSize);
+        stage.width(imageWidth);
+        stage.height(imageHeight);
+        stage.batchDraw();
+      };
+    }
+  }, [backgroundImage, myBackgroundImage]);
   
 
 
@@ -110,18 +183,38 @@ function Canvas() {
       setLayoutName(layoutName);
     
       if (image) {
-        // Convert the image to a data URL and store it in the localStorage
+        // Convert the image to a data URL and store it in the URL parameters
         const reader = new FileReader();
         reader.onload = (event) => {
           const imageDataUrl = event.target.result;
+    
+          // Save the canvas background image to local storage
           localStorage.setItem('canvasBackgroundImage', imageDataUrl);
+    
+          // Update URL parameters
+          const params = new URLSearchParams(location.search);
+          params.set('layoutName', layoutName);
+          params.set('backgroundImage', imageDataUrl);
+          params.set('boxes', JSON.stringify(boxes));
+          history.push(`${location.pathname}?${params.toString()}`);
         };
         reader.readAsDataURL(image);
+        setMyBackgroundImage(null)
+        setGridVisible(false);
+        resetCanvasState();
       } else {
-        // Clear the background image in the localStorage if null or undefined
-        localStorage.removeItem('canvasBackgroundImage');
+        // Clear the background image and boxes in the URL parameters
+        const params = new URLSearchParams(location.search);
+        params.delete('layoutName');
+        params.delete('backgroundImage');
+        params.delete('boxes');
+        history.push(`${location.pathname}?${params.toString()}`);
       }
     };
+    
+  
+    // ...
+
 
     /////////////Modal////////
     const openModal = () => {
@@ -213,37 +306,72 @@ function Canvas() {
       
           const tempContext = tempCanvas.getContext('2d');
       
-          // Draw the background image onto the canvas
-          if (backgroundImage) {
+          // Draw the background image onto the canvas (use either backgroundImage or myBackgroundImage)
+          const backgroundToUse = myBackgroundImage || backgroundImage;
+      
+          if (backgroundToUse) {
             const backgroundImageElement = new Image();
-            backgroundImageElement.src = URL.createObjectURL(backgroundImage);
+            backgroundImageElement.src = myBackgroundImage
+              ? `data:image/jpeg;base64,${myBackgroundImage}`
+              : URL.createObjectURL(backgroundToUse);
+      
             backgroundImageElement.onload = () => {
-              tempContext.drawImage(backgroundImageElement, 0, 0, stage.width(), stage.height());
+              // Draw the background image
+              tempContext.drawImage(
+                backgroundImageElement,
+                0,
+                0,
+                stage.width(),
+                stage.height()
+              );
       
-              // Draw the Konva stage onto the canvas
-              const stageData = stage.toDataURL({
-                mimeType: 'image/png',
-                quality: 1,
-                pixelRatio: 1,
+              // Draw other Konva elements onto the canvas
+              stage.children.forEach((layer) => {
+                if (layer.isVisible()) {
+                  layer.children.forEach((node) => {
+                    if (node.isVisible()) {
+                      tempContext.drawImage(node.toCanvas(), node.x(), node.y());
+                    }
+                  });
+                }
               });
-              const stageImage = new Image();
-              stageImage.src = stageData;
-              stageImage.onload = () => {
-                tempContext.drawImage(stageImage, 0, 0);
       
-                // Create a link element and trigger a download
-                const a = document.createElement('a');
-                a.href = tempCanvas.toDataURL('image/png');
-                a.download = 'canvas_image.png';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-              };
+              // Create a link element and trigger a download
+              const a = document.createElement('a');
+              a.href = tempCanvas.toDataURL('image/png');
+              a.download = 'canvas_image.png';
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
             };
           }
         }
       };
       
+      
+      const resetCanvasState = () => {
+        setShapes([]);
+        setNewShape({ tool: 'line', points: [] });
+        setTextValue('');
+        setHistory([]);
+        setHistoryIndex(0);
+        
+        setMyBackgroundImage(null);
+        setLayoutName('');
+        setGridSize(50);
+        
+        setBoxes([]);
+        setCount(3);
+        setSelectedBox(null);
+        setTableList([
+          { label: 'Table 1', width: gridSize, height: gridSize },
+          { label: 'Table 2', width: gridSize, height: gridSize },
+          { label: 'Table 3', width: gridSize, height: gridSize },
+        ]);
+        setDroppedTables([]);
+        setActiveTables([]);
+        setInactiveTables([]);
+      };
       
 
     return (
@@ -291,75 +419,95 @@ function Canvas() {
   
         
        
-         <div className={`drawing-canvas`}>
-        {gridVisible && backgroundImage && (
-          <img
-            src={backgroundImage ? URL.createObjectURL(backgroundImage) : ''}
-            alt="Background Image"
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              objectFit: 'contain',
-            }}
-          />
-        )}
+        <div className="drawing-canvas">
+      {backgroundImage && (
+        <img
+          src={URL.createObjectURL(backgroundImage)}
+          alt="Background Image"
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'contain',
+          }}
+        />
+      )}
 
-        {/* Konva Stage with the drawing area */}
-        <Stage
-          width={backgroundImage ? backgroundImage.width : 1000}
-          height={backgroundImage ? backgroundImage.height : 800}
-          ref={stageRef}
-        >
-          <Layer>
-            {Array.from({ length: Math.ceil((backgroundImage ? backgroundImage.width : 1000) / gridSize) }).map((_, i) => (
-              <Line
-                key={`grid-x-${i}`}
-                points={[i * gridSize, 0, i * gridSize, (backgroundImage ? backgroundImage.height : 800)]}
-                stroke="#ccc"
-                strokeWidth={1}
-              />
-            ))}
-            {Array.from({ length: Math.ceil((backgroundImage ? backgroundImage.height : 800) / gridSize) }).map((_, i) => (
-              <Line
-                key={`grid-y-${i}`}
-                points={[0, i * gridSize, (backgroundImage ? backgroundImage.width : 1000), i * gridSize]}
-                stroke="#ccc"
-                strokeWidth={1}
-              />
-            ))}
-            {boxes.map((box, index) => (
-              <Group
-                key={index}
-                x={box.x}
-                y={box.y}
-                draggable
-                onDragEnd={(e) => handleBoxDragEnd(e, index)}
-              >
-                <Rect
-                  width={box.width}
-                  height={box.height}
-                  fill="lightblue"
-                  stroke="black"
-                  strokeWidth={2}
+      {myBackgroundImage && (
+        <img
+          src={`data:image/jpeg;base64,${myBackgroundImage}`}
+          alt="Background Image"
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'contain',
+          }}
+        />
+      )}
+
+      {/* Konva Stage with the drawing area */}
+      <Stage
+        width={backgroundImage ? backgroundImage.width : 1000}
+        height={backgroundImage ? backgroundImage.height : 800}
+        ref={stageRef}
+      >
+        <Layer>
+          {gridVisible && backgroundImage && (
+            <>
+              {Array.from({ length: Math.ceil((backgroundImage.width || 1000) / gridSize) }).map((_, i) => (
+                <Line
+                  key={`grid-x-${i}`}
+                  points={[i * gridSize, 0, i * gridSize, (backgroundImage.height || 800)]}
+                  stroke="#ccc"
+                  strokeWidth={1}
                 />
-                <KonvaText
-                  x={0}
-                  y={0}
-                  text={box.label}
-                  fontSize={16}  // Adjust the font size as needed
-                  fill="black"
-                  align="center"
-                  width={box.width}
-                  height={box.height}
-                  verticalAlign="middle"
+              ))}
+              {Array.from({ length: Math.ceil((backgroundImage.height || 800) / gridSize) }).map((_, i) => (
+                <Line
+                  key={`grid-y-${i}`}
+                  points={[0, i * gridSize, (backgroundImage.width || 1000), i * gridSize]}
+                  stroke="#ccc"
+                  strokeWidth={1}
                 />
-              </Group>
-            ))}
-          </Layer>
-        </Stage>
+              ))}
+            </>
+          )}
+
+          {boxes.map((box, index) => (
+            <Group
+              key={index}
+              x={box.x}
+              y={box.y}
+              draggable
+              onDragEnd={(e) => handleBoxDragEnd(e, index)}
+            >
+              <Rect
+                width={box.width}
+                height={box.height}
+                fill="lightblue"
+                stroke="black"
+                strokeWidth={2}
+              />
+              <KonvaText
+                x={0}
+                y={0}
+                text={box.label}
+                fontSize={16}  // Adjust the font size as needed
+                fill="black"
+                align="center"
+                width={box.width}
+                height={box.height}
+                verticalAlign="middle"
+              />
+            </Group>
+          ))}
+        </Layer>
+      </Stage>
       </div>
   
         {/* Render the layout popup when showLayoutPopup is true */}

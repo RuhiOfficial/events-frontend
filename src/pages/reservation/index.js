@@ -7,6 +7,7 @@ import { Button ,Text} from 'components';
 import Section from 'pages/Section';
 import AddTable from 'pages/AddTable';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import DeleteTable from 'pages/DeleteTable';
 
 
 const sections = [
@@ -27,6 +28,7 @@ const sections = [
 function Reservartion() {
   const [isSectionOpen, setIsSectionOpen] = useState(false);
   const [isTableOpen, setIsTableOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   const [sectionsData, setSectionsData] = useState(sections);
 
@@ -67,6 +69,16 @@ function Reservartion() {
     setIsTableOpen(false);
   };
   
+  const openDeleteModal = () => {
+    setIsDeleteOpen(true);
+  };
+
+  const closeDeleteModal = () => {
+    setIsDeleteOpen(false);
+  };
+
+
+
   const DraggableTableName = ({ name, index }) => {
         return (
           <Draggable draggableId={name} index={index}>
@@ -129,25 +141,26 @@ function Reservartion() {
 )}
 </Droppable>
 </div>
-<div className="flex items-center justify">
+            <div className="flex items-center justify">
 
               <button className="mx-2 text-blue-500 hover:text-blue-700">
                 <span role="img" aria-label="Edit">
                   ✏️
                 </span>
               </button>
-              <button className="mx-2 text-red-500 hover:text-red-700">
+              <button className="mx-2 text-red-500 hover:text-red-700 "onClick={openDeleteModal}>
                 <span role="img" aria-label="Delete">
                   🗑️
                 </span>
               </button>
+             
               <button className="mx-2 text-green-500 hover:text-green-700" onClick={openTableModal}>
                 <span role="img" aria-label="Add">
                   ➕
                 </span>
               </button>
-              <AddTable isOpen={isTableOpen} onRequestClose={closeTableModal} />
-         
+              <AddTable isTableOpen={isTableOpen} onRequestTableClose={closeTableModal} />
+              <DeleteTable isOpen={isDeleteOpen} onRequestClose={closeDeleteModal} />
 </div>
 </div>
 ))}
