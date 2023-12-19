@@ -53,7 +53,8 @@ function DeleteTable({ isOpen, onRequestClose }) {
       clipRule="evenodd"
     />
   </svg>
-</div>
+</div> 
+
 
 
               
