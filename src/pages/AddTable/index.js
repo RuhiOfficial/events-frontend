@@ -4,10 +4,13 @@ import * as yup from "yup";
 import { Button, Input, Text,SelectBox ,Img} from "components";
 import useForm from "hooks/useForm";
 import {  ToastContainer,toast } from "react-toastify";
+import { getSection,postTable } from 'service/api';
 
-function AddTable({ isOpen, onRequestClose }) {
-    const {selectedSection,setSelectedSection}=useState(null);
-    const {sectionList,setSectionList}=useState([]);
+function AddTable({ isTableOpen, onRequestTableClose }) {
+    const [selectedSection,setSelectedSection]=useState(null);
+    const [sectionList,setSectionList]=useState([]);
+     const venueId= localStorage.getItem('Venue')
+     
 
     const formValidationSchema = yup.object().shape({
                       name: yup.string().required("Name is required"),
@@ -32,7 +35,7 @@ function AddTable({ isOpen, onRequestClose }) {
 
              useEffect(()=>{
                 section();
-             })         
+             },[])         
    ///////////Sections///////////////
 
 const handleSectionChange = (selectedOption) => {
@@ -42,37 +45,39 @@ const handleSectionChange = (selectedOption) => {
   };
   
   async function section() {
-    const req = {};
+    
+    const req = { 
+      data:{venue_id:venueId }};
   
-    // await getSection(req)
-    //   .then((res) => {
-    //     // console.log(res, "response is");
+    await getSection(req)
+      .then((res) => {
+        console.log(res, "List of Sections are as follows");
         
   
-    //     let options;
+        let options;
   
-    //     if (res.data.data.length === 1) {
+        if (res.data.data.length === 1) {
           
-    //       options = [
-    //         {
-    //           label: res.data.data[0].name,
-    //           value: res.data.data[0].id,
-    //         },
-    //       ];
-    //     } else {
+          options = [
+            {
+              label: res.data.data[0].name,
+              value: res.data.data[0].id,
+            },
+          ];
+        } else {
          
-    //       options = res.data.data.map((item) => ({
-    //         label: item.name,
-    //         value: item.id,
-    //       }));
-    //     }
-  
-    //     setSectionList(options);
+          options = res.data.data.map((item) => ({
+            label: item.name,
+            value: item.id,
+          }));
+        }
+        console.log(options)
+       setSectionList(options)
         
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //   });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
   
 
@@ -88,38 +93,38 @@ const handleSectionChange = (selectedOption) => {
                 const req = {
             
                   data: {
-                    vid:1,
-                    eid:2,
-                    name: data?.name,
+                    venue_id:venueId,
+                    section_id:selectedSection,
+                    table_name: data?.name,
                     no_of_seats: data?.no_of_seats,
                     minimum_order: data?.minimum_order,
                   },
             
                 };
-            // console.log(req,"req is ======>>>")
-            //  await   postAddVenue(req)
-            //       .then((res) => {
-            //         // console.log(res)
+            console.log(req,"req is ======>>>")
+             await   postTable(req)
+                  .then((res) => {
+                    
                     
                 
                     
-            //         toast.success("Venue is added Succesfully!");
-            //         setTimeout(() => {
-            //           window.location.href="/"
-            //         }, 3000);
+                    toast.success("Table is added Succesfully!");
+                    setTimeout(() => {
+                      window.location.href="/reservation"
+                    }, 3000);
                   
-            //       })
-            //       .catch((err) => {
-            //         console.error(err);
-            //         toast.error("Something Went Wrong!");
-            //       });
+                  })
+                  .catch((err) => {
+                    console.error(err);
+                    toast.error("Something Went Wrong!");
+                  });
               }
              
     
   return (
     <Modal
-          isOpen={isOpen}
-          onRequestClose={onRequestClose}
+          isOpen={isTableOpen}
+          onRequestClose={onRequestTableClose}
           contentLabel="Example Modal"
           style={{
             overlay: {
@@ -165,10 +170,10 @@ const handleSectionChange = (selectedOption) => {
                    placeholderClassName="text-gray-600"
                    isMulti={false}
                    name="country"
-                //    options={countryList}
+                 options={sectionList}
                    isSearchable={true}
                    placeholder="Select Section..."
-                //    onChange={handleCountryChange}
+                   onChange={handleSectionChange}
                 
                  />
                 </div>
@@ -240,9 +245,9 @@ const handleSectionChange = (selectedOption) => {
                              size="md"
                              variant="gradient"
                              color="blue_600_indigo_900"
-                             // onClick={() => {
-                             //   form.handleSubmit(addvenue);
-                             // }}
+                             onClick={() => {
+                               form.handleSubmit(addTable);
+                             }}
                            >
                              Add 
                            </Button>

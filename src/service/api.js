@@ -3,12 +3,14 @@ import { apis } from "service";
 
 const COMMON_URL = `https://event-backend.isdemo.in/api/v1/`;
 
+
 const API_URLS = {
   GET_VENUE_TYPE: `${COMMON_URL}venueType`,
   GET_EVENT_TYPE: `${COMMON_URL}eventType`,
   GET_TIMEZONE: `${COMMON_URL}timezone`,
   GET_COUNTRIES: `${COMMON_URL}list_countries`,
   GET_EVENT: `${COMMON_URL}event`,
+  GET_SECTION: `${COMMON_URL}listsection`,
   POST_STATE:`${COMMON_URL}list_states`,
   POST_SIGNUP_USER: `${COMMON_URL}signupUser`,
   POST_LOGIN_USER: `${COMMON_URL}loginUser`,
@@ -16,10 +18,13 @@ const API_URLS = {
   POST_ADD_EVENT: `${COMMON_URL}event`,
   POST_CITY: `${COMMON_URL}list_cities`,
   POST_VENUE: `${COMMON_URL}venue_list_by_company`,
+  POST_SECTION: `${COMMON_URL}addsection`,
+  POST_TABLE: `${COMMON_URL}eventTable`,
 };
 
   export const getVenueType = (payload) =>
   apis.get(API_URLS.GET_VENUE_TYPE, payload);
+  
   
   export const getEvent = (payload) =>
   apis.get(`${API_URLS.GET_EVENT}?venue_id=${payload.data.venue_id}`, payload);
@@ -32,6 +37,9 @@ const API_URLS = {
 
   export const getEventType = (payload) =>
   apis.get(API_URLS.GET_EVENT_TYPE, payload);
+
+  export const getSection = (payload) =>
+  apis.get(`${API_URLS.GET_SECTION}?venue_id=${payload.data.venue_id}`, payload);
 
   export const postCities = (payload) =>
   apis.post(API_URLS.POST_CITY, {
@@ -75,6 +83,20 @@ export const postLoginUser = (payload) =>
       ...payload,
       headers: { "Content-type": "application/json", ...payload?.headers },
     });
+
+    export const postSection = (payload) =>
+    apis.post(API_URLS.POST_SECTION, {
+      ...payload,
+      headers: { "Content-type": "application/json", ...payload?.headers },
+    });
+
+
+    export const postTable = (payload) =>
+    apis.post(API_URLS.POST_TABLE, {
+      ...payload,
+      headers: { "Content-type": "application/json", ...payload?.headers },
+    });
+
 
   
   

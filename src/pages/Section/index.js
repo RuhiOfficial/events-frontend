@@ -5,19 +5,20 @@ import * as yup from "yup";
 import { Button, Input, Text,SelectBox ,Img} from "components";
 import useForm from "hooks/useForm";
 import {  ToastContainer,toast } from "react-toastify";
+import { postSection } from 'service/api';
 
 function Section({ isOpen, onRequestClose }) {
+  const vid= localStorage.getItem('Venue')
     const formValidationSchema = yup.object().shape({
                       name: yup.string().required("Name is required"),
-                      no_of_seats: yup.string().required("Seats count is required"),
-                      minimum_order: yup.string().required("Minimum Order is required"),
+                      price: yup.string().required("Price count is required"),
+                      
                       });
                 
             const form = useForm(
                         {
                           name: "",
-                          no_of_seats: "",
-                          minimum_order: "",
+                          price:"",
                         
                         },
                         {
@@ -29,37 +30,36 @@ function Section({ isOpen, onRequestClose }) {
         /// Hiiting the Api to to save data /////////
         
         
-             async function addTable(data) {
+             async function addSection(data) {
         
               // console.log(data,"data from modal is ");
                 const req = {
             
                   data: {
-                    vid:1,
-                    eid:2,
+                    venue_id:vid,
                     name: data?.name,
-                    no_of_seats: data?.no_of_seats,
-                    minimum_order: data?.minimum_order,
+                    price: data?.price,
+                    
                   },
             
                 };
-            // console.log(req,"req is ======>>>")
-            //  await   postAddVenue(req)
-            //       .then((res) => {
-            //         // console.log(res)
+            console.log(req,"req is ======>>>")
+             await   postSection(req)
+                  .then((res) => {
+                    console.log(res)
                     
                 
                     
-            //         toast.success("Venue is added Succesfully!");
-            //         setTimeout(() => {
-            //           window.location.href="/"
-            //         }, 3000);
+                    toast.success("Section is added Succesfully!");
+                    setTimeout(() => {
+                      window.location.href="/reservation"
+                    }, 3000);
                   
-            //       })
-            //       .catch((err) => {
-            //         console.error(err);
-            //         toast.error("Something Went Wrong!");
-            //       });
+                  })
+                  .catch((err) => {
+                    console.error(err);
+                    toast.error("Something Went Wrong!");
+                  });
               }
              
         
@@ -160,9 +160,9 @@ function Section({ isOpen, onRequestClose }) {
                     size="md"
                     variant="gradient"
                     color="blue_600_indigo_900"
-                    // onClick={() => {
-                    //   form.handleSubmit(addvenue);
-                    // }}
+                    onClick={() => {
+                      form.handleSubmit(addSection);
+                    }}
                   >
                     Add 
                   </Button>
