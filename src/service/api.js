@@ -20,6 +20,7 @@ const API_URLS = {
   POST_VENUE: `${COMMON_URL}venue_list_by_company`,
   POST_SECTION: `${COMMON_URL}addsection`,
   POST_TABLE: `${COMMON_URL}eventTable`,
+  DELETE_TABLE: `${COMMON_URL}eventTable`,
 };
 
   export const getVenueType = (payload) =>
@@ -40,6 +41,9 @@ const API_URLS = {
 
   export const getSection = (payload) =>
   apis.get(`${API_URLS.GET_SECTION}?venue_id=${payload.data.venue_id}`, payload);
+
+  export const deleteTable = (payload) =>
+  apis.delete(`${API_URLS.DELETE_TABLE}?id=${payload.data.venue_id}`, payload);
 
   export const postCities = (payload) =>
   apis.post(API_URLS.POST_CITY, {

@@ -5,9 +5,32 @@ import { Button, Input, Text,SelectBox ,Img} from "components";
 
 import {  ToastContainer,toast } from "react-toastify";
 import { postSection } from 'service/api';
+import { deleteTable } from 'service/api';
+
 
 
 function DeleteTable({ isOpen, onRequestClose }) {
+  const delTable=async()=>{
+
+
+    const req = { 
+      // data:{id:venueId }
+    };
+  
+    await deleteTable(req)
+      .then((res) => {
+       
+        } 
+        
+      )
+      .catch((err) => {
+        console.error(err);
+      });
+
+
+
+
+  }
   return (
     <Modal
           isOpen={isOpen}
@@ -89,9 +112,9 @@ function DeleteTable({ isOpen, onRequestClose }) {
                     size="md"
                     variant="gradient"
                     color="blue_600_indigo_900"
-                    // onClick={() => {
-                    //   form.handleSubmit(addSection);
-                    // }}
+                    onClick={() => {
+                      onRequestClose()
+                    }}
                   >
                     No Cancel
                   </Button>
@@ -99,9 +122,7 @@ function DeleteTable({ isOpen, onRequestClose }) {
   className="common-pointer cursor-pointer leading-[normal] text-center text-white text-s w-[200px] bg-gradient-to-r from-[#ef4444] to-[#991b1b]"
   shape="round"
   size="md"
-  // onClick={() => {
-  //   form.handleSubmit(addSection);
-  // }}
+  onClick={delTable}
 >
   Yes, I'm sure
 </Button>

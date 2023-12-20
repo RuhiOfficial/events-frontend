@@ -78,24 +78,35 @@ function Reservartion() {
   };
 
 
-
-  const DraggableTableName = ({ name, index }) => {
-        return (
-          <Draggable draggableId={name} index={index}>
-            {(provided) => (
-              <div
-                ref={provided.innerRef}
-                {...provided.draggableProps}
-                {...provided.dragHandleProps}
-                className="cursor-move inline-block bg-[#5051f9] text-white p-2 rounded mr-2"
-              >
-                {name}
-              </div>
-            )}
-          </Draggable>
-        );
-      };
-
+  const DraggableTableName = ({ name, index, onClick }) => {
+    const handleClick = () => {
+      onClick(index); // Pass the index or any necessary data to the onClick function
+    };
+  
+    return (
+      <Draggable draggableId={name} index={index}>
+        {(provided, snapshot) => (
+          <div
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            className={`cursor-move inline-block ${
+              snapshot.isDragging ? "opacity-50" : ""
+            }`}
+          >
+            <div
+              className="bg-[#5051f9] text-white p-2 rounded mr-2"
+              onClick={handleClick}
+            >
+              {name}
+            </div>
+          </div>
+        )}
+      </Draggable>
+    );
+  };
+  
+  
 
   return (
     <div className='p-[50px] m-[50px] bg-[#1f2327]'>
@@ -125,47 +136,57 @@ function Reservartion() {
     </div>
      
     <DragDropContext onDragEnd={onDragEnd}>
-           <div className=" mx-auto mt-8 ">
+      <div className="mx-auto mt-8">
         {sectionsData.map((section) => (
           <div key={section.id} className="flex items-center justify-between p-4 grey-border mb-4">
-<div>
-<h2 className="text-lg font-bold white">{section.sectionName}</h2>
-<Droppable droppableId={section.id.toString()} direction="horizontal">
-{(provided) => (
-<div ref={provided.innerRef} {...provided.droppableProps} className="flex mt-2 white ">
-{section.tables.map((table, index) => (
-<DraggableTableName key={index} name={table} index={index} />
-))}
-{provided.placeholder}
-</div>
-)}
-</Droppable>
-</div>
+            <div>
+              <h2 className="text-lg font-bold white">{section.sectionName}</h2>
+              <Droppable droppableId={section.id.toString()} direction="horizontal">
+                {(provided) => (
+                  <div ref={provided.innerRef} {...provided.droppableProps} className="flex mt-2 white ">
+                    {section.tables.map((table, index) => (
+                      <DraggableTableName
+                        key={index}
+                        name={table}
+                        index={index}
+                        onClick={() => {
+                          console.log("table index is clicked ", index);
+                        }}
+                      />
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </div>
+            <div className="flex items-center justify">
             <div className="flex items-center justify">
 
-              <button className="mx-2 text-blue-500 hover:text-blue-700">
-                <span role="img" aria-label="Edit">
-                  ✏️
-                </span>
-              </button>
-              <button className="mx-2 text-red-500 hover:text-red-700 "onClick={openDeleteModal}>
-                <span role="img" aria-label="Delete">
-                  🗑️
-                </span>
-              </button>
-             
-              <button className="mx-2 text-green-500 hover:text-green-700" onClick={openTableModal}>
-                <span role="img" aria-label="Add">
-                  ➕
-                </span>
-              </button>
-              <AddTable isTableOpen={isTableOpen} onRequestTableClose={closeTableModal} />
-              <DeleteTable isOpen={isDeleteOpen} onRequestClose={closeDeleteModal} />
+<button className="mx-2 text-blue-500 hover:text-blue-700">
+  <span role="img" aria-label="Edit">
+    ✏️
+  </span>
+</button>
+<button className="mx-2 text-red-500 hover:text-red-700 "onClick={openDeleteModal}>
+  <span role="img" aria-label="Delete">
+    🗑️
+  </span>
+</button>
+
+<button className="mx-2 text-green-500 hover:text-green-700" onClick={openTableModal}>
+  <span role="img" aria-label="Add">
+    ➕
+  </span>
+</button>
+<AddTable isTableOpen={isTableOpen} onRequestTableClose={closeTableModal} />
+<DeleteTable isOpen={isDeleteOpen} onRequestClose={closeDeleteModal} />
 </div>
-</div>
-))}
-</div>
-</DragDropContext>
+
+            </div>
+          </div>
+        ))}
+      </div>
+    </DragDropContext>
     </div>
    
   );
