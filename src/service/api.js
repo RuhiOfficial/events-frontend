@@ -11,6 +11,7 @@ const API_URLS = {
   GET_COUNTRIES: `${COMMON_URL}list_countries`,
   GET_EVENT: `${COMMON_URL}event`,
   GET_SECTION: `${COMMON_URL}listsection`,
+  GET_SECTION_BY_ID:`${COMMON_URL}section_list`,
   POST_STATE:`${COMMON_URL}list_states`,
   POST_SIGNUP_USER: `${COMMON_URL}signupUser`,
   POST_LOGIN_USER: `${COMMON_URL}loginUser`,
@@ -20,7 +21,9 @@ const API_URLS = {
   POST_VENUE: `${COMMON_URL}venue_list_by_company`,
   POST_SECTION: `${COMMON_URL}addsection`,
   POST_TABLE: `${COMMON_URL}eventTable`,
-  DELETE_TABLE: `${COMMON_URL}eventTable`,
+  DELETE_SECTION: `${COMMON_URL}sections`,
+  UPDATE_SECTION: `${COMMON_URL}sections_update`,
+
 };
 
   export const getVenueType = (payload) =>
@@ -42,8 +45,14 @@ const API_URLS = {
   export const getSection = (payload) =>
   apis.get(`${API_URLS.GET_SECTION}?venue_id=${payload.data.venue_id}`, payload);
 
-  export const deleteTable = (payload) =>
-  apis.delete(`${API_URLS.DELETE_TABLE}?id=${payload.data.venue_id}`, payload);
+  export const sectionById = (payload) =>
+  apis.get(`${API_URLS.GET_SECTION_BY_ID}?id=${payload.data.id}`, payload);
+
+  export const deleteSection = (payload) =>
+  apis.delete(`${API_URLS.UPDATE_SECTION}?id=${payload.data.id}`, payload);
+
+  export const updateSection = (payload) =>
+  apis.post(`${API_URLS.UPDATE_SECTION}?id=${payload.data.id}`, payload);
 
   export const postCities = (payload) =>
   apis.post(API_URLS.POST_CITY, {

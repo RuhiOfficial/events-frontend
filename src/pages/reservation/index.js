@@ -7,7 +7,8 @@ import { Button ,Text} from 'components';
 import Section from 'pages/Section';
 import AddTable from 'pages/AddTable';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import DeleteTable from 'pages/DeleteTable';
+import DeleteSection from 'pages/DeleteSection';
+import EditSection from 'pages/EditSection';
 
 
 const sections = [
@@ -29,6 +30,9 @@ function Reservartion() {
   const [isSectionOpen, setIsSectionOpen] = useState(false);
   const [isTableOpen, setIsTableOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [isEditSectionOpen, setIsEditSectionOpen] = useState(false);
+  const [editSectionId, setEditSectionId] = useState();
+  const [deleteSectionId, setDeleteSectionId] = useState();
 
   const [sectionsData, setSectionsData] = useState(sections);
 
@@ -69,12 +73,24 @@ function Reservartion() {
     setIsTableOpen(false);
   };
   
-  const openDeleteModal = () => {
+  const openDeleteModal = (sectionId) => {
+    setDeleteSectionId(sectionId)
     setIsDeleteOpen(true);
   };
 
   const closeDeleteModal = () => {
+    setDeleteSectionId(null)
     setIsDeleteOpen(false);
+  };
+
+  const openEditSectionModal = (sectionId) => {
+    setEditSectionId(sectionId)
+    setIsEditSectionOpen(true);
+  };
+
+  const closeEditSectionModal = () => {
+    setEditSectionId(null)
+    setIsEditSectionOpen(false);
   };
 
 
@@ -162,12 +178,12 @@ function Reservartion() {
             <div className="flex items-center justify">
             <div className="flex items-center justify">
 
-<button className="mx-2 text-blue-500 hover:text-blue-700">
-  <span role="img" aria-label="Edit">
+<button className="mx-2 text-blue-500 hover:text-blue-700" onClick={()=>{openEditSectionModal(section.id)}}>
+  <span role="img" aria-label="Edit" >
     ✏️
   </span>
 </button>
-<button className="mx-2 text-red-500 hover:text-red-700 "onClick={openDeleteModal}>
+<button className="mx-2 text-red-500 hover:text-red-700 " onClick={()=>{openDeleteModal(section.id)}}>
   <span role="img" aria-label="Delete">
     🗑️
   </span>
@@ -179,7 +195,8 @@ function Reservartion() {
   </span>
 </button>
 <AddTable isTableOpen={isTableOpen} onRequestTableClose={closeTableModal} />
-<DeleteTable isOpen={isDeleteOpen} onRequestClose={closeDeleteModal} />
+<DeleteSection isOpen={isDeleteOpen} onRequestClose={closeDeleteModal} sectionId={deleteSectionId}/>
+<EditSection isOpen={isEditSectionOpen} onRequestClose={closeEditSectionModal} sectionId={editSectionId} />
 </div>
 
             </div>

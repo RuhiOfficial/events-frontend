@@ -1,31 +1,36 @@
 import React from 'react'
 import Modal from 'react-modal';
 
-import { Button, Input, Text,SelectBox ,Img} from "components";
+import { Button,Text} from "components";
 
 import {  ToastContainer,toast } from "react-toastify";
-import { postSection } from 'service/api';
-import { deleteTable } from 'service/api';
+
+import { deleteSection } from 'service/api';
 
 
 
-function DeleteTable({ isOpen, onRequestClose }) {
-  const delTable=async()=>{
+function DeleteSection({ isOpen, onRequestClose ,sectionId}) {
+  console.log(sectionId,"from delete page ===>>")
+  const delSection=async()=>{
+    console.log("raeched at the delete modal ")
 
 
     const req = { 
-      // data:{id:venueId }
+      data:{id:sectionId }
     };
   
-    await deleteTable(req)
+    await deleteSection(req)
       .then((res) => {
-       
-        } 
-        
-      )
-      .catch((err) => {
-        console.error(err);
-      });
+        toast.success("Section is deleted Succesfully!");
+            setTimeout(() => {
+              window.location.href="/reservation"
+            }, 3000);
+          
+          })
+          .catch((err) => {
+            console.error(err);
+            toast.error("Something Went Wrong!");
+          });
 
 
 
@@ -86,11 +91,7 @@ function DeleteTable({ isOpen, onRequestClose }) {
                 </div>
                
                 
-                <div className="flex flex-col items-start justify-start mt-[10px] w-full">
-                 
-
-                  {/* {/ Add more input fields as needed /} */}
-                </div>
+                
                
                 <div className="flex flex-col items-center justify-center mt-[10px] w-full">
                 
@@ -122,7 +123,7 @@ function DeleteTable({ isOpen, onRequestClose }) {
   className="common-pointer cursor-pointer leading-[normal] text-center text-white text-s w-[200px] bg-gradient-to-r from-[#ef4444] to-[#991b1b]"
   shape="round"
   size="md"
-  onClick={delTable}
+  onClick={delSection}
 >
   Yes, I'm sure
 </Button>
@@ -142,4 +143,4 @@ function DeleteTable({ isOpen, onRequestClose }) {
   )
 }
 
-export default DeleteTable;
+export default DeleteSection;
