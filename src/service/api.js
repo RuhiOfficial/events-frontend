@@ -11,7 +11,9 @@ const API_URLS = {
   GET_COUNTRIES: `${COMMON_URL}list_countries`,
   GET_EVENT: `${COMMON_URL}event`,
   GET_SECTION: `${COMMON_URL}listsection`,
+  GET_SECTION_LIST: `${COMMON_URL}data-table`,
   GET_SECTION_BY_ID:`${COMMON_URL}section_list`,
+  GET_CANVAS_TABLE:`${COMMON_URL}eventTable`,
   POST_STATE:`${COMMON_URL}list_states`,
   POST_SIGNUP_USER: `${COMMON_URL}signupUser`,
   POST_LOGIN_USER: `${COMMON_URL}loginUser`,
@@ -24,6 +26,7 @@ const API_URLS = {
   DELETE_SECTION: `${COMMON_URL}sections`,
   UPDATE_SECTION: `${COMMON_URL}sections_update`,
 
+
 };
 
   export const getVenueType = (payload) =>
@@ -32,6 +35,9 @@ const API_URLS = {
   
   export const getEvent = (payload) =>
   apis.get(`${API_URLS.GET_EVENT}?venue_id=${payload.data.venue_id}`, payload);
+  
+  export const getCanvasTable = (payload) =>
+  apis.get(`${API_URLS.GET_CANVAS_TABLE}?venue_id=${payload.data.venue_id}`, payload);
   
   export const getTimezone = (payload) =>
   apis.get(API_URLS.GET_TIMEZONE, payload);
@@ -43,7 +49,10 @@ const API_URLS = {
   apis.get(API_URLS.GET_EVENT_TYPE, payload);
 
   export const getSection = (payload) =>
-  apis.get(`${API_URLS.GET_SECTION}?venue_id=${payload.data.venue_id}`, payload);
+  apis.get(API_URLS.GET_SECTION, payload);
+
+  export const getSectionList = (payload) =>
+  apis.get(API_URLS.GET_SECTION_LIST, payload);
 
   export const sectionById = (payload) =>
   apis.get(`${API_URLS.GET_SECTION_BY_ID}?id=${payload.data.id}`, payload);

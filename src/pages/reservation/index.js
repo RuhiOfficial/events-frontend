@@ -9,6 +9,7 @@ import AddTable from 'pages/AddTable';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import DeleteSection from 'pages/DeleteSection';
 import EditSection from 'pages/EditSection';
+import { getSectionList } from 'service/api';
 
 
 const sections = [
@@ -31,10 +32,11 @@ function Reservartion() {
   const [isTableOpen, setIsTableOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isEditSectionOpen, setIsEditSectionOpen] = useState(false);
-  const [editSectionId, setEditSectionId] = useState();
+  const [editSectionId, setEditSectionId] = useState(null);
   const [deleteSectionId, setDeleteSectionId] = useState();
 
   const [sectionsData, setSectionsData] = useState(sections);
+  const [tableList,setTableList]=useState([])
 
     const onDragEnd = (result) => {
       if (!result.destination) {
@@ -84,6 +86,7 @@ function Reservartion() {
   };
 
   const openEditSectionModal = (sectionId) => {
+    
     setEditSectionId(sectionId)
     setIsEditSectionOpen(true);
   };
@@ -123,6 +126,87 @@ function Reservartion() {
   };
   
   
+   ///////////Table List///////////////
+useEffect(()=>{
+  section()
+},[])
+
+async function section() {
+ const req = {
+   data:{
+     venue_id:5,
+   }
+ };
+
+ await getSectionList(req)
+  .then((res) => {
+    console.log(res, "response from Reservation is ===>>");
+
+    // Adjust this part based on the actual structure of your API response
+    if (res.data && Array.isArray(res.data)) {
+      const sectionsMap = new Map();
+
+      res.data.forEach((item) => {
+        console.log(item); // Log the current item to inspect its structure
+
+        if (
+          item &&
+          typeof item.section_id !== 'undefined' &&
+          typeof item.section_name !== 'undefined' &&
+          item.tables &&
+          Array.isArray(item.tables)
+        ) {
+          // Check if the section already exists in the map
+          if (!sectionsMap.has(item.section_id)) {
+            // If not, create a new section
+            sectionsMap.set(item.section_id, {
+              id: item.section_id,
+              sectionName: item.section_name,
+              tables: [],
+            });
+          }
+
+          // Add the table to the corresponding section
+          sectionsMap.get(item.section_id).tables.push(
+            ...item.tables.map((table) => ({
+              id: table.id,
+              tableName: table.table_name,
+            }))
+          );
+        } else {
+          console.error('Invalid data structure in the item:', item);
+        }
+      });
+
+      // Convert the map values to an array
+      const options = Array.from(sectionsMap.values());
+
+      // Optionally, you can sort the sections by id
+      options.sort((a, b) => a.id - b.id);
+
+      console.log(options);
+
+      setTableList(options);
+    } else {
+      console.error('Invalid data structure in the API response.');
+    }
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+
+
+
+
+}
+
+ 
+ 
+ 
+ console.log(tableList,"list from the reservation is as follows===>>")
+ 
+
+
 
   return (
     <div className='p-[50px] m-[50px] bg-[#1f2327]'>

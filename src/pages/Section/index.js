@@ -43,7 +43,7 @@ function Section({ isOpen, onRequestClose }) {
                   },
             
                 };
-            console.log(req,"req is ======>>>")
+            
              await   postSection(req)
                   .then((res) => {
                     console.log(res)

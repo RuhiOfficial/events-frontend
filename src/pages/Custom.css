@@ -18,12 +18,11 @@
 
 .page_404  img{ width:100%;}
 
-.four_zero_four_bg{
-
-background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
-  height: 400px;
-  background-position: center;
+.four_zero_four_bg {
+  background: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif) center no-repeat;
+  height: 500px;
 }
+
 
 
 .four_zero_four_bg h1{
@@ -211,6 +210,7 @@ border-bottom: #d2d6dc;
   padding: 8px;
   background-color: #f0f0f0;
   margin-bottom: 4px;
+  text-align: center;
 }
 
 .table-list-item.selected {

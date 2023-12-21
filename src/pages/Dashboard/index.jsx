@@ -273,7 +273,7 @@ const fetchData = async (venueId) => {
                             </Button>
                           </div>
                       
-                          <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mb-[33px] w-full">
+                          <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mb-[33px] w-full h-[170px]">
                          
         <List
           className="flex-1 sm:flex-col flex-row gap-[31px] grid md:grid-cols-1 grid-cols-2 w-full"

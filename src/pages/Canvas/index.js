@@ -6,6 +6,7 @@ import { Stage, Layer, Line, Rect, Circle,Group , Text as KonvaText } from 'reac
 import LayoutPopup from 'components/Layoutpopup';
 import { Button, Img, List, Text } from "components";
 import { useLocation, useHistory } from 'react-router-dom';
+import { getCanvasTable } from 'service/api';
 
 function Canvas() {
   const location = useLocation();
@@ -25,23 +26,20 @@ function Canvas() {
     const [boxes, setBoxes] = useState([]);
     const [count, setCount] = useState(3); 
     const [selectedBox, setSelectedBox] = useState(null);
-    const [tableList, setTableList] = useState([
-      { label: 'Table 1', width: gridSize, height: gridSize },
-      { label: 'Table 2', width: gridSize, height: gridSize },
-      { label: 'Table 3', width: gridSize, height: gridSize },
-    ]);
+    const [tableList, setTableList] = useState([]);
     const [droppedTables, setDroppedTables] = useState([]);
     const [activeTables, setActiveTables] = useState([]);
   const [inactiveTables, setInactiveTables] = useState([]);
+  const vid=localStorage.getItem('Venue')
   console.log(backgroundImage,"initial")
   // localStorage.setItem('canvasBackgroundImage', 'https://example.com/path/to/your/image.jpg');
 useEffect(() => {
   const savedCanvasState = localStorage.getItem('canvasState');
-  console.log(savedCanvasState, "saved canvas state is===>>>");
+
 
   if (savedCanvasState) {
     const loadedBackgroundImage = localStorage.getItem('canvasBackgroundImage');
-    console.log(loadedBackgroundImage, "loaded background is ==>>");
+    
 
     if (loadedBackgroundImage) {
       const img = new Image();
@@ -95,7 +93,49 @@ useEffect(() => {
   }
 }, []);
 
-  
+  ///////////Table List///////////////
+useEffect(()=>{
+   table()
+},[backgroundImage || myBackgroundImage])
+
+async function table() {
+  const req = {
+    data:{
+      venue_id:5,
+    }
+  };
+
+  await getCanvasTable(req)
+    .then((res) => {
+     console.log(res, "response from Canvas is ===>>");
+      
+
+      let options;
+
+      if (res.data.data.length === 1) {
+        
+        options = [
+          {
+            label: res.data.data[0].table_name,
+            value: res.data.data[0].id,
+          },
+        ];
+      } else {
+       
+        options = res.data.data.map((item) => ({
+          label: item.table_name,
+          value: item.id,
+        }));
+      }
+
+       setTableList(options);
+      
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+}
+
   
   
   

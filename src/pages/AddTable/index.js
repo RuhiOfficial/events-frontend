@@ -47,11 +47,12 @@ const handleSectionChange = (selectedOption) => {
   async function section() {
     
     const req = { 
-      data:{venue_id:venueId }};
+      // data:{venue_id:venueId }
+    };
   
     await getSection(req)
       .then((res) => {
-        console.log(res, "List of Sections are as follows");
+        
         
   
         let options;
@@ -101,7 +102,7 @@ const handleSectionChange = (selectedOption) => {
                   },
             
                 };
-            console.log(req,"req is ======>>>")
+           
              await   postTable(req)
                   .then((res) => {
                     
