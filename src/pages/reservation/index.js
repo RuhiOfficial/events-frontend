@@ -34,26 +34,29 @@ function Reservartion() {
   const [isEditSectionOpen, setIsEditSectionOpen] = useState(false);
   const [editSectionId, setEditSectionId] = useState(null);
   const [deleteSectionId, setDeleteSectionId] = useState();
-
+  const vid=localStorage.getItem('Venue')
   const [sectionsData, setSectionsData] = useState(sections);
   const [tableList,setTableList]=useState([])
 
-    const onDragEnd = (result) => {
-      if (!result.destination) {
-        return;
-      }
+  const onDragEnd = (result) => {
+    if (!result.destination) {
+      return;
+    }
   
-      const updatedSections = [...sectionsData];
-      const sourceSection = updatedSections.find((section) => section.id.toString() === result.source.droppableId);
-      const destinationSection = updatedSections.find((section) => section.id.toString() === result.destination.droppableId);
+    const updatedSections = [...tableList];
+    const sourceSection = updatedSections.find((section) => section && section.section_id && section.section_id.toString() === result.source.droppableId);
+    const destinationSection = updatedSections.find((section) => section && section.section_id && section.section_id.toString() === result.destination.droppableId);
   
-      if (sourceSection && destinationSection) {
-        const [movedTable] = sourceSection.tables.splice(result.source.index, 1);
-        destinationSection.tables.splice(result.destination.index, 0, movedTable);
+    if (sourceSection && destinationSection) {
+      const [movedTable] = sourceSection.tables.splice(result.source.index, 1);
+      destinationSection.tables.splice(result.destination.index, 0, movedTable);
   
-        setSectionsData(updatedSections);
-      }
-    };
+      setTableList(updatedSections); // Update the state with the modified table list
+    }
+  };
+  
+  
+  
   
   
   
@@ -66,6 +69,7 @@ function Reservartion() {
 
   const closeModal = () => {
     setIsSectionOpen(false);
+    section();
   };
   const openTableModal = () => {
     setIsTableOpen(true);
@@ -83,18 +87,25 @@ function Reservartion() {
   const closeDeleteModal = () => {
     setDeleteSectionId(null)
     setIsDeleteOpen(false);
+    section();
   };
 
   const openEditSectionModal = (sectionId) => {
-    
+     console.log(sectionId,"coming as params")
     setEditSectionId(sectionId)
     setIsEditSectionOpen(true);
   };
 
   const closeEditSectionModal = () => {
     setEditSectionId(null)
+
     setIsEditSectionOpen(false);
+    section();
   };
+
+
+  
+
 
 
   const DraggableTableName = ({ name, index, onClick }) => {
@@ -134,76 +145,40 @@ useEffect(()=>{
 async function section() {
  const req = {
    data:{
-     venue_id:5,
+     venue_id:6,
    }
- };
-
+ }
  await getSectionList(req)
   .then((res) => {
     console.log(res, "response from Reservation is ===>>");
 
-    // Adjust this part based on the actual structure of your API response
-    if (res.data && Array.isArray(res.data)) {
-      const sectionsMap = new Map();
+    // if (res.data && Array.isArray(res.data)) {
+    //   const sectionsData = res.data.map((section) => {
+    //     return {
+    //       id: section.section_id,
+    //       sectionName: section.section_name,
+    //       tables: section.tables.map((table) => ({
+    //         id: table.id,
+    //         tableName: table.table_name,
+    //       })),
+    //     };
+    //   });
 
-      res.data.forEach((item) => {
-        console.log(item); // Log the current item to inspect its structure
+    //   console.log(sectionsData); // Log the transformed data
 
-        if (
-          item &&
-          typeof item.section_id !== 'undefined' &&
-          typeof item.section_name !== 'undefined' &&
-          item.tables &&
-          Array.isArray(item.tables)
-        ) {
-          // Check if the section already exists in the map
-          if (!sectionsMap.has(item.section_id)) {
-            // If not, create a new section
-            sectionsMap.set(item.section_id, {
-              id: item.section_id,
-              sectionName: item.section_name,
-              tables: [],
-            });
-          }
-
-          // Add the table to the corresponding section
-          sectionsMap.get(item.section_id).tables.push(
-            ...item.tables.map((table) => ({
-              id: table.id,
-              tableName: table.table_name,
-            }))
-          );
-        } else {
-          console.error('Invalid data structure in the item:', item);
-        }
-      });
-
-      // Convert the map values to an array
-      const options = Array.from(sectionsMap.values());
-
-      // Optionally, you can sort the sections by id
-      options.sort((a, b) => a.id - b.id);
-
-      console.log(options);
-
-      setTableList(options);
-    } else {
-      console.error('Invalid data structure in the API response.');
-    }
+      setTableList(res.data.data);
+    
   })
   .catch((err) => {
     console.error(err);
   });
-
-
-
 
 }
 
  
  
  
- console.log(tableList,"list from the reservation is as follows===>>")
+ console.log(editSectionId,"edit section id ===>>")
  
 
 
@@ -237,37 +212,37 @@ async function section() {
      
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="mx-auto mt-8">
-        {sectionsData.map((section) => (
-          <div key={section.id} className="flex items-center justify-between p-4 grey-border mb-4">
+        {tableList.map((section) => (
+          <div key={section.section_id} className="flex items-center justify-between p-4 grey-border mb-4">
             <div>
-              <h2 className="text-lg font-bold white">{section.sectionName}</h2>
-              <Droppable droppableId={section.id.toString()} direction="horizontal">
-                {(provided) => (
-                  <div ref={provided.innerRef} {...provided.droppableProps} className="flex mt-2 white ">
-                    {section.tables.map((table, index) => (
-                      <DraggableTableName
-                        key={index}
-                        name={table}
-                        index={index}
-                        onClick={() => {
-                          console.log("table index is clicked ", index);
-                        }}
-                      />
-                    ))}
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
+              <h2 className="text-lg font-bold white">{section.section_name}</h2>
+              <Droppable droppableId={section.section_id.toString()} direction="horizontal">
+        {(provided) => (
+          <div ref={provided.innerRef} {...provided.droppableProps} className="flex mt-2 white">
+            {section.tables.map((table, index) => (
+              <DraggableTableName
+                key={`${section.id}-${table.table_id}`}// Ensure a unique key
+                name={table.table_name}
+                index={index}
+                onClick={() => {
+                  console.log("table index is clicked ", index);
+                }}
+              />
+            ))}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
             </div>
             <div className="flex items-center justify">
             <div className="flex items-center justify">
 
-<button className="mx-2 text-blue-500 hover:text-blue-700" onClick={()=>{openEditSectionModal(section.id)}}>
+<button className="mx-2 text-blue-500 hover:text-blue-700" onClick={()=>{openEditSectionModal(section.section_id)}}>
   <span role="img" aria-label="Edit" >
     ✏️
   </span>
 </button>
-<button className="mx-2 text-red-500 hover:text-red-700 " onClick={()=>{openDeleteModal(section.id)}}>
+<button className="mx-2 text-red-500 hover:text-red-700 " onClick={()=>{openDeleteModal(section.section_id)}}>
   <span role="img" aria-label="Delete">
     🗑️
   </span>

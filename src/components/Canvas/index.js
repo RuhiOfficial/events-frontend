@@ -25,11 +25,11 @@ function Canvas() {
     const [boxes, setBoxes] = useState([]);
     const [count, setCount] = useState(3); 
     const [selectedBox, setSelectedBox] = useState(null);
-    const [tableList, setTableList] = useState([
-      { label: 'Table 1', width: gridSize, height: gridSize },
-      { label: 'Table 2', width: gridSize, height: gridSize },
-      { label: 'Table 3', width: gridSize, height: gridSize },
-    ]);
+    // const [tableList, setTableList] = useState([
+    //   { label: 'Table 1', width: gridSize, height: gridSize },
+    //   { label: 'Table 2', width: gridSize, height: gridSize },
+    //   { label: 'Table 3', width: gridSize, height: gridSize },
+    // ]);
     const [droppedTables, setDroppedTables] = useState([]);
     const [activeTables, setActiveTables] = useState([]);
   const [inactiveTables, setInactiveTables] = useState([]);
@@ -295,58 +295,60 @@ useEffect(() => {
           </ul>
         );
       };
-      const saveCanvasImage = () => {
-        const stage = stageRef.current.getStage();
+      // const saveCanvasImage = () => {
+           
+
+      //   const stage = stageRef.current.getStage();
       
-        if (stage) {
-          // Create a new canvas element
-          const tempCanvas = document.createElement('canvas');
-          tempCanvas.width = stage.width();
-          tempCanvas.height = stage.height();
+      //   if (stage) {
+      //     // Create a new canvas element
+      //     const tempCanvas = document.createElement('canvas');
+      //     tempCanvas.width = stage.width();
+      //     tempCanvas.height = stage.height();
       
-          const tempContext = tempCanvas.getContext('2d');
+      //     const tempContext = tempCanvas.getContext('2d');
       
-          // Draw the background image onto the canvas (use either backgroundImage or myBackgroundImage)
-          const backgroundToUse = myBackgroundImage || backgroundImage;
+      //     // Draw the background image onto the canvas (use either backgroundImage or myBackgroundImage)
+      //     const backgroundToUse = myBackgroundImage || backgroundImage;
       
-          if (backgroundToUse) {
-            const backgroundImageElement = new Image();
-            backgroundImageElement.src = myBackgroundImage
-              ? `data:image/jpeg;base64,${myBackgroundImage}`
-              : URL.createObjectURL(backgroundToUse);
+      //     if (backgroundToUse) {
+      //       const backgroundImageElement = new Image();
+      //       backgroundImageElement.src = myBackgroundImage
+      //         ? `data:image/jpeg;base64,${myBackgroundImage}`
+      //         : URL.createObjectURL(backgroundToUse);
       
-            backgroundImageElement.onload = () => {
-              // Draw the background image
-              tempContext.drawImage(
-                backgroundImageElement,
-                0,
-                0,
-                stage.width(),
-                stage.height()
-              );
+      //       backgroundImageElement.onload = () => {
+      //         // Draw the background image
+      //         tempContext.drawImage(
+      //           backgroundImageElement,
+      //           0,
+      //           0,
+      //           stage.width(),
+      //           stage.height()
+      //         );
       
-              // Draw other Konva elements onto the canvas
-              stage.children.forEach((layer) => {
-                if (layer.isVisible()) {
-                  layer.children.forEach((node) => {
-                    if (node.isVisible()) {
-                      tempContext.drawImage(node.toCanvas(), node.x(), node.y());
-                    }
-                  });
-                }
-              });
+      //         // Draw other Konva elements onto the canvas
+      //         stage.children.forEach((layer) => {
+      //           if (layer.isVisible()) {
+      //             layer.children.forEach((node) => {
+      //               if (node.isVisible()) {
+      //                 tempContext.drawImage(node.toCanvas(), node.x(), node.y());
+      //               }
+      //             });
+      //           }
+      //         });
       
-              // Create a link element and trigger a download
-              const a = document.createElement('a');
-              a.href = tempCanvas.toDataURL('image/png');
-              a.download = 'canvas_image.png';
-              document.body.appendChild(a);
-              a.click();
-              document.body.removeChild(a);
-            };
-          }
-        }
-      };
+      //         // Create a link element and trigger a download
+      //         const a = document.createElement('a');
+      //         a.href = tempCanvas.toDataURL('image/png');
+      //         a.download = 'canvas_image.png';
+      //         document.body.appendChild(a);
+      //         a.click();
+      //         document.body.removeChild(a);
+      //       };
+      //     }
+      //   }
+      // };
       
       
       const resetCanvasState = () => {
@@ -373,6 +375,120 @@ useEffect(() => {
         setInactiveTables([]);
       };
       
+
+
+
+
+
+
+
+      const saveCanvasImage = () => {
+        const stage = stageRef.current.getStage();
+        console.log("reached saved canvas ======>>")
+    
+        if (stage) {
+          // Create a new canvas element
+          const tempCanvas = document.createElement('canvas');
+          tempCanvas.width = stage.width();
+          tempCanvas.height = stage.height();
+    
+          const tempContext = tempCanvas.getContext('2d');
+    
+          // Draw the background image onto the canvas (use either backgroundImage or myBackgroundImage)
+          const backgroundToUse = myBackgroundImage || backgroundImage;
+    
+          if (backgroundToUse) {
+            const backgroundImageElement = new Image();
+            backgroundImageElement.src = myBackgroundImage
+              ? `data:image/jpeg;base64,${myBackgroundImage}`
+              : URL.createObjectURL(backgroundToUse);
+    
+            backgroundImageElement.onload = () => {
+              // Draw the background image
+              tempContext.drawImage(
+                backgroundImageElement,
+                0,
+                0,
+                stage.width(),
+                stage.height()
+              );
+    
+              // Draw other Konva elements onto the canvas
+              stage.children.forEach((layer) => {
+                if (layer.isVisible()) {
+                  layer.children.forEach((node) => {
+                    if (node.isVisible()) {
+                      tempContext.drawImage(node.toCanvas(), node.x(), node.y());
+                    }
+                  });
+                }
+              });
+    
+           
+    
+              // Extract necessary data for the API request
+              const imageDataUrl = tempCanvas.toDataURL('image/png');
+              const boxInfo = boxes.map((box) => ({
+                label: box.label,
+                x: box.x,
+                y: box.y,
+                width: box.width,
+                height: box.height,
+              }));
+              const activeTableLabels = activeTables.map((table) => table.label);
+              const inactiveTableLabels = inactiveTables.map((table) => table.label);
+             console.log(imageDataUrl, boxInfo, activeTableLabels, inactiveTableLabels,"data to send to the api is ===>>");
+    
+              // Call the API function with the extracted data
+              // sendApiRequest(imageDataUrl, boxInfo, activeTableLabels, inactiveTableLabels);
+            };
+          }
+        }
+      };
+    
+      const sendApiRequest = (imageUrl, boxInfo, activeTables, inactiveTables) => {
+        // Define your API endpoint and make the HTTP request here
+        const apiUrl = 'your/api/endpoint';
+        const requestData = {
+          imageUrl,
+          boxInfo,
+          activeTables,
+          inactiveTables,
+        };
+    
+        // Make a fetch or axios request to the API
+        fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestData),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log('API response:', data);
+            // Handle the API response as needed
+          })
+          .catch((error) => {
+            console.error('Error sending API request:', error);
+            // Handle errors
+          });
+      };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     return (
       <div className="drawing-app" style={{ display: 'flex' }}>

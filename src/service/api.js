@@ -52,7 +52,7 @@ const API_URLS = {
   apis.get(API_URLS.GET_SECTION, payload);
 
   export const getSectionList = (payload) =>
-  apis.get(API_URLS.GET_SECTION_LIST, payload);
+  apis.get(`${API_URLS.GET_SECTION_LIST}?venue_id=${payload.data.venue_id}`, payload);
 
   export const sectionById = (payload) =>
   apis.get(`${API_URLS.GET_SECTION_BY_ID}?id=${payload.data.id}`, payload);

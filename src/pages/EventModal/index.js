@@ -182,9 +182,9 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
            // // setSignupUser(res?.data);
             
             toast.success("Event is added Succesfully!");
-            setTimeout(() => {
-              window.location.href="/"
-            }, 3000);
+            // setTimeout(() => {
+            //   window.location.href="/"
+            // }, 3000);
           
           })
           .catch((err) => {
