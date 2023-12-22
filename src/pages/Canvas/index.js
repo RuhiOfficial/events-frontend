@@ -6,7 +6,8 @@ import { Stage, Layer, Line, Rect, Circle,Group , Text as KonvaText } from 'reac
 import LayoutPopup from 'components/Layoutpopup';
 import { Button, Img, List, Text } from "components";
 import { useLocation, useHistory } from 'react-router-dom';
-import { getCanvasTable } from 'service/api';
+import { getCanvasTable ,postLayout} from 'service/api';
+import {  ToastContainer,toast } from "react-toastify";
 
 function Canvas() {
   const location = useLocation();
@@ -31,7 +32,9 @@ function Canvas() {
     const [activeTables, setActiveTables] = useState([]);
   const [inactiveTables, setInactiveTables] = useState([]);
   const vid=localStorage.getItem('Venue')
+  const nameLayout=localStorage.getItem('layoutName')
   console.log(backgroundImage,"initial")
+  console.log(layoutName,"Layout name ===>>")
   // localStorage.setItem('canvasBackgroundImage', 'https://example.com/path/to/your/image.jpg');
 useEffect(() => {
   const savedCanvasState = localStorage.getItem('canvasState');
@@ -107,9 +110,6 @@ async function table() {
 
   await getCanvasTable(req)
     .then((res) => {
-     console.log(res, "response from Canvas is ===>>");
-      
-
       let options;
 
       if (res.data.data.length === 1) {
@@ -136,11 +136,7 @@ async function table() {
     });
 }
 
-  
-  
-  
-  
-  
+
   useEffect(() => {
     // Read layout information from URL parameters
     const params = new URLSearchParams(location.search);
@@ -219,6 +215,7 @@ async function table() {
    
     
     const onBackgroundImageChange = (layoutName, image) => {
+
       setBackgroundImage(image);
       setLayoutName(layoutName);
     
@@ -335,26 +332,50 @@ async function table() {
           </ul>
         );
       };
+
+
+
+      const updateTableStatus = () => {
+        const activeTables = [];
+        const inactiveTables = [];
+    
+        tableList.forEach((table) => {
+          const tableExists = boxes.some((box) => box.label === table.label);
+    
+          if (tableExists) {
+            activeTables.push(table);
+          } else {
+            inactiveTables.push(table);
+          }
+        });
+    
+        setActiveTables(activeTables);
+        setInactiveTables(inactiveTables);
+      };
+    
+      useEffect(() => {
+        updateTableStatus();
+      }, [boxes]); 
       const saveCanvasImage = () => {
         const stage = stageRef.current.getStage();
-      
+    
         if (stage) {
           // Create a new canvas element
           const tempCanvas = document.createElement('canvas');
           tempCanvas.width = stage.width();
           tempCanvas.height = stage.height();
-      
+    
           const tempContext = tempCanvas.getContext('2d');
-      
+    
           // Draw the background image onto the canvas (use either backgroundImage or myBackgroundImage)
           const backgroundToUse = myBackgroundImage || backgroundImage;
-      
+    
           if (backgroundToUse) {
             const backgroundImageElement = new Image();
             backgroundImageElement.src = myBackgroundImage
               ? `data:image/jpeg;base64,${myBackgroundImage}`
               : URL.createObjectURL(backgroundToUse);
-      
+    
             backgroundImageElement.onload = () => {
               // Draw the background image
               tempContext.drawImage(
@@ -364,7 +385,7 @@ async function table() {
                 stage.width(),
                 stage.height()
               );
-      
+    
               // Draw other Konva elements onto the canvas
               stage.children.forEach((layer) => {
                 if (layer.isVisible()) {
@@ -375,7 +396,7 @@ async function table() {
                   });
                 }
               });
-      
+    
               // Create a link element and trigger a download
               const a = document.createElement('a');
               a.href = tempCanvas.toDataURL('image/png');
@@ -383,11 +404,62 @@ async function table() {
               document.body.appendChild(a);
               a.click();
               document.body.removeChild(a);
+    
+              // Extract necessary data for the API request
+              const imageDataUrl = tempCanvas.toDataURL('image/png');
+              const boxInfo = boxes.map((box) => ({
+                label: box.label,
+                x: box.x,
+                y: box.y,
+                width: box.width,
+                height: box.height,
+              }));
+             
+    postCanvas(imageDataUrl,boxInfo,activeTables,inactiveTables);
+    
+              // Call the API function with the extracted data
+              // sendApiRequest(imageDataUrl, boxInfo, activeTableLabels, inactiveTableLabels);
             };
           }
         }
       };
+    
+
+
+
+
+  async function postCanvas(imageDataUrl,boxInfo) {
+        
+    // console.log(data,"data from modal is ");
+      const req = {
+  
+        data: {
+          venue_id:vid,
+          name:nameLayout,
+          image_url:imageDataUrl,
+          boxes:boxInfo
+        },
+  
+      };
+ 
+   await   postLayout(req)
+        .then((res) => {
+          
+          
       
+          
+          toast.success("Canvas is added Succesfully!");
+         
+        
+        })
+        .catch((err) => {
+          console.error(err);
+          toast.error("Something Went Wrong!");
+        });
+    }
+  
+
+    
       
       const resetCanvasState = () => {
         setShapes([]);
@@ -403,11 +475,11 @@ async function table() {
         setBoxes([]);
         setCount(3);
         setSelectedBox(null);
-        setTableList([
-          { label: 'Table 1', width: gridSize, height: gridSize },
-          { label: 'Table 2', width: gridSize, height: gridSize },
-          { label: 'Table 3', width: gridSize, height: gridSize },
-        ]);
+        // setTableList([
+        //   { label: 'Table 1', width: gridSize, height: gridSize },
+        //   { label: 'Table 2', width: gridSize, height: gridSize },
+        //   { label: 'Table 3', width: gridSize, height: gridSize },
+        // ]);
         setDroppedTables([]);
         setActiveTables([]);
         setInactiveTables([]);
@@ -569,6 +641,7 @@ async function table() {
             <button onClick={addText}>Add Text</button>
           </div>
         )}
+        <ToastContainer />
       </div>
     );
 }

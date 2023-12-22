@@ -11,7 +11,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 function LayoutPopup({ onClose, onBackgroundImageChange,isOpen, onRequestClose }) {
   const [layoutName, setLayoutName] = useState('');
   const [backgroundImage, setBackgroundImage] = useState(null);
-  localStorage.setItem('layoutImage',backgroundImage)
+
+  localStorage.setItem('layoutName',layoutName)
   if(backgroundImage){
     console.log(backgroundImage.name)
   }
@@ -24,7 +25,7 @@ function LayoutPopup({ onClose, onBackgroundImageChange,isOpen, onRequestClose }
 
   const handleSave = () => {
     if (layoutName && backgroundImage) {
-        console.log(backgroundImage,"background image ")
+        
       // Send the layout name and background image to the parent component
       onBackgroundImageChange(layoutName, backgroundImage);
       onRequestClose();
@@ -58,31 +59,6 @@ function LayoutPopup({ onClose, onBackgroundImageChange,isOpen, onRequestClose }
      }}
    >
      
-    {/* <div className="layout-popup">
-      <h2 className='header'>New Layout</h2>
-      <div className='divs'>
-      <label htmlFor="layoutName">Name:</label>
-      <input className='inputs'
-        type="text"
-        id="layoutName"
-        value={layoutName}
-        onChange={(e) => setLayoutName(e.target.value)}
-      />
-      </div>
-      <div className='divs'>
-      <label htmlFor="backgroundImage">Image:</label>
-      <input
-        type="file"
-        id="backgroundImage"
-        accept="image/*"
-        onChange={handleBackgroundImageChange}
-      />
-      </div>
-      <div>
-      <button className='mybuttons' onClick={handleSave}>Save</button>
-      <button className='mybuttons'  onClick={onClose}>Cancel</button>
-      </div>
-    </div> */}
     <div className="flex flex-col font-poppins items-center justify-start mx-auto w-full ">
            
           <div className="flex flex-col font-poppins items-center justify-start mx-auto w-full ">
@@ -135,14 +111,14 @@ function LayoutPopup({ onClose, onBackgroundImageChange,isOpen, onRequestClose }
     <div className="flex flex-col items-start justify-start mt-[38px] w-[380px]">
                 
              
-                <input 
+                <input   
                 placeholder=" Event Name"
         type="text"
         id="layoutName"
         value={layoutName}
         className=" inputs text-white capitalize font-roboto p-0 placeholder-white-900 text-base text-left w-[370px] ml-10 h-[50px] pl-4 common-pointer border-t border-white-700_99 border-solid w-full bg-[#292e34]"
         onChange={(e) => setLayoutName(e.target.value)}
-  
+        style={{color:"white"}}
     />
 </div>
                

@@ -6,7 +6,8 @@ import { postVenueList } from 'service/api';
 import Cookies from 'js-cookie';
 
 const ListModal = ({ isOpen, onRequestClose }) => {
-  const companyId = Cookies.get('companyId');
+  // const companyId = Cookies.get('companyId');
+  const companyId=localStorage.getItem('companyId');
   console.log(companyId,"id if company is ===>>>")
     const [loading, setLoading] = useState(false);
     const [venueList, setVenueList] = useState([]);
@@ -31,11 +32,13 @@ useEffect(()=>{
 
 },[])
 
+console.log(venueList,"list of venues==>")
 
 
 const handleListItemClick = (venueId) => {
     // Update the cookie with the clicked venueId
     Cookies.set('venueId', venueId);
+   localStorage.setItem('Venue',venueId);
 
     // Handle other actions if needed
     console.log(`List item clicked: ${venueId}`);
@@ -111,7 +114,7 @@ console.log(venueList,"list is ")
                   {item.name}
                 </Text>
                 <Text
-                  className="text-lg text-white-A700 text-[10px]"
+                  className="text-xs text-white-A700 "
                   size="txtPoppins"
                 >
                   {item.email}

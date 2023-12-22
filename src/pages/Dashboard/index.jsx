@@ -21,8 +21,10 @@ const DashboardPage = () => {
   const [loading, setLoading] = useState(false);
   const[venueId,setVenueId]=useState(null);
   const[eventList,setEventList]=useState([]);
+  const[date,setDate]=useState([]);
   useEffect(() => {
-    const savedVenueId = Cookies.get('venueId');
+    // const savedVenueId = Cookies.get('venueId');
+    const savedVenueId=localStorage.getItem('Venue')
     console.log(savedVenueId,"saved venue from cookies")
     setVenueId(savedVenueId);
      
@@ -33,7 +35,7 @@ const DashboardPage = () => {
 const fetchData = async (venueId) => {
     console.log(venueId,"inside function venue id is")
     const req = { 
-      data:{venue_id:venueId }};
+      data:{venue_id:12 }};
 
     try {
       const res = await getEvent(req);
@@ -67,6 +69,51 @@ const fetchData = async (venueId) => {
   };
 
   console.log(venueId,"venue id from dashboard")
+
+  useEffect(() => {
+    const today = new Date();
+    const options = {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    };
+
+    // Format the date
+    const formattedDate = today.toLocaleDateString('en-US', options);
+
+    // Add the appropriate suffix to the day
+    const daySuffix = (day) => {
+      if (day >= 11 && day <= 13) {
+        return 'th';
+      }
+      switch (day % 10) {
+        case 1:
+          return 'st';
+        case 2:
+          return 'nd';
+        case 3:
+          return 'rd';
+        default:
+          return 'th';
+      }
+    };
+
+    const day = today.getDate();
+    const dayWithSuffix = day + daySuffix(day);
+
+    // Replace the day in the formatted date
+    const finalFormattedDate = formattedDate.replace(
+      new RegExp(today.getDate(), 'g'),
+      dayWithSuffix
+    );
+
+    setDate(finalFormattedDate);
+  }, []);
+
+
+
+
   return (
     <>
     < div className={`relative ${isModalOpen || isEventModalOpen ? 'filter blur' : ''}`}>
@@ -94,7 +141,7 @@ const fetchData = async (venueId) => {
                             className="text-4xl sm:text-[32px] md:text-[34px] text-white-A700"
                             size="txtInterSemiBold36"
                           >
-                            Friday November 20th, 2023
+                            {date}
                           </Text>
                           </div>
                           <div>
@@ -273,7 +320,7 @@ const fetchData = async (venueId) => {
                             </Button>
                           </div>
                       
-                          <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mb-[33px] w-full h-[170px]">
+                          <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mb-[33px] w-full min-h-[170px]">
                          
         <List
           className="flex-1 sm:flex-col flex-row gap-[31px] grid md:grid-cols-1 grid-cols-2 w-full"

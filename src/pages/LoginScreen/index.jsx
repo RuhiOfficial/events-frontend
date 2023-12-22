@@ -55,6 +55,7 @@ const LoginScreenPage = () => {
         localStorage.setItem("Venue", JSON.stringify(res?.data?.user?.venue_id));
 
         localStorage.setItem("LoginId", JSON.stringify(res?.data?.user?.id));
+        localStorage.setItem('companyId', JSON.stringify(res?.data?.user?.company_id));
 
         localStorage.setItem(
           "RoleId",

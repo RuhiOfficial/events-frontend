@@ -11,7 +11,7 @@ import "../Custom.css";
 
 const Modal = ({ isOpen, onClose }) => {
   
- const cid= localStorage.getItem("LoginId");
+ const cid= localStorage.getItem("companyId");
 //  console.log(cid,"customer id is ===>>>")
  
   const [selectedCountry, setSelectedCountry] = useState(null);
