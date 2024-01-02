@@ -4,6 +4,7 @@ import "../Custom.css"
 import 'react-datepicker/dist/react-datepicker.css';
 import Modal from 'pages/Modal';
 import EventModal from 'pages/EventModal';
+import SingleEvent from 'pages/SingleEvent';
 import Cookies from 'js-cookie';
 import BlobLoader from 'components/BlobLoader';
 import ImageComponent from 'components/ImageComponent.js';
@@ -17,15 +18,17 @@ const DashboardPage = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEventModalOpen,setIsEventModalOpen]=useState(false);
+  const [isSingleEventModalOpen,setIsSingleEventModalOpen]=useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const[venueId,setVenueId]=useState(null);
   const[eventList,setEventList]=useState([]);
+  const[eventId,setEventId]=useState();
   const[date,setDate]=useState([]);
   useEffect(() => {
     // const savedVenueId = Cookies.get('venueId');
     const savedVenueId=localStorage.getItem('Venue')
-    console.log(savedVenueId,"saved venue from cookies")
+    
     setVenueId(savedVenueId);
      
       fetchData(savedVenueId);
@@ -33,9 +36,9 @@ const DashboardPage = () => {
   }, []);
 
 const fetchData = async (venueId) => {
-    console.log(venueId,"inside function venue id is")
+    
     const req = { 
-      data:{venue_id:12 }};
+      data:{venue_id:venueId }};
 
     try {
       const res = await getEvent(req);
@@ -59,16 +62,21 @@ const fetchData = async (venueId) => {
     setIsModalOpen(false);
   };
   const openEventModal = () => {
-    console.log("event modal opens")
-    setIsEventModalOpen(true);
+     setIsEventModalOpen(true);
   };
 
   const closeEventModal = () => {
-    console.log("event modal close")
-    setIsEventModalOpen(false);
+     setIsEventModalOpen(false);
   };
 
-  console.log(venueId,"venue id from dashboard")
+  const openIndividualEventModal = (id) => {
+   setEventId(id);
+    setIsSingleEventModalOpen(true);
+  };
+
+  const closeIndividualEventModal = () => {
+    setIsSingleEventModalOpen(false);
+  };
 
   useEffect(() => {
     const today = new Date();
@@ -100,7 +108,7 @@ const fetchData = async (venueId) => {
     };
 
     const day = today.getDate();
-    const dayWithSuffix = day + daySuffix(day);
+    const dayWithSuffix = day ;
 
     // Replace the day in the formatted date
     const finalFormattedDate = formattedDate.replace(
@@ -111,8 +119,9 @@ const fetchData = async (venueId) => {
     setDate(finalFormattedDate);
   }, []);
 
-
-
+  const handleEventClick = (id) => {
+    console.log(id,"id is as follows==>")
+ };
 
   return (
     <>
@@ -329,6 +338,7 @@ const fetchData = async (venueId) => {
           {eventList.map((item) => (
             <div
               key={item.id}
+              onClick={() => openIndividualEventModal(item.id)}
               className="bg-black-900_11 border border-blue_gray-800 border-solid hover:cursor-pointer flex flex-1 sm:flex-col flex-row gap-[21px] items-center justify-start sm:ml-[0] hover:mx-0 p-2.5 hover:shadow-bs shadow-bs hover:w-full w-full"
             >
             
@@ -357,14 +367,14 @@ const fetchData = async (venueId) => {
                   className="text-lg text-white-A700"
                   size="txtPoppinsMedium18"
                 >
-                  hello
+                  {item.time_from}-{item.time_to}
                   {/* {item.id} */}
                 </Text>
                 <Text
                   className="mt-3.5 text-sm text-white-A700"
                   size="txtPoppinsRegular14"
                 >
-                  how are you 
+                  {item.event_desc}
                   {/* {item.albumId} */}
                 </Text>
               </div>
@@ -708,6 +718,8 @@ const fetchData = async (venueId) => {
     </div>
     <Modal isOpen={isModalOpen} onClose={closeModal} />
     <EventModal isEventOpen={isEventModalOpen} onEventClose={closeEventModal} />
+    <SingleEvent isOpen={isSingleEventModalOpen}  onRequestClose={closeIndividualEventModal} eventId={eventId}
+      />
     </>
   );
 };
