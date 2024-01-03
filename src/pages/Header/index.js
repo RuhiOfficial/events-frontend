@@ -8,12 +8,15 @@ import ListModal from 'pages/ListModal';
 import { Button, Img, Line, List, Text } from "components";
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { postSingleVenue } from 'service/api';
 
 
 function Header() {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [isDropdownOpen, setDropdownOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [name,setName]= useState();
+    const [alphabetImages, setAlphabetImages] = useState([]);
     const[venueId,setVenueId]=useState("");
      const[data,setData]=useState("");
 
@@ -24,19 +27,26 @@ function Header() {
       // const savedVenueId = Cookies.get('venueId');
       const savedVenueId= localStorage.getItem('Venue')
       setVenueId(savedVenueId);
-      
-    const fetchData = async () => {
-      try {
-        const response = await fetch("https://jsonplaceholder.typicode.com/users");
-        const result = await response.json();
-        setData(result.slice(0, 2)); // Limit to the first 2 items for this example
+      const fetchData=async()=>{
+      const req = {
+        data: {
+          id: savedVenueId,
         
-      } catch (error) {
-        console.error("Error fetching data:", error);
+        },
+      };
+  
+      try {
+        const res = await postSingleVenue(req);
+        
+        setName(res.data.data[0].name)
+        const images = Array.from(name.toUpperCase()).map((letter) => getAlphabetImage(letter));
+        setAlphabetImages(images);
+        
+      } catch (err) {
+        console.error(err);
         
       }
-    };
-
+      }
     fetchData();
   }, []);
 
@@ -91,6 +101,13 @@ function Header() {
       localStorage.clear();
       window.location.href = "/";
     }
+
+    const getAlphabetImage = (letter) => {
+      // You can replace this with your own API or logic to fetch alphabet images
+      // For simplicity, I'm using placeholder images from placekitten.com
+      return `https://placekitten.com/100/100?text=${letter}`;
+    };
+    
   return (
     <div>
         
@@ -127,10 +144,10 @@ function Header() {
                         alt="rectangleSix"
                       />
                       <Text
-                        className="text-base text-right text-white-A700 w-auto"
+                        className="text-base text-right text-white-A700 w-auto mr-3"
                         size="txtRubikRomanMedium16"
                       >
-                        W Scoattdale
+                       {name}
                       </Text>
                     </div>
             <div className="relative">

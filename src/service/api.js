@@ -10,6 +10,8 @@ const API_URLS = {
   GET_TIMEZONE: `${COMMON_URL}timezone`,
   GET_COUNTRIES: `${COMMON_URL}list_countries`,
   GET_EVENT: `${COMMON_URL}event`,
+  GET_SINGLE_EVENT:`${COMMON_URL}event_single_list`,
+  
   GET_SECTION: `${COMMON_URL}listsection`,
   GET_SECTION_LIST: `${COMMON_URL}data-table`,
   GET_SECTION_BY_ID:`${COMMON_URL}section_list`,
@@ -24,6 +26,7 @@ const API_URLS = {
   POST_SECTION: `${COMMON_URL}addsection`,
   POST_TABLE: `${COMMON_URL}eventTable`,
   POST_LAYOUT: `${COMMON_URL}layout`,
+  POST_SINGLE_VENUE:`${COMMON_URL}venue_detail`,
   DELETE_SECTION: `${COMMON_URL}sections`,
   UPDATE_SECTION: `${COMMON_URL}sections_update`,
 
@@ -54,6 +57,11 @@ const API_URLS = {
 
   export const getSectionList = (payload) =>
   apis.get(`${API_URLS.GET_SECTION_LIST}?venue_id=${payload.data.venue_id}`, payload);
+
+  export const getSingleEvent = (payload) =>
+  apis.get(`${API_URLS.GET_SINGLE_EVENT}?id=${payload.data.id}`, payload);
+
+  
 
   export const sectionById = (payload) =>
   apis.get(`${API_URLS.GET_SECTION_BY_ID}?id=${payload.data.id}`, payload);
@@ -125,7 +133,11 @@ export const postLoginUser = (payload) =>
       ...payload,
       headers: { "Content-type": "application/json", ...payload?.headers },
     });
-
+    export const postSingleVenue = (payload) =>
+    apis.post(API_URLS.POST_SINGLE_VENUE, {
+      ...payload,
+      headers: { "Content-type": "application/json", ...payload?.headers },
+    });
 
   
   

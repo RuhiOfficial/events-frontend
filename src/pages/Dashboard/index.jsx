@@ -119,9 +119,6 @@ const fetchData = async (venueId) => {
     setDate(finalFormattedDate);
   }, []);
 
-  const handleEventClick = (id) => {
-    console.log(id,"id is as follows==>")
- };
 
   return (
     <>

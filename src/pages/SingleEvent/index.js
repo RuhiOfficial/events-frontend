@@ -1,32 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import * as yup from 'yup';
+import { getSingleEvent } from 'service/api';
 
 import { updateSection, sectionById } from 'service/api';
 import { ToastContainer, toast } from 'react-toastify';
 import { Button, Img, Line, List, Text } from "components";
 
-function SingleEvent({ isOpen, onRequestClose, sectionId }) {
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
+function SingleEvent({ isOpen, onRequestClose, eventId }) {
+const [data,setData]=useState([])
 
   useEffect(() => {
     loadSection();
-  }, [sectionId]);
+  }, [eventId]);
+
+  console.log(eventId,"event id =============>>>>")
 
   async function editSection() {
     // Check if both name and price are defined
-    if (name === undefined || price === undefined) {
-     
-      return;
-    }
+   
 
     const req = {
-      data: {
-        id: sectionId,
-        name: name,
-        price: price,
-      },
+      // data: {
+      //   id: eventId,
+      //   name: name,
+      //   price: price,
+      // },
     };
 
     try {
@@ -46,15 +45,15 @@ function SingleEvent({ isOpen, onRequestClose, sectionId }) {
 
   async function loadSection() {
     try {
-      const res = await sectionById({ data: { id: sectionId } });
-      console.log('Fetched Data:', res.data);
+      const res = await getSingleEvent({ data: { id: eventId } });
+      console.log('Fetched Data from the single event page is :', res.data);
 
       // Check if the response data is not empty
       if (res.data) {
         // Update the state
        
-        setName(res.data.name);
-        setPrice(res.data.price);
+        setData(res.data);
+        // setPrice(res.data.price);
       }
     } catch (err) {
       console.error(err);
@@ -104,13 +103,13 @@ function SingleEvent({ isOpen, onRequestClose, sectionId }) {
                     className="md:text-3xl sm:text-[28px] text-[32px] text-white-A700 w-auto"
                     size="txtPoppins"
                   >
-                    PARTY 
+                    {data.name} 
                   </Text>
                   <Text
                     className="md:text-xl sm:text-[10px] text-[18px] text-white-A700 w-auto"
                     size="txtPoppins"
                   >
-                    Party With live Music 
+                    {data.event_desc} 
                   </Text>
                   <hr className="my-2 border-t border-white-A700 w-[250px]" />
                   <Text

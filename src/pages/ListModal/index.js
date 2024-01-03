@@ -74,7 +74,7 @@ console.log(venueList,"list is ")
        
       }}
     >
-      <h2>Modal Content</h2>
+      
       <div style={{ height: '700px',width:'900px' /* Add a specific height to trigger scrolling */ }}>
       <div className="bg-blue_gray-900_01 flex flex-col font-poppins  justify-start sm:px-5 px-[26px] rounded shadow-bs1 w-full">
                         <div className="flex flex-col gap-10  justify-start py-9 w-full">
@@ -135,7 +135,7 @@ console.log(venueList,"list is ")
                           </div>
                         </div>
                       </div>
-      <button onClick={onRequestClose}>Close Modal</button>
+      {/* <button onClick={onRequestClose}>Close Modal</button> */}
       </div>
     </Modal>
   );
