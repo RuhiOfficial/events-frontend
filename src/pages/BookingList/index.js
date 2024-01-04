@@ -83,7 +83,7 @@ const BookingList = ({ columns, data }) => {
             {filteredData.map((row) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} className="border-t hover:bg-gray-700">
+                <tr {...row.getRowProps()} className="border-t hover:bg-gray-700  ">
                   {row.cells.map((cell) => (
                     <td key={cell.column.id} {...cell.getCellProps()} className="p-4">
                       {cell.render('Cell')}
@@ -97,7 +97,7 @@ const BookingList = ({ columns, data }) => {
               return (
                 <tr {...row.getRowProps()} className="border-t hover:bg-gray-700">
                   {row.cells.map((cell) => (
-                    <td key={cell.column.id} {...cell.getCellProps()} className="p-4">
+                    <td key={cell.column.id} {...cell.getCellProps()} className="p-4 text-center">
                       {cell.render('Cell')}
                     </td>
                   ))}
