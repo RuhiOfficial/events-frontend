@@ -11,6 +11,7 @@ import ImageComponent from 'components/ImageComponent.js';
 
 import { Button, Img, Line, List, Text } from "components";
 import { getEvent } from 'service/api';
+import BookingList from 'pages/BookingList';
 
 
 
@@ -118,6 +119,20 @@ const fetchData = async (venueId) => {
 
     setDate(finalFormattedDate);
   }, []);
+
+  const columns = [
+    // Define your columns here
+    { Header: 'NAME', accessor: 'name' },
+    { Header: 'AGE', accessor: 'age' },
+    // Add more columns as needed
+  ];
+
+  const records = [
+    // Your data array
+    { name: 'John Doe', age: 25 },
+    { name: 'Jane Doe', age: 30 },
+    // Add more data objects as needed
+  ];
 
 
   return (
@@ -458,6 +473,32 @@ const fetchData = async (venueId) => {
                       </div>
                     </div>
                   </div>
+
+
+
+
+                  {/*  */}
+
+                  <div className="flex md:flex-col flex-row gap-[22px] items-end justify-between w-full">
+                    <div className="flex md:flex-1 flex-col gap-[21px] items-center justify-start w-full md:w-full">
+
+                      <div className="bg-blue_gray-900_01 flex flex-col font-poppins  justify-start sm:px-5 px-[26px] rounded shadow-bs1 w-full">
+                        <div className="flex flex-col gap-10  justify-start py-9 w-full">
+                        
+                      
+                          <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mb-[33px] w-full min-h-[170px]">
+                         
+                          <BookingList columns={columns} data={records} />
+ </div>
+                        </div>
+                      </div>
+                    </div>
+                  
+                  </div>
+
+{/*  */}
+
+
                   <List
                     className="sm:flex-col flex-row font-poppins gap-[41px] grid md:grid-cols-1 grid-cols-2 justify-center w-full"
                     orientation="horizontal"
