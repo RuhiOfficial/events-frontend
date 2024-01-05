@@ -230,3 +230,220 @@ border-bottom: #d2d6dc;
 .blue{
   color:#5051f9
 }
+
+
+
+
+
+
+
+
+.event-main{
+  width: 900px;
+  margin: auto;
+  margin-top: 30px;
+}
+
+.venue-text {
+  font-size: 16px;
+  color: #333; 
+  
+}
+.event-image {
+  width: 400px;
+  height: 300px;
+
+  border-radius: 30px;
+  margin-top: 15px;
+}
+.highlighted-text {
+  color: #ffac00;
+  margin: 13px auto;
+}
+
+/* .venue-container {
+  height: 700px;
+  width: 900px;
+} */
+.event-img{
+  width: 160px;
+  height: 100px;
+  
+}
+
+#agreeTerms {
+  margin-right: 10px;
+}
+
+.venue-wrapper {
+  background-color: #1a202c;
+  font-family: 'Poppins', sans-serif;
+  
+}
+
+.event-list-item {
+  background-color: #1a202c;
+  border: 1px solid #4a5568;
+  cursor: pointer;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  gap: 21px;
+  align-items: center;
+  justify-content: start;
+  margin-left: 0;
+  padding: 2.5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.event-list-item:hover {
+  background-color: #2d3748;
+  border-color: #2d3748;
+}
+
+.event-list-item img {
+  flex: 1;
+  height: 151px;
+  width: 21%;
+  object-fit: cover;
+}
+
+.event-list-item .text-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+}
+
+.event-list-item .title {
+  font-size: 23px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.event-list-item .event-id {
+  font-size: 18px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.event-list-item .album-id {
+  margin-top: 3.5px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #ffffff;
+}
+.table-service{
+  width: 467px;
+  background-color:#c1bbbb;
+  margin-left: 238px;
+  border-radius: 30px;
+  box-shadow: 20px 0px 0px #000;
+  box-sizing: border-box;
+}
+.loaction-text{
+  color: white;  
+  font-size: 24px;
+  font-weight: 700;
+}
+.map{
+  width: 431px;
+    outline-style: none;
+    border-radius: 30px;
+}
+.text-location{
+  margin-top: 40px;
+    margin-bottom: 16px;
+
+}
+.increment-button {
+  margin-left: 5px;
+}
+ 
+.increment-button,
+.decrement-button {
+  background-color: green;
+  color: white;
+}
+.display-contents {
+  display: contents;
+}
+.container-head{
+  background-color: black;
+}
+
+.leaflet-container.leaflet-touch.leaflet-fade-anim.leaflet-grab.leaflet-touch-drag.leaflet-touch-zoom {
+  height: 200px!important;
+  width: 115%!important;
+  border-radius: 30px!important;
+  position: relative!important;
+  outline-style: none;
+}
+.form-title.sm {
+  font-size: x-large;
+  margin-bottom: 8px;
+  margin-top: 20px;
+  color: white;
+}
+input, optgroup, select, textarea {
+  font-family: inherit;
+  font-feature-settings: inherit;
+  font-variation-settings: inherit;
+  font-size: 100%;
+  width: 95%;
+  font-weight: inherit;
+  border: 2px solid black;
+  line-height: inherit;
+  color: currentColor;
+  padding: 0;
+  position: relative;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  padding: 5px;
+  
+  
+}
+#date {
+  width: 100%;
+  margin-right: 40px;
+}
+
+#tableselection {
+  width: 100%;
+  margin-left: 30px;
+}
+.container.mx-auto {
+  margin-left: 40px;
+  width: -webkit-fill-available;
+}
+
+button.w-full.bg-blue.hover\:bg-blue-dark.text-white.font-bold.py-2.px-4.rounded {
+  background-color: blue;
+  margin-top: 20px;
+  width: 98%;
+  border-radius: 10px;
+  margin-bottom: 50px;
+}
+
+#totalGuests {
+  padding: 10px;
+  width: 98%;
+  border-radius: 10px;
+  margin-left: 0px;
+}
+textarea#bookingNote {
+  width: 98%;
+  margin-top: 5px;
+  margin-left: 0px;
+  border-radius: 5px;
+}
+
+input#dob {
+  width: 30%;
+}
+
+input#agreeTerms {
+  width: unset;
+}

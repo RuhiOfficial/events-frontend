@@ -8,9 +8,10 @@ import SingleEvent from 'pages/SingleEvent';
 import Cookies from 'js-cookie';
 import BlobLoader from 'components/BlobLoader';
 import ImageComponent from 'components/ImageComponent.js';
+import axios from 'axios'
 
 import { Button, Img, Line, List, Text } from "components";
-import { getEvent } from 'service/api';
+import { getEvent,getBookingList } from 'service/api';
 import BookingList from 'pages/BookingList';
 
 
@@ -134,6 +135,40 @@ const fetchData = async (venueId) => {
     // Add more data objects as needed
   ];
 
+  useEffect(()=>{
+    loadBooking();
+  })
+
+  const loadBooking = async()=>{
+
+    const req={
+      data:{
+        venue_id:1
+      }
+    }
+    try {
+      const res = await getBookingList(req);
+      console.log(res.data,"data coming from api is ======>>>")
+      
+    }
+    catch {
+      console.error("there is an error");
+    };
+      
+  }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post('https://event-backend.isdemo.in/api/v1/tickets'); // Replace with your API endpoint
+         console.log(response ,"demo api for testing ====>>")
+      } catch (error) {
+        
+      }
+    };
+    fetchData();
+  },[]
+
+  )
 
   return (
     <>

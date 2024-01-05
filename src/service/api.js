@@ -14,6 +14,7 @@ const API_URLS = {
   
   GET_SECTION: `${COMMON_URL}listsection`,
   GET_SECTION_LIST: `${COMMON_URL}data-table`,
+  GET_BOOKING_LIST:`${COMMON_URL}tickets`,
   GET_SECTION_BY_ID:`${COMMON_URL}section_list`,
   GET_CANVAS_TABLE:`${COMMON_URL}eventTable`,
   POST_STATE:`${COMMON_URL}list_states`,
@@ -54,6 +55,10 @@ const API_URLS = {
 
   export const getSection = (payload) =>
   apis.get(API_URLS.GET_SECTION, payload);
+
+  export const getBookingList = (payload) =>
+  apis.get(`${API_URLS.GET_BOOKING_LIST}?venue_id=${payload.data.venue_id}`, payload);
+
 
   export const getSectionList = (payload) =>
   apis.get(`${API_URLS.GET_SECTION_LIST}?venue_id=${payload.data.venue_id}`, payload);
