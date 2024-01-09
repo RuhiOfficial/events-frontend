@@ -9,6 +9,7 @@ import moment from 'moment';
 
 
 
+
 import { updateSection,postBookTickets } from 'service/api';
 import { ToastContainer, toast } from 'react-toastify';
 import { Button, Img, Line, List, Text ,Input} from "components";
@@ -18,7 +19,14 @@ import DatePicker from 'components/Date';
 import Dob from 'components/Date';
 
 
+import { css } from '@emotion/react';
+import { PacmanLoader } from 'react-spinners';
 
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 
 function SingleEvent({ isOpen, onRequestClose, eventId }) {
@@ -28,6 +36,7 @@ const [dob, setDob] = useState(null);
 const [formattedStartTime,setFormattedStartTime] = useState(null);
   const [arrivalTime, setArrivalTime] = useState(null);
   const venueId=localStorage.getItem('Venue')
+  const [isLoading, setIsLoading] = useState(true);
 
 
 
@@ -111,6 +120,7 @@ const [formattedStartTime,setFormattedStartTime] = useState(null);
         // Update the state
        
         setData(res.data);
+        setIsLoading(false)
         // setPrice(res.data.price);
       }
     } catch (err) {
@@ -159,7 +169,7 @@ console.log(data.event_desc,"data ==============>>>>>")
       contentLabel="Example Modal"
       style={{
         overlay: {
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          backgroundColor: 'rgba(0, 0, 0, 0.85)',
         },
       
       
@@ -173,7 +183,6 @@ console.log(data.event_desc,"data ==============>>>>>")
           background: 'none',
           border: 'none',
           padding: 0,
-          overflowY: 'auto',
           maxHeight: '80vh',
          
         },
@@ -187,6 +196,8 @@ console.log(data.event_desc,"data ==============>>>>>")
            
            <div className="flex flex-col font-poppins items-center justify-start mx-auto w-full ">
              <div className="bg-no-repeat flex flex-col items-center justify-start p-10 md:p-5 w-full">
+             {/* <PacmanLoader css={override} size={50} color={'#5051f9'} loading={isLoading} />
+                          {!isLoading && ( */}
                <div className="bg-[#292e34] flex flex-col items-start justify-start p-[3.5rem] rounded-[24px] w-full ">
                  <div className='text-center w-full flex justify-between items-center'>
                  <div className="flex flex-col items-center justify-center w-[800px] sm:w-full">
@@ -206,8 +217,10 @@ console.log(data.event_desc,"data ==============>>>>>")
                 <div className="flex flex-row items-start justify-start mt-[18px] w-full">
                 
                 <div className='w-5/12'>
-                 <img className="h-51  event-image" src={data.featured_image} alt="Event Image" />
-                           
+                <PacmanLoader css={override} size={50} color={'#5051f9'} loading={isLoading} />
+                          {!isLoading && (
+                 <img className="h-51  event-image" src={data.featured_image} alt="" />
+                          )}     
                   </div>
                    <div>
                           
@@ -433,6 +446,7 @@ console.log(data.event_desc,"data ==============>>>>>")
                   </Button>
                 </div>
               </div>
+                          {/* )} */}
             </div>
           </div>
 

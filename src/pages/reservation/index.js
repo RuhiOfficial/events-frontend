@@ -10,6 +10,14 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import DeleteSection from 'pages/DeleteSection';
 import EditSection from 'pages/EditSection';
 import { getSectionList } from 'service/api';
+import { css } from '@emotion/react';
+import { PacmanLoader } from 'react-spinners';
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 
 const sections = [
@@ -37,6 +45,7 @@ function Reservartion() {
   const vid=localStorage.getItem('Venue')
   const [sectionsData, setSectionsData] = useState(sections);
   const [tableList,setTableList]=useState([])
+  const [isLoading, setIsLoading] = useState(true);
 
   const onDragEnd = (result) => {
     if (!result.destination) {
@@ -114,6 +123,7 @@ function Reservartion() {
     };
   
     return (
+      
       <Draggable draggableId={name} index={index}>
         {(provided, snapshot) => (
           <div
@@ -167,6 +177,7 @@ async function section() {
     //   console.log(sectionsData); // Log the transformed data
 
       setTableList(res.data.data);
+      setIsLoading(false)
     
   })
   .catch((err) => {
@@ -184,6 +195,7 @@ async function section() {
 
 
   return (
+   
     <div className='p-[50px] m-[50px] bg-[#1f2327]'>
       <div  className='flex justify-between items-center'>
       <Text
@@ -209,7 +221,8 @@ async function section() {
     <Section isOpen={isSectionOpen} onRequestClose={closeModal} />
     </div>
     </div>
-     
+    <PacmanLoader css={override} size={50} color={'#5051f9'} loading={isLoading} />
+                          {!isLoading && (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="mx-auto mt-8">
         {tableList.map((section) => (
@@ -263,8 +276,10 @@ async function section() {
         ))}
       </div>
     </DragDropContext>
+                          )}
     </div>
    
+  
   );
 }
 

@@ -14,6 +14,15 @@ import { Button, Img, Line, List, Text } from "components";
 import { getEvent,getBookingList } from 'service/api';
 import BookingList from 'pages/BookingList';
 import "../Custom.css"
+import { css } from '@emotion/react';
+import { PacmanLoader } from 'react-spinners';
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
+
 
 
 
@@ -29,6 +38,7 @@ const DashboardPage = () => {
   const[eventId,setEventId]=useState();
   const[date,setDate]=useState([]);
   const[ticketList,setTicketList]=useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     // const savedVenueId = Cookies.get('venueId');
     const savedVenueId=localStorage.getItem('Venue')
@@ -48,6 +58,13 @@ const fetchData = async (venueId) => {
       const res = await getEvent(req);
       console.log(res.data)
       setEventList(res.data.data);
+      setIsLoading(false);
+
+      // setTimeout(() => {
+      //   const dummyData = ['Item 1', 'Item 2', 'Item 3'];
+      //   setData(dummyData);
+      //   setIsLoading(false);
+      // }, 2000);
     }
     catch {
       console.error("there is an error");
@@ -125,8 +142,8 @@ const fetchData = async (venueId) => {
 
   const columns = [
     // Define your columns here
-    { Header: 'First Name', accessor: 'first_name'  },
-    { Header: 'Last Name', accessor: 'last_name' },
+    { Header: 'EVENT', accessor: 'name' },
+    { Header: 'NAME', accessor: 'full_name'  },
     { Header: 'EMAIL', accessor: 'email'  },
     { Header: 'CONTACT NO', accessor: 'phone' },
     { Header: 'SECTION', accessor: 'section' },
@@ -186,6 +203,7 @@ const fetchData = async (venueId) => {
   return (
     <>
     < div className={`relative ${isModalOpen || isEventModalOpen ? 'filter blur' : ''}`}>
+    
       <div className="flex flex-col font-roboto items-center justify-start mx-auto w-full">
         <div className="backdrop-opacity-[0.5] bg-gray-900  flex flex-col items-center justify-end   w-full">
           <div className="flex md:flex-col flex-row  items-start justify-between mx-auto md:px-5 w-full">
@@ -388,7 +406,8 @@ const fetchData = async (venueId) => {
                             </Button>
                           </div>
                           <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mb-[33px] w-full min-h-[170px]">
-                         
+                          <PacmanLoader css={override} size={50} color={'#5051f9'} loading={isLoading} />
+                          {!isLoading && (
                          <List
                            className="flex-1 sm:flex-col flex-row gap-[31px] grid md:grid-cols-1 grid-cols-2 w-full"
                            orientation="horizontal"
@@ -439,6 +458,7 @@ const fetchData = async (venueId) => {
                              </div>
                            ))}
                          </List>
+                          )}
                   </div>
                                          </div>
                                        </div>
@@ -531,8 +551,10 @@ const fetchData = async (venueId) => {
                         
                       
                           <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mb-[33px] w-full min-h-[170px]">
-                         
+                          <PacmanLoader css={override} size={50} color={'#5051f9'} loading={isLoading} />
+                          {!isLoading && (
                           <BookingList columns={columns} data={ticketList} />
+                          )}
  </div>
                         </div>
                       </div>

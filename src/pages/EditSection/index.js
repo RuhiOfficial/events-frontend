@@ -85,7 +85,7 @@ function EditSection({ isOpen, onRequestClose, sectionId }) {
         },
       }}
     >
-      <h2>Modal Content</h2>
+     
       <div className="flex flex-col font-poppins items-center justify-start mx-auto w-full ">
         <div className="flex flex-col font-poppins items-center justify-start mx-auto w-full ">
           <div className="bg-no-repeat flex flex-col items-center justify-start p-10 md:p-5 w-full">
@@ -102,14 +102,21 @@ function EditSection({ isOpen, onRequestClose, sectionId }) {
               </div>
 
               <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-              <Input
+              <input
                   name="Section Name"
                   placeholder=" Section Name"
-                  className="capitalize font-roboto p-0 placeholder-white-900 text-base text-left w-full h-[50px] pl-4 common-pointer border border-white border-solid w-full bg-[#292e34] "
-                  wrapClassName=" common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
-                  style={{ color: 'white' }}
+                  className="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34] capitalize font-roboto p-0 placeholder-white-900 text-base text-left w-full h-[50px] pl-4 common-pointer border border-white border-solid w-full bg-[#292e34] "
+                  
+                  style={{ color: 'white' , borderColor:"white"}}
                   onChange={(e) => {
                     
+
+                    if (e.target) {
+                      console.log('Value changed:', e.target.value);
+                      // Your logic here
+                    }
+
+                    console.log('Name changed:', e.target.value);
                     setName(e.target.value);
                   }}
                   value={name}
@@ -119,12 +126,12 @@ function EditSection({ isOpen, onRequestClose, sectionId }) {
               </div>
 
               <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                <Input
+                <input
                   name="price"
                   placeholder=" Price"
                   className="capitalize font-roboto p-0 placeholder-white-900 text-base text-left w-full h-[50px] pl-4 common-pointer border border-white-700_99 border-solid w-full bg-[#292e34] "
                   wrapClassName=" common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
-                  style={{ color: 'white' }}
+                  style={{ color: 'white',borderColor:"white" }}
                   onChange={(e) => {
                     console.log('Price changed:', e.target.value);
                     setPrice(e.target.value);
