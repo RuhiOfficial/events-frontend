@@ -176,7 +176,7 @@ const fetchData = async (venueId) => {
       <div className="flex flex-col font-roboto items-center justify-start mx-auto w-full">
         <div className="backdrop-opacity-[0.5] bg-gray-900  flex flex-col items-center justify-end   w-full">
           <div className="flex md:flex-col flex-row  items-start justify-between mx-auto md:px-5 w-full">
-            <div style={{display:"flex"}}>
+            <div style={{display:"flex"}} className="w-full">
             
             <div className="flex flex-1 flex-col gap-[40px] items-center justify-start mb-[34px] w-full">
               <header className="bg-gray-900_01 flex md:flex-col flex-row md:gap-5 items-center  w-full justify-between">
@@ -186,7 +186,7 @@ const fetchData = async (venueId) => {
               </header>
              
 
-             <div className="flex flex-col font-inter items-center justify-start w-full md:w-full h-full  p-[2.1rem] ml-[40px]">
+             <div className="flex flex-col font-inter items-center justify-start w-full md:w-full h-full  p-[2.1rem]">
                 <div className="flex flex-col gap-[26px] items-center justify-start w-full">
                   <div className="flex md:flex-col flex-row gap-[22px] items-end justify-between w-full">
                     <div className="flex md:flex-1 flex-col gap-[21px] items-center justify-start w-3/4 md:w-full">
@@ -213,7 +213,7 @@ const fetchData = async (venueId) => {
                         </div>
                         <div className="flex md:flex-col flex-row font-poppins gap-6 items-center justify-between ml-0.5 md:ml-[0] rounded shadow-bs w-full">
                           <List
-                            className="md:flex-1 sm:flex-col flex-row gap-6 grid sm:grid-cols-1 md:grid-cols-2 grid-cols-3 w-3/4 md:w-full"
+                            className="md:flex-1 sm:flex-col flex-row gap-6 grid sm:grid-cols-1 md:grid-cols-2 grid-cols-4 w-full md:w-full"
                             orientation="horizontal"
                           >
                             <div className="bg-blue_gray-900_01 flex flex-col items-start justify-end sm:ml-[0] p-[7px] rounded w-full">
@@ -317,35 +317,35 @@ const fetchData = async (venueId) => {
                                 </Text>
                               </div>
                             </div>
-                          </List>
-                          <div className="bg-blue_gray-900_01 flex md:flex-1 flex-col items-start justify-end p-2 rounded w-[24%] md:w-full">
-                            <div className="flex flex-col gap-[25px] items-start justify-start md:ml-[0] ml-[11px] mt-[11px] w-[47%] md:w-full">
-                              <div className="flex flex-row gap-4 items-end justify-start w-full">
-                                <Button
-                                  className="flex h-8 items-center justify-center rounded w-8"
-                                  color="indigo_A400"
-                                >
-                                  <Img
-                                    className="h-[22px]"
-                                    src="images/img_emergencyservice.png"
-                                    alt="emergencyservic"
-                                  />
-                                </Button>
+                            <div className="bg-blue_gray-900_01 flex flex-col items-start justify-end sm:ml-[0] p-[7px] rounded w-full">
+                              <div className="flex flex-col gap-[25px] items-start justify-start md:ml-[0] ml-[11px] mt-[11px] w-[47%] md:w-full">
+                                <div className="flex flex-row gap-4 items-end justify-start w-full">
+                                  <div className="bg-indigo-A400 flex flex-col h-8 items-center justify-start p-[5px] rounded w-8">
+                                    <div className="flex flex-col h-[22px] items-center justify-start w-[22px]">
+                                    <Img
+                                      className="h-[22px]"
+                                      src="images/img_emergencyservice.png"
+                                      alt="emergencyservic"
+                                    />
+                                    </div>
+                                  </div>
+                                  <Text
+                                    className="my-[5px] text-sm text-white-A700 tracking-[0.14px]"
+                                    size="txtPoppinsSemiBold14"
+                                  >
+                                    Inventory
+                                  </Text>
+                                </div>
                                 <Text
-                                  className="my-[5px] text-sm text-white-A700 tracking-[0.14px]"
-                                  size="txtPoppinsSemiBold14"
+                                  className="md:text-3xl sm:text-[28px] text-[32px] text-white-A700"
+                                  size="txtPoppinsSemiBold32"
                                 >
-                                  Inventory
+                                  22
                                 </Text>
                               </div>
-                              <Text
-                                className="md:text-3xl sm:text-[28px] text-[32px] text-white-A700"
-                                size="txtPoppinsSemiBold32"
-                              >
-                                22
-                              </Text>
                             </div>
-                          </div>
+                          </List>
+                          
                         </div>
 
 
@@ -357,8 +357,8 @@ const fetchData = async (venueId) => {
                       </div>
                       <div className="bg-blue_gray-900_01 flex flex-col font-poppins  justify-start sm:px-5 px-[26px] rounded shadow-bs1 w-full">
                         <div className="flex flex-col gap-10  justify-start py-9 w-full">
-                          <div className="flex flex-row md:gap-10 gap-[1053px]  justify-start w-auto md:w-full">
-                            <div className="flex flex-col font-poppins items-center justify-start">
+                          <div className="flex flex-row md:gap-10 justify-start w-auto md:w-full">
+                            <div className="w-full flex justify-between">
                               <Text
                                 className="text-[22px] sm:text-lg text-white-A700 md:text-xl"
                                 size="txtPoppinsSemiBold22"

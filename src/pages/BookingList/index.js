@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useTable, usePagination, useGlobalFilter } from 'react-table';
 import { Text } from "components";
+import "../Custom.css"
 
 const BookingList = ({ columns, data }) => {
   const [globalFilter, setGlobalFilter] = useState('');
@@ -49,14 +50,14 @@ const BookingList = ({ columns, data }) => {
   return (
     <div className="flex w-full">
       <div className="flex-1 overflow-x-auto">
-      <div className="flex flex-row font-poppins items-center justify-between">
+      <div className="flex flex-row font-poppins booking_serch items-center justify-between">
                               <Text
                                 className="text-[22px] sm:text-lg text-white-A700 md:text-xl"
                                 size="txtPoppinsSemiBold22"
                               >
                                 Bookings
                               </Text>
-                              <div className="mb-4 p-4 bg-transparent  w-[200px]">
+                              <div className="bg-transparent  w-[200px]">
           <input
             type="text"
             value={globalFilter}

@@ -447,3 +447,19 @@ input#dob {
 input#agreeTerms {
   width: unset;
 }
+
+.pop_frm textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 0px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 10px;
+}
+
+.booking_serch input{
+  background: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  font-size: 13px;
+}

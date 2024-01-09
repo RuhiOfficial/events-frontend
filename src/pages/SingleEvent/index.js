@@ -181,7 +181,7 @@ const [data,setData]=useState([])
                               Table Selection
                             </Button>
                                 </div>
-                                <div  className='flex flex-row items-start justify-between mt-[18px] w-full'>
+                                <div  className='flex flex-row items-start justify-between mt-[18px] w-full pop_frm'>
                                 
                         {/* <Input
                         name="Date"
