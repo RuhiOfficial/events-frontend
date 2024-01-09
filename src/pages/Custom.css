@@ -1,4 +1,4 @@
-/* MyDatePicker.css */
+ /* MyDatePicker.css  */
 
 .custom-datepicker {
   color:white !important;
@@ -18,12 +18,11 @@
 
 .page_404  img{ width:100%;}
 
-.four_zero_four_bg{
-
-background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
-  height: 400px;
-  background-position: center;
+.four_zero_four_bg {
+  background: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif) center no-repeat;
+  height: 500px;
 }
+
 
 
 .four_zero_four_bg h1{
@@ -70,7 +69,7 @@ font-family: 'Arial', sans-serif;
 
 .react-datepicker__input-container {
 display: inline-block;
-width: 100%; /* Ensure the date picker takes full width */
+width: 100%; /* Ensure the date picker takes full width*/
 padding: 11px 17px 11px;
 }
 
@@ -85,25 +84,523 @@ outline: none;
 .react-datepicker-popper {
 z-index: 1000;
 }
-
-/* styles.css */
-.custom-timepicker {
-border:1px solid white
-/* Your custom styles for the entire time picker component */
+.react-datepicker__year-dropdown {
+  display: block !important;
 }
 
+.react-datepicker__year-read-view--down-arrow,
+.react-datepicker__year-read-view--up-arrow {
+  display: inline-block !important;
+}
+
+
+
+
 .custom-timepicker .react-time-picker-dropdown-icon {
-fill: grey; /* Icon color */
+  fill: grey; /* Icon color */
 }
 
 .custom-timepicker .react-time-picker-dropdown-clock {
-color: grey; /* Clock color */
+  color: grey; /* Clock color */
 }
 
 .custom-timepicker .react-time-picker-dropdown-clock-selected {
-color: white; /* Selected time color */
+color: rgb(181, 20, 20); /*Selected time color*/
 }
 
 input.tp_inputBox{
-  color: white !important; /* Selected time color */
+  color: white !important; /*Selected time color */
+}
+/* CustomTimepicker.css */
+.custom-timepicker-wrapper {
+  position: relative;
+}
+
+
+
+/* You can also style the input field itself if needed */
+/* .custom-timepicker {
+  width: 300px;} /* Set the overall width of the time picker */
+
+
+/* Adjust the width of the hour input */
+.custom-timepicker .react-time-picker__inputGroup__hour {
+  width: 80px !important; /* Adjust the width as needed */
+}
+
+/* Adjust the width of the minute input */
+.custom-timepicker .react-time-picker__inputGroup__minute {
+  width: 80px !important; /* Adjust the width as needed */
+}
+.custom-timepicker .rc-time-picker-panel-input-wrap {
+  border: none;
+}
+
+.custom-timepicker .rc-time-picker-input {
+  background-color: transparent;
+  color: white;
+  border: none;
+  height:49px;
+}
+
+.custom-timepicker .rc-time-picker-clear {
+  color: white;
+}
+
+/* Canvas */
+.drawing-app {
+  width: 100%;
+  height: 100%;
+  background-color: #1f2327;
+  /* background-color: white */
+}
+
+.drawing-canvas {
+  position: relative;
+  overflow: hidden; 
+  height:fit-content;
+  margin-top: 50px;
+  margin-left: 100px;
+  border:2px solid white;
+}
+.myCard{
+border:2px solid  #282c34;
+margin: 25px;
+height:400px;
+}
+.divs{
+
+margin:20px;
+text-align: center;
+justify-content: center;
+}
+.mybuttons{
+ margin: 10px;
+ padding:4px
+
+}
+.inputs{
+margin: 5px;
+border-bottom: #d2d6dc;
+
+}
+.custom-file-input {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.custom-file-input input {
+  position: absolute;
+  font-size: 100px;
+  right: 0;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.file-container {
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+/* Add more styles as needed */
+
+/* Canvas.css */
+
+.table-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.table-list-item {
+  cursor: pointer;
+  padding: 8px;
+  background-color: #f0f0f0;
+  margin-bottom: 4px;
+  text-align: center;
+}
+
+.table-list-item.selected {
+  background-color: #b3d9ff; /* Change this color as needed */
+}
+
+.grey{
+  color:#bebcb8
+}
+.white{
+  color:white
+}
+.grey-border{
+  border:1px solid #626262 !important
+}
+
+.blue{
+  color:#5051f9
+}
+
+
+
+
+
+
+
+
+.event-main{
+  width: 900px;
+  margin: auto;
+  margin-top: 30px;
+}
+
+.venue-text {
+  font-size: 16px;
+  color: #333; 
+  
+}
+.event-image {
+  width: 400px;
+  height: 300px;
+
+  border-radius: 30px;
+  margin-top: 15px;
+}
+.highlighted-text {
+  color: #ffac00;
+  margin: 13px auto;
+}
+
+/* .venue-container {
+  height: 700px;
+  width: 900px;
+} */
+.event-img{
+  width: 160px;
+  height: 100px;
+  
+}
+
+#agreeTerms {
+  margin-right: 10px;
+}
+
+.venue-wrapper {
+  background-color: #1a202c;
+  font-family: 'Poppins', sans-serif;
+  
+}
+
+.event-list-item {
+  background-color: #1a202c;
+  border: 1px solid #4a5568;
+  cursor: pointer;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  gap: 21px;
+  align-items: center;
+  justify-content: start;
+  margin-left: 0;
+  padding: 2.5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.event-list-item:hover {
+  background-color: #2d3748;
+  border-color: #2d3748;
+}
+
+.event-list-item img {
+  flex: 1;
+  height: 151px;
+  width: 21%;
+  object-fit: cover;
+}
+
+.event-list-item .text-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+}
+
+.event-list-item .title {
+  font-size: 23px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.event-list-item .event-id {
+  font-size: 18px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.event-list-item .album-id {
+  margin-top: 3.5px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #ffffff;
+}
+.table-service{
+  width: 467px;
+  background-color:#c1bbbb;
+  margin-left: 238px;
+  border-radius: 30px;
+  box-shadow: 20px 0px 0px #000;
+  box-sizing: border-box;
+}
+.loaction-text{
+  color: white;  
+  font-size: 24px;
+  font-weight: 700;
+}
+.map{
+  width: 431px;
+    outline-style: none;
+    border-radius: 30px;
+}
+.text-location{
+  margin-top: 40px;
+    margin-bottom: 16px;
+
+}
+.increment-button {
+  margin-left: 5px;
+}
+ 
+.increment-button,
+.decrement-button {
+  background-color: green;
+  color: white;
+}
+.display-contents {
+  display: contents;
+}
+.container-head{
+  background-color: black;
+}
+
+.leaflet-container.leaflet-touch.leaflet-fade-anim.leaflet-grab.leaflet-touch-drag.leaflet-touch-zoom {
+  height: 200px!important;
+  width: 115%!important;
+  border-radius: 30px!important;
+  position: relative!important;
+  outline-style: none;
+}
+.form-title.sm {
+  font-size: x-large;
+  margin-bottom: 8px;
+  margin-top: 20px;
+  color: white;
+}
+input, optgroup, select, textarea {
+  font-family: inherit;
+  font-feature-settings: inherit;
+  font-variation-settings: inherit;
+  font-size: 100%;
+  width: 95%;
+  font-weight: inherit;
+  border: 2px solid black;
+  line-height: inherit;
+  color: currentColor;
+  padding: 0;
+  position: relative;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  padding: 5px;
+  
+  
+}
+#date {
+  width: 100%;
+  margin-right: 40px;
+}
+
+#tableselection {
+  width: 100%;
+  margin-left: 30px;
+}
+.container.mx-auto {
+  margin-left: 40px;
+  width: -webkit-fill-available;
+}
+
+button.w-full.bg-blue.hover\:bg-blue-dark.text-white.font-bold.py-2.px-4.rounded {
+  background-color: blue;
+  margin-top: 20px;
+  width: 98%;
+  border-radius: 10px;
+  margin-bottom: 50px;
+}
+
+#totalGuests {
+  padding: 10px;
+  width: 98%;
+  border-radius: 10px;
+  margin-left: 0px;
+}
+textarea#bookingNote {
+  width: 98%;
+  margin-top: 5px;
+  margin-left: 0px;
+  border-radius: 5px;
+}
+
+input#dob {
+  width: 30%;
+}
+
+input#agreeTerms {
+  width: unset;
+}
+
+/*  Dark Date picker version  */
+/* Add this to your global CSS or Tailwind CSS styles */
+.dark-calendar {
+  background-color: #1a202c;
+  color: #cbd5e0;
+}
+
+.dark-popper .react-datepicker__year-dropdown {
+  background-color: #1a202c;
+  color: #cbd5e0;
+}
+
+.dark-popper .react-datepicker__header {
+  background-color: #1a202c;
+  color: #cbd5e0;
+}
+
+.dark-popper .react-datepicker__current-month,
+.dark-popper .react-datepicker-time__header {
+  color: #cbd5e0;
+}
+
+.dark-popper .react-datepicker__day-name,
+.dark-popper .react-datepicker__day,
+.dark-popper .react-datepicker__time-list-item {
+  color: #cbd5e0;
+}
+
+.dark-popper .react-datepicker__day--selected {
+  background-color: #4a5568;
+}
+
+.dark-popper .react-datepicker__day--keyboard-selected {
+  background-color: #2d3748;
+}
+
+
+
+.dark-calendar {
+  background-color: #1a202c;
+  color: #cbd5e0;
+  border: 1px solid #2d3748;
+}
+
+.dark-popper .react-datepicker__year-dropdown,
+.dark-popper .react-datepicker__month-container {
+  background-color: #1a202c;
+  color: #cbd5e0;
+}
+
+.dark-popper .react-datepicker__header {
+  background-color: #2d3748;
+  color: #cbd5e0;
+}
+
+.dark-popper .react-datepicker__current-month,
+.dark-popper .react-datepicker-time__header {
+  color: #cbd5e0;
+}
+
+.dark-popper .react-datepicker__day-name,
+.dark-popper .react-datepicker__day,
+.dark-popper .react-datepicker__time-list-item {
+  color: #cbd5e0;
+}
+
+.dark-popper .react-datepicker__day--selected {
+  background-color: #4a5568;
+}
+
+.dark-popper .react-datepicker__day--keyboard-selected {
+  background-color: #2d3748;
+}
+
+.dark-popper .react-datepicker__month-text:hover,
+.dark-popper .react-datepicker__quarter-text:hover,
+.dark-popper .react-datepicker__year-text:hover,
+.dark-popper .react-datepicker__month:hover,
+.dark-popper .react-datepicker__quarter:hover,
+.dark-popper .react-datepicker__year:hover {
+  background-color: #2d3748;
+}
+
+
+
+
+/* dark Timepicker  */
+/* Add this to your global CSS or Tailwind CSS styles */
+.dark-timepicker .rc-time-picker-panel-inner {
+  background-color: #1a202c;
+  color: #cbd5e0;
+}
+
+.dark-timepicker .rc-time-picker-panel-input {
+  background-color: #2d3748;
+  border: 1px solid #2d3748;
+  color: #cbd5e0;
+}
+
+.dark-timepicker .rc-time-picker-panel-combobox {
+  background-color: #2d3748;
+}
+
+.dark-timepicker .rc-time-picker-panel-select {
+  background-color: #2d3748;
+  color: #cbd5e0;
+}
+
+.dark-timepicker .rc-time-picker-panel-select-option-selected {
+  background-color: #4a5568;
+}
+
+.dark-timepicker .rc-time-picker-clear-btn {
+  color: #cbd5e0;
+}
+
+.dark-timepicker .rc-time-picker-panel-combobox {
+  background-color: #2d3748;
+  border: 1px solid #2d3748;
+  color: #cbd5e0;
+}
+
+.dark-timepicker .rc-time-picker-panel-input-wrap {
+  border: 1px solid #2d3748;
+}
+
+
+input#agreeTerms {
+  width: unset;
+}
+
+.pop_frm textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 0px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 10px;
+}
+
+.booking_serch input{
+  background: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  font-size: 13px;
 }

@@ -1,26 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import "../Custom.css"
 import 'react-datepicker/dist/react-datepicker.css';
 import { Link } from 'react-router-dom';
+import ListModal from 'pages/ListModal';
 
 import { Button, Img, Line, List, Text } from "components";
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import { postSingleVenue } from 'service/api';
 
 
 function Header() {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [isDropdownOpen, setDropdownOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const Navigate= useNavigate();
+    const [name,setName]= useState();
+    const [alphabetImages, setAlphabetImages] = useState([]);
+    const[venueId,setVenueId]=useState("");
+     const[data,setData]=useState("");
+
+
+  useEffect(() => {
+   
+      // Read venue ID from the cookie
+      // const savedVenueId = Cookies.get('venueId');
+      const savedVenueId= localStorage.getItem('Venue')
+      setVenueId(savedVenueId);
+      const fetchData=async()=>{
+      const req = {
+        data: {
+          id: savedVenueId,
+        
+        },
+      };
+  
+      try {
+        const res = await postSingleVenue(req);
+        
+        setName(res.data.data[0].name)
+        const images = Array.from(name.toUpperCase()).map((letter) => getAlphabetImage(letter));
+        setAlphabetImages(images);
+        
+      } catch (err) {
+        console.error(err);
+        
+      }
+      }
+    fetchData();
+  }, []);
+
+
     const openModal = () => {
-    setIsModalOpen(true);
+      setIsModalOpen(true);
     };
-
+  
     const closeModal = () => {
-    setIsModalOpen(false);
+      setIsModalOpen(false);
     };
-
   
     const toggleDropdown = () => {
       setDropdownOpen(!isDropdownOpen);
@@ -64,6 +101,13 @@ function Header() {
       localStorage.clear();
       window.location.href = "/";
     }
+
+    const getAlphabetImage = (letter) => {
+      // You can replace this with your own API or logic to fetch alphabet images
+      // For simplicity, I'm using placeholder images from placekitten.com
+      return `https://placekitten.com/100/100?text=${letter}`;
+    };
+    
   return (
     <div>
         
@@ -100,10 +144,10 @@ function Header() {
                         alt="rectangleSix"
                       />
                       <Text
-                        className="text-base text-right text-white-A700 w-auto"
+                        className="text-base text-right text-white-A700 w-auto mr-3"
                         size="txtRubikRomanMedium16"
                       >
-                        W Scoattdale
+                       {name}
                       </Text>
                     </div>
             <div className="relative">
@@ -137,6 +181,18 @@ function Header() {
               >
                 ReactJS Dropdown 1
               </a> */}
+              <div className="p-2 flex flex-col items-center">
+              <Button
+                              className="cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm "
+                              color="indigo_A400"
+                              size="sm"
+                              onClick={openModal}
+                            >
+                              Switch Venue
+                            </Button>
+                            <ListModal isOpen={isModalOpen} onRequestClose={closeModal} />
+
+                            </div>
               <Button
                               className="cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm "
                               color="indigo_A400"
@@ -169,3 +225,9 @@ function Header() {
 }
 
 export default Header
+
+
+
+
+
+

@@ -1,11 +1,19 @@
 import React, { useState,useEffect } from 'react';
-import DatePicker from 'react-datepicker';
+
 import "../Custom.css"
 import 'react-datepicker/dist/react-datepicker.css';
 import Modal from 'pages/Modal';
 import EventModal from 'pages/EventModal';
+import SingleEvent from 'pages/SingleEvent';
+import Cookies from 'js-cookie';
+import BlobLoader from 'components/BlobLoader';
+import ImageComponent from 'components/ImageComponent.js';
+import axios from 'axios'
 
 import { Button, Img, Line, List, Text } from "components";
+import { getEvent,getBookingList } from 'service/api';
+import BookingList from 'pages/BookingList';
+import "../Custom.css"
 
 
 
@@ -13,28 +21,41 @@ const DashboardPage = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEventModalOpen,setIsEventModalOpen]=useState(false);
+  const [isSingleEventModalOpen,setIsSingleEventModalOpen]=useState(false);
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-
+  const [loading, setLoading] = useState(false);
+  const[venueId,setVenueId]=useState(null);
+  const[eventList,setEventList]=useState([]);
+  const[eventId,setEventId]=useState();
+  const[date,setDate]=useState([]);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("https://jsonplaceholder.typicode.com/users");
-        const result = await response.json();
-        setData(result.slice(0, 2)); // Limit to the first 2 items for this example
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
+    // const savedVenueId = Cookies.get('venueId');
+    const savedVenueId=localStorage.getItem('Venue')
+    
+    setVenueId(savedVenueId);
+     
+      fetchData(savedVenueId);
+    
   }, []);
 
+const fetchData = async (venueId) => {
+    
+    const req = { 
+      data:{venue_id:venueId }};
 
+    try {
+      const res = await getEvent(req);
+      console.log(res.data)
+      setEventList(res.data.data);
+    }
+    catch {
+      console.error("there is an error");
+    };
+  
+   
+  };
 
+  
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -44,15 +65,111 @@ const DashboardPage = () => {
     setIsModalOpen(false);
   };
   const openEventModal = () => {
-    console.log("event modal opens")
-    setIsEventModalOpen(true);
+     setIsEventModalOpen(true);
   };
 
   const closeEventModal = () => {
-    console.log("event modal close")
-    setIsEventModalOpen(false);
+     setIsEventModalOpen(false);
   };
 
+  const openIndividualEventModal = (id) => {
+   setEventId(id);
+    setIsSingleEventModalOpen(true);
+  };
+
+  const closeIndividualEventModal = () => {
+    setIsSingleEventModalOpen(false);
+  };
+
+  useEffect(() => {
+    const today = new Date();
+    const options = {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    };
+
+    // Format the date
+    const formattedDate = today.toLocaleDateString('en-US', options);
+
+    // Add the appropriate suffix to the day
+    const daySuffix = (day) => {
+      if (day >= 11 && day <= 13) {
+        return 'th';
+      }
+      switch (day % 10) {
+        case 1:
+          return 'st';
+        case 2:
+          return 'nd';
+        case 3:
+          return 'rd';
+        default:
+          return 'th';
+      }
+    };
+
+    const day = today.getDate();
+    const dayWithSuffix = day ;
+
+    // Replace the day in the formatted date
+    const finalFormattedDate = formattedDate.replace(
+      new RegExp(today.getDate(), 'g'),
+      dayWithSuffix
+    );
+
+    setDate(finalFormattedDate);
+  }, []);
+
+  const columns = [
+    // Define your columns here
+    { Header: 'NAME', accessor: 'name' },
+    { Header: 'AGE', accessor: 'age' },
+    // Add more columns as needed
+  ];
+
+  const records = [
+    // Your data array
+    { name: 'John Doe', age: 25 },
+    { name: 'Jane Doe', age: 30 },
+    // Add more data objects as needed
+  ];
+
+  useEffect(()=>{
+    loadBooking();
+  })
+
+  const loadBooking = async()=>{
+
+    const req={
+      data:{
+        venue_id:1
+      }
+    }
+    try {
+      const res = await getBookingList(req);
+      console.log(res.data,"data coming from api is ======>>>")
+      
+    }
+    catch {
+      console.error("there is an error");
+    };
+      
+  }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post('https://event-backend.isdemo.in/api/v1/tickets'); // Replace with your API endpoint
+         console.log(response ,"demo api for testing ====>>")
+      } catch (error) {
+        
+      }
+    };
+    fetchData();
+  },[]
+
+  )
   
   return (
     <>
@@ -60,7 +177,7 @@ const DashboardPage = () => {
       <div className="flex flex-col font-roboto items-center justify-start mx-auto w-full">
         <div className="backdrop-opacity-[0.5] bg-gray-900  flex flex-col items-center justify-end   w-full">
           <div className="flex md:flex-col flex-row  items-start justify-between mx-auto md:px-5 w-full">
-            <div style={{display:"flex"}}>
+          <div style={{display:"flex"}} className="w-full">
             
             <div className="flex flex-1 flex-col gap-[40px] items-center justify-start mb-[34px] w-full">
               <header className="bg-gray-900_01 flex md:flex-col flex-row md:gap-5 items-center  w-full justify-between">
@@ -70,7 +187,7 @@ const DashboardPage = () => {
               </header>
              
 
-             <div className="flex flex-col font-inter items-center justify-start w-full md:w-full h-full  p-[2.1rem] ml-[40px]">
+             <div className="flex flex-col font-inter items-center justify-start w-full md:w-full h-full  p-[2.1rem] ">
                 <div className="flex flex-col gap-[26px] items-center justify-start w-full">
                   <div className="flex md:flex-col flex-row gap-[22px] items-end justify-between w-full">
                     <div className="flex md:flex-1 flex-col gap-[21px] items-center justify-start w-3/4 md:w-full">
@@ -97,7 +214,7 @@ const DashboardPage = () => {
                         </div>
                         <div className="flex md:flex-col flex-row font-poppins gap-6 items-center justify-between ml-0.5 md:ml-[0] rounded shadow-bs w-full">
                           <List
-                            className="md:flex-1 sm:flex-col flex-row gap-6 grid sm:grid-cols-1 md:grid-cols-2 grid-cols-3 w-3/4 md:w-full"
+                           className="md:flex-1 sm:flex-col flex-row gap-6 grid sm:grid-cols-1 md:grid-cols-2 grid-cols-4 w-full md:w-full"
                             orientation="horizontal"
                           >
                             <div className="bg-blue_gray-900_01 flex flex-col items-start justify-end sm:ml-[0] p-[7px] rounded w-full">
@@ -201,35 +318,34 @@ const DashboardPage = () => {
                                 </Text>
                               </div>
                             </div>
-                          </List>
-                          <div className="bg-blue_gray-900_01 flex md:flex-1 flex-col items-start justify-end p-2 rounded w-[24%] md:w-full">
-                            <div className="flex flex-col gap-[25px] items-start justify-start md:ml-[0] ml-[11px] mt-[11px] w-[47%] md:w-full">
-                              <div className="flex flex-row gap-4 items-end justify-start w-full">
-                                <Button
-                                  className="flex h-8 items-center justify-center rounded w-8"
-                                  color="indigo_A400"
-                                >
-                                  <Img
-                                    className="h-[22px]"
-                                    src="images/img_emergencyservice.png"
-                                    alt="emergencyservic"
-                                  />
-                                </Button>
+                            <div className="bg-blue_gray-900_01 flex flex-col items-start justify-end sm:ml-[0] p-[7px] rounded w-full">
+                              <div className="flex flex-col gap-[25px] items-start justify-start md:ml-[0] ml-[11px] mt-[11px] w-[47%] md:w-full">
+                                <div className="flex flex-row gap-4 items-end justify-start w-full">
+                                  <div className="bg-indigo-A400 flex flex-col h-8 items-center justify-start p-[5px] rounded w-8">
+                                    <div className="flex flex-col h-[22px] items-center justify-start w-[22px]">
+                                    <Img
+                                      className="h-[22px]"
+                                      src="images/img_emergencyservice.png"
+                                      alt="emergencyservic"
+                                    />
+                                    </div>
+                                  </div>
+                                  <Text
+                                    className="my-[5px] text-sm text-white-A700 tracking-[0.14px]"
+                                    size="txtPoppinsSemiBold14"
+                                  >
+                                    Inventory
+                                  </Text>
+                                </div>
                                 <Text
-                                  className="my-[5px] text-sm text-white-A700 tracking-[0.14px]"
-                                  size="txtPoppinsSemiBold14"
+                                  className="md:text-3xl sm:text-[28px] text-[32px] text-white-A700"
+                                  size="txtPoppinsSemiBold32"
                                 >
-                                  Inventory
+                                  22
                                 </Text>
                               </div>
-                              <Text
-                                className="md:text-3xl sm:text-[28px] text-[32px] text-white-A700"
-                                size="txtPoppinsSemiBold32"
-                              >
-                                22
-                              </Text>
-                            </div>
-                          </div>
+                              </div>
+                            </List>
                         </div>
 
 
@@ -241,8 +357,8 @@ const DashboardPage = () => {
                       </div>
                       <div className="bg-blue_gray-900_01 flex flex-col font-poppins  justify-start sm:px-5 px-[26px] rounded shadow-bs1 w-full">
                         <div className="flex flex-col gap-10  justify-start py-9 w-full">
-                          <div className="flex flex-row md:gap-10 gap-[1053px]  justify-start w-auto md:w-full">
-                            <div className="flex flex-col font-poppins items-center justify-start">
+                        <div className="flex flex-row md:gap-10 justify-start w-auto md:w-full">
+                            <div className="w-full flex justify-between">
                               <Text
                                 className="text-[22px] sm:text-lg text-white-A700 md:text-xl"
                                 size="txtPoppinsSemiBold22"
@@ -259,124 +375,62 @@ const DashboardPage = () => {
                               + Add Event
                             </Button>
                           </div>
-                          {/* <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mb-[33px] w-full">
-                            <List
-                              className="flex-1 sm:flex-col flex-row gap-[31px] grid md:grid-cols-1 grid-cols-2 w-full"
-                              orientation="horizontal"
-                            >
-                              <div className="bg-black-900_11 border border-blue_gray-800 border-solid hover:cursor-pointer flex flex-1 sm:flex-col flex-row gap-[21px] items-center justify-start sm:ml-[0] hover:mx-0 p-2.5 hover:shadow-bs shadow-bs hover:w-full w-full">
-                                <Img
-                                  className="sm:flex-1 h-[151px] md:h-auto object-cover w-[21%] sm:w-full"
-                                  src="images/img_rectangle63.png"
-                                  alt="rectangleSixtyThree"
-                                />
-                                <div className="flex flex-col items-start justify-start">
-
- <Text
-                                    className="sm:text-[19px] md:text-[21px] text-[23px] text-white-A700"
-                                    size="txtPoppinsSemiBold23"
-                                  >
-                                    Cottontail @ NIGHT | Thursdays
-                                  </Text>
-                                  <Text
-                                    className="text-lg text-white-A700"
-                                    size="txtPoppinsMedium18"
-                                  >
-                                    9:00 pm To 2.00 am
-                                  </Text>
-                                  <Text
-                                    className="mt-3.5 text-sm text-white-A700"
-                                    size="txtPoppinsRegular14"
-                                  >
-                                    Recurring weekly
-                                  </Text>
-                                </div>
-                              </div>
-                              <div className="bg-black-900_11 border border-blue_gray-800 border-solid hover:cursor-pointer flex flex-1 sm:flex-col flex-row gap-[21px] items-center justify-start sm:ml-[0] hover:mx-0 p-2.5 hover:shadow-bs shadow-bs hover:w-full w-full">
-                                <Img
-                                  className="sm:flex-1 h-[151px] md:h-auto object-cover w-[21%] sm:w-full"
-                                  src="images/img_rectangle63.png"
-                                  alt="rectangleSixtyThree"
-                                />
-                                <div className="flex flex-col items-start justify-start">
-                                  <Text
-                                    className="sm:text-[19px] md:text-[21px] text-[23px] text-white-A700"
-                                    size="txtPoppinsSemiBold23"
-                                  >
-                                    Cottontail @ NIGHT | Thursdays
-                                  </Text>
-                                  <Text
-                                    className="text-lg text-white-A700"
-                                    size="txtPoppinsMedium18"
-                                  >
-                                    9:00 pm To 2.00 am
-                                  </Text>
-                                  <Text
-                                    className="mt-3.5 text-sm text-white-A700"
-                                    size="txtPoppinsRegular14"
-                                  >
-                                    Recurring weekly
-                                  </Text>
-                                </div>
-                              </div>
-                            </List>
-                           
-                          </div> */}
-                          <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mb-[33px] w-full">
-                          {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <List
-          className="flex-1 sm:flex-col flex-row gap-[31px] grid md:grid-cols-1 grid-cols-2 w-full"
-          orientation="horizontal"
-        >
-          {data.map((item) => (
-            <div
-              key={item.id}
-              className="bg-black-900_11 border border-blue_gray-800 border-solid hover:cursor-pointer flex flex-1 sm:flex-col flex-row gap-[21px] items-center justify-start sm:ml-[0] hover:mx-0 p-2.5 hover:shadow-bs shadow-bs hover:w-full w-full"
-            >
-              {/* <Img
-                className="sm:flex-1 h-[151px] md:h-auto object-cover w-[21%] sm:w-full"
-                src={item.thumbnailUrl}
-                alt={`Photo ${item.id}`}
-              /> */}
-
-                  <Img
-                                  className="sm:flex-1 h-[151px] md:h-auto object-cover w-[21%] sm:w-full"
-                                  src="images/img_rectangle63.png"
-                                  alt="rectangleSixtyThree"
-                                />
-
-              <div className="flex flex-col items-start justify-start">
-                <Text
-                  className="sm:text-[19px] md:text-[21px] text-[23px] text-white-A700"
-                  size="txtPoppinsSemiBold23"
-                >
-                  {item.title}
-                </Text>
-                <Text
-                  className="text-lg text-white-A700"
-                  size="txtPoppinsMedium18"
-                >
-                  {item.id}
-                </Text>
-                <Text
-                  className="mt-3.5 text-sm text-white-A700"
-                  size="txtPoppinsRegular14"
-                >
-                  {item.albumId}
-                </Text>
-              </div>
-            </div>
-          ))}
-        </List>
-      )}
-    
-                           
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                          <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mb-[33px] w-full min-h-[170px]">
+                         
+                         <List
+                           className="flex-1 sm:flex-col flex-row gap-[31px] grid md:grid-cols-1 grid-cols-2 w-full"
+                           orientation="horizontal"
+                         >
+                           {eventList.map((item) => (
+                             <div
+                               key={item.id}
+                               onClick={() => openIndividualEventModal(item.id)}
+                               className="bg-black-900_11 border border-blue_gray-800 border-solid hover:cursor-pointer flex flex-1 sm:flex-col flex-row gap-[21px] items-center justify-start sm:ml-[0] hover:mx-0 p-2.5 hover:shadow-bs shadow-bs hover:w-full w-full"
+                             >
+                             
+                               {/* <Img
+                                 className="sm:flex-1 h-[151px] md:h-auto object-cover w-[21%] sm:w-full"
+                                 src={item.featured_image}
+                                 alt={`Photo`}
+                               /> */}
+                               
+                 
+                                   <Img
+                                                   className="sm:flex-1 h-[151px] md:h-auto object-cover w-[21%] sm:w-full"
+                                                   src="images/img_rectangle63.png"
+                                                   alt="rectangleSixtyThree"
+                                                 />
+                 
+                               <div className="flex flex-col items-start justify-start">
+                                 <Text
+                                   className="sm:text-[19px] md:text-[21px] text-[23px] text-white-A700"
+                                   size="txtPoppinsSemiBold23"
+                                 >
+                                   {item.name}
+                                   {/* {venueId} */}
+                                 </Text>
+                                 <Text
+                                   className="text-lg text-white-A700"
+                                   size="txtPoppinsMedium18"
+                                 >
+                                   {item.time_from}-{item.time_to}
+                                   {/* {item.id} */}
+                                 </Text>
+                                 <Text
+                                   className="mt-3.5 text-sm text-white-A700"
+                                   size="txtPoppinsRegular14"
+                                 >
+                                   {item.event_desc}
+                                   {/* {item.albumId} */}
+                                 </Text>
+                               </div>
+                             </div>
+                           ))}
+                         </List>
+                  </div>
+                                         </div>
+                                       </div>
+                                     </div>
                     <div className="flex md:flex-1 flex-col font-poppins gap-[18px] items-center justify-start md:mt-0 mt-[78px] w-[24%] md:w-full">
                       <div className="bg-blue_gray-900_01 flex flex-col items-start justify-center p-4 rounded shadow-bs3 w-full">
                         <Text
@@ -435,6 +489,7 @@ const DashboardPage = () => {
                           </div>
                         </div>
                       </div>
+
                       <div className="bg-blue_gray-900_01 flex flex-col items-center justify-start p-3.5 rounded shadow-bs3 w-full">
                         <div className="flex flex-row items-start justify-between mb-24 w-[99%] md:w-full">
                           <Text
@@ -453,6 +508,29 @@ const DashboardPage = () => {
                       </div>
                     </div>
                   </div>
+
+                    {/*  */}
+
+                  <div className="flex md:flex-col flex-row gap-[22px] items-end justify-between w-full">
+                    <div className="flex md:flex-1 flex-col gap-[21px] items-center justify-start w-full md:w-full">
+
+                      <div className="bg-blue_gray-900_01 flex flex-col font-poppins  justify-start sm:px-5 px-[26px] rounded shadow-bs1 w-full">
+                        <div className="flex flex-col gap-10  justify-start py-9 w-full">
+                        
+                      
+                          <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mb-[33px] w-full min-h-[170px]">
+                         
+                          <BookingList columns={columns} data={records} />
+ </div>
+                        </div>
+                      </div>
+                    </div>
+                  
+                  </div>
+
+{/*  */}
+
+
                   <List
                     className="sm:flex-col flex-row font-poppins gap-[41px] grid md:grid-cols-1 grid-cols-2 justify-center w-full"
                     orientation="horizontal"
@@ -710,6 +788,9 @@ const DashboardPage = () => {
     </div>
     <Modal isOpen={isModalOpen} onClose={closeModal} />
     <EventModal isEventOpen={isEventModalOpen} onEventClose={closeEventModal} />
+
+    <SingleEvent isOpen={isSingleEventModalOpen}  onRequestClose={closeIndividualEventModal} eventId={eventId}/>
+    
     </>
   );
 };

@@ -7,8 +7,10 @@ import LoginScreen from "pages/LoginScreen";
 import Header from "pages/Header";
 import Home from "pages/Home";
 import NotFound from "pages/NotFound";
+import Layout from "pages/Layout";
 import Modal from "pages/Modal";
-
+import Canvas from "pages/Canvas";
+import Reservation from "pages/reservation";
 const ProjectRoutes = () => {
   const auth = localStorage.getItem("Name");
   console.log(auth);
@@ -21,6 +23,8 @@ const ProjectRoutes = () => {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/*" element={<NotFound />} />
+              <Route path="/canvas" element={<Canvas/>}/>
+              <Route path="/reservation" element={<Reservation/>}/>
               
               
               {/* <Route path="/modal" element={<Modal />} /> */}

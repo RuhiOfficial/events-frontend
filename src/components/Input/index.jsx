@@ -34,6 +34,7 @@ const Input = React.forwardRef(
       size = "",
       variant = "",
       color = "",
+      value, // New prop to handle default value
       ...restProps
     },
     ref,
@@ -44,7 +45,7 @@ const Input = React.forwardRef(
 
     return (
       <>
-        <div
+         <div
           className={`${wrapClassName} 
               ${shapes[shape] || ""} 
               ${variants[variant]?.[color] || ""} 
@@ -59,6 +60,7 @@ const Input = React.forwardRef(
             name={name}
             onChange={handleChange}
             placeholder={placeholder}
+            value={value} // Set the value prop here
             {...restProps}
           />
           {!!suffix && suffix}

@@ -12,10 +12,12 @@ import { Button, Img, Input, Text } from "components";
 import useForm from "hooks/useForm";
 
 import "react-toastify/dist/ReactToastify.css";
+import Cookies from 'js-cookie';
+
 
 const LoginScreenPage = () => {
   const [loginUser, setLoginUser] = React.useState();
-
+  
   
   const navigate = useNavigate();
   const form1ValidationSchema = yup.object().shape({
@@ -46,11 +48,14 @@ const LoginScreenPage = () => {
 
     postLoginUser(req)
       .then((res) => {
+         console.log(res,"response from Login screen ====>>")
         setLoginUser(res?.data);
         
         localStorage.setItem("Name", JSON.stringify(res?.data?.user?.name));
+        localStorage.setItem("Venue", JSON.stringify(res?.data?.user?.venue_id));
 
         localStorage.setItem("LoginId", JSON.stringify(res?.data?.user?.id));
+        localStorage.setItem('companyId', JSON.stringify(res?.data?.user?.company_id));
 
         localStorage.setItem(
           "RoleId",
@@ -62,6 +67,8 @@ const LoginScreenPage = () => {
           JSON.stringify(res?.data?.authorisation?.token),
         );
         const auth= localStorage.getItem("Name");
+         Cookies.set('companyId', JSON.stringify(res?.data?.user?.company_id));
+         Cookies.set('venueId', JSON.stringify(res?.data?.user?.venue_id));
         console.log(auth,"from login===>>")
         window.location.href = "/";
       })
