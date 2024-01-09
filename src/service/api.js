@@ -28,6 +28,7 @@ const API_URLS = {
   POST_TABLE: `${COMMON_URL}eventTable`,
   POST_LAYOUT: `${COMMON_URL}layout`,
   POST_SINGLE_VENUE:`${COMMON_URL}venue_detail`,
+  POST_BOOK_TICKETS:`${COMMON_URL}tickets`,
   DELETE_SECTION: `${COMMON_URL}sections`,
   UPDATE_SECTION: `${COMMON_URL}sections_update`,
 
@@ -140,6 +141,12 @@ export const postLoginUser = (payload) =>
     });
     export const postSingleVenue = (payload) =>
     apis.post(API_URLS.POST_SINGLE_VENUE, {
+      ...payload,
+      headers: { "Content-type": "application/json", ...payload?.headers },
+    });
+
+    export const postBookTickets = (payload) =>
+    apis.post(API_URLS.POST_BOOK_TICKETS, {
       ...payload,
       headers: { "Content-type": "application/json", ...payload?.headers },
     });

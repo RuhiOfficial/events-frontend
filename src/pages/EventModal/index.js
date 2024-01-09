@@ -29,64 +29,8 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
   console.log(selectedImage,"selected image is ")
   const handleImageSelect = (imageUrl) => {
     setSelectedImage(imageUrl);
-  //   try {
-  //     // Check if the input is a valid data URL
-  //     if (!imageUrl.startsWith('data:image/jpeg;base64,')) {
-  //       throw new Error('Invalid data URL');
-  //     }
-
-  //     // Remove the data URI prefix if present
-  //     const base64String = imageUrl.split(',')[1];
-
-  //     // Check if the base64String is a valid base64-encoded string
-  //     if (!base64String) {
-  //       throw new Error('Invalid base64-encoded string');
-  //     }
-
-  //     // Decode the Base64 string
-  //     const decodedImageUrl = atob(base64String);
-
-  //     // Check if the decodedImageUrl is a valid string
-  //     if (!decodedImageUrl) {
-  //       throw new Error('Error decoding image URL');
-  //     }
-
-  //     // Extract only the image data (remove metadata)
-  //     const imageData = decodedImageUrl.split(',').pop();
-
-  //     // Check if the imageData is a valid string
-  //     if (!imageData) {
-  //       throw new Error('Invalid image data');
-  //     }
-
-  //     // Use the imageData in the img tag
-  //     const imgSrc = `data:image/jpeg;base64,${imageData}`;
-
-  //     // Set the decoded URL as the selected image
-  //     setSelectedImage(imgSrc);
-  //   } catch (error) {
-  //     console.error('Error decoding image URL:', error);
-  //     // Handle the error gracefully, e.g., display a message to the user
-  //   }
+  
  };
-
-  
-  // // Function to convert data URL to Blob
-  // function dataURLtoBlob(dataURL) {
-  //   const arr = dataURL.split(',');
-  //   const mime = arr[0].match(/:(.*?);/)[1];
-  //   const bstr = atob(arr[1]);
-  //   let n = bstr.length;
-  //   const u8arr = new Uint8Array(n);
-  
-  //   while (n--) {
-  //     u8arr[n] = bstr.charCodeAt(n);
-  //   }
-  
-  //   return new Blob([u8arr], { type: mime });
-  // }
-  
-  
 
   const handleDateChange = (start, end) => {
     setStartDate(start);

@@ -13,6 +13,7 @@ import axios from 'axios'
 import { Button, Img, Line, List, Text } from "components";
 import { getEvent,getBookingList } from 'service/api';
 import BookingList from 'pages/BookingList';
+import "../Custom.css"
 
 
 
@@ -169,14 +170,14 @@ const fetchData = async (venueId) => {
   },[]
 
   )
-
+  
   return (
     <>
     < div className={`relative ${isModalOpen || isEventModalOpen ? 'filter blur' : ''}`}>
       <div className="flex flex-col font-roboto items-center justify-start mx-auto w-full">
         <div className="backdrop-opacity-[0.5] bg-gray-900  flex flex-col items-center justify-end   w-full">
           <div className="flex md:flex-col flex-row  items-start justify-between mx-auto md:px-5 w-full">
-            <div style={{display:"flex"}}>
+          <div style={{display:"flex"}} className="w-full">
             
             <div className="flex flex-1 flex-col gap-[40px] items-center justify-start mb-[34px] w-full">
               <header className="bg-gray-900_01 flex md:flex-col flex-row md:gap-5 items-center  w-full justify-between">
@@ -186,7 +187,7 @@ const fetchData = async (venueId) => {
               </header>
              
 
-             <div className="flex flex-col font-inter items-center justify-start w-full md:w-full h-full  p-[2.1rem] ml-[40px]">
+             <div className="flex flex-col font-inter items-center justify-start w-full md:w-full h-full  p-[2.1rem] ">
                 <div className="flex flex-col gap-[26px] items-center justify-start w-full">
                   <div className="flex md:flex-col flex-row gap-[22px] items-end justify-between w-full">
                     <div className="flex md:flex-1 flex-col gap-[21px] items-center justify-start w-3/4 md:w-full">
@@ -213,7 +214,7 @@ const fetchData = async (venueId) => {
                         </div>
                         <div className="flex md:flex-col flex-row font-poppins gap-6 items-center justify-between ml-0.5 md:ml-[0] rounded shadow-bs w-full">
                           <List
-                            className="md:flex-1 sm:flex-col flex-row gap-6 grid sm:grid-cols-1 md:grid-cols-2 grid-cols-3 w-3/4 md:w-full"
+                           className="md:flex-1 sm:flex-col flex-row gap-6 grid sm:grid-cols-1 md:grid-cols-2 grid-cols-4 w-full md:w-full"
                             orientation="horizontal"
                           >
                             <div className="bg-blue_gray-900_01 flex flex-col items-start justify-end sm:ml-[0] p-[7px] rounded w-full">
@@ -317,35 +318,34 @@ const fetchData = async (venueId) => {
                                 </Text>
                               </div>
                             </div>
-                          </List>
-                          <div className="bg-blue_gray-900_01 flex md:flex-1 flex-col items-start justify-end p-2 rounded w-[24%] md:w-full">
-                            <div className="flex flex-col gap-[25px] items-start justify-start md:ml-[0] ml-[11px] mt-[11px] w-[47%] md:w-full">
-                              <div className="flex flex-row gap-4 items-end justify-start w-full">
-                                <Button
-                                  className="flex h-8 items-center justify-center rounded w-8"
-                                  color="indigo_A400"
-                                >
-                                  <Img
-                                    className="h-[22px]"
-                                    src="images/img_emergencyservice.png"
-                                    alt="emergencyservic"
-                                  />
-                                </Button>
+                            <div className="bg-blue_gray-900_01 flex flex-col items-start justify-end sm:ml-[0] p-[7px] rounded w-full">
+                              <div className="flex flex-col gap-[25px] items-start justify-start md:ml-[0] ml-[11px] mt-[11px] w-[47%] md:w-full">
+                                <div className="flex flex-row gap-4 items-end justify-start w-full">
+                                  <div className="bg-indigo-A400 flex flex-col h-8 items-center justify-start p-[5px] rounded w-8">
+                                    <div className="flex flex-col h-[22px] items-center justify-start w-[22px]">
+                                    <Img
+                                      className="h-[22px]"
+                                      src="images/img_emergencyservice.png"
+                                      alt="emergencyservic"
+                                    />
+                                    </div>
+                                  </div>
+                                  <Text
+                                    className="my-[5px] text-sm text-white-A700 tracking-[0.14px]"
+                                    size="txtPoppinsSemiBold14"
+                                  >
+                                    Inventory
+                                  </Text>
+                                </div>
                                 <Text
-                                  className="my-[5px] text-sm text-white-A700 tracking-[0.14px]"
-                                  size="txtPoppinsSemiBold14"
+                                  className="md:text-3xl sm:text-[28px] text-[32px] text-white-A700"
+                                  size="txtPoppinsSemiBold32"
                                 >
-                                  Inventory
+                                  22
                                 </Text>
                               </div>
-                              <Text
-                                className="md:text-3xl sm:text-[28px] text-[32px] text-white-A700"
-                                size="txtPoppinsSemiBold32"
-                              >
-                                22
-                              </Text>
-                            </div>
-                          </div>
+                              </div>
+                            </List>
                         </div>
 
 
@@ -357,8 +357,8 @@ const fetchData = async (venueId) => {
                       </div>
                       <div className="bg-blue_gray-900_01 flex flex-col font-poppins  justify-start sm:px-5 px-[26px] rounded shadow-bs1 w-full">
                         <div className="flex flex-col gap-10  justify-start py-9 w-full">
-                          <div className="flex flex-row md:gap-10 gap-[1053px]  justify-start w-auto md:w-full">
-                            <div className="flex flex-col font-poppins items-center justify-start">
+                        <div className="flex flex-row md:gap-10 justify-start w-auto md:w-full">
+                            <div className="w-full flex justify-between">
                               <Text
                                 className="text-[22px] sm:text-lg text-white-A700 md:text-xl"
                                 size="txtPoppinsSemiBold22"
@@ -375,63 +375,62 @@ const fetchData = async (venueId) => {
                               + Add Event
                             </Button>
                           </div>
-                      
                           <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mb-[33px] w-full min-h-[170px]">
                          
-        <List
-          className="flex-1 sm:flex-col flex-row gap-[31px] grid md:grid-cols-1 grid-cols-2 w-full"
-          orientation="horizontal"
-        >
-          {eventList.map((item) => (
-            <div
-              key={item.id}
-              onClick={() => openIndividualEventModal(item.id)}
-              className="bg-black-900_11 border border-blue_gray-800 border-solid hover:cursor-pointer flex flex-1 sm:flex-col flex-row gap-[21px] items-center justify-start sm:ml-[0] hover:mx-0 p-2.5 hover:shadow-bs shadow-bs hover:w-full w-full"
-            >
-            
-              {/* <Img
-                className="sm:flex-1 h-[151px] md:h-auto object-cover w-[21%] sm:w-full"
-                src={item.featured_image}
-                alt={`Photo`}
-              /> */}
-              
-
-                  <Img
-                                  className="sm:flex-1 h-[151px] md:h-auto object-cover w-[21%] sm:w-full"
-                                  src="images/img_rectangle63.png"
-                                  alt="rectangleSixtyThree"
-                                />
-
-              <div className="flex flex-col items-start justify-start">
-                <Text
-                  className="sm:text-[19px] md:text-[21px] text-[23px] text-white-A700"
-                  size="txtPoppinsSemiBold23"
-                >
-                  {item.name}
-                  {/* {venueId} */}
-                </Text>
-                <Text
-                  className="text-lg text-white-A700"
-                  size="txtPoppinsMedium18"
-                >
-                  {item.time_from}-{item.time_to}
-                  {/* {item.id} */}
-                </Text>
-                <Text
-                  className="mt-3.5 text-sm text-white-A700"
-                  size="txtPoppinsRegular14"
-                >
-                  {item.event_desc}
-                  {/* {item.albumId} */}
-                </Text>
-              </div>
-            </div>
-          ))}
-        </List>
- </div>
-                        </div>
-                      </div>
-                    </div>
+                         <List
+                           className="flex-1 sm:flex-col flex-row gap-[31px] grid md:grid-cols-1 grid-cols-2 w-full"
+                           orientation="horizontal"
+                         >
+                           {eventList.map((item) => (
+                             <div
+                               key={item.id}
+                               onClick={() => openIndividualEventModal(item.id)}
+                               className="bg-black-900_11 border border-blue_gray-800 border-solid hover:cursor-pointer flex flex-1 sm:flex-col flex-row gap-[21px] items-center justify-start sm:ml-[0] hover:mx-0 p-2.5 hover:shadow-bs shadow-bs hover:w-full w-full"
+                             >
+                             
+                               {/* <Img
+                                 className="sm:flex-1 h-[151px] md:h-auto object-cover w-[21%] sm:w-full"
+                                 src={item.featured_image}
+                                 alt={`Photo`}
+                               /> */}
+                               
+                 
+                                   <Img
+                                                   className="sm:flex-1 h-[151px] md:h-auto object-cover w-[21%] sm:w-full"
+                                                   src="images/img_rectangle63.png"
+                                                   alt="rectangleSixtyThree"
+                                                 />
+                 
+                               <div className="flex flex-col items-start justify-start">
+                                 <Text
+                                   className="sm:text-[19px] md:text-[21px] text-[23px] text-white-A700"
+                                   size="txtPoppinsSemiBold23"
+                                 >
+                                   {item.name}
+                                   {/* {venueId} */}
+                                 </Text>
+                                 <Text
+                                   className="text-lg text-white-A700"
+                                   size="txtPoppinsMedium18"
+                                 >
+                                   {item.time_from}-{item.time_to}
+                                   {/* {item.id} */}
+                                 </Text>
+                                 <Text
+                                   className="mt-3.5 text-sm text-white-A700"
+                                   size="txtPoppinsRegular14"
+                                 >
+                                   {item.event_desc}
+                                   {/* {item.albumId} */}
+                                 </Text>
+                               </div>
+                             </div>
+                           ))}
+                         </List>
+                  </div>
+                                         </div>
+                                       </div>
+                                     </div>
                     <div className="flex md:flex-1 flex-col font-poppins gap-[18px] items-center justify-start md:mt-0 mt-[78px] w-[24%] md:w-full">
                       <div className="bg-blue_gray-900_01 flex flex-col items-start justify-center p-4 rounded shadow-bs3 w-full">
                         <Text
@@ -490,6 +489,7 @@ const fetchData = async (venueId) => {
                           </div>
                         </div>
                       </div>
+
                       <div className="bg-blue_gray-900_01 flex flex-col items-center justify-start p-3.5 rounded shadow-bs3 w-full">
                         <div className="flex flex-row items-start justify-between mb-24 w-[99%] md:w-full">
                           <Text
@@ -509,10 +509,7 @@ const fetchData = async (venueId) => {
                     </div>
                   </div>
 
-
-
-
-                  {/*  */}
+                    {/*  */}
 
                   <div className="flex md:flex-col flex-row gap-[22px] items-end justify-between w-full">
                     <div className="flex md:flex-1 flex-col gap-[21px] items-center justify-start w-full md:w-full">
@@ -791,8 +788,9 @@ const fetchData = async (venueId) => {
     </div>
     <Modal isOpen={isModalOpen} onClose={closeModal} />
     <EventModal isEventOpen={isEventModalOpen} onEventClose={closeEventModal} />
-    <SingleEvent isOpen={isSingleEventModalOpen}  onRequestClose={closeIndividualEventModal} eventId={eventId}
-      />
+
+    <SingleEvent isOpen={isSingleEventModalOpen}  onRequestClose={closeIndividualEventModal} eventId={eventId}/>
+    
     </>
   );
 };

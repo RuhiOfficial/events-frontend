@@ -84,6 +84,15 @@ outline: none;
 .react-datepicker-popper {
 z-index: 1000;
 }
+.react-datepicker__year-dropdown {
+  display: block !important;
+}
+
+.react-datepicker__year-read-view--down-arrow,
+.react-datepicker__year-read-view--up-arrow {
+  display: inline-block !important;
+}
+
 
 
 
@@ -131,6 +140,7 @@ input.tp_inputBox{
   background-color: transparent;
   color: white;
   border: none;
+  height:49px;
 }
 
 .custom-timepicker .rc-time-picker-clear {
@@ -446,4 +456,151 @@ input#dob {
 
 input#agreeTerms {
   width: unset;
+}
+
+/*  Dark Date picker version  */
+/* Add this to your global CSS or Tailwind CSS styles */
+.dark-calendar {
+  background-color: #1a202c;
+  color: #cbd5e0;
+}
+
+.dark-popper .react-datepicker__year-dropdown {
+  background-color: #1a202c;
+  color: #cbd5e0;
+}
+
+.dark-popper .react-datepicker__header {
+  background-color: #1a202c;
+  color: #cbd5e0;
+}
+
+.dark-popper .react-datepicker__current-month,
+.dark-popper .react-datepicker-time__header {
+  color: #cbd5e0;
+}
+
+.dark-popper .react-datepicker__day-name,
+.dark-popper .react-datepicker__day,
+.dark-popper .react-datepicker__time-list-item {
+  color: #cbd5e0;
+}
+
+.dark-popper .react-datepicker__day--selected {
+  background-color: #4a5568;
+}
+
+.dark-popper .react-datepicker__day--keyboard-selected {
+  background-color: #2d3748;
+}
+
+
+
+.dark-calendar {
+  background-color: #1a202c;
+  color: #cbd5e0;
+  border: 1px solid #2d3748;
+}
+
+.dark-popper .react-datepicker__year-dropdown,
+.dark-popper .react-datepicker__month-container {
+  background-color: #1a202c;
+  color: #cbd5e0;
+}
+
+.dark-popper .react-datepicker__header {
+  background-color: #2d3748;
+  color: #cbd5e0;
+}
+
+.dark-popper .react-datepicker__current-month,
+.dark-popper .react-datepicker-time__header {
+  color: #cbd5e0;
+}
+
+.dark-popper .react-datepicker__day-name,
+.dark-popper .react-datepicker__day,
+.dark-popper .react-datepicker__time-list-item {
+  color: #cbd5e0;
+}
+
+.dark-popper .react-datepicker__day--selected {
+  background-color: #4a5568;
+}
+
+.dark-popper .react-datepicker__day--keyboard-selected {
+  background-color: #2d3748;
+}
+
+.dark-popper .react-datepicker__month-text:hover,
+.dark-popper .react-datepicker__quarter-text:hover,
+.dark-popper .react-datepicker__year-text:hover,
+.dark-popper .react-datepicker__month:hover,
+.dark-popper .react-datepicker__quarter:hover,
+.dark-popper .react-datepicker__year:hover {
+  background-color: #2d3748;
+}
+
+
+
+
+/* dark Timepicker  */
+/* Add this to your global CSS or Tailwind CSS styles */
+.dark-timepicker .rc-time-picker-panel-inner {
+  background-color: #1a202c;
+  color: #cbd5e0;
+}
+
+.dark-timepicker .rc-time-picker-panel-input {
+  background-color: #2d3748;
+  border: 1px solid #2d3748;
+  color: #cbd5e0;
+}
+
+.dark-timepicker .rc-time-picker-panel-combobox {
+  background-color: #2d3748;
+}
+
+.dark-timepicker .rc-time-picker-panel-select {
+  background-color: #2d3748;
+  color: #cbd5e0;
+}
+
+.dark-timepicker .rc-time-picker-panel-select-option-selected {
+  background-color: #4a5568;
+}
+
+.dark-timepicker .rc-time-picker-clear-btn {
+  color: #cbd5e0;
+}
+
+.dark-timepicker .rc-time-picker-panel-combobox {
+  background-color: #2d3748;
+  border: 1px solid #2d3748;
+  color: #cbd5e0;
+}
+
+.dark-timepicker .rc-time-picker-panel-input-wrap {
+  border: 1px solid #2d3748;
+}
+
+
+input#agreeTerms {
+  width: unset;
+}
+
+.pop_frm textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 0px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 10px;
+}
+
+.booking_serch input{
+  background: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  font-size: 13px;
 }

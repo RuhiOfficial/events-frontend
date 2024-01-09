@@ -3,17 +3,34 @@ import { useParams } from "react-router-dom";
 import Modal from 'react-modal';
 import * as yup from 'yup';
 import { getSingleEvent } from 'service/api';
+import useForm from 'hooks/useForm';
+import moment from 'moment';
 
-import { updateSection, sectionById } from 'service/api';
+
+
+
+import { updateSection,postBookTickets } from 'service/api';
 import { ToastContainer, toast } from 'react-toastify';
 import { Button, Img, Line, List, Text ,Input} from "components";
 import "react-datepicker/dist/react-datepicker.css";
+import TimePicker from 'components/Timepicker';
+import DatePicker from 'components/Date';
+import Dob from 'components/Date';
+
 
 
 
 
 function SingleEvent({ isOpen, onRequestClose, eventId }) {
 const [data,setData]=useState([])
+const [startDate, setStartDate] = useState(null);
+const [dob, setDob] = useState(null);
+const [formattedStartTime,setFormattedStartTime] = useState(null);
+  const [arrivalTime, setArrivalTime] = useState(null);
+  const venueId=localStorage.getItem('Venue')
+
+
+
 
   useEffect(() => {
     loadSection();
@@ -21,23 +38,59 @@ const [data,setData]=useState([])
 
   console.log(eventId,"event id =============>>>>")
 
-  async function editSection() {
+  const form = useForm(
+    {
+
+    
+      first_name: "",
+      last_name: "",
+      phone: "",
+      email:"",
+      booking_note: "",
+      no_of_seats:"",
+      arrival_time:"",
+      dob:"",
+      section:"",
+    
+    },
+    // {
+    //   validate: true,
+    //   validateSchema: formValidationSchema,
+    //   validationOnChange: true,
+    // },
+  );
+
+
+
+
+
+
+  async function bookTicket(data) {
     // Check if both name and price are defined
    
 
     const req = {
-      // data: {
-      //   id: eventId,
-      //   name: name,
-      //   price: price,
-      // },
+      data: {
+        venue_id:venueId,
+        event_id:eventId,
+        first_name:data?.first_name,
+      last_name: data?.last_name,
+      phone:data?.phone,
+      email:data?.email,
+      booking_note: data?.booking_note,
+      no_of_seats:data?.no_of_seats,
+      arrival_time:arrivalTime,
+      dob:dob,
+      section:"hello",
+      },
     };
 
     try {
-      const res = await updateSection(req);
+      const res = await postBookTickets(req);
+      console.log("i hit the api ==>>")
       console.log(res);
 
-      toast.success('Section is updated Successfully!');
+      toast.success('Ticket has been Booked  Successfully!');
       setTimeout(() => {
         onRequestClose();
         // window.location.href = '/reservation';
@@ -67,20 +120,8 @@ const [data,setData]=useState([])
 
   // data imported ......................
 
+console.log(data.event_desc,"data ==============>>>>>")
 
-
-  const { id } = useParams();
-  // const [selectedDate, setSelectedDate] = useState(null);
-  const [startTime] = useState(null);
-  const [dob] = useState(null);
-  const [date] = useState(null);
-  const [bookingNote] = useState("");
-  const [guestsNumber] = useState(0);
-
-  // getDayClassName = (date) => {
-  //     // Add custom styling for specific days if needed
-  //     return date.getDay() === 0 || date.getDay() === 6 ? "weekend-day" : "";
-  // };
 
   const [isPopupOpen, setPopupOpen] = useState(false);
 
@@ -90,6 +131,25 @@ const [data,setData]=useState([])
   };
 
 
+
+
+  const handleDateChange = (start) => {
+    setStartDate(start);
+  
+  };
+  const handleDobChange = (dob) => {
+    console.log("==================================================================================>>>>>>>")
+    console.log(dob,"comimg dob is ")
+    setDob(dob);
+  
+  };
+
+  const handleTimeChange = (start) => {
+    const formattedTime = moment(start).format('hh:mm A');
+    setArrivalTime(start);
+    setFormattedStartTime(formattedTime)
+    
+  };
   
 
   return (
@@ -154,21 +214,11 @@ const [data,setData]=useState([])
                         </div>
                         <div className='w-8/12'>
                         <div  className='flex flex-row items-start justify-between mt-[18px] w-full'>
-                        <Input
-                        name="Date"
-                        value="date is"
-                        className=" capitalize font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4 "
-                        wrapClassName=" common-pointer border border-white-700_99 border-solid w-[49%] bg-[#292e34]"
-                        style={{color:"white"}}
-                        // onChange={(e) => {
-                        //   form.handleChange("name", e);
-                        // }}
-                        // errors={form?.errors?.name}
-                        // value={form?.values?.name}
-                      
-                        size="md"
-                        variant="fill"
-                />
+                      <div className='border border-white-700_99 border-solid w-[49%] bg-[#292e34] h-[51px]'>
+                      <DatePicker placeholder={data.date_from} onChange={handleDateChange}
+                         className="capitalize font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4   " />
+                      </div>
+                       
 
                                     
                           <Button
@@ -181,30 +231,23 @@ const [data,setData]=useState([])
                               Table Selection
                             </Button>
                                 </div>
-                                <div  className='flex flex-row items-start justify-between mt-[18px] w-full'>
-                                
-                        {/* <Input
-                        name="Date"
-                        
-                        placeholder="Preferred Section"
-                        className=" capitalize font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4 "
-                        wrapClassName=" common-pointer border border-white-700_99 border-solid w-full h-[100%] bg-[#292e34]"
-                        style={{color:"white"}}
-                        // onChange={(e) => {
-                        //   form.handleChange("name", e);
-                        // }}
-                        // errors={form?.errors?.name}
-                        // value={form?.values?.name}
-                      
-                        size="md"
-                        variant="fill"
-                /> */}
-                <textarea   readOnly
-  className=" resize-none border border-white p-2 rounded-md  h-[220px]  text-white font-roboto p-0  placeholder-white-900 text-base text-left h-[130px]  pl-4 
+                                <div  className='flex flex-row items-start justify-between mt-[18px] w-full
+                                resize-none border border-white p-2 rounded-md  h-[220px]  text-white font-roboto p-0  placeholder-white-900 text-base text-left h-[130px]  pl-4 
+                                w-full h-[100%] bg-[#292e34]'>
+                     
+                {/* <textarea   readOnly
+         className=" resize-none border border-white p-2 rounded-md  h-[220px]  text-white font-roboto p-0  placeholder-white-900 text-base text-left h-[130px]  pl-4 
  w-full h-[100%] bg-[#292e34] "
-  style={{color:"white"}}
+  
   placeholder="Type something..."
-></textarea>
+  
+></textarea> */}
+
+<h2 style={{
+  color:"white"
+}}>
+{data.event_desc}
+</h2>
 
 
                                     
@@ -215,7 +258,7 @@ const [data,setData]=useState([])
                        
                
                  
-                  {/* {/ Add more input fields as needed /} */}
+                  
                 </div>
                 
 
@@ -227,25 +270,25 @@ const [data,setData]=useState([])
                         className=" capitalize font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4 "
                         wrapClassName=" common-pointer border border-white-700_99 border-solid w-[49%] bg-[#292e34]"
                         style={{color:"white"}}
-                        // onChange={(e) => {
-                        //   form.handleChange("name", e);
-                        // }}
-                        // errors={form?.errors?.name}
-                        // value={form?.values?.name}
+                       
+                        errors={form?.errors?.section}
+                        value={form?.values?.section}
                       
                         size="md"
                         variant="fill"
                 />
 
+                <div className='w-[49%] h-[51px]'> 
+                <TimePicker 
+                          onChange={handleTimeChange}
+                          value={arrivalTime}
+                          placeholder="Arrival Time"
+                          className="custom-timepicker border  text-left h-full  w-full text-base " 
+                        />
+                </div>
                                     
-                          <Button
-                              className=" h-[52px] w-[49%] cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] text-center text-sm border text-white700 "
-                              // color="indigo_A400"
-                              style={{color:"white"}}
-                              size="sm"
-                              onClick={handleClick}>
-                          TimePicker
-                            </Button>
+
+      
                                 </div>
 
 
@@ -256,11 +299,11 @@ const [data,setData]=useState([])
                         className=" capitalize font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4 "
                         wrapClassName=" common-pointer border border-white-700_99 border-solid w-[49%] bg-[#292e34]"
                         style={{color:"white"}}
-                        // onChange={(e) => {
-                        //   form.handleChange("name", e);
-                        // }}
-                        // errors={form?.errors?.name}
-                        // value={form?.values?.name}
+                        onChange={(e) => {
+                          form.handleChange("first_name", e);
+                        }}
+                        errors={form?.errors?.["first_name"]}
+                        value={form?.values?.["first_name"]}
                       
                         size="md"
                         variant="fill"
@@ -271,11 +314,11 @@ const [data,setData]=useState([])
                         className=" capitalize font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4 "
                         wrapClassName=" common-pointer border border-white-700_99 border-solid w-[49%] bg-[#292e34]"
                         style={{color:"white"}}
-                        // onChange={(e) => {
-                        //   form.handleChange("name", e);
-                        // }}
-                        // errors={form?.errors?.name}
-                        // value={form?.values?.name}
+                        onChange={(e) => {
+                          form.handleChange("last_name", e);
+                        }}
+                        errors={form?.errors?.["last_name"]}
+                        value={form?.values?.["last_name"]}
                       
                         size="md"
                         variant="fill"
@@ -290,26 +333,27 @@ const [data,setData]=useState([])
                         className=" capitalize font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4 "
                         wrapClassName=" common-pointer border border-white-700_99 border-solid w-[49%] bg-[#292e34]"
                         style={{color:"white"}}
-                        // onChange={(e) => {
-                        //   form.handleChange("name", e);
-                        // }}
-                        // errors={form?.errors?.name}
-                        // value={form?.values?.name}
+                        onChange={(e) => {
+                          form.handleChange("phone", e);
+                        }}
+                        errors={form?.errors?.phone}
+                        value={form?.values?.phone}
                       
                         size="md"
                         variant="fill"
                 />
          <Input
                         name="email"
+                        type="email"
                         placeholder="Email"
                         className=" capitalize font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4 "
                         wrapClassName=" common-pointer border border-white-700_99 border-solid w-[49%] bg-[#292e34]"
                         style={{color:"white"}}
-                        // onChange={(e) => {
-                        //   form.handleChange("name", e);
-                        // }}
-                        // errors={form?.errors?.name}
-                        // value={form?.values?.name}
+                        onChange={(e) => {
+                          form.handleChange("email", e);
+                        }}
+                        errors={form?.errors?.email}
+                        value={form?.values?.email}
                       
                         size="md"
                         variant="fill"
@@ -318,21 +362,14 @@ const [data,setData]=useState([])
                        
                                 </div>
                                 <div  className='flex flex-row items-start justify-between mt-[18px] w-full'>
-                        <Input
-                        name="DOB"
-                        placeholder="DOB"
-                        className=" capitalize font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4 "
-                        wrapClassName=" common-pointer border border-white-700_99 border-solid w-[49%] bg-[#292e34]"
-                        style={{color:"white"}}
-                        // onChange={(e) => {
-                        //   form.handleChange("name", e);
-                        // }}
-                        // errors={form?.errors?.name}
-                        // value={form?.values?.name}
+                                <div className='border border-white-700_99 border-solid w-[49%] bg-[#292e34] h-[51px]'>
+                              
+
+
+                                <Dob placeholder="DOB" onChange={handleDobChange}
+                         className="capitalize font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4   " />
+                      </div>
                       
-                        size="md"
-                        variant="fill"
-                />
         
                                     
                        
@@ -345,17 +382,17 @@ const [data,setData]=useState([])
                         className="capitalize font-roboto p-0  placeholder-white-900 text-base text-left w-full h-[50px] pl-4 "
                         wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
                         style={{color:"white"}}
-                        // onChange={(e) => {
-                        //   form.handleChange("name", e);
-                        // }}
-                        // errors={form?.errors?.name}
-                        // value={form?.values?.name}
+                        onChange={(e) => {
+                          form.handleChange("booking_note", e);
+                        }}
+                        errors={form?.errors?.["booking_note"]}
+                        value={form?.values?.["booking_note"]}
                       
                         size="md"
                         variant="fill"
                 />
 
-                  {/* {/ Add more input fields as needed /} */}
+                
                 </div>
                
                 <div className="flex flex-col items-start justify-start mt-[18px] w-full">
@@ -363,19 +400,19 @@ const [data,setData]=useState([])
                     name="input"
                     placeholder="No of Guests "
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    wrapClassName="common-pointer border-[2px] rounded-[20px] border-[#d2ae38] border-solid w-full bg-[#292e34]"
                     type="number"
-                    // onChange={(e) => {
-                    //   form.handleChange("price", e);
-                    // }}
-                    // errors={form?.errors?.price}
-                    // value={form?.values?.price}
+                    onChange={(e) => {
+                      form.handleChange("no_of_seats", e);
+                    }}
+                    errors={form?.errors?.["no_of_seats"]}
+                    value={form?.values?.["no_of_seats"]}
                     style={{color:"white"}}
                    
                     size="md"
                     variant="fill"
                   />
-                  {/* {/ Add more input fields as needed /} */}
+                 
                 </div>
               
                 
@@ -388,9 +425,9 @@ const [data,setData]=useState([])
                     size="md"
                     variant="gradient"
                     color="blue_600_indigo_900"
-                    // onClick={() => {
-                    //   form.handleSubmit(addSection);
-                    // }}
+                    onClick={() => {
+                      form.handleSubmit(bookTicket);
+                    }}
                   >
                     Book Ticket
                   </Button>

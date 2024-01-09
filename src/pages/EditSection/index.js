@@ -102,11 +102,11 @@ function EditSection({ isOpen, onRequestClose, sectionId }) {
               </div>
 
               <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-              <input
+              <Input
                   name="Section Name"
                   placeholder=" Section Name"
-                  className="capitalize font-roboto p-0 placeholder-white-900 text-base text-left w-full h-[50px] pl-4 common-pointer border border-white-700_99 border-solid w-full bg-[#292e34] "
-                  
+                  className="capitalize font-roboto p-0 placeholder-white-900 text-base text-left w-full h-[50px] pl-4 common-pointer border border-white border-solid w-full bg-[#292e34] "
+                  wrapClassName=" common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
                   style={{ color: 'white' }}
                   onChange={(e) => {
                     
@@ -119,11 +119,11 @@ function EditSection({ isOpen, onRequestClose, sectionId }) {
               </div>
 
               <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                <input
+                <Input
                   name="price"
                   placeholder=" Price"
                   className="capitalize font-roboto p-0 placeholder-white-900 text-base text-left w-full h-[50px] pl-4 common-pointer border border-white-700_99 border-solid w-full bg-[#292e34] "
-                  
+                  wrapClassName=" common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
                   style={{ color: 'white' }}
                   onChange={(e) => {
                     console.log('Price changed:', e.target.value);
