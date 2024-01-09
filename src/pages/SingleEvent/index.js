@@ -31,6 +31,8 @@ const override = css`
 
 function SingleEvent({ isOpen, onRequestClose, eventId }) {
 const [data,setData]=useState([])
+const [customDate,setCustomDate]=useState()
+
 const [startDate, setStartDate] = useState(null);
 const [dob, setDob] = useState(null);
 const [formattedStartTime,setFormattedStartTime] = useState(null);
@@ -39,7 +41,13 @@ const [formattedStartTime,setFormattedStartTime] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
 
-
+  useEffect(() => {
+    // Convert the given date string to a JavaScript Date object
+    const rawDate= data.date_from;
+ const dateBeforeTString= rawDate?rawDate.split('T')[0]:null;
+    
+    setCustomDate(dateBeforeTString);
+  }, [data.date_from]);
 
   useEffect(() => {
     loadSection();
@@ -160,7 +168,7 @@ console.log(data.event_desc,"data ==============>>>>>")
     setFormattedStartTime(formattedTime)
     
   };
-  
+ console.log(customDate,"my updaqted date is ==>>")
 
   return (
     <Modal
@@ -228,7 +236,7 @@ console.log(data.event_desc,"data ==============>>>>>")
                         <div className='w-8/12'>
                         <div  className='flex flex-row items-start justify-between mt-[18px] w-full'>
                       <div className='border border-white-700_99 border-solid w-[49%] bg-[#292e34] h-[51px]'>
-                      <DatePicker placeholder={data.date_from} onChange={handleDateChange}
+                      <DatePicker placeholder={customDate} onChange={handleDateChange}
                          className="capitalize font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4   " />
                       </div>
                        

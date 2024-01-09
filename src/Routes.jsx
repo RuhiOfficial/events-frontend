@@ -11,6 +11,7 @@ import Layout from "pages/Layout";
 import Modal from "pages/Modal";
 import Canvas from "pages/Canvas";
 import Reservation from "pages/reservation";
+import ViewLayout from "pages/ViewLayout";
 const ProjectRoutes = () => {
   const auth = localStorage.getItem("Name");
   console.log(auth);
@@ -25,7 +26,7 @@ const ProjectRoutes = () => {
               <Route path="/*" element={<NotFound />} />
               <Route path="/canvas" element={<Canvas/>}/>
               <Route path="/reservation" element={<Reservation/>}/>
-              
+              <Route path="/view" element={<ViewLayout/>}/>
               
               {/* <Route path="/modal" element={<Modal />} /> */}
             </Routes>
