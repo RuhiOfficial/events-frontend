@@ -194,7 +194,7 @@ console.log(data.event_desc,"data ==============>>>>>")
                     className="md:text-3xl sm:text-[28px] text-[32px] text-white-A700 w-auto"
                     size="txtPoppins"
                   >
-                   Party Event 
+                   {data.name}
                   </Text>
                   
                 </div>
@@ -206,7 +206,7 @@ console.log(data.event_desc,"data ==============>>>>>")
                 <div className="flex flex-row items-start justify-start mt-[18px] w-full">
                 
                 <div className='w-5/12'>
-                 <img className="h-51  event-image" src="https://dzbwcqs3bd4zb.cloudfront.net/bab479e3-b12c-4736-824f-1499da4fca0b.png" alt="Event Image" />
+                 <img className="h-51  event-image" src={data.featured_image} alt="Event Image" />
                            
                   </div>
                    <div>

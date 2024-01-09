@@ -28,6 +28,7 @@ const DashboardPage = () => {
   const[eventList,setEventList]=useState([]);
   const[eventId,setEventId]=useState();
   const[date,setDate]=useState([]);
+  const[ticketList,setTicketList]=useState([]);
   useEffect(() => {
     // const savedVenueId = Cookies.get('venueId');
     const savedVenueId=localStorage.getItem('Venue')
@@ -124,8 +125,14 @@ const fetchData = async (venueId) => {
 
   const columns = [
     // Define your columns here
-    { Header: 'NAME', accessor: 'name' },
-    { Header: 'AGE', accessor: 'age' },
+    { Header: 'First Name', accessor: 'first_name'  },
+    { Header: 'Last Name', accessor: 'last_name' },
+    { Header: 'EMAIL', accessor: 'email'  },
+    { Header: 'CONTACT NO', accessor: 'phone' },
+    { Header: 'SECTION', accessor: 'section' },
+    { Header: 'GUEST COUNT', accessor: 'no_of_seats' },
+    { Header: 'ARRIVAL TIME', accessor: 'arrival_time' },
+    { Header: 'BOOKING NOTES', accessor: 'booking_note' },
     // Add more columns as needed
   ];
 
@@ -150,6 +157,7 @@ const fetchData = async (venueId) => {
     try {
       const res = await getBookingList(req);
       console.log(res.data,"data coming from api is ======>>>")
+      setTicketList(res.data.data)
       
     }
     catch {
@@ -157,6 +165,9 @@ const fetchData = async (venueId) => {
     };
       
   }
+
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -170,6 +181,7 @@ const fetchData = async (venueId) => {
   },[]
 
   )
+
   
   return (
     <>
@@ -397,7 +409,7 @@ const fetchData = async (venueId) => {
                  
                                    <Img
                                                    className="sm:flex-1 h-[151px] md:h-auto object-cover w-[21%] sm:w-full"
-                                                   src="images/img_rectangle63.png"
+                                                   src={item.featured_image}
                                                    alt="rectangleSixtyThree"
                                                  />
                  
@@ -520,7 +532,7 @@ const fetchData = async (venueId) => {
                       
                           <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mb-[33px] w-full min-h-[170px]">
                          
-                          <BookingList columns={columns} data={records} />
+                          <BookingList columns={columns} data={ticketList} />
  </div>
                         </div>
                       </div>

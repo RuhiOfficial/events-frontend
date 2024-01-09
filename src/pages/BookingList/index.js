@@ -4,6 +4,7 @@ import { Text } from "components";
 import "../Custom.css"
 
 const BookingList = ({ columns, data }) => {
+  console.log(data,"data from booking page is ====>>")
   const [globalFilter, setGlobalFilter] = useState('');
 
   const {
@@ -24,7 +25,7 @@ const BookingList = ({ columns, data }) => {
     {
       columns,
       data,
-      initialState: { pageIndex: 0, pageSize: 10 },
+      initialState: { pageIndex:0, pageSize: 5 },
     },
     useGlobalFilter,
     usePagination
@@ -44,9 +45,9 @@ const BookingList = ({ columns, data }) => {
             String(row[column.id]).toLowerCase().includes(globalFilter.toLowerCase())
         )
       ),
-    [data, columns, globalFilter]
+    [data, columns, globalFilter,data, columns, globalFilter, pageIndex]
   );
-
+  console.log(pageIndex,"index is ==>>")
   return (
     <div className="flex w-full">
       <div className="flex-1 overflow-x-auto">
@@ -96,7 +97,7 @@ const BookingList = ({ columns, data }) => {
                   {page.map((row) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} className="border-t hover:bg-gray-700">
+                <tr {...row.getRowProps()} className="border-t hover:bg-gray-700 text-sm">
                   {row.cells.map((cell) => (
                     <td key={cell.column.id} {...cell.getCellProps()} className="p-4 text-center">
                       {cell.render('Cell')}
@@ -109,28 +110,33 @@ const BookingList = ({ columns, data }) => {
         </table>
         <div className="flex-shrink-0 p-4">
         <div className="pagination mt-4 text-end">
-          <button
-            onClick={() => previousPage()}
-            disabled={!canPreviousPage}
-            className="px-3 py-2 bg-[#5051f9]"
-            style={{ color: 'white' }}
-          >
-            Previous
-          </button>{' '}
-          <span style={{ color: 'white' }} className="ml-5 mr-5">
-            Page{' '}
-            <strong>
-              {pageIndex + 1} of {pageOptions.length}
-            </strong>{' '}
-          </span>
-          <button
-            onClick={() => nextPage()}
-            disabled={!canNextPage}
-            className="px-3 py-2 bg-[#5051f9]"
-            style={{ color: 'white' }}
-          >
-            Next
-          </button>{' '}
+        {/* {page.length > 0 && (
+  <div className="pagination mt-4 text-end">
+    <button
+      onClick={() => previousPage()}
+      disabled={!canPreviousPage}
+      className="px-3 py-2 bg-[#5051f9]"
+      style={{ color: 'white' }}
+    >
+      Previous
+    </button>{' '}
+    <span style={{ color: 'white' }} className="ml-5 mr-5">
+      Page{' '}
+      <strong>
+        {pageIndex + 1} of {pageOptions.length}
+      </strong>{' '}
+    </span>
+    <button
+      onClick={() => nextPage()}
+      disabled={!canNextPage}
+      className="px-3 py-2 bg-[#5051f9]"
+      style={{ color: 'white' }}
+    >
+      Next
+    </button>{' '}
+  </div>
+)} */}
+
         </div>
       </div>
       </div>
