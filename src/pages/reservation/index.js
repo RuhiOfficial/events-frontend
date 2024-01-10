@@ -155,7 +155,7 @@ useEffect(()=>{
 async function section() {
  const req = {
    data:{
-     venue_id:6,
+     venue_id:25,
    }
  }
  await getSectionList(req)

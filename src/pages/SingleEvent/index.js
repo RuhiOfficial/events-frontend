@@ -5,11 +5,6 @@ import * as yup from 'yup';
 import { getSingleEvent } from 'service/api';
 import useForm from 'hooks/useForm';
 import moment from 'moment';
-
-
-
-
-
 import { updateSection,postBookTickets } from 'service/api';
 import { ToastContainer, toast } from 'react-toastify';
 import { Button, Img, Line, List, Text ,Input} from "components";
@@ -17,10 +12,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import TimePicker from 'components/Timepicker';
 import DatePicker from 'components/Date';
 import Dob from 'components/Dob';
-
-
 import { css } from '@emotion/react';
 import { PacmanLoader } from 'react-spinners';
+import ViewLayout from 'pages/ViewLayout';
 
 const override = css`
   display: block;
@@ -29,17 +23,25 @@ const override = css`
 `;
 
 
+
+
+
 function SingleEvent({ isOpen, onRequestClose, eventId }) {
-const [data,setData]=useState([])
-const [customDate,setCustomDate]=useState()
+    const [data,setData]=useState([])
+    const [customDate,setCustomDate]=useState()
+    const [startDate, setStartDate] = useState(null);
+    const [dob, setDob] = useState(null);
+    const [formattedStartTime,setFormattedStartTime] = useState(null);
+    const [arrivalTime, setArrivalTime] = useState(null);
+    const venueId=localStorage.getItem('Venue')
+    const [mySection, setMySection] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-const [startDate, setStartDate] = useState(null);
-const [dob, setDob] = useState(null);
-const [formattedStartTime,setFormattedStartTime] = useState(null);
-  const [arrivalTime, setArrivalTime] = useState(null);
-  const venueId=localStorage.getItem('Venue')
-  const [isLoading, setIsLoading] = useState(true);
 
+    useEffect(()=>{
+      setMySection(localStorage.getItem('Section'));
+   },)
 
   useEffect(() => {
     // Convert the given date string to a JavaScript Date object
@@ -83,7 +85,6 @@ const [formattedStartTime,setFormattedStartTime] = useState(null);
 
 
   async function bookTicket(data) {
-    // Check if both name and price are defined
    
 
     const req = {
@@ -110,7 +111,7 @@ const [formattedStartTime,setFormattedStartTime] = useState(null);
       toast.success('Ticket has been Booked  Successfully!');
       setTimeout(() => {
         onRequestClose();
-        // window.location.href = '/reservation';
+         window.location.href = '/';
       }, 3000);
     } catch (err) {
       console.error(err);
@@ -168,7 +169,20 @@ console.log(data.event_desc,"data ==============>>>>>")
     
   };
 
- console.log(dob,"jdefgjybwgfckykswnfckienswykxyikeygksibfehnwyklumflmox,ugmxewl;gimvx,epw;i")
+ 
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+
+
+
+
   return (
     <Modal
       isOpen={isOpen}
@@ -246,7 +260,7 @@ console.log(data.event_desc,"data ==============>>>>>")
                               // color="indigo_A400"
                               style={{color:"white"}}
                               size="sm"
-                              onClick={handleClick}>
+                              onClick={openModal}>
                           
                               Table Selection
                             </Button>
@@ -292,7 +306,7 @@ console.log(data.event_desc,"data ==============>>>>>")
                         style={{color:"white"}}
                        
                         errors={form?.errors?.section}
-                        value={form?.values?.section}
+                        value={mySection?mySection:"Section"}
                       
                         size="md"
                         variant="fill"
@@ -460,11 +474,13 @@ console.log(data.event_desc,"data ==============>>>>>")
                           {/* )} */}
             </div>
           </div>
-
+         
 
           </div>
       <ToastContainer />
+      <ViewLayout isOpen={isModalOpen} onRequestClose={closeModal} />
     </Modal>
+    
   );
 }
 

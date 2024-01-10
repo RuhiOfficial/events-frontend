@@ -165,24 +165,60 @@ async function table() {
     );
   }, [backgroundImage, boxes /*, other state variables */]);
   
+  // useEffect(() => {
+  //   if (backgroundImage || myBackgroundImage) {
+  //     const img = new Image();
+  //     img.src = backgroundImage ? URL.createObjectURL(backgroundImage) : `data:image/jpeg;base64,${myBackgroundImage}`;
+  //     img.onload = () => {
+  //       const stage = stageRef.current;
+  //       const imageWidth = img.width;
+  //       const imageHeight = img.height;
+  //       const newGridSize = Math.min(imageWidth, imageHeight) / 20; // Adjust factor as needed
+  //       setGridSize(newGridSize);
+  //       stage.width(imageWidth);
+  //       stage.height(imageHeight);
+  //       stage.batchDraw();
+  //     };
+  //   }
+  // }, [backgroundImage, myBackgroundImage]);
+  
+
   useEffect(() => {
     if (backgroundImage || myBackgroundImage) {
       const img = new Image();
       img.src = backgroundImage ? URL.createObjectURL(backgroundImage) : `data:image/jpeg;base64,${myBackgroundImage}`;
       img.onload = () => {
         const stage = stageRef.current;
-        const imageWidth = img.width;
-        const imageHeight = img.height;
-        const newGridSize = Math.min(imageWidth, imageHeight) / 20; // Adjust factor as needed
-        setGridSize(newGridSize);
-        stage.width(imageWidth);
-        stage.height(imageHeight);
-        stage.batchDraw();
+  
+        if (stage) {
+          const desiredWidth = 1000; // Set your desired width
+          const desiredHeight = 800; // Set your desired height
+  
+          // Create a canvas with the desired dimensions
+          const canvas = document.createElement('canvas');
+          canvas.width = desiredWidth;
+          canvas.height = desiredHeight;
+          const context = canvas.getContext('2d');
+  
+          // Draw the image on the canvas with the desired dimensions
+          context.drawImage(img, 0, 0, desiredWidth, desiredHeight);
+  
+          // Convert the canvas content to a base64 string
+          const resizedImageDataUrl = canvas.toDataURL('image/jpeg').split(',')[1];
+  
+          // Set the resized image as the background
+          setMyBackgroundImage(resizedImageDataUrl);
+  
+          stage.width(desiredWidth);
+          stage.height(desiredHeight);
+          stage.batchDraw();
+        }
       };
     }
   }, [backgroundImage, myBackgroundImage]);
   
-
+  
+  
 
     const saveToHistory = () => {
       const newHistory = [...history.slice(0, historyIndex + 1), shapes];
