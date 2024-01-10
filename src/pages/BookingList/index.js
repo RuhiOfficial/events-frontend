@@ -25,7 +25,7 @@ const BookingList = ({ columns, data }) => {
     {
       columns,
       data,
-      initialState: { pageIndex:0, pageSize: 5 },
+      initialState: { pageIndex:0, pageSize: 20},
     },
     useGlobalFilter,
     usePagination
@@ -47,7 +47,7 @@ const BookingList = ({ columns, data }) => {
       ),
     [data, columns, globalFilter,data, columns, globalFilter, pageIndex]
   );
-  console.log(pageIndex,"index is ==>>")
+  
   return (
     <div className="flex w-full">
       <div className="flex-1 overflow-x-auto">

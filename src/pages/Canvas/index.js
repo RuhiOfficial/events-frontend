@@ -104,12 +104,13 @@ useEffect(()=>{
 async function table() {
   const req = {
     data:{
-      venue_id:5,
+      venue_id:vid,
     }
   };
 
   await getCanvasTable(req)
     .then((res) => {
+      console.log(res,"canvas table list ====>>")
       let options;
 
       if (res.data.data.length === 1) {

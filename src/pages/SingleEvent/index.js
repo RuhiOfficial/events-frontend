@@ -16,7 +16,7 @@ import { Button, Img, Line, List, Text ,Input} from "components";
 import "react-datepicker/dist/react-datepicker.css";
 import TimePicker from 'components/Timepicker';
 import DatePicker from 'components/Date';
-import Dob from 'components/Date';
+import Dob from 'components/Dob';
 
 
 import { css } from '@emotion/react';
@@ -96,8 +96,8 @@ const [formattedStartTime,setFormattedStartTime] = useState(null);
       email:data?.email,
       booking_note: data?.booking_note,
       no_of_seats:data?.no_of_seats,
-      arrival_time:arrivalTime,
-      dob:dob,
+      arrival_time:formattedStartTime,
+      dob:"2024-01-10",
       section:"hello",
       },
     };
@@ -155,9 +155,8 @@ console.log(data.event_desc,"data ==============>>>>>")
     setStartDate(start);
   
   };
-  const handleDobChange = (dob) => {
-    console.log("==================================================================================>>>>>>>")
-    console.log(dob,"comimg dob is ")
+  const my = (dob) => {
+    console.log(dob,"00-02-338484-2845-28930-58458-0249765250r89")
     setDob(dob);
   
   };
@@ -168,8 +167,8 @@ console.log(data.event_desc,"data ==============>>>>>")
     setFormattedStartTime(formattedTime)
     
   };
- console.log(customDate,"my updaqted date is ==>>")
 
+ console.log(dob,"jdefgjybwgfckykswnfckienswykxyikeygksibfehnwyklumflmox,ugmxewl;gimvx,epw;i")
   return (
     <Modal
       isOpen={isOpen}
@@ -387,9 +386,13 @@ console.log(data.event_desc,"data ==============>>>>>")
                               
 
 
-                                <Dob placeholder="DOB" onChange={handleDobChange}
-                         className="capitalize font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4   " />
-                      </div>
+                                <Dob
+  placeholder='DOB'
+  dob={dob} // Make sure to pass the dob prop if needed
+  onChange={my} // Pass your onChange function
+  className="capitalize font-roboto p-0 placeholder-white-900 text-base text-left h-[50px] pl-4"
+/>
+</div>
                       
         
                                     

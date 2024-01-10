@@ -14,7 +14,7 @@ const API_URLS = {
   
   GET_SECTION: `${COMMON_URL}listsection`,
   GET_SECTION_LIST: `${COMMON_URL}data-table`,
-  GET_BOOKING_LIST:`${COMMON_URL}tickets`,
+  GET_BOOKING_LIST:`${COMMON_URL}ticketbooking`,
   GET_SECTION_BY_ID:`${COMMON_URL}section_list`,
   GET_CANVAS_TABLE:`${COMMON_URL}eventTable`,
   POST_STATE:`${COMMON_URL}list_states`,
@@ -28,7 +28,7 @@ const API_URLS = {
   POST_TABLE: `${COMMON_URL}eventTable`,
   POST_LAYOUT: `${COMMON_URL}layout`,
   POST_SINGLE_VENUE:`${COMMON_URL}venue_detail`,
-  POST_BOOK_TICKETS:`${COMMON_URL}tickets`,
+  POST_BOOK_TICKETS:`${COMMON_URL}ticketbooking`,
   DELETE_SECTION: `${COMMON_URL}sections`,
   UPDATE_SECTION: `${COMMON_URL}sections_update`,
 

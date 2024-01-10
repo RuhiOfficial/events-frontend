@@ -52,7 +52,7 @@ const DashboardPage = () => {
      
       fetchData(savedVenueId);
     
-  }, []);
+  }, [venueId]);
 
 const fetchData = async (venueId) => {
     
@@ -61,7 +61,7 @@ const fetchData = async (venueId) => {
 
     try {
       const res = await getEvent(req);
-      console.log(res.data)
+      console.log(res.data,"list of events on the bases of venue id ")
       setEventList(res.data.data);
       setIsLoading(false);
 
@@ -147,7 +147,7 @@ const fetchData = async (venueId) => {
 
   const columns = [
     // Define your columns here
-    { Header: 'EVENT', accessor: 'name' },
+    { Header: 'EVENT', accessor: 'event_name' },
     { Header: 'NAME', accessor: 'full_name'  },
     { Header: 'EMAIL', accessor: 'email'  },
     { Header: 'CONTACT NO', accessor: 'phone' },
@@ -167,18 +167,18 @@ const fetchData = async (venueId) => {
 
   useEffect(()=>{
     loadBooking();
-  })
+  },[venueId])
 
   const loadBooking = async()=>{
 
     const req={
       data:{
-        venue_id:1
+        venue_id:venueId
       }
     }
     try {
       const res = await getBookingList(req);
-      console.log(res.data,"data coming from api is ======>>>")
+      
       setTicketList(res.data.data)
       
     }
@@ -190,19 +190,19 @@ const fetchData = async (venueId) => {
 
 
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.post('https://event-backend.isdemo.in/api/v1/tickets'); // Replace with your API endpoint
-         console.log(response ,"demo api for testing ====>>")
-      } catch (error) {
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.post('https://event-backend.isdemo.in/api/v1/tickets'); // Replace with your API endpoint
+  //        console.log(response ,"demo api for testing ====>>")
+  //     } catch (error) {
         
-      }
-    };
-    fetchData();
-  },[]
+  //     }
+  //   };
+  //   fetchData();
+  // },[]
 
-  )
+  // )
 
   
   return (
