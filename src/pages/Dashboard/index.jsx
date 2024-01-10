@@ -148,7 +148,15 @@ const fetchData = async (venueId) => {
   const columns = [
     // Define your columns here
     { Header: 'EVENT', accessor: 'event_name' },
-    { Header: 'NAME', accessor: 'full_name'  },
+    {
+    Header: 'NAME',
+    accessor: 'full_name',
+    Cell: ({ row }) => {
+      // Combine first_name and last_name
+      const fullName = `${row.original.first_name} ${row.original.last_name}`;
+      return <span>{fullName}</span>;
+    },
+  },
     { Header: 'EMAIL', accessor: 'email'  },
     { Header: 'CONTACT NO', accessor: 'phone' },
     { Header: 'SECTION', accessor: 'section' },
