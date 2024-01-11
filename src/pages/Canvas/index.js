@@ -6,7 +6,7 @@ import { Stage, Layer, Line, Rect, Circle,Group , Text as KonvaText } from 'reac
 import LayoutPopup from 'components/Layoutpopup';
 import { Button, Img, List, Text } from "components";
 import { useLocation, useHistory } from 'react-router-dom';
-import { getCanvasTable ,postLayout} from 'service/api';
+import { getCanvasTable ,postLayout,getSectionList} from 'service/api';
 import {  ToastContainer,toast } from "react-toastify";
 
 function Canvas() {
@@ -101,7 +101,7 @@ useEffect(() => {
   ///////////Table List///////////////
 useEffect(()=>{
    table()
-},[backgroundImage || myBackgroundImage])
+},[])
 
 async function table() {
   const req = {
@@ -110,28 +110,29 @@ async function table() {
     }
   };
 
-  await getCanvasTable(req)
+  await getSectionList(req)
     .then((res) => {
       console.log(res,"canvas table list ====>>")
-      let options;
+      // let options;
 
-      if (res.data.data.length === 1) {
+      // if (res.data.data.length === 1) {
         
-        options = [
-          {
-            label: res.data.data[0].table_name,
-            value: res.data.data[0].id,
-          },
-        ];
-      } else {
+      //   options = [
+      //     {
+      //       label: res.data.data[0].table_name,
+      //       value: res.data.data[0].id,
+      //     },
+      //   ];
+      // } 
+      // else {
        
-        options = res.data.data.map((item) => ({
-          label: item.table_name,
-          value: item.id,
-        }));
-      }
+      //   options = res.data.data.map((item) => ({
+      //     label: item.table_name,
+      //     value: item.id,
+      //   }));
+      // }
 
-       setTableList(options);
+       setTableList(res.data.data);
       
     })
     .catch((err) => {
@@ -383,6 +384,7 @@ useEffect(() => {
         }
       };
       
+      
     
       const removeSelectedBox = () => {
         if (selectedBox !== null) {
@@ -401,11 +403,11 @@ useEffect(() => {
     
       const handleTableListClick = (table) => {
         // Find and remove the box associated with the selected table
-        const updatedBoxes = boxes.filter((box) => box.label !== table.label);
+        const updatedBoxes = boxes.filter((box) => box.label !== table.table_name);
         
         // Add a new box with increased dimensions
         const newBox = {
-          label: table.label,
+          label: table.table_name, // Adjust the property name according to your API response
           width: gridSize * 1.5, // Adjust the width as needed
           height: gridSize * 1.5, // Adjust the height as needed
           x: 0,
@@ -415,6 +417,7 @@ useEffect(() => {
         setBoxes([...updatedBoxes, newBox]);
         setSelectedBox(newBox); // Set the selected box to the newly added box
       };
+      
       
     
       const handleDropTable = () => {
@@ -443,29 +446,47 @@ useEffect(() => {
       // };
 
       const renderTableList = () => {
+        // Group tables by section_id
+        const tablesBySection = {};
+      
+        tableList.forEach((section) => {
+          const sectionId = section.section_name;
+          if (!tablesBySection[sectionId]) {
+            tablesBySection[sectionId] = [];
+          }
+          tablesBySection[sectionId] = [...tablesBySection[sectionId], ...section.tables];
+        });
+      
         return (
           <ul className="table-list">
-            {tableList.map((table, index) => (
-              <li
-                key={index}
-                className={`table-list-item ${
-                  selectedBox && selectedBox.label === table.label ? 'selected' : ''
-                }`}
-                onClick={() => handleTableListClick(table)}
-              >
-                {table.label}
-                {selectedBox && selectedBox.label === table.label && (
-                  <span
-                    className="resize-handle"
-                    draggable
-                    onDragEnd={(e) => handleResizeEnd(e, selectedBox)}
-                  />
-                )}
-              </li>
+            {Object.entries(tablesBySection).map(([sectionId, tables], sectionIndex) => (
+              <React.Fragment key={sectionIndex}>
+                <li className="table-list-item bg-[transparent]  " style={{color:"white"}}>{` ${sectionId}`}</li>
+                {tables.map((table, index) => (
+                  <li
+                    key={index}
+                    className={`table-list-item ${
+                      selectedBox && selectedBox.label === table.table_name ? 'selected' : ''
+                    }`}
+                    onClick={() => handleTableListClick(table)}
+                  >
+                    {table.table_name}
+                    {selectedBox && selectedBox.label === table.table_name && (
+                      <span
+                        className="resize-handle"
+                        draggable
+                        onDragEnd={(e) => handleResizeEnd(e, selectedBox)}
+                      />
+                    )}
+                  </li>
+                ))}
+              </React.Fragment>
             ))}
           </ul>
         );
       };
+      
+      
       
       
 

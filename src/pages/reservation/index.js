@@ -160,7 +160,7 @@ async function section() {
  }
  await getSectionList(req)
   .then((res) => {
-    console.log(res, "response from Reservation is ===>>");
+   
 
     // if (res.data && Array.isArray(res.data)) {
     //   const sectionsData = res.data.map((section) => {
@@ -189,7 +189,7 @@ async function section() {
  
  
  
- console.log(editSectionId,"edit section id ===>>")
+
  
 
 
