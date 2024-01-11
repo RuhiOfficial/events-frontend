@@ -33,8 +33,10 @@ function Canvas() {
   const [inactiveTables, setInactiveTables] = useState([]);
   const vid=localStorage.getItem('Venue')
   const nameLayout=localStorage.getItem('layoutName')
-  console.log(backgroundImage,"initial")
-  console.log(layoutName,"Layout name ===>>")
+  const [selectedResizingBox, setSelectedResizingBox] = useState(null);
+
+  // console.log(backgroundImage,"initial")
+  // console.log(layoutName,"Layout name ===>>")
   // localStorage.setItem('canvasBackgroundImage', 'https://example.com/path/to/your/image.jpg');
 useEffect(() => {
   const savedCanvasState = localStorage.getItem('canvasState');
@@ -183,39 +185,85 @@ async function table() {
   // }, [backgroundImage, myBackgroundImage]);
   
 
-  useEffect(() => {
-    if (backgroundImage || myBackgroundImage) {
-      const img = new Image();
-      img.src = backgroundImage ? URL.createObjectURL(backgroundImage) : `data:image/jpeg;base64,${myBackgroundImage}`;
-      img.onload = () => {
-        const stage = stageRef.current;
+  // useEffect(() => {
+  //   if (backgroundImage || myBackgroundImage) {
+  //     const img = new Image();
+  //     img.src = backgroundImage ? URL.createObjectURL(backgroundImage) : `data:image/jpeg;base64,${myBackgroundImage}`;
+  //     img.onload = () => {
+  //       const stage = stageRef.current;
   
-        if (stage) {
-          const desiredWidth = 1000; // Set your desired width
-          const desiredHeight = 800; // Set your desired height
+  //       if (stage) {
+  //         const desiredWidth = 1000; // Set your desired width
+  //         const desiredHeight = 800; // Set your desired height
   
-          // Create a canvas with the desired dimensions
-          const canvas = document.createElement('canvas');
-          canvas.width = desiredWidth;
-          canvas.height = desiredHeight;
-          const context = canvas.getContext('2d');
+  //         // Create a canvas with the desired dimensions
+  //         const canvas = document.createElement('canvas');
+  //         canvas.width = desiredWidth;
+  //         canvas.height = desiredHeight;
+  //         const context = canvas.getContext('2d');
   
-          // Draw the image on the canvas with the desired dimensions
-          context.drawImage(img, 0, 0, desiredWidth, desiredHeight);
+  //         // Draw the image on the canvas with the desired dimensions
+  //         context.drawImage(img, 0, 0, desiredWidth, desiredHeight);
   
-          // Convert the canvas content to a base64 string
-          const resizedImageDataUrl = canvas.toDataURL('image/jpeg').split(',')[1];
+  //         // Convert the canvas content to a base64 string
+  //         const resizedImageDataUrl = canvas.toDataURL('image/jpeg').split(',')[1];
   
-          // Set the resized image as the background
-          setMyBackgroundImage(resizedImageDataUrl);
+  //         // Set the resized image as the background
+  //         setMyBackgroundImage(resizedImageDataUrl);
   
-          stage.width(desiredWidth);
-          stage.height(desiredHeight);
-          stage.batchDraw();
-        }
-      };
-    }
-  }, [backgroundImage, myBackgroundImage]);
+  //         stage.width(desiredWidth);
+  //         stage.height(desiredHeight);
+  //         stage.batchDraw();
+  //       }
+  //     };
+  //   }
+  // }, [backgroundImage, myBackgroundImage]);
+ // ...
+
+useEffect(() => {
+  if (backgroundImage || myBackgroundImage) {
+    const img = new Image();
+    img.src = backgroundImage ? URL.createObjectURL(backgroundImage) : `data:image/jpeg;base64,${myBackgroundImage}`;
+    img.onload = () => {
+      const stage = stageRef.current;
+
+      if (stage) {
+        const desiredMaxWidth = 1500; // Set your desired maximum width
+
+        // Determine the width to use (original width or maximum width)
+        const newWidth = Math.min(desiredMaxWidth, img.width);
+
+        // Calculate the aspect ratio of the image
+        const aspectRatio = img.width / img.height;
+
+        // Calculate the new height based on the aspect ratio and the new width
+        const newHeight = newWidth / aspectRatio;
+
+        // Create a canvas with the new dimensions
+        const canvas = document.createElement('canvas');
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+        const context = canvas.getContext('2d');
+
+        // Draw the image on the canvas with the new dimensions
+        context.drawImage(img, 0, 0, newWidth, newHeight);
+
+        // Convert the canvas content to a base64 string
+        const resizedImageDataUrl = canvas.toDataURL('image/jpeg').split(',')[1];
+
+        // Set the resized image as the background
+        setMyBackgroundImage(resizedImageDataUrl);
+
+        stage.width(newWidth);
+        stage.height(newHeight);
+        stage.batchDraw();
+      }
+    };
+  }
+}, [backgroundImage, myBackgroundImage]);
+
+// ...
+
   
   
   
@@ -301,16 +349,40 @@ async function table() {
       };
       
       
+      // const handleBoxDragEnd = (e, index) => {
+      //   const updatedBoxes = [...boxes];
+      //   updatedBoxes[index] = {
+      //     ...updatedBoxes[index],
+      //     x: e.target.x(),
+      //     y: e.target.y(),
+      //   };
+      //   setBoxes(updatedBoxes);
+      //   setSelectedBox(updatedBoxes[index]); // Update the selected box
+      // };
       const handleBoxDragEnd = (e, index) => {
-        const updatedBoxes = [...boxes];
-        updatedBoxes[index] = {
-          ...updatedBoxes[index],
-          x: e.target.x(),
-          y: e.target.y(),
-        };
-        setBoxes(updatedBoxes);
-        setSelectedBox(updatedBoxes[index]); // Update the selected box
+        if (e.target.hasName('resizeHandle')) {
+          // Resize the box
+          const updatedBoxes = [...boxes];
+          updatedBoxes[index] = {
+            ...updatedBoxes[index],
+            width: Math.max(0, e.target.x()),
+            height: Math.max(0, e.target.y()),
+          };
+          setBoxes(updatedBoxes);
+          setSelectedResizingBox(null);
+        } else {
+          // Handle normal dragging
+          const updatedBoxes = [...boxes];
+          updatedBoxes[index] = {
+            ...updatedBoxes[index],
+            x: e.target.x(),
+            y: e.target.y(),
+          };
+          setBoxes(updatedBoxes);
+          setSelectedBox(updatedBoxes[index]);
+        }
       };
+      
     
       const removeSelectedBox = () => {
         if (selectedBox !== null) {
@@ -352,6 +424,24 @@ async function table() {
         }
       };
     
+      // const renderTableList = () => {
+      //   return (
+      //     <ul className="table-list">
+      //       {tableList.map((table, index) => (
+      //         <li
+      //           key={index}
+      //           className={`table-list-item ${
+      //             selectedBox && selectedBox.label === table.label ? 'selected' : ''
+      //           }`}
+      //           onClick={() => handleTableListClick(table)}
+      //         >
+      //           {table.label}
+      //         </li>
+      //       ))}
+      //     </ul>
+      //   );
+      // };
+
       const renderTableList = () => {
         return (
           <ul className="table-list">
@@ -364,14 +454,82 @@ async function table() {
                 onClick={() => handleTableListClick(table)}
               >
                 {table.label}
+                {selectedBox && selectedBox.label === table.label && (
+                  <span
+                    className="resize-handle"
+                    draggable
+                    onDragEnd={(e) => handleResizeEnd(e, selectedBox)}
+                  />
+                )}
               </li>
             ))}
           </ul>
         );
       };
+      
+      
 
-
-
+      const handleResizeEnd = (e, box) => {
+        const stage = stageRef.current.getStage();
+      
+        if (stage) {
+          const scale = stage.scaleX(); // Consider the current scale of the stage
+      
+          const mouseX = e.target.x() / scale;
+          const mouseY = e.target.y() / scale;
+      
+          const updatedBoxes = boxes.map((b) =>
+            b.label === box.label
+              ? {
+                  ...b,
+                  width: Math.max(0, mouseX - b.x),
+                  height: Math.max(0, mouseY - b.y),
+                }
+              : b
+          );
+      
+          setBoxes(updatedBoxes);
+        }
+      };
+      
+      const handleResizeDragEnd = (e, box) => {
+        const stage = stageRef.current.getStage();
+      
+        if (stage) {
+          const scale = stage.scaleX(); // Consider the current scale of the stage
+      
+          // Calculate the initial position of the resizing handle relative to the box
+          const initialHandleX = box.width - 10;
+          const initialHandleY = box.height - 10;
+      
+          // Calculate the movement of the handle during dragging
+          const handleMovementX = (e.target.x() - initialHandleX) / scale;
+          const handleMovementY = (e.target.y() - initialHandleY) / scale;
+      
+          // Calculate the new width and height based on the handle movement
+          const newWidth = Math.max(0, box.width + handleMovementX);
+          const newHeight = Math.max(0, box.height + handleMovementY);
+      
+          const updatedBoxes = boxes.map((b) =>
+            b.label === box.label
+              ? {
+                  ...b,
+                  width: newWidth,
+                  height: newHeight,
+                }
+              : b
+          );
+      
+          setBoxes(updatedBoxes);
+        }
+      };
+      
+      
+      
+      
+      
+      
+      
       const updateTableStatus = () => {
         const activeTables = [];
         const inactiveTables = [];
@@ -523,6 +681,9 @@ async function table() {
       };
       
 
+      
+      
+
     return (
       <div className="drawing-app" style={{ display: 'flex' }}>
         <div style={{ display: 'flex', flexDirection: 'column', margin: '10px' }}>
@@ -605,57 +766,51 @@ async function table() {
         height={backgroundImage ? backgroundImage.height : 800}
         ref={stageRef}
       >
-        <Layer>
-          {gridVisible && backgroundImage && (
-            <>
-              {Array.from({ length: Math.ceil((backgroundImage.width || 1000) / gridSize) }).map((_, i) => (
-                <Line
-                  key={`grid-x-${i}`}
-                  points={[i * gridSize, 0, i * gridSize, (backgroundImage.height || 800)]}
-                  stroke="#ccc"
-                  strokeWidth={1}
-                />
-              ))}
-              {Array.from({ length: Math.ceil((backgroundImage.height || 800) / gridSize) }).map((_, i) => (
-                <Line
-                  key={`grid-y-${i}`}
-                  points={[0, i * gridSize, (backgroundImage.width || 1000), i * gridSize]}
-                  stroke="#ccc"
-                  strokeWidth={1}
-                />
-              ))}
-            </>
-          )}
+     <Layer>
+  {boxes.map((box, index) => (
+    <Group
+      key={index}
+      x={box.x}
+      y={box.y}
+      draggable
+      onDragEnd={(e) => handleBoxDragEnd(e, index)}
+    >
+     <Rect
+  width={box.width}
+  height={box.height}
+  fill="lightblue"
+  stroke="black"
+  strokeWidth={2}
+  draggable
+  onDragEnd={(e) => handleBoxDragEnd(e, index)}
+/>
+<KonvaText
+  x={0}
+  y={0}
+  text={box.label}
+  fontSize={16}
+  fill="black"
+  align="center"
+  width={box.width}
+  height={box.height}
+  verticalAlign="middle"
+/>
+{/* Resizing handle */}
+<Rect
+  x={box.width - 10}
+  y={box.height - 10}
+  width={10}
+  height={10}
+  fill="red"
+  draggable
+  name="resizeHandle"
+  onDragEnd={(e) => handleResizeDragEnd(e, box)}
+/>
 
-          {boxes.map((box, index) => (
-            <Group
-              key={index}
-              x={box.x}
-              y={box.y}
-              draggable
-              onDragEnd={(e) => handleBoxDragEnd(e, index)}
-            >
-              <Rect
-                width={box.width}
-                height={box.height}
-                fill="lightblue"
-                stroke="black"
-                strokeWidth={2}
-              />
-              <KonvaText
-                x={0}
-                y={0}
-                text={box.label}
-                fontSize={16}  // Adjust the font size as needed
-                fill="black"
-                align="center"
-                width={box.width}
-                height={box.height}
-                verticalAlign="middle"
-              />
-            </Group>
-          ))}
-        </Layer>
+    </Group>
+  ))}
+</Layer>
+
       </Stage>
       </div>
   

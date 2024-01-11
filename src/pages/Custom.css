@@ -212,6 +212,24 @@ border-bottom: #d2d6dc;
   color: white;
 }
 
+.resize-anchor {
+  position: absolute;
+  cursor: nwse-resize;
+  user-select: none;
+  font-size: 12px;
+}
+
+.resize-handle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #007bff;
+  border-radius: 50%;
+  cursor: nwse-resize;
+  user-select: none;
+}
+
+
 /* Add more styles as needed */
 
 /* Canvas.css */
