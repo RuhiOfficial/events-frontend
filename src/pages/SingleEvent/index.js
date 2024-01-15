@@ -269,7 +269,7 @@ console.log(data.event_desc,"data ==============>>>>>")
                 
                 <div className="flex flex-row items-start justify-start mt-[18px] w-full">
                 
-                <div className='w-5/12 container'>
+                <div className='w-5/12 my-container'>
                 <ScaleLoader css={override} size={60} color={'#5051f9'} loading={isLoading} className='load-center'/>
                           {!isLoading && (
                  <img className="h-51  event-image" src={data.featured_image} alt="" />
