@@ -15,7 +15,7 @@ import { getEvent,getBookingList } from 'service/api';
 import BookingList from 'pages/BookingList';
 import "../Custom.css"
 import { css } from '@emotion/react';
-import { RingLoader } from 'react-spinners';
+import { ScaleLoader } from 'react-spinners';
 
 const override = css`
   display: block;
@@ -419,7 +419,7 @@ const fetchData = async (venueId) => {
                             </Button>
                           </div>
                           <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mb-[33px] w-full min-h-[170px]">
-                          <RingLoader css={override} size={80} color={'#5051f9'} loading={isLoading} />
+                          <ScaleLoader css={override} size={80} color={'#5051f9'} loading={isLoading} />
                           {!isLoading && (
                          <List
                            className="flex-1 sm:flex-col flex-row gap-[31px] grid md:grid-cols-1 grid-cols-2 w-full"
@@ -563,8 +563,8 @@ const fetchData = async (venueId) => {
                         <div className="flex flex-col gap-10  justify-start py-9 w-full">
                         
                       
-                          <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mb-[33px] w-full min-h-[170px]">
-                          <RingLoader css={override} size={80} color={'#5051f9'} loading={isLoading} />
+                          <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mb-[33px] w-full min-h-[170px] ">
+                          <ScaleLoader css={override} size={80} color={'#5051f9'} loading={isLoading} />
                           {!isLoading && (
                           <BookingList columns={columns} data={ticketList} />
                           )}

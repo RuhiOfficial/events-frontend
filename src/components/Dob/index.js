@@ -1,47 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import '../../pages/Custom.css'; // Custom styles for DateRangePicker
 import { Placeholder } from 'react-bootstrap';
-const Dob = ({ dob, onChange,placeholder }) => {
 
-    const [selectedStartDate, setSelectedStartDate] = useState(dob);
-    console.log(placeholder,"coming placeholder ")
+const DateComponent = ({ dob, onChange, placeholder }) => {
+  const [selectedDate, setSelectedDate] = useState(dob);
 
-    const handleStartDateChange = (date) => {
-      setSelectedStartDate(date);
-      
-      
-    };
-  
-   
-  
-    return (
-      
-        <DatePicker
-  selected={selectedStartDate}
-  onChange={handleStartDateChange}
-  selectsStart
-  startDate={selectedStartDate}
-  showMonthDropdown
-  showYearDropdown
-  placeholderText={placeholder}
-  dateFormat="yyyy-MM-dd"
-  className="rounded-l-md px-3 py-2 border-b border-gray-300 focus:outline-none focus:border-blue-500 flex-grow"
-  showTimeInput={false}
-  popperClassName="dark-popper" 
+  useEffect(() => {
+    // Update the state when the dob prop changes
+    setSelectedDate(dob);
+  }, [dob]);
 
-/>
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
 
-    )
+    // Call the parent component's onChange function with the updated date
+    onChange(date);
+  };
 
+  return (
+    <DatePicker
+      selected={selectedDate}
+      onChange={handleDateChange}
+      selectsStart
+      showMonthDropdown
+      showYearDropdown
+      placeholderText={placeholder}
+      dateFormat="yyyy-MM-dd"
+      className="rounded-l-md px-3 py-2 border-b border-gray-300 focus:outline-none focus:border-blue-500 flex-grow"
+      showTimeInput={false}
+      popperClassName="dark-popper"
+      utcOffset={new Date().getTimezoneOffset()}
+    />
+  );
+};
 
-
-
-
-
-
-
-
-}
-export default Dob;
+export default DateComponent;

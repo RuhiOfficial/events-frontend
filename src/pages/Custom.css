@@ -632,3 +632,11 @@ input#agreeTerms {
 .ReactModal__Content::-webkit-scrollbar {
   display: none;
 }
+
+.container{
+  display: flex;
+  justify-content: center; /* horizontal centering */
+  align-items: center; /* vertical centering */
+  height: 35vh; /* adjust height as needed */
+}
+

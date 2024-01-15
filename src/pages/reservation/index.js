@@ -11,7 +11,7 @@ import DeleteSection from 'pages/DeleteSection';
 import EditSection from 'pages/EditSection';
 import { getSectionList } from 'service/api';
 import { css } from '@emotion/react';
-import { PacmanLoader } from 'react-spinners';
+import { ScaleLoader } from 'react-spinners';
 
 const override = css`
   display: block;
@@ -221,7 +221,7 @@ async function section() {
     <Section isOpen={isSectionOpen} onRequestClose={closeModal} />
     </div>
     </div>
-    <PacmanLoader css={override} size={50} color={'#5051f9'} loading={isLoading} />
+    <ScaleLoader css={override} size={50} color={'#5051f9'} loading={isLoading} />
                           {!isLoading && (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="mx-auto mt-8">

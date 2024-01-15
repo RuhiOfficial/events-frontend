@@ -11,9 +11,9 @@ import { Button, Img, Line, List, Text ,Input} from "components";
 import "react-datepicker/dist/react-datepicker.css";
 import TimePicker from 'components/Timepicker';
 import DatePicker from 'components/Date';
-import Dob from 'components/Dob';
+import DOB from 'components/Dob';
 import { css } from '@emotion/react';
-import { PacmanLoader } from 'react-spinners';
+import { ScaleLoader } from 'react-spinners';
 import ViewLayout from 'pages/ViewLayout';
 
 const override = css`
@@ -37,7 +37,7 @@ function SingleEvent({ isOpen, onRequestClose, eventId }) {
     const [mySection, setMySection] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+   
 
     useEffect(()=>{
       setMySection(localStorage.getItem('Section'));
@@ -47,8 +47,24 @@ function SingleEvent({ isOpen, onRequestClose, eventId }) {
     // Convert the given date string to a JavaScript Date object
     const rawDate= data.date_from;
  const dateBeforeTString= rawDate?rawDate.split('T')[0]:null;
+
+
+
+ 
+
+    const dateObject = new Date(dateBeforeTString);
+
+    const options = {
+      weekday: 'short', // Short day name (Sun)
+      month: 'short',   // Short month name (Jan)
+      day: 'numeric',   // Day of the month (04)
+      year: 'numeric',  // Full year (2024)
+    };
     
-    setCustomDate(dateBeforeTString);
+    const formattedDate = dateObject.toLocaleDateString('en-US', options);
+    
+   
+    setCustomDate(formattedDate);
   }, [data.date_from]);
 
   useEffect(() => {
@@ -56,6 +72,11 @@ function SingleEvent({ isOpen, onRequestClose, eventId }) {
   }, [eventId]);
 
   console.log(eventId,"event id =============>>>>")
+
+
+
+  
+
 
   const form = useForm(
     {
@@ -81,6 +102,9 @@ function SingleEvent({ isOpen, onRequestClose, eventId }) {
 
 
 
+  console.log(dob,"dob is =================================>>>>>>>>>>")
+
+
 
 
 
@@ -89,17 +113,18 @@ function SingleEvent({ isOpen, onRequestClose, eventId }) {
 
     const req = {
       data: {
-        venue_id:venueId,
-        event_id:eventId,
-        first_name:data?.first_name,
+      venue_id:venueId,
+      event_id:eventId,
+      first_name:data?.first_name,
       last_name: data?.last_name,
       phone:data?.phone,
       email:data?.email,
       booking_note: data?.booking_note,
       no_of_seats:data?.no_of_seats,
       arrival_time:formattedStartTime,
-      dob:"2024-01-10",
+      dob:dob,
       section:"hello",
+      
       },
     };
 
@@ -109,15 +134,47 @@ function SingleEvent({ isOpen, onRequestClose, eventId }) {
       console.log(res);
 
       toast.success('Ticket has been Booked  Successfully!');
-      setTimeout(() => {
-        onRequestClose();
-         window.location.href = '/';
-      }, 3000);
+      // setTimeout(() => {
+      //   onRequestClose();
+      //    window.location.href = '/';
+      // }, 3000);
     } catch (err) {
       console.error(err);
       toast.error('Something Went Wrong!');
     }
   }
+
+  const handleDateChange = (start) => {
+    console.log(start,"testing is now done")
+    setStartDate(start);
+  
+  };
+  const handleDobChange = (start) => {
+    console.log(start,"testing is now done")
+    setDob(start);
+  
+  };
+  
+
+  const handleTimeChange = (start) => {
+    const formattedTime = moment(start).format('hh:mm A');
+    setArrivalTime(start);
+    setFormattedStartTime(formattedTime)
+    
+  };
+
+ 
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+ 
+
 
   async function loadSection() {
     try {
@@ -152,33 +209,8 @@ console.log(data.event_desc,"data ==============>>>>>")
 
 
 
-  const handleDateChange = (start) => {
-    setStartDate(start);
   
-  };
-  const my = (dob) => {
-    console.log(dob,"00-02-338484-2845-28930-58458-0249765250r89")
-    setDob(dob);
   
-  };
-
-  const handleTimeChange = (start) => {
-    const formattedTime = moment(start).format('hh:mm A');
-    setArrivalTime(start);
-    setFormattedStartTime(formattedTime)
-    
-  };
-
- 
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
 
 
 
@@ -237,8 +269,8 @@ console.log(data.event_desc,"data ==============>>>>>")
                 
                 <div className="flex flex-row items-start justify-start mt-[18px] w-full">
                 
-                <div className='w-5/12'>
-                <PacmanLoader css={override} size={50} color={'#5051f9'} loading={isLoading} />
+                <div className='w-5/12 container'>
+                <ScaleLoader css={override} size={60} color={'#5051f9'} loading={isLoading} className='load-center'/>
                           {!isLoading && (
                  <img className="h-51  event-image" src={data.featured_image} alt="" />
                           )}     
@@ -249,14 +281,14 @@ console.log(data.event_desc,"data ==============>>>>>")
                         <div className='w-8/12'>
                         <div  className='flex flex-row items-start justify-between mt-[18px] w-full'>
                       <div className='border border-white-700_99 border-solid w-[49%] bg-[#292e34] h-[51px]'>
-                      <DatePicker placeholder={customDate} onChange={handleDateChange}
-                         className="capitalize font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4   " />
+                      <DatePicker placeholder={customDate} onChange={handleDateChange} 
+                         className=" font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4   " />
                       </div>
                        
 
                                     
                           <Button
-                              className=" h-[52px] w-[49%] cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] text-center text-sm border text-white700 "
+                              className=" h-[52px] w-[49%] cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] text-center text-sm border border-[#d2ae38] hover:bg-[#d2ae38]  text-white700 "
                               // color="indigo_A400"
                               style={{color:"white"}}
                               size="sm"
@@ -301,7 +333,7 @@ console.log(data.event_desc,"data ==============>>>>>")
                         <Input
                         name="Preffered Section"
                         placeholder="Preffered Section"
-                        className=" capitalize font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4 "
+                        className=" font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4 "
                         wrapClassName=" common-pointer border border-white-700_99 border-solid w-[49%] bg-[#292e34]"
                         style={{color:"white"}}
                        
@@ -330,7 +362,7 @@ console.log(data.event_desc,"data ==============>>>>>")
                         <Input
                         name="firstName"
                         placeholder="First Name"
-                        className=" capitalize font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4 "
+                        className="font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4 "
                         wrapClassName=" common-pointer border border-white-700_99 border-solid w-[49%] bg-[#292e34]"
                         style={{color:"white"}}
                         onChange={(e) => {
@@ -345,7 +377,7 @@ console.log(data.event_desc,"data ==============>>>>>")
          <Input
                         name="lastName"
                         placeholder="Last Name"
-                        className=" capitalize font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4 "
+                        className="font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4 "
                         wrapClassName=" common-pointer border border-white-700_99 border-solid w-[49%] bg-[#292e34]"
                         style={{color:"white"}}
                         onChange={(e) => {
@@ -364,7 +396,7 @@ console.log(data.event_desc,"data ==============>>>>>")
                         <Input
                         name="ContactNo"
                         placeholder="Contact No"
-                        className=" capitalize font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4 "
+                        className=" font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4 "
                         wrapClassName=" common-pointer border border-white-700_99 border-solid w-[49%] bg-[#292e34]"
                         style={{color:"white"}}
                         onChange={(e) => {
@@ -380,7 +412,7 @@ console.log(data.event_desc,"data ==============>>>>>")
                         name="email"
                         type="email"
                         placeholder="Email"
-                        className=" capitalize font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4 "
+                        className=" font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4 "
                         wrapClassName=" common-pointer border border-white-700_99 border-solid w-[49%] bg-[#292e34]"
                         style={{color:"white"}}
                         onChange={(e) => {
@@ -398,14 +430,9 @@ console.log(data.event_desc,"data ==============>>>>>")
                                 <div  className='flex flex-row items-start justify-between mt-[18px] w-full'>
                                 <div className='border border-white-700_99 border-solid w-[49%] bg-[#292e34] h-[51px]'>
                               
+                                <DOB placeholder='DOB' onChange={handleDobChange}  utcOffset={new Date().getTimezoneOffset()}/>
 
-
-                                <Dob
-  placeholder='DOB'
-  dob={dob} // Make sure to pass the dob prop if needed
-  onChange={my} // Pass your onChange function
-  className="capitalize font-roboto p-0 placeholder-white-900 text-base text-left h-[50px] pl-4"
-/>
+                                
 </div>
                       
         
@@ -417,7 +444,7 @@ console.log(data.event_desc,"data ==============>>>>>")
                   <Input
                         name="input"
                         placeholder=" Booking Notes?"
-                        className="capitalize font-roboto p-0  placeholder-white-900 text-base text-left w-full h-[50px] pl-4 "
+                        className=" font-roboto p-0  placeholder-white-900 text-base text-left w-full h-[50px] pl-4 "
                         wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
                         style={{color:"white"}}
                         onChange={(e) => {
@@ -437,7 +464,7 @@ console.log(data.event_desc,"data ==============>>>>>")
                   <Input
                     name="input"
                     placeholder="No of Guests "
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
+                    className=" font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
                     wrapClassName="common-pointer border-[2px] rounded-[20px] border-[#d2ae38] border-solid w-full bg-[#292e34]"
                     type="number"
                     onChange={(e) => {
