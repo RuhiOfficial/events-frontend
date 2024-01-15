@@ -633,10 +633,10 @@ input#agreeTerms {
   display: none;
 }
 
-.container{
+.my-container{
   display: flex;
-  justify-content: center; /* horizontal centering */
-  align-items: center; /* vertical centering */
-  height: 35vh; /* adjust height as needed */
+  justify-content: center; 
+  align-items: center; 
+  height: 40vh; 
 }
 
