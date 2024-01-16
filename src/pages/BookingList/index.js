@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo ,useEffect} from 'react';
 import { useTable, usePagination, useGlobalFilter } from 'react-table';
 import { Text } from "components";
 import "../Custom.css"
@@ -6,6 +6,7 @@ import "../Custom.css"
 const BookingList = ({ columns, data }) => {
   console.log(data,"data from booking page is ====>>")
   const [globalFilter, setGlobalFilter] = useState('');
+  const [index,setIndex]=useState(0);
 
   const {
     getTableProps,
@@ -14,7 +15,7 @@ const BookingList = ({ columns, data }) => {
     page,
     nextPage,
     previousPage,
-    pageIndex,
+    pageIndex: currentPageIndex,
     canNextPage,
     canPreviousPage,
     pageOptions,
@@ -25,12 +26,14 @@ const BookingList = ({ columns, data }) => {
     {
       columns,
       data,
-      initialState: { pageIndex:0, pageSize: 20},
+      initialState: { pageIndex:0, pageSize:5},
     },
     useGlobalFilter,
     usePagination
   );
 
+
+  const pageIndex = currentPageIndex !== undefined ? currentPageIndex : 0;
   const handleGlobalFilterChange = (e) => {
     setGlobalFilter(e.target.value);
     setTableGlobalFilter(e.target.value); // Apply global filter to the table
@@ -47,7 +50,11 @@ const BookingList = ({ columns, data }) => {
       ),
     [data, columns, globalFilter,data, columns, globalFilter, pageIndex]
   );
+  console.log(pageIndex,"index of page ====>>")
   
+
+
+
   return (
     <div className="flex w-full">
       <div className="flex-1 overflow-x-auto">
@@ -110,10 +117,11 @@ const BookingList = ({ columns, data }) => {
         </table>
         <div className="flex-shrink-0 p-4">
         <div className="pagination mt-4 text-end">
-        {/* {page.length > 0 && (
+        {page.length > 0 && (
   <div className="pagination mt-4 text-end">
     <button
-      onClick={() => previousPage()}
+      onClick={() => {previousPage()
+      setIndex(index - 1)}}
       disabled={!canPreviousPage}
       className="px-3 py-2 bg-[#5051f9]"
       style={{ color: 'white' }}
@@ -123,11 +131,12 @@ const BookingList = ({ columns, data }) => {
     <span style={{ color: 'white' }} className="ml-5 mr-5">
       Page{' '}
       <strong>
-        {pageIndex + 1} of {pageOptions.length}
+        {index + 1} of {pageOptions.length}
       </strong>{' '}
     </span>
     <button
-      onClick={() => nextPage()}
+      onClick={() => {nextPage();
+        setIndex(index + 1)}}
       disabled={!canNextPage}
       className="px-3 py-2 bg-[#5051f9]"
       style={{ color: 'white' }}
@@ -135,7 +144,7 @@ const BookingList = ({ columns, data }) => {
       Next
     </button>{' '}
   </div>
-)} */}
+)}
 
         </div>
       </div>

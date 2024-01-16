@@ -20,7 +20,7 @@ import inventory from "../../assets/images/Group7.png"
 function Mysidebar({children}) {
   const location = useLocation();
   const [activeMenu, setActiveMenu] = useState("");
-
+  const [tooltipText, setTooltipText] = useState("");
   useEffect(() => {
     setActiveMenu(location.pathname); // Compare with the full path
   }, [location.pathname]);
@@ -64,6 +64,15 @@ function Mysidebar({children}) {
           altText: "inventory", // Add alt text for accessibility
         },
       ]
+
+
+      const handleMouseEnter = (altText) => {
+        setTooltipText(altText);
+      };
+    
+      const handleMouseLeave = () => {
+        setTooltipText("");
+      };
     
   return (
     <div>
@@ -87,14 +96,20 @@ function Mysidebar({children}) {
                 className="flex flex-col items-center justify-center  mb-[790px] mt-[25px]  w-full"
               >
                 {sideBarMenu?.map((menu, i) => (
-             <MenuItem
-             key={`sideBarMenuItem${i}`}
-             className={`menu-item ${activeMenu === menu.href ? 'active-menu' : ''}`}
-           >
-             <Link to={menu.href}>
-               <img src={menu.imgSrc} alt={menu.altText} />
-             </Link>
-           </MenuItem>
+                 <MenuItem
+                 key={`sideBarMenuItem${i}`}
+                 className={`menu-item ${activeMenu === menu.href ? 'active-menu' : ''}`}
+               >
+                 <Link to={menu.href}>
+                   <div className="tooltip-container">
+                     <img src={menu.imgSrc} alt={menu.altText} />
+                     <span className="tooltip-text">{menu.altText}</span>
+                   </div>
+                 </Link>
+               </MenuItem>
+               
+
+    
                 ))}
               </Menu>
 }</Sidebar>

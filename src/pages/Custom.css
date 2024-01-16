@@ -637,6 +637,34 @@ input#agreeTerms {
   display: flex;
   justify-content: center; 
   align-items: center; 
-  height: 32vh; 
+ 
+}
+
+/* Sidebar ToolTip */
+
+
+/* Add this to your CSS file */
+.menu-item {
+  position: relative;
+}
+
+.tooltip-text {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  margin-left: 10px;
+  transform: translate(0, -50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  white-space: nowrap;
+  opacity: 0; /* Initially, set opacity to 0 */
+  pointer-events: none; /* Make the tooltip not interfere with hover events on the underlying elements */
+  transition: opacity 0.3s ease; /* Add a smooth transition for the tooltip */
+}
+
+.menu-item:hover .tooltip-text {
+  opacity: 1; /* Make the tooltip visible on hover */
 }
 
