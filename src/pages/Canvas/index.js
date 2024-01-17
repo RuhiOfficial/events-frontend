@@ -38,6 +38,10 @@ function Canvas() {
   // console.log(backgroundImage,"initial")
   // console.log(layoutName,"Layout name ===>>")
   // localStorage.setItem('canvasBackgroundImage', 'https://example.com/path/to/your/image.jpg');
+
+
+
+  
 useEffect(() => {
   const savedCanvasState = localStorage.getItem('canvasState');
 
@@ -572,6 +576,7 @@ useEffect(() => {
       useEffect(() => {
         updateTableStatus();
       }, [boxes]); 
+
       const saveCanvasImage = () => {
         const stage = stageRef.current.getStage();
     
@@ -623,20 +628,38 @@ useEffect(() => {
     
               // Extract necessary data for the API request
               const imageDataUrl = tempCanvas.toDataURL('image/png');
-              const boxInfo = boxes.map((box) => ({
-                label: box.label,
-                x: box.x,
-                y: box.y,
-                width: box.width,
-                height: box.height,
-              }));
+             const updatedBoxes = boxes.map((box) => ({
+      label: box.label,
+      x: box.x,
+      y: box.y,
+      width: box.width,
+      height: box.height,
+      sectionName: getSectionNameForBox(box), // Add sectionName property
+    }));
              
-    postCanvas(imageDataUrl,boxInfo,activeTables,inactiveTables);
+    postCanvas(imageDataUrl, updatedBoxes, activeTables, inactiveTables);
     
               // Call the API function with the extracted data
               // sendApiRequest(imageDataUrl, boxInfo, activeTableLabels, inactiveTableLabels);
             };
           }
+          const getSectionNameForBox = (box) => {
+            // Iterate over each section in tableList
+            for (const section of tableList) {
+              // Find the table with a matching table_name within the current section
+              const matchingTable = section.tables.find((table) => table.table_name === box.label);
+          
+              // If a matching table is found, return the section_name
+              if (matchingTable) {
+                return section.section_name;
+              }
+            }
+          
+            // If no matching table is found, return 'Unknown Section'
+            return 'Unknown Section';
+          };
+          
+          
         }
       };
     
