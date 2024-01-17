@@ -4,10 +4,10 @@ import { getLayout } from 'service/api';
 
 const ViewLayout = ({ isOpen, onRequestClose }) => {
   const [response, setResponse] = useState([]);
+  const [myBox, setMyBox] = useState([]);
   const [imgWidth, setImgWidth] = useState();
   const [imgHeight, setImgHeight] = useState();
   const [url, setUrl] = useState();
-  const [boxes, setBoxes] = useState([]);
   const [hoveredBoxIndex, setHoveredBoxIndex] = useState(null);
 
   const fetch = async () => {
@@ -19,14 +19,28 @@ const ViewLayout = ({ isOpen, onRequestClose }) => {
     };
     try {
       const res = await getLayout(req);
-      console.log(res, 'Response coming from the get Layout API ======>>');
+      console.log(res, 'Response coming from the get Layout api ======>>');
       setResponse(res.data[0]);
-      setBoxes(res.data[0].box_details);
+      setMyBox(res.data[0].box_details)
       setUrl(res.data[0].image_url);
     } catch (err) {
       console.error(err);
     }
   };
+
+
+  const boxes = myBox.map((box, index) => {
+    const { x, y, width, height, box_name, sectionName } = box;
+    return [parseFloat(x), parseFloat(y), parseFloat(width), parseFloat(height), box_name, sectionName];
+  });
+
+  // const boxes = [
+  //   [100, 100, 50, 50, 'Box1', 'sec1'],
+  //   [200, 150, 70, 40, 'Box2', 'sec1'],
+  //   [300, 200, 90, 30, 'Box3', 'sec2'],
+  //   [400, 250, 110, 20, 'Box4', 'sec2'],
+  //   // Add more boxes as needed
+  // ];
 
   const canvasRef = useRef(null);
 
@@ -52,11 +66,11 @@ const ViewLayout = ({ isOpen, onRequestClose }) => {
     context.font = '14px Arial';
 
     boxes.forEach((box, index) => {
-      const { x, y, width, height, box_name, sectionName } = box;
-      context.strokeStyle = sectionName === highlightedSection ? 'yellow' : 'add8e6';
+      const [x, y, width, height, name, section] = box;
+      context.strokeStyle = section === highlightedSection ? 'red' : 'transparent';
       context.strokeRect(x, y, width, height);
-      context.fillStyle = '#add8e6';
-      context.fillText(box_name, x + 5, y + 15);
+      context.fillStyle = 'transparent';
+      // context.fillText(name, x + 5, y + 15);
     });
   };
 
@@ -78,7 +92,7 @@ const ViewLayout = ({ isOpen, onRequestClose }) => {
     let isHovering = false;
 
     for (let i = 0; i < boxes.length; i++) {
-      const { x, y, width, height, box_name, section } = boxes[i];
+      const [x, y, width, height, name, section] = boxes[i];
       if (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
         setHoveredBoxIndex(i);
         isHovering = true;
@@ -90,7 +104,7 @@ const ViewLayout = ({ isOpen, onRequestClose }) => {
       setHoveredBoxIndex(null);
     }
 
-    const highlightedSection = isHovering && hoveredBoxIndex !== null ? boxes[hoveredBoxIndex].section : null;
+    const highlightedSection = isHovering && hoveredBoxIndex !== null ? boxes[hoveredBoxIndex][5] : null;
     drawBoxes(highlightedSection);
   };
 
@@ -127,25 +141,33 @@ const ViewLayout = ({ isOpen, onRequestClose }) => {
     fetch();
   }, [url]);
 
-  const handleCanvasClick = (event) => {
-    const canvas = canvasRef.current;
-    if (!canvas) {
-      return;
-    }
+// ... (previous code)
 
-    const rect = canvas.getBoundingClientRect();
-    const mouseX = event.clientX - rect.left;
-    const mouseY = event.clientY - rect.top;
+const handleCanvasClick = (event) => {
+  const canvas = canvasRef.current;
+  if (!canvas) {
+    return;
+  }
 
-    for (let i = 0; i < boxes.length; i++) {
-      const { x, y, width, height, box_name, section } = boxes[i];
-      if (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
-        alert(`Clicked on section: ${section}`);
-        break;
-      }
+  const context = canvas.getContext('2d');
+  const rect = canvas.getBoundingClientRect();
+  const mouseX = event.clientX - rect.left;
+  const mouseY = event.clientY - rect.top;
+
+  for (let i = 0; i < boxes.length; i++) {
+    const [x, y, width, height, name, section] = boxes[i];
+    if (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
+      // alert(`Clicked on section: ${section}`);
+      localStorage.setItem('Section',section)
+      onRequestClose();
+      break;
     }
-  };
- console.log(boxes,"boxes are as follows=====================================>>>>>>>>>>>>>>>")
+  }
+};
+
+// ... (remaining code)
+
+
   return (
     <Modal
       isOpen={isOpen}
