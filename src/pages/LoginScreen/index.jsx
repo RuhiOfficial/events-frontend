@@ -57,6 +57,7 @@ const LoginScreenPage = () => {
 
         localStorage.setItem("LoginId", JSON.stringify(res?.data?.user?.id));
         localStorage.setItem('companyId', JSON.stringify(res?.data?.user?.company_id));
+        localStorage.setItem("Status", true);
 
         localStorage.setItem(
           "RoleId",
@@ -82,9 +83,14 @@ const LoginScreenPage = () => {
           try {
             const res = await getLocalstorage(req);
             console.log(res, 'Response coming from LOGIN PAGE  api ======>>');
-            // setResponse(res.data[0]);
-            // setMyBox(res.data[0].box_details)
-            // setUrl(res.data[0].image_url);
+            localStorage.setItem('canvasBackgroundImage',res.data[0].image_url)
+            const backgroundImage=res.data[0].image_url
+            const boxes=res.data[0].boxes
+            localStorage.setItem(
+              'canvasState',
+              JSON.stringify({ backgroundImage, boxes, /* ...other state variables */ })
+            );
+            
           } catch (err) {
             console.error(err);
           }

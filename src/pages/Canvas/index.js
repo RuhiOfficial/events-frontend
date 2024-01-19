@@ -8,6 +8,7 @@ import { Button, Img, List, Text } from "components";
 import { useLocation, useHistory } from 'react-router-dom';
 import { getCanvasTable ,postLayout,getSectionList} from 'service/api';
 import {  ToastContainer,toast } from "react-toastify";
+import { getLocalstorage } from 'service/api';
 
 function Canvas() {
   const location = useLocation();
@@ -30,18 +31,66 @@ function Canvas() {
     const [tableList, setTableList] = useState([]);
     const [droppedTables, setDroppedTables] = useState([]);
     const [activeTables, setActiveTables] = useState([]);
-  const [inactiveTables, setInactiveTables] = useState([]);
-  const vid=localStorage.getItem('Venue')
-  const nameLayout=localStorage.getItem('layoutName')
-  const [selectedResizingBox, setSelectedResizingBox] = useState(null);
-
-  // console.log(backgroundImage,"initial")
-  // console.log(layoutName,"Layout name ===>>")
-  // localStorage.setItem('canvasBackgroundImage', 'https://example.com/path/to/your/image.jpg');
-
-
+    const [inactiveTables, setInactiveTables] = useState([]);
+    const [defaultLayout, setDefaultLayout] = useState([]);
+    const vid=localStorage.getItem('Venue')
+    const nameLayout=localStorage.getItem('layoutName')
+    const [selectedResizingBox, setSelectedResizingBox] = useState(null);
+    const [myImage, setMyImage] = useState("");
 
   
+//   const fetch = async () => {
+//     const vid = localStorage.getItem('Venue');
+//     const req = {
+//       data: {
+//         venue_id: vid,
+//       },
+//     };
+//     try {
+//       const res = await getLocalstorage(req);
+//       console.log(res, 'Response coming from the localStorage ============= ======>>');
+//       setDefaultLayout(res.data[0]);
+//       const backImage= localStorage.getItem('canvasBackgroundImage')
+     
+//       setMyImage(backImage);
+//       console.log(backImage,"it exists or not ??????==============>>>>>")
+//       if(backImage == null){
+//         const  pic=res.data[0].image_url;
+//        localStorage.setItem('canvasBackgroundImage',res.data[0].image_url)
+
+
+       
+//        const parsedBoxes = JSON.parse(req.data[0].boxes);
+
+//        // Set background image and boxes
+//        setBackgroundImage(pic);
+       
+//        setBoxes(parsedBoxes);
+//        localStorage.setItem(
+//         'canvasState',
+//         JSON.stringify({ backgroundImage, boxes, /* ...other state variables */ })
+//       );
+    
+//      }
+
+//       }
+//   catch (err) {
+//       console.error(err);
+//     }
+//   };
+  
+//    useEffect(()=>{
+//     fetch();
+//    }
+// ,[myImage,backgroundImage]
+//    )
+
+
+
+
+
+
+   
 useEffect(() => {
   const savedCanvasState = localStorage.getItem('canvasState');
 
@@ -117,25 +166,6 @@ async function table() {
   await getSectionList(req)
     .then((res) => {
       console.log(res,"canvas table list ====>>")
-      // let options;
-
-      // if (res.data.data.length === 1) {
-        
-      //   options = [
-      //     {
-      //       label: res.data.data[0].table_name,
-      //       value: res.data.data[0].id,
-      //     },
-      //   ];
-      // } 
-      // else {
-       
-      //   options = res.data.data.map((item) => ({
-      //     label: item.table_name,
-      //     value: item.id,
-      //   }));
-      // }
-
        setTableList(res.data.data);
       
     })
@@ -172,58 +202,7 @@ async function table() {
     );
   }, [backgroundImage, boxes /*, other state variables */]);
   
-  // useEffect(() => {
-  //   if (backgroundImage || myBackgroundImage) {
-  //     const img = new Image();
-  //     img.src = backgroundImage ? URL.createObjectURL(backgroundImage) : `data:image/jpeg;base64,${myBackgroundImage}`;
-  //     img.onload = () => {
-  //       const stage = stageRef.current;
-  //       const imageWidth = img.width;
-  //       const imageHeight = img.height;
-  //       const newGridSize = Math.min(imageWidth, imageHeight) / 20; // Adjust factor as needed
-  //       setGridSize(newGridSize);
-  //       stage.width(imageWidth);
-  //       stage.height(imageHeight);
-  //       stage.batchDraw();
-  //     };
-  //   }
-  // }, [backgroundImage, myBackgroundImage]);
-  
-
-  // useEffect(() => {
-  //   if (backgroundImage || myBackgroundImage) {
-  //     const img = new Image();
-  //     img.src = backgroundImage ? URL.createObjectURL(backgroundImage) : `data:image/jpeg;base64,${myBackgroundImage}`;
-  //     img.onload = () => {
-  //       const stage = stageRef.current;
-  
-  //       if (stage) {
-  //         const desiredWidth = 1000; // Set your desired width
-  //         const desiredHeight = 800; // Set your desired height
-  
-  //         // Create a canvas with the desired dimensions
-  //         const canvas = document.createElement('canvas');
-  //         canvas.width = desiredWidth;
-  //         canvas.height = desiredHeight;
-  //         const context = canvas.getContext('2d');
-  
-  //         // Draw the image on the canvas with the desired dimensions
-  //         context.drawImage(img, 0, 0, desiredWidth, desiredHeight);
-  
-  //         // Convert the canvas content to a base64 string
-  //         const resizedImageDataUrl = canvas.toDataURL('image/jpeg').split(',')[1];
-  
-  //         // Set the resized image as the background
-  //         setMyBackgroundImage(resizedImageDataUrl);
-  
-  //         stage.width(desiredWidth);
-  //         stage.height(desiredHeight);
-  //         stage.batchDraw();
-  //       }
-  //     };
-  //   }
-  // }, [backgroundImage, myBackgroundImage]);
- // ...
+ 
 
 useEffect(() => {
   if (backgroundImage || myBackgroundImage) {
@@ -265,13 +244,7 @@ useEffect(() => {
       }
     };
   }
-}, [backgroundImage, myBackgroundImage]);
-
-// ...
-
-  
-  
-  
+}, [backgroundImage, myBackgroundImage,myImage]);
 
     const saveToHistory = () => {
       const newHistory = [...history.slice(0, historyIndex + 1), shapes];
@@ -305,6 +278,7 @@ useEffect(() => {
    
     
     const onBackgroundImageChange = (layoutName, image) => {
+
 
       setBackgroundImage(image);
       setLayoutName(layoutName);
