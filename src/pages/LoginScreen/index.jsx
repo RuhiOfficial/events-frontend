@@ -8,6 +8,7 @@ import { postLoginUser } from "service/api";
 import * as yup from "yup";
 
 import { Button, Img, Input, Text } from "components";
+import { getLocalstorage } from "service/api";
 
 import useForm from "hooks/useForm";
 
@@ -66,11 +67,44 @@ const LoginScreenPage = () => {
           "Token",
           JSON.stringify(res?.data?.authorisation?.token),
         );
-        const auth= localStorage.getItem("Name");
+       
          Cookies.set('companyId', JSON.stringify(res?.data?.user?.company_id));
          Cookies.set('venueId', JSON.stringify(res?.data?.user?.venue_id));
-        console.log(auth,"from login===>>")
-        window.location.href = "/";
+
+
+         const fetch = async () => {
+          const vid = localStorage.getItem('Venue');
+          const req = {
+            data: {
+              venue_id: vid,
+            },
+          };
+          try {
+            const res = await getLocalstorage(req);
+            console.log(res, 'Response coming from LOGIN PAGE  api ======>>');
+            // setResponse(res.data[0]);
+            // setMyBox(res.data[0].box_details)
+            // setUrl(res.data[0].image_url);
+          } catch (err) {
+            console.error(err);
+          }
+        };
+    fetch();
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        // window.location.href = "/";
       })
       .catch((err) => {
         console.error(err);

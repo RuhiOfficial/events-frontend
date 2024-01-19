@@ -94,9 +94,13 @@ const TicketReservations = () => {
   );
 
   return (
+    <div className='p-[50px] m-[50px] bg-[#1f2327]'>
     <div className="flex w-full">
-      <div className="flex-1 overflow-x-auto bg-[#292e34] ">
-        <div className="flex flex-row font-poppins booking_serch items-center justify-between m-10">
+      <div className="flex-1 overflow-x-auto  ">
+        <div className='grid gap-x-8 gap-y-4'>
+
+     
+        <div className="flex flex-row font-poppins booking_serch items-center justify-between m-2 ">
           <Text
             className="text-[22px] sm:text-lg text-white-A700 md:text-xl"
             size="txtPoppinsSemiBold22"
@@ -119,7 +123,7 @@ const TicketReservations = () => {
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th key={column.id} className="p-4">
+                  <th key={column.id} className="p-4 font-poppins">
                     {column.render('Header')}
                   </th>
                 ))}
@@ -130,7 +134,7 @@ const TicketReservations = () => {
             {filteredData.map((row) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} className="border-t hover:bg-gray-700  ">
+                <tr {...row.getRowProps()} className="border-t border-[#626262] border-solid hover:bg-gray-700 bg-opacity-25 text-[14px]">
                   {row.cells.map((cell) => (
                     <td key={cell.column.id} {...cell.getCellProps()} className="p-4">
                       {cell.render('Cell')}
@@ -142,7 +146,7 @@ const TicketReservations = () => {
             {page.map((row) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} className="border-t hover:bg-gray-700 text-sm">
+                <tr {...row.getRowProps()} className="border-t border-[#626262] border-solid hover:bg-gray-700 bg-opacity-25  text-[14px]">
                   {row.cells.map((cell) => (
                     <td key={cell.column.id} {...cell.getCellProps()} className="p-4 text-center justify-center">
                       {cell.render('Cell')}
@@ -189,7 +193,9 @@ const TicketReservations = () => {
             )}
           </div>
         </div>
+        </div>
       </div>
+    </div>
     </div>
   );
 };

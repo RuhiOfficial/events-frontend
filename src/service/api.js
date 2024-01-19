@@ -15,6 +15,7 @@ const API_URLS = {
   GET_SECTION: `${COMMON_URL}listsection`,
   GET_SECTION_LIST: `${COMMON_URL}data-table`,
   GET_LAYOUT: `${COMMON_URL}get_layout`,
+  GET_LOCALSTORAGE: `${COMMON_URL}get_layout_box`,
   GET_BOOKING_LIST:`${COMMON_URL}ticketbooking`,
   GET_SECTION_BY_ID:`${COMMON_URL}section_list`,
   GET_CANVAS_TABLE:`${COMMON_URL}eventTable`,
@@ -75,6 +76,9 @@ const API_URLS = {
 
   export const getLayout = (payload) =>
   apis.get(`${API_URLS.GET_LAYOUT}?venue_id=${payload.data.venue_id}`, payload);
+
+  export const getLocalstorage = (payload) =>
+  apis.get(`${API_URLS.GET_LOCALSTORAGE}?venue_id=${payload.data.venue_id}`, payload);
 
   export const deleteSection = (payload) =>
   apis.delete(`${API_URLS.UPDATE_SECTION}?id=${payload.data.id}`, payload);

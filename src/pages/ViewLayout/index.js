@@ -34,13 +34,7 @@ const ViewLayout = ({ isOpen, onRequestClose }) => {
     return [parseFloat(x), parseFloat(y), parseFloat(width), parseFloat(height), box_name, sectionName];
   });
 
-  // const boxes = [
-  //   [100, 100, 50, 50, 'Box1', 'sec1'],
-  //   [200, 150, 70, 40, 'Box2', 'sec1'],
-  //   [300, 200, 90, 30, 'Box3', 'sec2'],
-  //   [400, 250, 110, 20, 'Box4', 'sec2'],
-  //   // Add more boxes as needed
-  // ];
+  
 
   const canvasRef = useRef(null);
 

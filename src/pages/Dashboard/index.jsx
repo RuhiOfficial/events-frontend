@@ -563,7 +563,7 @@ const fetchData = async (venueId) => {
                         <div className="flex flex-col gap-10  justify-start py-9 w-full">
                         
                       
-                          <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mb-[33px] w-full min-h-[170px] ">
+                          <div className="flex md:flex-col flex-row  items-center justify-between w-full min-h-[170px] ">
                           <ScaleLoader css={override} size={80} color={'#5051f9'} loading={isLoading} />
                           {!isLoading && (
                           <BookingList columns={columns} data={ticketList} />

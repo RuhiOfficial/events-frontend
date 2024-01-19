@@ -57,7 +57,9 @@ const BookingList = ({ columns, data }) => {
 
   return (
     <div className="flex w-full">
-      <div className="flex-1 overflow-x-auto">
+      <div className="flex-1 overflow-x-auto p-10">
+      <div className='grid gap-x-8 gap-y-4'>
+
       <div className="flex flex-row font-poppins booking_serch items-center justify-between">
                               <Text
                                 className="text-[22px] sm:text-lg text-white-A700 md:text-xl"
@@ -81,7 +83,7 @@ const BookingList = ({ columns, data }) => {
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th key={column.id} className="p-4">
+                  <th key={column.id} className="p-4 ">
                     {column.render('Header')}
                   </th>
                 ))}
@@ -92,7 +94,7 @@ const BookingList = ({ columns, data }) => {
             {filteredData.map((row) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} className="border-t hover:bg-gray-700  ">
+                <tr {...row.getRowProps()} className="border-t border-[#626262] border-solid hover:bg-gray-700"  >
                   {row.cells.map((cell) => (
                     <td key={cell.column.id} {...cell.getCellProps()} className="p-4">
                       {cell.render('Cell')}
@@ -104,7 +106,7 @@ const BookingList = ({ columns, data }) => {
                   {page.map((row) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} className="border-t hover:bg-gray-700 text-sm">
+                <tr {...row.getRowProps()} className="border-t border-[#626262] border-solid hover:bg-gray-700 text-sm">
                   {row.cells.map((cell) => (
                     <td key={cell.column.id} {...cell.getCellProps()} className="p-4 text-center">
                       {cell.render('Cell')}
@@ -146,6 +148,7 @@ const BookingList = ({ columns, data }) => {
   </div>
 )}
 
+        </div>
         </div>
       </div>
       </div>
