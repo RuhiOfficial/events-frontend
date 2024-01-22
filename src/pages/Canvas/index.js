@@ -12,7 +12,7 @@ import { getLocalstorage } from 'service/api';
 
 function Canvas() {
   const location = useLocation();
-
+  // 
     const stageRef = useRef(null);
     const [shapes, setShapes] = useState([]);
     const [newShape, setNewShape] = useState({ tool: 'line', points: [] });
