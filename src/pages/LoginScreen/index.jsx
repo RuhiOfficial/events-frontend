@@ -40,7 +40,7 @@ const LoginScreenPage = () => {
     {
       validate: true,
       validateSchema: form1ValidationSchema,
-      validationOnChange: true,
+       validationOnChange: true,
     },
   );
 
@@ -108,9 +108,12 @@ const LoginScreenPage = () => {
 
 
 
-
+     setTimeout(() => {
         
-        // window.location.href = "/";
+         window.location.href = '/';
+      }, 5000);
+        
+       
       })
       .catch((err) => {
         console.error(err);

@@ -338,29 +338,53 @@ useEffect(() => {
       //   setBoxes(updatedBoxes);
       //   setSelectedBox(updatedBoxes[index]); // Update the selected box
       // };
+      const handleBoxDragMove = (e, index) => {
+        const updatedBoxes = [...boxes];
+        const box = updatedBoxes[index];
+      
+        if (e.target.hasName('resizeHandle')) {
+          // Handle resizing
+          const scale = stageRef.current.getStage().scaleX();
+          const newWidth = Math.max(0, e.target.x() / scale);
+          const newHeight = Math.max(0, e.target.y() / scale);
+      
+          box.width = newWidth;
+          box.height = newHeight;
+        } else {
+          // Handle normal dragging
+          const scale = stageRef.current.getStage().scaleX();
+          box.x = e.target.x() / scale;
+          box.y = e.target.y() / scale;
+        }
+      
+        setBoxes(updatedBoxes);
+      };
+      
+      
       const handleBoxDragEnd = (e, index) => {
+        const updatedBoxes = [...boxes];
+        
         if (e.target.hasName('resizeHandle')) {
           // Resize the box
-          const updatedBoxes = [...boxes];
           updatedBoxes[index] = {
             ...updatedBoxes[index],
             width: Math.max(0, e.target.x()),
             height: Math.max(0, e.target.y()),
           };
-          setBoxes(updatedBoxes);
-          setSelectedResizingBox(null);
         } else {
           // Handle normal dragging
-          const updatedBoxes = [...boxes];
           updatedBoxes[index] = {
             ...updatedBoxes[index],
             x: e.target.x(),
             y: e.target.y(),
           };
-          setBoxes(updatedBoxes);
-          setSelectedBox(updatedBoxes[index]);
         }
+      
+        setBoxes(updatedBoxes);
+        setSelectedBox(updatedBoxes[index]);
+        setSelectedResizingBox(null);
       };
+      
       
       
     
@@ -642,15 +666,22 @@ useEffect(() => {
 
 
   async function postCanvas(imageDataUrl,boxInfo) {
-        
+
+    const img = new Image();
+    img.src = backgroundImage ? URL.createObjectURL(backgroundImage) : `data:image/jpeg;base64,${myBackgroundImage}`;
+    
+    // const imageBoxUrl = img.src.toDataURL('image/png');
     // console.log(data,"data from modal is ");
       const req = {
+
+        
   
         data: {
           venue_id:vid,
-          name:nameLayout,
+          name:nameLayout || "name",
           image_url:imageDataUrl,
-          boxes:boxInfo
+          boxes:boxInfo,
+          imageBoxUrl:img.src
         },
   
       };
@@ -785,48 +816,48 @@ useEffect(() => {
         ref={stageRef}
       >
      <Layer>
-  {boxes.map((box, index) => (
-    <Group
-      key={index}
-      x={box.x}
-      y={box.y}
+     {boxes.map((box, index) => (
+  <Group
+    key={index}
+    x={box.x}
+    y={box.y}
+    draggable
+    onDragMove={(e) => handleBoxDragMove(e, index)}
+    onDragEnd={handleBoxDragEnd}
+  >
+    <Rect
+      width={box.width}
+      height={box.height}
+      fill="lightblue"
+      stroke="black"
+      strokeWidth={2}
       draggable
-      onDragEnd={(e) => handleBoxDragEnd(e, index)}
-    >
-     <Rect
-  width={box.width}
-  height={box.height}
-  fill="lightblue"
-  stroke="black"
-  strokeWidth={2}
-  draggable
-  onDragEnd={(e) => handleBoxDragEnd(e, index)}
-/>
-<KonvaText
-  x={0}
-  y={0}
-  text={box.label}
-  fontSize={16}
-  fill="black"
-  align="center"
-  width={box.width}
-  height={box.height}
-  verticalAlign="middle"
-/>
-{/* Resizing handle */}
-<Rect
-  x={box.width - 10}
-  y={box.height - 10}
-  width={10}
-  height={10}
-  fill="red"
-  draggable
-  name="resizeHandle"
-  onDragEnd={(e) => handleResizeDragEnd(e, box)}
-/>
+    />
+    {/* Display the label at the center of the box */}
+    <KonvaText
+      text={box.label}
+      fontSize={16}
+      fill="black"
+      align="center"
+      verticalAlign="middle"
+      width={box.width}
+      height={box.height}
+    />
+    {/* Resizing handle */}
+    <Rect
+      x={box.width - 10}
+      y={box.height - 10}
+      width={10}
+      height={10}
+      fill="red"
+      draggable
+      name="resizeHandle"
+      onDragMove={(e) => handleBoxDragMove(e, index)}
+      onDragEnd={handleBoxDragEnd}
+    />
+  </Group>
+))}
 
-    </Group>
-  ))}
 </Layer>
 
       </Stage>
