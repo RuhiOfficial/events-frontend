@@ -246,11 +246,11 @@ useEffect(() => {
   }
 }, [backgroundImage, myBackgroundImage,myImage]);
 
-    const saveToHistory = () => {
-      const newHistory = [...history.slice(0, historyIndex + 1), shapes];
-      setHistory(newHistory);
-      setHistoryIndex(newHistory.length - 1);
-    };
+    // const saveToHistory = () => {
+    //   const newHistory = [...history.slice(0, historyIndex + 1), shapes];
+    //   setHistory(newHistory);
+    //   setHistoryIndex(newHistory.length - 1);
+    // };
   
   
     const addText = () => {
@@ -429,23 +429,7 @@ useEffect(() => {
         }
       };
     
-      // const renderTableList = () => {
-      //   return (
-      //     <ul className="table-list">
-      //       {tableList.map((table, index) => (
-      //         <li
-      //           key={index}
-      //           className={`table-list-item ${
-      //             selectedBox && selectedBox.label === table.label ? 'selected' : ''
-      //           }`}
-      //           onClick={() => handleTableListClick(table)}
-      //         >
-      //           {table.label}
-      //         </li>
-      //       ))}
-      //     </ul>
-      //   );
-      // };
+      
 
       const renderTableList = () => {
         // Group tables by section_id
@@ -515,37 +499,37 @@ useEffect(() => {
         }
       };
       
-      const handleResizeDragEnd = (e, box) => {
-        const stage = stageRef.current.getStage();
+      // const handleResizeDragEnd = (e, box) => {
+      //   const stage = stageRef.current.getStage();
       
-        if (stage) {
-          const scale = stage.scaleX(); // Consider the current scale of the stage
+      //   if (stage) {
+      //     const scale = stage.scaleX(); // Consider the current scale of the stage
       
-          // Calculate the initial position of the resizing handle relative to the box
-          const initialHandleX = box.width - 10;
-          const initialHandleY = box.height - 10;
+      //     // Calculate the initial position of the resizing handle relative to the box
+      //     const initialHandleX = box.width - 10;
+      //     const initialHandleY = box.height - 10;
       
-          // Calculate the movement of the handle during dragging
-          const handleMovementX = (e.target.x() - initialHandleX) / scale;
-          const handleMovementY = (e.target.y() - initialHandleY) / scale;
+      //     // Calculate the movement of the handle during dragging
+      //     const handleMovementX = (e.target.x() - initialHandleX) / scale;
+      //     const handleMovementY = (e.target.y() - initialHandleY) / scale;
       
-          // Calculate the new width and height based on the handle movement
-          const newWidth = Math.max(0, box.width + handleMovementX);
-          const newHeight = Math.max(0, box.height + handleMovementY);
+      //     // Calculate the new width and height based on the handle movement
+      //     const newWidth = Math.max(0, box.width + handleMovementX);
+      //     const newHeight = Math.max(0, box.height + handleMovementY);
       
-          const updatedBoxes = boxes.map((b) =>
-            b.label === box.label
-              ? {
-                  ...b,
-                  width: newWidth,
-                  height: newHeight,
-                }
-              : b
-          );
+      //     const updatedBoxes = boxes.map((b) =>
+      //       b.label === box.label
+      //         ? {
+      //             ...b,
+      //             width: newWidth,
+      //             height: newHeight,
+      //           }
+      //         : b
+      //     );
       
-          setBoxes(updatedBoxes);
-        }
-      };
+      //     setBoxes(updatedBoxes);
+      //   }
+      // };
       
       
       
@@ -581,10 +565,14 @@ useEffect(() => {
         if (stage) {
           // Create a new canvas element
           const tempCanvas = document.createElement('canvas');
+          const tempCanvas1 = document.createElement('canvas');
           tempCanvas.width = stage.width();
           tempCanvas.height = stage.height();
+          tempCanvas1.width = stage.width();
+          tempCanvas1.height = stage.height();
     
           const tempContext = tempCanvas.getContext('2d');
+          const tempContext1 = tempCanvas1.getContext('2d');
     
           // Draw the background image onto the canvas (use either backgroundImage or myBackgroundImage)
           const backgroundToUse = myBackgroundImage || backgroundImage;
@@ -604,6 +592,14 @@ useEffect(() => {
                 stage.width(),
                 stage.height()
               );
+
+              tempContext1.drawImage(
+                backgroundImageElement,
+                0,
+                0,
+                stage.width(),
+                stage.height()
+              );
     
               // Draw other Konva elements onto the canvas
               stage.children.forEach((layer) => {
@@ -616,16 +612,17 @@ useEffect(() => {
                 }
               });
     
-              // Create a link element and trigger a download
-              const a = document.createElement('a');
-              a.href = tempCanvas.toDataURL('image/png');
-              a.download = 'canvas_image.png';
-              document.body.appendChild(a);
-              a.click();
-              document.body.removeChild(a);
+              // // Create a link element and trigger a download
+              // const a = document.createElement('a');
+              // a.href = tempCanvas.toDataURL('image/png');
+              // a.download = 'canvas_image.png';
+              // document.body.appendChild(a);
+              // a.click();
+              // document.body.removeChild(a);
     
               // Extract necessary data for the API request
               const imageDataUrl = tempCanvas.toDataURL('image/png');
+              const onlyImageUrl = tempCanvas1.toDataURL('image/png');
              const updatedBoxes = boxes.map((box) => ({
       label: box.label,
       x: box.x,
@@ -634,8 +631,10 @@ useEffect(() => {
       height: box.height,
       sectionName: getSectionNameForBox(box), // Add sectionName property
     }));
+
+    
              
-    postCanvas(imageDataUrl, updatedBoxes, activeTables, inactiveTables);
+    postCanvas(imageDataUrl,onlyImageUrl, updatedBoxes);
     
               // Call the API function with the extracted data
               // sendApiRequest(imageDataUrl, boxInfo, activeTableLabels, inactiveTableLabels);
@@ -665,13 +664,9 @@ useEffect(() => {
 
 
 
-  async function postCanvas(imageDataUrl,boxInfo) {
+  async function postCanvas(imageDataUrl,onlyImageUrl, updatedBoxes) {
 
-    const img = new Image();
-    img.src = backgroundImage ? URL.createObjectURL(backgroundImage) : `data:image/jpeg;base64,${myBackgroundImage}`;
-    
-    // const imageBoxUrl = img.src.toDataURL('image/png');
-    // console.log(data,"data from modal is ");
+  
       const req = {
 
         
@@ -680,8 +675,8 @@ useEffect(() => {
           venue_id:vid,
           name:nameLayout || "name",
           image_url:imageDataUrl,
-          boxes:boxInfo,
-          imageBoxUrl:img.src
+          boxes:updatedBoxes,
+          imageBoxUrl:onlyImageUrl
         },
   
       };

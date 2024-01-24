@@ -83,8 +83,8 @@ const LoginScreenPage = () => {
           try {
             const res = await getLocalstorage(req);
             console.log(res, 'Response coming from LOGIN PAGE  api ======>>');
-            localStorage.setItem('canvasBackgroundImage',res.data[0].image_url)
-            const backgroundImage=res.data[0].image_url
+            localStorage.setItem('canvasBackgroundImage',res.data[0].imageBoxUrl)
+            const backgroundImage=res.data[0].imageBoxUrl
             const boxes=res.data[0].boxes
             localStorage.setItem(
               'canvasState',
@@ -108,10 +108,10 @@ const LoginScreenPage = () => {
 
 
 
-     setTimeout(() => {
+    //  setTimeout(() => {
         
-         window.location.href = '/';
-      }, 5000);
+    //      window.location.href = '/';
+    //   }, 5000);
         
        
       })
