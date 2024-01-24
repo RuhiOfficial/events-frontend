@@ -231,6 +231,7 @@ useEffect(() => {
 
         // Draw the image on the canvas with the new dimensions
         context.drawImage(img, 0, 0, newWidth, newHeight);
+        // my 
 
         // Convert the canvas content to a base64 string
         const resizedImageDataUrl = canvas.toDataURL('image/jpeg').split(',')[1];
