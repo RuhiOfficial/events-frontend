@@ -134,10 +134,10 @@ function SingleEvent({ isOpen, onRequestClose, eventId }) {
       console.log(res);
 
       toast.success('Ticket has been Booked  Successfully!');
-      // setTimeout(() => {
-      //   onRequestClose();
-      //    window.location.href = '/';
-      // }, 3000);
+      setTimeout(() => {
+        onRequestClose();
+         window.location.href = '/';
+      }, 3000);
     } catch (err) {
       console.error(err);
       toast.error('Something Went Wrong!');
