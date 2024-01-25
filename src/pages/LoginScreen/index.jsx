@@ -73,29 +73,7 @@ const LoginScreenPage = () => {
          Cookies.set('venueId', JSON.stringify(res?.data?.user?.venue_id));
 
 
-         const fetch = async () => {
-          const vid = localStorage.getItem('Venue');
-          const req = {
-            data: {
-              venue_id: vid,
-            },
-          };
-          try {
-            const res = await getLocalstorage(req);
-            console.log(res, 'Response coming from LOGIN PAGE  api ======>>');
-            localStorage.setItem('canvasBackgroundImage',res.data[0].imageBoxUrl)
-            const backgroundImage=res.data[0].imageBoxUrl
-            const boxes=res.data[0].boxes
-            localStorage.setItem(
-              'canvasState',
-              JSON.stringify({ backgroundImage, boxes, /* ...other state variables */ })
-            );
-            
-          } catch (err) {
-            console.error(err);
-          }
-        };
-    fetch();
+      
 
 
 
@@ -105,13 +83,10 @@ const LoginScreenPage = () => {
 
 
 
-
-
-
-     setTimeout(() => {
+    
         
          window.location.href = '/';
-      }, 4000);
+     
         
        
       })

@@ -37,57 +37,68 @@ function Canvas() {
     const nameLayout=localStorage.getItem('layoutName')
     const [selectedResizingBox, setSelectedResizingBox] = useState(null);
     const [myImage, setMyImage] = useState("");
-
+    const [imageLoaded, setImageLoaded] = useState(false);
   
-//   const fetch = async () => {
-//     const vid = localStorage.getItem('Venue');
-//     const req = {
-//       data: {
-//         venue_id: vid,
-//       },
-//     };
-//     try {
-//       const res = await getLocalstorage(req);
-//       console.log(res, 'Response coming from the localStorage ============= ======>>');
-//       setDefaultLayout(res.data[0]);
-//       const backImage= localStorage.getItem('canvasBackgroundImage')
-     
-//       setMyImage(backImage);
-//       console.log(backImage,"it exists or not ??????==============>>>>>")
-//       if(backImage == null){
-//         const  pic=res.data[0].image_url;
-//        localStorage.setItem('canvasBackgroundImage',res.data[0].image_url)
-
-
-       
-//        const parsedBoxes = JSON.parse(req.data[0].boxes);
-
-//        // Set background image and boxes
-//        setBackgroundImage(pic);
-       
-//        setBoxes(parsedBoxes);
-//        localStorage.setItem(
-//         'canvasState',
-//         JSON.stringify({ backgroundImage, boxes, /* ...other state variables */ })
-//       );
+    const fetch = async () => {
+      try {
+        console.log('Fetching data...');
+        const vid = localStorage.getItem('Venue');
+        const req = {
+          data: {
+            venue_id: vid,
+          },
+        };
+        const res = await getLocalstorage(req);
+        console.log(res, 'Response coming from LOGIN PAGE api ======>>');
+        localStorage.setItem('canvasBackgroundImage', res.data[0].imageBoxUrl);
+        const backgroundImage = res.data[0].imageBoxUrl;
+        const boxes = res.data[0].boxes;
+        localStorage.setItem(
+          'canvasState',
+          JSON.stringify({ backgroundImage, boxes /* ...other state variables */ })
+        );
+        console.log('Fetch successful');
+      } catch (err) {
+        console.error(err);
+        console.error('Fetch failed');
+      }
+    };
     
-//      }
 
-//       }
-//   catch (err) {
-//       console.error(err);
-//     }
-//   };
+    useEffect(() => {
+      // Check if the component has already been initialized
+      const isInitialized = localStorage.getItem('isInitialized');
   
-//    useEffect(()=>{
-//     fetch();
-//    }
-// ,[myImage,backgroundImage]
-//    )
-
-
-
-
+      // If not initialized, perform initialization tasks (e.g., fetch)
+      if (!isInitialized) {
+        fetch();
+        
+        // Mark the component as initialized in local storage
+        localStorage.setItem('isInitialized', true);
+      }
+    }, []);
+  
+    // useEffect(() => {
+    //   console.log('Fetching data...');
+    
+    //   const initializeCanvas = async () => {
+    //     try {
+    //       await fetch();
+    //       // Additional initialization logic if needed
+    //       console.log('Initialization complete');
+    //     } catch (error) {
+    //       console.error('Initialization failed:', error);
+    //     }
+    //   };
+    
+    //   initializeCanvas();
+    
+    //   // Clean-up function (optional, but useful for debugging)
+    //   return () => {
+    //     console.log('Component unmounted');
+    //   };
+    // }, []);
+    
 
 
    
@@ -727,7 +738,7 @@ useEffect(() => {
       
 
       
-      
+
 
     return (
       <div className="drawing-app" style={{ display: 'flex' }}>
@@ -815,15 +826,15 @@ useEffect(() => {
      {boxes.map((box, index) => (
   <Group
     key={index}
-    x={box.x}
-    y={box.y}
+    x={Number(box.x)}
+    y={Number(box.y)}
     draggable
     onDragMove={(e) => handleBoxDragMove(e, index)}
     onDragEnd={handleBoxDragEnd}
   >
     <Rect
-      width={box.width}
-      height={box.height}
+      width={Number(box.width)}
+      height={Number(box.height)}
       fill="lightblue"
       stroke="black"
       strokeWidth={2}
@@ -836,13 +847,13 @@ useEffect(() => {
       fill="black"
       align="center"
       verticalAlign="middle"
-      width={box.width}
-      height={box.height}
+      width={Number(box.width)}
+      height={Number(box.height)}
     />
     {/* Resizing handle */}
     <Rect
-      x={box.width - 10}
-      y={box.height - 10}
+      x={Number(box.width) - 10}
+      y={Number(box.height) - 10}
       width={10}
       height={10}
       fill="red"
