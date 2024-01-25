@@ -162,9 +162,7 @@ const LoginScreenPage = () => {
                     }}
                     errors={form1?.errors?.email}
                     value={form1?.values?.email}
-                    onClick={() => {
-                      form1.handleSubmit(login);
-                    }}
+                    
                     shape="round"
                     color="gray_200"
                     size="md"
