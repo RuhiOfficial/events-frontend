@@ -56,12 +56,12 @@ const ViewLayout = ({ isOpen, onRequestClose }) => {
     context.drawImage(image, 0, 0, canvas.width, canvas.height);
 
     context.strokeStyle = 'red';
-    context.lineWidth = 2;
+    context.lineWidth = 14;
     context.font = '14px Arial';
 
     boxes.forEach((box, index) => {
       const [x, y, width, height, name, section] = box;
-      context.strokeStyle = section === highlightedSection ? 'red' : 'transparent';
+      context.strokeStyle = section === highlightedSection ? 'gold' : 'transparent';
       context.strokeRect(x, y, width, height);
       context.fillStyle = 'transparent';
       // context.fillText(name, x + 5, y + 15);

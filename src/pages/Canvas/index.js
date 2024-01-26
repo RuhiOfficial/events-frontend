@@ -38,6 +38,7 @@ function Canvas() {
     const [selectedResizingBox, setSelectedResizingBox] = useState(null);
     const [myImage, setMyImage] = useState("");
     const [imageLoaded, setImageLoaded] = useState(false);
+    const [fetchedCalled, setFetchedCalled] = useState(false);
   
     const fetch = async () => {
       try {
@@ -57,6 +58,7 @@ function Canvas() {
           'canvasState',
           JSON.stringify({ backgroundImage, boxes /* ...other state variables */ })
         );
+        setFetchedCalled(true)
         console.log('Fetch successful');
       } catch (err) {
         console.error(err);
@@ -65,102 +67,101 @@ function Canvas() {
     };
     
 
-    useEffect(() => {
+    useEffect(async() => {
       // Check if the component has already been initialized
       const isInitialized = localStorage.getItem('isInitialized');
   
       // If not initialized, perform initialization tasks (e.g., fetch)
       if (!isInitialized) {
-        fetch();
+      await  fetch();
+        
         
         // Mark the component as initialized in local storage
         localStorage.setItem('isInitialized', true);
+
+
       }
     }, []);
+
+
+    useEffect(()=>
+    {
+       // Load canvas image only if the component is initialized and fetchedCalled is true
+    if (localStorage.getItem('isInitialized') && fetchedCalled) {
+      loadCanvasImage();
+    }
+    }
+      )
+
   
-    // useEffect(() => {
-    //   console.log('Fetching data...');
+  
+
+    const loadCanvasImage = async () => {
+      const savedCanvasState = (localStorage.getItem('canvasState'));
     
-    //   const initializeCanvas = async () => {
-    //     try {
-    //       await fetch();
-    //       // Additional initialization logic if needed
-    //       console.log('Initialization complete');
-    //     } catch (error) {
-    //       console.error('Initialization failed:', error);
-    //     }
-    //   };
     
-    //   initializeCanvas();
+      if (savedCanvasState || fetchedCalled) {
+        const savedCanvasState = (localStorage.getItem('canvasState'));
+        const loadedBackgroundImage = localStorage.getItem('canvasBackgroundImage');
+        
     
-    //   // Clean-up function (optional, but useful for debugging)
-    //   return () => {
-    //     console.log('Component unmounted');
-    //   };
-    // }, []);
-    
-
-
-   
-useEffect(() => {
-  const savedCanvasState = localStorage.getItem('canvasState');
-
-
-  if (savedCanvasState) {
-    const loadedBackgroundImage = localStorage.getItem('canvasBackgroundImage');
-    
-
-    if (loadedBackgroundImage) {
-      const img = new Image();
-
-      if (loadedBackgroundImage.startsWith('data:image')) {
-        // If it's a base64 string, set it as the src
-        img.src = loadedBackgroundImage;
-
-        img.onload = () => {
-          // Convert the loaded image to a base64 string
-          const canvas = document.createElement('canvas');
-          canvas.width = img.width;
-          canvas.height = img.height;
-          const context = canvas.getContext('2d');
-          context.drawImage(img, 0, 0);
-          const base64String = canvas.toDataURL('image/jpeg').split(',')[1];
-          
-          // Set myBackgroundImage with the base64 string
-          setMyBackgroundImage(base64String);
-        };
-
-        img.onerror = (error) => {
-          console.error('Error loading image:', error);
-        };
-      } else {
-        // If it's a File object, handle it differently
-        const reader = new FileReader();
-        reader.onload = () => {
+        if (loadedBackgroundImage) {
           const img = new Image();
-          img.src = reader.result;
-
-          img.onload = () => {
-            setBackgroundImage(img);
-          };
-
-          img.onerror = (error) => {
-            console.error('Error loading image:', error);
-          };
-        };
-
-        // Assuming loadedBackgroundImage is a File object
-        reader.readAsDataURL(loadedBackgroundImage);
+    
+          if (loadedBackgroundImage.startsWith('data:image')) {
+            // If it's a base64 string, set it as the src
+            img.src = loadedBackgroundImage;
+    
+            img.onload = () => {
+              // Convert the loaded image to a base64 string
+              const canvas = document.createElement('canvas');
+              canvas.width = img.width;
+              canvas.height = img.height;
+              const context = canvas.getContext('2d');
+              context.drawImage(img, 0, 0);
+              const base64String = canvas.toDataURL('image/jpeg').split(',')[1];
+              
+              // Set myBackgroundImage with the base64 string
+              setMyBackgroundImage(base64String);
+            };
+    
+            img.onerror = (error) => {
+              console.error('Error loading image:', error);
+            };
+          } else {
+            // If it's a File object, handle it differently
+            const reader = new FileReader();
+            reader.onload = () => {
+              const img = new Image();
+              img.src = reader.result;
+    
+              img.onload = () => {
+                setBackgroundImage(img);
+              };
+    
+              img.onerror = (error) => {
+                console.error('Error loading image:', error);
+              };
+            };
+    
+            // Assuming loadedBackgroundImage is a File object
+            reader.readAsDataURL(loadedBackgroundImage);
+          }
+        }
+    
+        const parsedCanvasState = JSON.parse(savedCanvasState);
+        setBoxes(parsedCanvasState.boxes || []);
+        // ... (restore other state variables)
+       setFetchedCalled(false)
+      } else {
+        console.log("No saved canvas state");
       }
     }
 
-    const parsedCanvasState = JSON.parse(savedCanvasState);
-    setBoxes(parsedCanvasState.boxes || []);
-    // ... (restore other state variables)
-  } else {
-    console.log("No saved canvas state");
-  }
-}, []);
+useEffect(() => {
+  
+loadCanvasImage()
+},[]);
 
   ///////////Table List///////////////
 useEffect(()=>{
