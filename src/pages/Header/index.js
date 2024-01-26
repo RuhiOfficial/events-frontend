@@ -132,7 +132,7 @@ function Header() {
     
     </div>
                 
-                <div className="flex flex-row font-rubik gap-5 items-center justify-center mb-3.5 md:ml-[0] ml-[1089px] md:mt-0 mt-1 w-auto mr-[17px]">
+                <div className="flex flex-row font-rubik gap-5 items-center justify-center mb-3.5 md:ml-[0]  md:mt-0 mt-1 w-auto mr-[17px]">
                  
                   
 

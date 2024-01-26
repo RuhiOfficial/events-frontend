@@ -16,6 +16,7 @@ import BookingList from 'pages/BookingList';
 import "../Custom.css"
 import { css } from '@emotion/react';
 import { ScaleLoader } from 'react-spinners';
+import Slider from "react-slick";
 
 const override = css`
  

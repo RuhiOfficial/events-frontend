@@ -3,6 +3,17 @@ import { useTable, usePagination, useGlobalFilter } from 'react-table';
 import { getBookingList } from 'service/api';
 import { Text } from 'components';
 import '../Custom.css';
+import { css } from '@emotion/react';
+import { ScaleLoader } from 'react-spinners';
+
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
+
+
 
 const TicketReservations = () => {
     const storedVenueId = localStorage.getItem('Venue');
@@ -10,6 +21,7 @@ const TicketReservations = () => {
   const [data, setData] = useState([]);
   const [globalFilter, setGlobalFilter] = useState('');
   const [index, setIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const loadBooking = async () => {
@@ -130,6 +142,8 @@ const TicketReservations = () => {
               </tr>
             ))}
           </thead>
+
+          
           <tbody {...getTableBodyProps()}>
             {filteredData.map((row) => {
               prepareRow(row);

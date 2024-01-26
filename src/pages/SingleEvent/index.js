@@ -243,10 +243,16 @@ console.log(data.event_desc,"data ==============>>>>>")
     >
       
    
+     
 
 
  <div className="flex flex-col font-poppins items-center justify-start mx-auto w-full ">
-           
+ {isLoading ? (
+        <div style={{ display: 'flex', flexDirection:"column", justifyContent: 'center', alignItems: 'center', height: 'auto', width:"100%"}}>
+          <ScaleLoader css={override} color={'#5051f9'} loading={isLoading} />
+          <h1 style={{color:'#5051f9', fontSize:"20px"}}> Loading!</h1>
+        </div>
+      ) : (  
            <div className="flex flex-col font-poppins items-center justify-start mx-auto w-full ">
              <div className="bg-no-repeat flex flex-col items-center justify-start p-10 md:p-5 w-full">
              {/* <PacmanLoader css={override} size={50} color={'#5051f9'} loading={isLoading} />
@@ -270,10 +276,9 @@ console.log(data.event_desc,"data ==============>>>>>")
                 <div className="flex flex-row items-start justify-start mt-[18px] w-full">
                 
                 <div className='w-5/12 my-container'>
-                <ScaleLoader css={override} size={60} color={'#5051f9'} loading={isLoading} className='load-center'/>
-                          {!isLoading && (
+               
                  <img className="h-51  event-image" src={data.featured_image} alt="" />
-                          )}     
+                             
                   </div>
                    <div>
                           
@@ -501,9 +506,10 @@ console.log(data.event_desc,"data ==============>>>>>")
                           {/* )} */}
             </div>
           </div>
-         
+          )}
 
           </div>
+     
       <ToastContainer />
       <ViewLayout isOpen={isModalOpen} onRequestClose={closeModal} />
     </Modal>

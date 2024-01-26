@@ -128,7 +128,7 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
             toast.success("Event is added Succesfully!");
             setTimeout(() => {
               window.location.href="/"
-            }, 3000);
+            }, 2000);
           
           })
           .catch((err) => {
