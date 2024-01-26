@@ -56,7 +56,7 @@ const ViewLayout = ({ isOpen, onRequestClose }) => {
     context.drawImage(image, 0, 0, canvas.width, canvas.height);
 
     context.strokeStyle = 'red';
-    context.lineWidth = 14;
+    context.lineWidth = 16;
     context.font = '14px Arial';
 
     boxes.forEach((box, index) => {

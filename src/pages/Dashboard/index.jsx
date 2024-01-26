@@ -18,17 +18,10 @@ import { css } from '@emotion/react';
 import { ScaleLoader } from 'react-spinners';
 
 const override = css`
-  display: block;
-  margin: 0 auto;
-  border-color: red;
+ 
 `;
 
-const loaderContainerStyle = css`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* You can adjust the height based on your design */
-`;
+
 
 
 const DashboardPage = () => {
@@ -419,8 +412,13 @@ const fetchData = async (venueId) => {
                             </Button>
                           </div>
                           <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mb-[33px] w-full min-h-[170px]">
-                          <ScaleLoader css={override} size={80} color={'#5051f9'} loading={isLoading} />
-                          {!isLoading && (
+                          {isLoading ? (
+        <div style={{ display: 'flex', flexDirection:"column", justifyContent: 'center', alignItems: 'center', height: 'auto', width:"100%"}}>
+          <ScaleLoader css={override} color={'#5051f9'} loading={isLoading} />
+          
+          <h1 style={{color:'#5051f9', fontSize:"20px"}}> Loading!</h1>
+        </div>
+      ) : (
                          <List
                            className="flex-1 sm:flex-col flex-row gap-[31px] grid md:grid-cols-1 grid-cols-2 w-full"
                            orientation="horizontal"
@@ -564,8 +562,13 @@ const fetchData = async (venueId) => {
                         
                       
                           <div className="flex md:flex-col flex-row  items-center justify-between w-full min-h-[170px] ">
-                          <ScaleLoader css={override} size={80} color={'#5051f9'} loading={isLoading} />
-                          {!isLoading && (
+                      
+                          {isLoading ? (
+        <div style={{ display: 'flex', flexDirection:"column", justifyContent: 'center', alignItems: 'center', height: 'auto', width:"100%"}}>
+          <ScaleLoader css={override} color={'#5051f9'} loading={isLoading} />
+          <h1 style={{color:'#5051f9', fontSize:"20px"}}> Loading!</h1>
+        </div>
+      ) : (
                           <BookingList columns={columns} data={ticketList} />
                           )}
  </div>

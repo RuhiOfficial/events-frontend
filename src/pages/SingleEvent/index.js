@@ -338,7 +338,7 @@ console.log(data.event_desc,"data ==============>>>>>")
                         style={{color:"white"}}
                        
                         errors={form?.errors?.section}
-                        value={mySection?mySection:"Section"}
+                        value={mySection}
                       
                         size="md"
                         variant="fill"

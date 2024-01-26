@@ -51,18 +51,18 @@ function Mysidebar({children}) {
           active: window.location.pathname === "/",
           altText: "tickets ", // Add alt text for accessibility
         },
-        {
-          imgSrc: admissions, // Assuming customers is the import of your image file
-          href: "/admissions",
-          active: window.location.pathname === "/admissions",
-          altText: "admissions", // Add alt text for accessibility
-        },
-        {
-          imgSrc: inventory, // Assuming customers is the import of your image file
-          href: "/inventory",
-          active: window.location.pathname === "/inventory",
-          altText: "inventory", // Add alt text for accessibility
-        },
+        // {
+        //   imgSrc: admissions, // Assuming customers is the import of your image file
+        //   href: "/admissions",
+        //   active: window.location.pathname === "/admissions",
+        //   altText: "admissions", // Add alt text for accessibility
+        // },
+        // {
+        //   imgSrc: inventory, // Assuming customers is the import of your image file
+        //   href: "/inventory",
+        //   active: window.location.pathname === "/inventory",
+        //   altText: "inventory", // Add alt text for accessibility
+        // },
       ]
 
 
