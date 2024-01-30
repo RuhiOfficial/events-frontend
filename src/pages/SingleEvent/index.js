@@ -38,6 +38,9 @@ function SingleEvent({ isOpen, onRequestClose, eventId }) {
     const [isLoading, setIsLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
    
+    useEffect(()=>{
+      (localStorage.removeItem('Section'));
+   },[eventId])
 
     useEffect(()=>{
       setMySection(localStorage.getItem('Section'));
