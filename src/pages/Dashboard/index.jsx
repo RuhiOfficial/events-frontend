@@ -167,7 +167,7 @@ const fetchData = async (venueId) => {
     { Header: 'EVENT', accessor: 'event_name' },
     {
     Header: 'NAME',
-    accessor: 'full_name',
+    accessor: 'first_name',
     Cell: ({ row }) => {
       // Combine first_name and last_name
       const fullName = `${row.original.first_name} ${row.original.last_name}`;
@@ -183,12 +183,7 @@ const fetchData = async (venueId) => {
     // Add more columns as needed
   ];
 
-  const records = [
-    // Your data array
-    { name: 'John Doe', age: 25 },
-    { name: 'Jane Doe', age: 30 },
-    // Add more data objects as needed
-  ];
+  
 
   useEffect(()=>{
     loadBooking();
@@ -205,6 +200,7 @@ const fetchData = async (venueId) => {
       const res = await getBookingList(req);
       
       setTicketList(res.data.data)
+      setIsLoading(false)
       
     }
     catch {
@@ -592,9 +588,14 @@ const fetchData = async (venueId) => {
           <ScaleLoader css={override} color={'#5051f9'} loading={isLoading} />
           <h1 style={{color:'#5051f9', fontSize:"20px"}}> Loading!</h1>
         </div>
-      ) : (
+      ) : (ticketList.length!==0?(
                           <BookingList columns={columns} data={ticketList} />
-                          )}
+                          ):
+                          <div style={{ display: 'flex', flexDirection:"column", justifyContent: 'center', alignItems: 'center', height: 'auto', width:"100%"}}>
+                         
+                          <h1 style={{color:'#5051f9', fontSize:"20px"}}> No Booking Available For This Venue!</h1>
+                        </div>)
+                        }
  </div>
                         </div>
                       </div>

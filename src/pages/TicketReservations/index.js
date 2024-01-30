@@ -33,6 +33,7 @@ const TicketReservations = () => {
       try {
         const res = await getBookingList(req);
         setData(res.data.data);
+        setIsLoading(false)
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -46,7 +47,7 @@ const TicketReservations = () => {
       { Header: 'EVENT', accessor: 'event_name' },
       {
         Header: 'NAME',
-        accessor: 'full_name',
+        accessor: 'first_name',
         Cell: ({ row }) => {
           const fullName = `${row.original.first_name} ${row.original.last_name}`;
           return <span>{fullName}</span>;
@@ -104,9 +105,20 @@ const TicketReservations = () => {
       ),
     [data, columns, globalFilter, pageIndex]
   );
+  console.log(data,"data coming from the bookings ")
 
   return (
+
+  
     <div className='p-[50px] m-[50px] bg-[#1f2327]'>
+    
+      {isLoading ? (
+        <div style={{ display: 'flex', flexDirection:"column", justifyContent: 'center', alignItems: 'center', height: 'auto', width:"100%"}}>
+          <ScaleLoader css={override} color={'#5051f9'} loading={isLoading} />
+          <h1 style={{color:'#5051f9', fontSize:"20px"}}> Loading!</h1>
+        </div>
+      ) : ( 
+          data.length!==0?(
     <div className="flex w-full">
       <div className="flex-1 overflow-x-auto  ">
         <div className='grid gap-x-8 gap-y-4'>
@@ -209,7 +221,26 @@ const TicketReservations = () => {
         </div>
         </div>
       </div>
+    </div>):
+      <div style={{ display: 'flex', flexDirection:"column", justifyContent: 'center', alignItems: 'center', height: 'auto', width:"100%"}}>
+      
+      <h1 style={{color:'#5051f9', fontSize:"20px"}}> No Bookings Available For This Venue!</h1>
     </div>
+  
+    
+    
+    
+    
+    
+    
+    
+    )
+    
+    
+    
+    
+    }
+
     </div>
   );
 };
