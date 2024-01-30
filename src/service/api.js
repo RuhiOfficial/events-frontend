@@ -37,6 +37,8 @@ const API_URLS = {
 
 };
 
+
+
   export const getVenueType = (payload) =>
   apis.get(API_URLS.GET_VENUE_TYPE, payload);
   
@@ -57,7 +59,7 @@ const API_URLS = {
   apis.get(API_URLS.GET_EVENT_TYPE, payload);
 
   export const getSection = (payload) =>
-  apis.get(API_URLS.GET_SECTION, payload);
+  apis.get(`${API_URLS.GET_SECTION}?venue_id=${payload.data.venue_id}`, payload);
 
   export const getBookingList = (payload) =>
   apis.get(`${API_URLS.GET_BOOKING_LIST}?venue_id=${payload.data.venue_id}`, payload);
@@ -81,7 +83,7 @@ const API_URLS = {
   apis.get(`${API_URLS.GET_LOCALSTORAGE}?venue_id=${payload.data.venue_id}`, payload);
 
   export const deleteSection = (payload) =>
-  apis.delete(`${API_URLS.UPDATE_SECTION}?id=${payload.data.id}`, payload);
+  apis.delete(`${API_URLS.DELETE_SECTION}?id=${payload.data.id}`, payload);
 
   export const updateSection = (payload) =>
   apis.post(`${API_URLS.UPDATE_SECTION}?id=${payload.data.id}`, payload);

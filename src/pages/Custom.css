@@ -265,13 +265,6 @@ border-bottom: #d2d6dc;
   color:#5051f9
 }
 
-
-
-
-
-
-
-
 .event-main{
   width: 900px;
   margin: auto;
@@ -668,3 +661,10 @@ input#agreeTerms {
   opacity: 1; /* Make the tooltip visible on hover */
 }
 
+
+
+.slider_list_block{
+  display: flex!important;
+  justify-content: space-between;
+  width:99%!important;
+}

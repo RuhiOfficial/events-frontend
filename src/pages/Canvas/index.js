@@ -9,6 +9,14 @@ import { useLocation, useHistory } from 'react-router-dom';
 import { getCanvasTable ,postLayout,getSectionList} from 'service/api';
 import {  ToastContainer,toast } from "react-toastify";
 import { getLocalstorage } from 'service/api';
+import { css } from '@emotion/react';
+import { ScaleLoader } from 'react-spinners';
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 function Canvas() {
   const location = useLocation();
@@ -39,6 +47,7 @@ function Canvas() {
     const [myImage, setMyImage] = useState("");
     const [imageLoaded, setImageLoaded] = useState(false);
     const [fetchedCalled, setFetchedCalled] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
   
     const fetch = async () => {
       try {
@@ -89,6 +98,7 @@ function Canvas() {
        // Load canvas image only if the component is initialized and fetchedCalled is true
     if (localStorage.getItem('isInitialized') && fetchedCalled) {
       loadCanvasImage();
+      setIsLoading(false)
     }
     }
       )
@@ -218,6 +228,7 @@ async function table() {
 
 useEffect(() => {
   if (backgroundImage || myBackgroundImage) {
+    setIsLoading(false)
     const img = new Image();
     img.src = backgroundImage ? URL.createObjectURL(backgroundImage) : `data:image/jpeg;base64,${myBackgroundImage}`;
     img.onload = () => {
@@ -785,7 +796,13 @@ useEffect(() => {
         </div>
   
         
-       
+        {isLoading ? (
+  // Loading state
+  <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: 'auto', width: '100%' }}>
+    <ScaleLoader css={override} color={'#5051f9'} loading={isLoading} />
+    <h1 style={{ color: '#5051f9', fontSize: '20px' }}> Loading!</h1>
+  </div>
+) : (
         <div className="drawing-canvas">
       {backgroundImage && (
         <img
@@ -869,7 +886,7 @@ useEffect(() => {
 </Layer>
 
       </Stage>
-      </div>
+      </div>)}
   
         {/* Render the layout popup when showLayoutPopup is true */}
         {isModalOpen && (

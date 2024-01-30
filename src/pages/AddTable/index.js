@@ -47,7 +47,7 @@ const handleSectionChange = (selectedOption) => {
   async function section() {
     
     const req = { 
-      // data:{venue_id:venueId }
+       data:{venue_id:venueId }
     };
   
     await getSection(req)

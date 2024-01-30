@@ -218,38 +218,57 @@ async function section() {
     Add Section
     </Button>
 
+    <Button
+    className=" ml-3 mr-3 cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm "
+    color="indigo_A400"
+    size="sm"
+    onClick={openTableModal}
+    >
+    Add Table
+    </Button>
+
+    
+
     <Section isOpen={isSectionOpen} onRequestClose={closeModal} />
     </div>
     </div>
     {isLoading ? (
-        <div style={{ display: 'flex', flexDirection:"column", justifyContent: 'center', alignItems: 'center', height: 'auto', width:"100%"}}>
-          <ScaleLoader css={override} color={'#5051f9'} loading={isLoading} />
-          <h1 style={{color:'#5051f9', fontSize:"20px"}}> Loading!</h1>
-        </div>
-      ) :  (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <div className="mx-auto mt-8">
-        {tableList.map((section) => (
-          <div key={section.section_id} className="flex items-center justify-between p-4 grey-border mb-4">
-            <div>
-              <h2 className="text-lg font-bold white">{section.section_name}</h2>
-              <Droppable droppableId={section.section_id.toString()} direction="horizontal">
-        {(provided) => (
-          <div ref={provided.innerRef} {...provided.droppableProps} className="flex mt-2 white">
-            {section.tables.map((table, index) => (
-              <DraggableTableName
-                key={`${section.id}-${table.table_id}`}// Ensure a unique key
-                name={table.table_name}
-                index={index}
-                onClick={() => {
-                  console.log("table index is clicked ", index);
-                }}
-              />
-            ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
+  // Loading state
+  <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: 'auto', width: '100%' }}>
+    <ScaleLoader css={override} color={'#5051f9'} loading={isLoading} />
+    <h1 style={{ color: '#5051f9', fontSize: '20px' }}> Loading!</h1>
+  </div>
+) : (
+  // Content when not loading
+  <DragDropContext onDragEnd={onDragEnd}>
+    <div className="mx-auto mt-8">
+      {tableList.map((section) => (
+        <div key={section.section_id} className="flex items-center justify-between p-4 grey-border mb-4">
+          <div>
+            <h2 className="text-lg font-bold white">{section.section_name}</h2>
+            <Droppable droppableId={section.section_id.toString()} direction="horizontal">
+              {(provided) => (
+                <div ref={provided.innerRef} {...provided.droppableProps} className="flex mt-2 white">
+                  {section.tables.length > 0 ? (
+                    // Render tables if available
+                    section.tables.map((table, index) => (
+                      <DraggableTableName
+                        key={`${section.id}-${table.table_id}`}
+                        name={table.table_name}
+                        index={index}
+                        onClick={() => {
+                          console.log("table index is clicked ", index);
+                        }}
+                      />
+                    ))
+                  ) : (
+                    // Render a message or other content when no tables are available
+                    <p>No tables available for this section</p>
+                  )}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
             </div>
             <div className="flex items-center justify">
             <div className="flex items-center justify">
@@ -265,11 +284,7 @@ async function section() {
   </span>
 </button>
 
-<button className="mx-2 text-green-500 hover:text-green-700" onClick={openTableModal}>
-  <span role="img" aria-label="Add">
-    ➕
-  </span>
-</button>
+
 <AddTable isTableOpen={isTableOpen} onRequestTableClose={closeTableModal} />
 <DeleteSection isOpen={isDeleteOpen} onRequestClose={closeDeleteModal} sectionId={deleteSectionId}/>
 <EditSection isOpen={isEditSectionOpen} onRequestClose={closeEditSectionModal} sectionId={editSectionId} />

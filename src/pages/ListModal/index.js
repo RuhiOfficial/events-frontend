@@ -4,12 +4,21 @@ import Modal from 'react-modal';
 import { Button, Img, Line, List, Text } from "components";
 import { postVenueList } from 'service/api';
 import Cookies from 'js-cookie';
+import { css } from '@emotion/react';
+import { ScaleLoader } from 'react-spinners';
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
+
 
 const ListModal = ({ isOpen, onRequestClose }) => {
   // const companyId = Cookies.get('companyId');
   const companyId=localStorage.getItem('companyId');
   console.log(companyId,"id if company is ===>>>")
-    const [loading, setLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [venueList, setVenueList] = useState([]);
  const list=async()=>{
     const req = {
@@ -20,6 +29,7 @@ const ListModal = ({ isOpen, onRequestClose }) => {
       console.log(req,"req from the header page is ")
     await postVenueList(req).then((res) => {
         setVenueList(res.data.data);
+        setIsLoading(false)
       })
       .catch((err) => {
         console.error(err);
@@ -81,9 +91,13 @@ console.log(venueList,"list is ")
                          
                       
                           <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mb-[33px] w-full">
-                          {loading ? (
-        <p>Loading...</p>
-      ) : (
+                          {isLoading ? (
+  // Loading state
+  <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: 'auto', width: '100%' }}>
+    <ScaleLoader css={override} color={'#5051f9'} loading={isLoading} />
+    <h1 style={{ color: '#5051f9', fontSize: '20px' }}> Loading!</h1>
+  </div>
+) : (
         <List
           className="flex-1 sm:flex-col flex-row gap-[31px] grid md:grid-cols-1 grid-cols-3 w-full "
           orientation="horizontal"

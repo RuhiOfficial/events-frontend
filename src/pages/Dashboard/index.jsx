@@ -9,6 +9,10 @@ import Cookies from 'js-cookie';
 import BlobLoader from 'components/BlobLoader';
 import ImageComponent from 'components/ImageComponent.js';
 import axios from 'axios'
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
 
 import { Button, Img, Line, List, Text } from "components";
 import { getEvent,getBookingList } from 'service/api';
@@ -16,7 +20,7 @@ import BookingList from 'pages/BookingList';
 import "../Custom.css"
 import { css } from '@emotion/react';
 import { ScaleLoader } from 'react-spinners';
-import Slider from "react-slick";
+
 
 const override = css`
  
@@ -38,6 +42,25 @@ const DashboardPage = () => {
   const[date,setDate]=useState([]);
   const[ticketList,setTicketList]=useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+
+
+
+  const settings = {
+    dots: true,
+    slidesToShow: 2,
+    slidesToScroll: 2,
+    customPaging: (i) => (
+      <div
+        style={{
+          width: '15px',
+          height: '15px',
+          backgroundColor: i === 0 ? 'red' : 'blue', // Customize the dot colors here
+          borderRadius: '50%',
+        }}
+      />
+    ),
+  };
   useEffect(() => {
     // const savedVenueId = Cookies.get('venueId');
     const savedVenueId=localStorage.getItem('Venue')
@@ -421,54 +444,54 @@ const fetchData = async (venueId) => {
         </div>
       ) : (
                          <List
-                           className="flex-1 sm:flex-col flex-row gap-[31px] grid md:grid-cols-1 grid-cols-2 w-full"
+                           className="flex-1 sm:flex-col flex-row gap-[31px] grid md:grid-cols-1 grid-cols-1 w-full"
                            orientation="horizontal"
                          >
-                           {eventList.map((item) => (
-                             <div
-                               key={item.id}
-                               onClick={() => openIndividualEventModal(item.id)}
-                               className="bg-black-900_11 border border-blue_gray-800 border-solid hover:cursor-pointer flex flex-1 sm:flex-col flex-row gap-[21px] items-center justify-start sm:ml-[0] hover:mx-0 p-2.5 hover:shadow-bs shadow-bs hover:w-full w-full"
-                             >
-                             
-                               {/* <Img
-                                 className="sm:flex-1 h-[151px] md:h-auto object-cover w-[21%] sm:w-full"
-                                 src={item.featured_image}
-                                 alt={`Photo`}
-                               /> */}
-                               
-                 
-                                   <Img
-                                                   className="sm:flex-1 h-[151px] md:h-auto object-cover w-[21%] sm:w-full"
-                                                   src={item.featured_image}
-                                                   alt="rectangleSixtyThree"
-                                                 />
-                 
-                               <div className="flex flex-col items-start justify-start">
-                                 <Text
-                                   className="sm:text-[19px] md:text-[21px] text-[23px] text-white-A700"
-                                   size="txtPoppinsSemiBold23"
-                                 >
-                                   {item.name}
-                                   {/* {venueId} */}
-                                 </Text>
-                                 <Text
-                                   className="text-lg text-white-A700"
-                                   size="txtPoppinsMedium18"
-                                 >
-                                   {item.time_from}-{item.time_to}
-                                   {/* {item.id} */}
-                                 </Text>
-                                 <Text
-                                   className="mt-3.5 text-sm text-white-A700"
-                                   size="txtPoppinsRegular14"
-                                 >
-                                   {item.event_desc}
-                                   {/* {item.albumId} */}
-                                 </Text>
-                               </div>
-                             </div>
-                           ))}
+                          <Slider
+  className="flex-1 sm:flex-col flex-row w-full"
+  dots={true} // Add this if you want navigation dots
+  infinite={false}
+  slidesToShow={2} // Show one slide at a time
+  slidesToScroll={2}
+  centerMode={false} // Set to true if you want the slides to be centered
+  centerPadding="200px" // Scroll two slides at a time
+>
+  {eventList.map((item) => (
+    <div
+      key={item.id}
+      onClick={() => openIndividualEventModal(item.id)}
+      style={{ marginRight: '10px' }}
+      className="
+      slider_list_block bg-black-900_11 border border-blue_gray-800 border-solid hover:cursor-pointer flex  sm:flex-col flex-row gap-[21px] items-center justify-start sm:ml-[0] hover:mx-0 p-2.5 hover:shadow-bs shadow-bs hover:w-full "
+    >
+      <Img
+        className="sm:flex-1 h-[151px] md:h-auto object-cover w-[21%] sm:w-full"
+        src={item.featured_image}
+        alt="rectangleSixtyThree"
+      />
+      <div className="flex flex-col items-start justify-start">
+        <Text
+          className="sm:text-[19px] md:text-[21px] text-[23px] text-white-A700"
+          size="txtPoppinsSemiBold23"
+        >
+          {item.name}
+        </Text>
+        <Text
+          className="text-lg text-white-A700"
+          size="txtPoppinsMedium18"
+        >
+          {item.time_from}-{item.time_to}
+        </Text>
+        <Text
+          className="mt-3.5 text-sm text-white-A700"
+          size="txtPoppinsRegular14"
+        >
+          {item.event_desc}
+        </Text>
+      </div>
+    </div>
+  ))}
+</Slider>
                          </List>
                           )}
                   </div>
