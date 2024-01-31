@@ -753,8 +753,13 @@ useEffect(() => {
 
 
     return (
-      <div className="drawing-app" style={{ display: 'flex' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', margin: '10px' }}>
+      <div className="flex flex-col font-roboto items-center justify-start mx-auto w-full">
+    <div className="backdrop-opacity-[0.5] bg-gray-900  flex flex-col items-center justify-end   w-full">
+    <div className="flex md:flex-col flex-row  items-start  mx-auto md:px-5 w-full ">
+   
+
+    
+        <div style={{ display: 'flex', flexDirection: 'column', marginTop: '40px' }}>
         {/* <button className="buttons" onClick={openLayoutPopup}>
           New Layout
         </button> */}
@@ -909,6 +914,9 @@ useEffect(() => {
         )}
         <ToastContainer />
       </div>
+      </div>
+      </div>
+      
     );
 }
 

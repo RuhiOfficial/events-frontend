@@ -111,18 +111,18 @@ function Header() {
   return (
     <div>
         
-         <header className="bg-gray-900_01 flex  flex-row md:gap-5 items-center  w-[100] justify-between ">
+         <header className="bg-[#3f51b5] flex  flex-row md:gap-5 items-center  w-[100] justify-between ">
             
             <div style={{display:"flex",alignItems:"center"}}>
             <h1 style={{padding:"15px",color:"white",fontSize:"xx-large",marginRight:"20px"}} > <Link to="/" className='eqlogo'>eQ</Link></h1>
-            <DatePicker
+            {/* <DatePicker
         selected={selectedDate}
         onChange={handleDateChange}
         dateFormat="dd/MM/yyyy"
         className=" p-2 w-full custom-datepicker "
         customInput={<CustomInput />}
     
-      />
+      /> */}
             </div>
         
         

@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useTable, usePagination, useGlobalFilter } from 'react-table';
 import { getBookingList } from 'service/api';
-import { Text } from 'components';
+import { Button,Text } from 'components';
 import '../Custom.css';
 import { css } from '@emotion/react';
 import { ScaleLoader } from 'react-spinners';
@@ -109,24 +109,25 @@ const TicketReservations = () => {
 
   return (
 
-  
-    <div className='p-[50px] m-[50px] bg-[#1f2327]'>
+    <div className="flex flex-col font-roboto items-center justify-start mx-auto w-full">
+    <div className="backdrop-opacity-[0.5] bg-gray-900  flex flex-col items-center justify-end   w-full">
+    <div className="flex md:flex-col flex-row  items-start justify-between mx-auto md:px-5 w-full">
     
       {isLoading ? (
-        <div style={{ display: 'flex', flexDirection:"column", justifyContent: 'center', alignItems: 'center', height: 'auto', width:"100%"}}>
+        <div style={{ display: 'flex', flexDirection:"column", justifyContent: 'center', alignItems: 'center', height: 'auto', width:"100%", margin:"20px"}}>
           <ScaleLoader css={override} color={'#5051f9'} loading={isLoading} />
           <h1 style={{color:'#5051f9', fontSize:"20px"}}> Loading!</h1>
         </div>
       ) : ( 
           data.length!==0?(
-    <div className="flex w-full">
+            <div className="bg-blue_gray-900_01 flex flex-col font-poppins  justify-start sm:px-5 px-[26px] rounded shadow-bs1 m-10 w-full">
       <div className="flex-1 overflow-x-auto  ">
         <div className='grid gap-x-8 gap-y-4'>
 
      
-        <div className="flex flex-row font-poppins booking_serch items-center justify-between m-2 ">
+        <div className="flex flex-row font-poppins booking_serch items-center justify-between mt-10 ">
           <Text
-            className="text-[22px] sm:text-lg text-white-A700 md:text-xl"
+            className="text-[22px] sm:text-lg text-white-A700 md:text-xl "
             size="txtPoppinsSemiBold22"
           >
             Bookings
@@ -184,40 +185,39 @@ const TicketReservations = () => {
           </tbody>
         </table>
         <div className="flex-shrink-0 p-4">
-          <div className="pagination mt-4 text-end">
-            {page.length > 0 && (
-              <div className="pagination mt-4 text-end">
-                <button
-                  onClick={() => {
-                    previousPage();
-                    setIndex(index - 1);
-                  }}
-                  disabled={!canPreviousPage}
-                  className="px-3 py-2 bg-[#5051f9]"
-                  style={{ color: 'white' }}
-                >
-                  Previous
-                </button>{' '}
-                <span style={{ color: 'white' }} className="ml-5 mr-5">
-                  Page{' '}
-                  <strong>
-                    {index + 1} of {pageOptions.length}
-                  </strong>{' '}
-                </span>
-                <button
-                  onClick={() => {
-                    nextPage();
-                    setIndex(index + 1);
-                  }}
-                  disabled={!canNextPage}
-                  className="px-3 py-2 bg-[#5051f9]"
-                  style={{ color: 'white' }}
-                >
-                  Next
-                </button>{' '}
-              </div>
-            )}
-          </div>
+        <div className="pagination mt-4 mb-10 text-end">
+      <Button
+    className=" ml-3 mr-3 cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm "
+    color="indigo_A400"
+    size="sm"
+    onClick={() => {previousPage()
+      setIndex(index - 1)}}
+      disabled={!canPreviousPage}
+    > Previous
+    
+    </Button>
+    
+    {' '}
+    <span style={{ color: 'white' }} className="ml-5 mr-5">
+      Page{' '}
+      <strong>
+        {index + 1} of {pageOptions.length}
+      </strong>{' '}
+    </span>
+
+    <Button
+    className=" ml-3 mr-3 cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm "
+    color="indigo_A400"
+    size="sm"
+    onClick={() => {nextPage();
+      setIndex(index + 1)}}
+    disabled={!canNextPage}
+    > Next
+    
+    </Button>
+    
+    {' '}
+  </div>
         </div>
         </div>
       </div>
@@ -241,6 +241,8 @@ const TicketReservations = () => {
     
     }
 
+</div>
+    </div>
     </div>
   );
 };

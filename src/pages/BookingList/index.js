@@ -1,6 +1,6 @@
 import React, { useState, useMemo ,useEffect} from 'react';
 import { useTable, usePagination, useGlobalFilter } from 'react-table';
-import { Text } from "components";
+import { Button ,Text} from 'components';
 import "../Custom.css"
 
 const BookingList = ({ columns, data }) => {
@@ -121,30 +121,37 @@ const BookingList = ({ columns, data }) => {
         <div className="pagination mt-4 text-end">
         {page.length > 0 && (
   <div className="pagination mt-4 text-end">
-    <button
-      onClick={() => {previousPage()
+      <Button
+    className=" ml-3 mr-3 cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm "
+    color="indigo_A400"
+    size="sm"
+    onClick={() => {previousPage()
       setIndex(index - 1)}}
       disabled={!canPreviousPage}
-      className="px-3 py-2 bg-[#5051f9]"
-      style={{ color: 'white' }}
-    >
-      Previous
-    </button>{' '}
+    > Previous
+    
+    </Button>
+    
+    {' '}
     <span style={{ color: 'white' }} className="ml-5 mr-5">
       Page{' '}
       <strong>
         {index + 1} of {pageOptions.length}
       </strong>{' '}
     </span>
-    <button
-      onClick={() => {nextPage();
-        setIndex(index + 1)}}
-      disabled={!canNextPage}
-      className="px-3 py-2 bg-[#5051f9]"
-      style={{ color: 'white' }}
-    >
-      Next
-    </button>{' '}
+
+    <Button
+    className=" ml-3 mr-3 cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm "
+    color="indigo_A400"
+    size="sm"
+    onClick={() => {nextPage();
+      setIndex(index + 1)}}
+    disabled={!canNextPage}
+    > Next
+    
+    </Button>
+    
+    {' '}
   </div>
 )}
 

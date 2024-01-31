@@ -195,8 +195,9 @@ async function section() {
 
 
   return (
-   
-    <div className='p-[50px] m-[50px] bg-[#1f2327]'>
+    <div className="flex flex-col font-roboto items-center justify-start mx-auto w-full">
+    <div className="backdrop-opacity-[0.5] bg-gray-900    w-full">
+    <div className='p-[50px] m-[40px] bg-[#1f2327] bg-blue_gray-900_01'>
       <div  className='flex justify-between items-center'>
       <Text
                     className="md:text-3xl sm:text-[25px] text-[20px] text-white-A700 w-auto"
@@ -297,7 +298,8 @@ async function section() {
     </DragDropContext>
                           )}
     </div>
-   
+   </div>
+   </div>
   
   );
 }
