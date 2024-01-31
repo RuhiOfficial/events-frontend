@@ -8,7 +8,7 @@ import ListModal from 'pages/ListModal';
 import { Button, Img, Line, List, Text } from "components";
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import { postSingleVenue } from 'service/api';
+import { postSingleVenue} from 'service/api';
 
 
 function Header() {
@@ -51,8 +51,14 @@ function Header() {
   }, []);
 
 
-    const openModal = () => {
+    const openModal = async() => {
+    
       setIsModalOpen(true);
+
+    
+
+
+
     };
   
     const closeModal = () => {

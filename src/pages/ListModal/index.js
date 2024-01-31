@@ -2,7 +2,7 @@
 import React,{useEffect,useState} from 'react';
 import Modal from 'react-modal';
 import { Button, Img, Line, List, Text } from "components";
-import { postVenueList } from 'service/api';
+import { postVenueList ,getLocalstorage} from 'service/api';
 import Cookies from 'js-cookie';
 import { css } from '@emotion/react';
 import { ScaleLoader } from 'react-spinners';
@@ -35,12 +35,58 @@ const ListModal = ({ isOpen, onRequestClose }) => {
         console.error(err);
       });
   }
+
+//  const fetch=async()=>{
+//   try {
+//     console.log('Fetching data...');
+//     const vid = localStorage.getItem('Venue');
+//     const req = {
+//       data: {
+//         venue_id: vid,
+//       },
+//     };
+//     const res = await getLocalstorage(req);
+//     console.log(res, 'Response coming from Header list modal PAGE api ======>>');
+   
+//       localStorage.setItem('canvasBackgroundImage', res.data[0].imageBoxUrl);
+//     const backgroundImage = res.data[0].imageBoxUrl;
+//     const boxes = res.data[0].boxes;
+//     localStorage.setItem(
+//       'canvasState',
+//       JSON.stringify({ backgroundImage, boxes /* ...other state variables */ })
+//     );
+
+//     }
+    
+    
+    
+   
+//   catch (err) {
+//     console.error(err);
+//     console.error('Fetch failed');
+//   }
+
+
+
+
+
+
+
+//  }
+
+
+
+
+
   
 
 useEffect(()=>{
+  
  list();
 
 },[])
+
+
 
 console.log(venueList,"list of venues==>")
 

@@ -222,7 +222,7 @@ const TicketReservations = () => {
         </div>
       </div>
     </div>):
-      <div style={{ display: 'flex', flexDirection:"column", justifyContent: 'center', alignItems: 'center', height: 'auto', width:"100%"}}>
+      <div style={{ display: 'flex', flexDirection:"column", justifyContent: 'center', alignItems: 'center', height: '200px', width:"100%"}}>
       
       <h1 style={{color:'#5051f9', fontSize:"20px"}}> No Bookings Available For This Venue!</h1>
     </div>

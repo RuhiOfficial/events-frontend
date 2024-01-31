@@ -42,6 +42,7 @@ const DashboardPage = () => {
   const[date,setDate]=useState([]);
   const[ticketList,setTicketList]=useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isEventLoading, setIsEventLoading] = useState(true);
 
 
 
@@ -80,7 +81,10 @@ const fetchData = async (venueId) => {
       const res = await getEvent(req);
       console.log(res.data,"list of events on the bases of venue id ")
       setEventList(res.data.data);
-      setIsLoading(false);
+     
+      setIsEventLoading(false);
+       
+      
 
       // setTimeout(() => {
       //   const dummyData = ['Item 1', 'Item 2', 'Item 3'];
@@ -432,13 +436,14 @@ const fetchData = async (venueId) => {
                             </Button>
                           </div>
                           <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between mb-[33px] w-full min-h-[170px]">
-                          {isLoading ? (
+                          {isEventLoading ? (
         <div style={{ display: 'flex', flexDirection:"column", justifyContent: 'center', alignItems: 'center', height: 'auto', width:"100%"}}>
-          <ScaleLoader css={override} color={'#5051f9'} loading={isLoading} />
+          <ScaleLoader css={override} color={'#5051f9'} loading={isEventLoading} />
           
           <h1 style={{color:'#5051f9', fontSize:"20px"}}> Loading!</h1>
         </div>
-      ) : (
+      ) : ( eventList.length!==0?(
+
                          <List
                            className="flex-1 sm:flex-col flex-row gap-[31px] grid md:grid-cols-1 grid-cols-1 w-full"
                            orientation="horizontal"
@@ -489,7 +494,12 @@ const fetchData = async (venueId) => {
   ))}
 </Slider>
                          </List>
-                          )}
+      ):
+      <div style={{ display: 'flex', flexDirection:"column", justifyContent: 'center', alignItems: 'center', height: 'auto', width:"100%"}}>
+     
+      <h1 style={{color:'#5051f9', fontSize:"20px"}}>No Event Yet , Add New!</h1>
+    </div>)
+                          }
                   </div>
                                          </div>
                                        </div>

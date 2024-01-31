@@ -155,7 +155,7 @@ useEffect(()=>{
 async function section() {
  const req = {
    data:{
-     venue_id:25,
+     venue_id:vid,
    }
  }
  await getSectionList(req)
@@ -203,7 +203,7 @@ async function section() {
                     className="md:text-3xl sm:text-[25px] text-[20px] text-white-A700 w-auto"
                     size="txtPoppins"
                   >
-                   TABLE
+                   SECTION 
                   </Text>
              
      
@@ -240,6 +240,7 @@ async function section() {
     <h1 style={{ color: '#5051f9', fontSize: '20px' }}> Loading!</h1>
   </div>
 ) : (
+  tableList.length !==0?(
   // Content when not loading
   <DragDropContext onDragEnd={onDragEnd}>
     <div className="mx-auto mt-8">
@@ -296,6 +297,11 @@ async function section() {
         ))}
       </div>
     </DragDropContext>
+  ):
+  <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: 'auto', width: '100%' }}>
+    
+    <h1 style={{ color: '#5051f9', fontSize: '20px' }}> No Section List Available For This Venue!</h1>
+  </div>
                           )}
     </div>
    </div>

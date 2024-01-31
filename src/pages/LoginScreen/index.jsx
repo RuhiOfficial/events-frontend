@@ -18,7 +18,7 @@ import Cookies from 'js-cookie';
 
 const LoginScreenPage = () => {
   const [loginUser, setLoginUser] = React.useState();
-  
+  const [showPassword, setShowPassword] = React.useState(false);
   
   const navigate = useNavigate();
   const form1ValidationSchema = yup.object().shape({
@@ -152,33 +152,29 @@ const LoginScreenPage = () => {
                     Password
                   </Text>
                   <Input
-                    name="input_One"
-                    placeholder="Password"
-                    className="!placeholder:text-black-900_87 !text-black-900_87 font-roboto p-0 text-base text-left w-full h-[50px] pl-4"
-                    wrapClassName="border-2 border-gray-700_66 border-solid flex rounded-[12px] w-full w-[558px]"
-                    type="password"
-                    onChange={(e) => {
-                      
-                      form1.handleChange("password", e);
-                    }}
-                    errors={form1?.errors?.password}
-                    value={form1?.values?.password}
-                    suffix={
-                      <Img
-                        className="ml-[35px] my-auto"
-                        src="images/img_eye.svg"
-                        alt="button"
-                      />
-                    }
-                    // shape="round"
-                    // color="white_A700"
-                    // size="sm"
-                    // variant="fill"
-                    shape="round"
-                    color="gray_200"
-                    size="sm"
-                    variant="fill"
-                  ></Input>
+          name="input_One"
+          placeholder="Password"
+          className="!placeholder:text-black-900_87 !text-black-900_87 font-roboto p-0 text-base text-left w-full h-[50px] pl-4"
+          wrapClassName="border-2 border-gray-700_66 border-solid flex rounded-[12px] w-full w-[558px]"
+          type={showPassword ? "text" : "password"} // Toggle input type
+          onChange={(e) => {
+            form1.handleChange("password", e);
+          }}
+          errors={form1?.errors?.password}
+          value={form1?.values?.password}
+          suffix={
+            <Img
+              className="ml-[35px] my-auto cursor-pointer"
+              src={showPassword ? "images/img_eye_hide.svg" : "images/img_eye.svg"}
+              alt="button"
+              onClick={() => setShowPassword(!showPassword)}
+            />
+          }
+          shape="round"
+          color="gray_200"
+          size="sm"
+          variant="fill"
+        ></Input>
                 </div>
                 <div className="flex flex-col items-start justify-start w-auto sm:w-full">
                   <Button
