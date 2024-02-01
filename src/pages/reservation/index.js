@@ -64,7 +64,11 @@ function Reservartion() {
     }
   };
   
-  
+  const [sectionListUpdated, setSectionListUpdated] = useState(false);
+
+  const updateSectionList = () => {
+    setSectionListUpdated((prev) => !prev);
+  };
   
   
   
@@ -287,7 +291,7 @@ async function section() {
 </button>
 
 
-<AddTable isTableOpen={isTableOpen} onRequestTableClose={closeTableModal} />
+<AddTable isTableOpen={isTableOpen} onRequestTableClose={closeTableModal} updateSectionList={updateSectionList}/>
 <DeleteSection isOpen={isDeleteOpen} onRequestClose={closeDeleteModal} sectionId={deleteSectionId}/>
 <EditSection isOpen={isEditSectionOpen} onRequestClose={closeEditSectionModal} sectionId={editSectionId} />
 </div>

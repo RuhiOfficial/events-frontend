@@ -6,7 +6,7 @@ import useForm from "hooks/useForm";
 import {  ToastContainer,toast } from "react-toastify";
 import { getSection,postTable } from 'service/api';
 
-function AddTable({ isTableOpen, onRequestTableClose }) {
+function AddTable({ isTableOpen, onRequestTableClose,updateSectionList }) {
     const [selectedSection,setSelectedSection]=useState(null);
     const [sectionList,setSectionList]=useState([]);
      const venueId= localStorage.getItem('Venue')
@@ -33,9 +33,7 @@ function AddTable({ isTableOpen, onRequestTableClose }) {
                       );
 
 
-             useEffect(()=>{
-                section();
-             },[])         
+                 
    ///////////Sections///////////////
 
 const handleSectionChange = (selectedOption) => {
@@ -81,7 +79,10 @@ const handleSectionChange = (selectedOption) => {
       });
   }
   
-
+  useEffect(() => {
+    // Fetch the updated section list whenever updateSectionList is called
+    section();
+  }, [updateSectionList]);    
 
 
 
@@ -175,7 +176,7 @@ const handleSectionChange = (selectedOption) => {
                    isSearchable={true}
                    placeholder="Select Section..."
                    onChange={handleSectionChange}
-                
+                  
                  />
                 </div>
                          <div className="flex flex-col items-start justify-start mt-[38px] w-full">

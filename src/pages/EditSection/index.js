@@ -35,6 +35,8 @@ function EditSection({ isOpen, onRequestClose, sectionId }) {
       toast.success('Section is updated Successfully!');
       setTimeout(() => {
         onRequestClose();
+        setName("");
+        setPrice("");
         // window.location.href = '/reservation';
       }, 3000);
     } catch (err) {

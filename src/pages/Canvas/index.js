@@ -12,6 +12,7 @@ import { getLocalstorage } from 'service/api';
 import { css } from '@emotion/react';
 import { ScaleLoader } from 'react-spinners';
 
+
 const override = css`
   display: block;
   margin: 0 auto;
@@ -48,6 +49,8 @@ function Canvas() {
     const [imageLoaded, setImageLoaded] = useState(false);
     const [fetchedCalled, setFetchedCalled] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [venueChanged,setVenueChanged] = useState(localStorage.getItem('venueChanged'))
+  
   
     const fetch = async () => {
       try {
@@ -59,6 +62,15 @@ function Canvas() {
           },
         };
         const res = await getLocalstorage(req);
+        if(res.data.message){
+          localStorage.removeItem('canvasBackgroundImage');
+        
+        localStorage.removeItem(
+          'canvasState');
+        }
+        else{
+
+        
         console.log(res, 'Response coming from LOGIN PAGE api ======>>');
         localStorage.setItem('canvasBackgroundImage', res.data[0].imageBoxUrl);
         const backgroundImage = res.data[0].imageBoxUrl;
@@ -68,6 +80,7 @@ function Canvas() {
           JSON.stringify({ backgroundImage, boxes /* ...other state variables */ })
         );
         setFetchedCalled(true)
+        }
         console.log('Fetch successful');
       } catch (err) {
         console.error(err);
@@ -80,6 +93,7 @@ function Canvas() {
       // Check if the component has already been initialized
       const isInitialized = localStorage.getItem('isInitialized');
   
+  
       // If not initialized, perform initialization tasks (e.g., fetch)
       if (!isInitialized) {
       await  fetch();
@@ -90,7 +104,39 @@ function Canvas() {
 
 
       }
+
     }, []);
+
+
+    // useEffect(async() => {
+    //   // Check if the component has already been initialized
+    //    console.log("reached in this function ")
+    //   console.log(venueChanged,"the venue changed is ===>>")
+    //   // If not initialized, perform initialization tasks (e.g., fetch)
+    //   if (venueChanged) {
+    //   await  fetch()
+    
+
+      
+        
+        
+
+
+    //   }
+      
+    // }, [venueChanged]);
+
+// useEffect(async ()=>{
+//   if(venueChanged){
+//     await  loadCanvasImage();
+//     setIsLoading(false);
+//     localStorage.setItem('venueChanged', false);
+//   }
+
+// },[])
+
+
+
 
 
     useEffect(()=>
@@ -103,14 +149,31 @@ function Canvas() {
     }
       )
 
-  
+      useEffect(()=>
+    {
+       // Load canvas image only if the component is initialized and fetchedCalled is true
+    
+      loadCanvasImage();
+      setIsLoading(false)
+    
+    },[venueChanged]
+      )
   
 
     const loadCanvasImage = async () => {
       const savedCanvasState = (localStorage.getItem('canvasState'));
+      const loadedImage = localStorage.getItem('canvasBackgroundImage');
     
-    
-      if (savedCanvasState || fetchedCalled) {
+    // if(venueChanged){
+    //   if(!loadedImage){
+    //     setBackgroundImage(null);
+    //     setMyBackgroundImage(null);
+       
+    //   }
+
+    // }
+      if (savedCanvasState || fetchedCalled ) {
+      
         const savedCanvasState = (localStorage.getItem('canvasState'));
         const loadedBackgroundImage = localStorage.getItem('canvasBackgroundImage');
         
@@ -163,6 +226,7 @@ function Canvas() {
         setBoxes(parsedCanvasState.boxes || []);
         // ... (restore other state variables)
        setFetchedCalled(false)
+       setIsLoading(false);
       } else {
         console.log("No saved canvas state");
       }

@@ -91,11 +91,52 @@ useEffect(()=>{
 console.log(venueList,"list of venues==>")
 
 
-const handleListItemClick = (venueId) => {
+
+const fetch = async () => {
+  try {
+    console.log('Fetching data..from header.');
+    const vid = localStorage.getItem('Venue');
+    const req = {
+      data: {
+        venue_id: vid,
+      },
+    };
+    const res = await getLocalstorage(req);
+    if(res.data.message){
+      localStorage.removeItem('canvasBackgroundImage');
+    
+    localStorage.removeItem(
+      'canvasState');
+    }
+    else{
+
+    
+    console.log(res, 'Response coming from LOGIN PAGE api ======>>');
+    localStorage.setItem('canvasBackgroundImage', res.data[0].imageBoxUrl);
+    const backgroundImage = res.data[0].imageBoxUrl;
+    const boxes = res.data[0].boxes;
+    localStorage.setItem(
+      'canvasState',
+      JSON.stringify({ backgroundImage, boxes /* ...other state variables */ })
+    );
+    
+    }
+    console.log('Fetch successful');
+  } catch (err) {
+    console.error(err);
+    console.error('Fetch failed');
+  }
+};
+
+
+
+
+const handleListItemClick = async (venueId) => {
     // Update the cookie with the clicked venueId
     Cookies.set('venueId', venueId);
    localStorage.setItem('Venue',venueId);
-
+    localStorage.setItem('venueChanged',true)
+   await fetch()
     // Handle other actions if needed
     console.log(`List item clicked: ${venueId}`);
     window.location.href = "/";
