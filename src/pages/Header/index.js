@@ -180,7 +180,7 @@ function Header() {
 
                 {isDropdownOpen && (
           <div className="absolute right-0 z-10 w-56 mt-4 origin-top-right bg-white border border-gray-100 rounded-md shadow-lg">
-            <div className="p-2 flex flex-col items-center">
+            <div className="p-2 flex flex-col items-center bg-[#292e34] border border-gray-100">
               {/* <a
                 href="#"
                 className="block px-4 py-2 text-sm text-gray-500 rounded-lg hover:bg-gray-50 hover:text-gray-700"
