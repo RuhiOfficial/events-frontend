@@ -232,6 +232,101 @@ function Canvas() {
       }
     }
 
+
+
+    // const loadCanvasImage = async () => {
+    //   try {
+    //     const savedCanvasState = localStorage.getItem('canvasState');
+    //     const loadedImage = localStorage.getItem('canvasBackgroundImage');
+    
+    //     if (!savedCanvasState && !fetchedCalled) {
+    //       const demoImage = new Image();
+    //     demoImage.src = 'images/img_ticket1.png'; // Replace with the path to your demo image
+
+    //     demoImage.onload = () => {
+    //       setBackgroundImage(demoImage);
+
+    //       // Convert demo image to data URL and set it as myBackgroundImage
+    //       const canvas = document.createElement('canvas');
+    //       canvas.width = demoImage.width;
+    //       canvas.height = demoImage.height;
+    //       const context = canvas.getContext('2d');
+    //       context.drawImage(demoImage, 0, 0);
+    //       const base64String = canvas.toDataURL('image/png').split(',')[1];
+    //       setMyBackgroundImage(base64String);
+    //     };
+    //       // console.log("No saved canvas state");
+    //       // return;
+    //     }
+    
+    //     if (loadedImage) {
+    //       const img = new Image();
+    
+    //       if (loadedImage.startsWith('data:image')) {
+    //         // If it's a base64 string, set it as the src
+    //         img.src = loadedImage;
+    
+    //         await new Promise((resolve) => {
+    //           img.onload = () => {
+    //             // Convert the loaded image to a base64 string
+    //             const canvas = document.createElement('canvas');
+    //             canvas.width = img.width;
+    //             canvas.height = img.height;
+    //             const context = canvas.getContext('2d');
+    //             context.drawImage(img, 0, 0);
+    //             const base64String = canvas.toDataURL('image/jpeg').split(',')[1];
+    
+    //             // Set myBackgroundImage with the base64 string
+    //             setMyBackgroundImage(base64String);
+    //             resolve();
+    //           };
+    
+    //           img.onerror = (error) => {
+    //             console.error('Error loading image:', error);
+    //             resolve();
+    //           };
+    //         });
+    //       } else {
+    //         // If it's a File object, handle it differently
+    //         const reader = new FileReader();
+    
+    //         await new Promise((resolve) => {
+    //           reader.onload = () => {
+    //             const img = new Image();
+    //             img.src = reader.result;
+    
+    //             img.onload = () => {
+    //               setBackgroundImage(img);
+    //               resolve();
+    //             };
+    
+    //             img.onerror = (error) => {
+    //               console.error('Error loading image:', error);
+    //               resolve();
+    //             };
+    //           };
+    
+    //           // Assuming loadedImage is a File object
+    //           reader.readAsDataURL(loadedImage);
+    //         });
+    //       }
+    //     }
+    
+    //     const parsedCanvasState = JSON.parse(savedCanvasState);
+    //     setBoxes(parsedCanvasState.boxes || []);
+    //     // ... (restore other state variables)
+    //     setFetchedCalled(false);
+    //     setIsLoading(false);
+    
+    //     // Check if the canvas is empty
+    //     const canvasIsEmpty = boxes.length === 0;
+    
+
+    //   } catch (err) {
+    //     console.error(err);
+    //   }
+    // };
+    
 useEffect(() => {
   
 loadCanvasImage()
@@ -872,7 +967,17 @@ useEffect(() => {
     <h1 style={{ color: '#5051f9', fontSize: '20px' }}> Loading!</h1>
   </div>
 ) : (
+     <div >
+    
+
+     
+     {!backgroundImage && !myBackgroundImage?<div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: 'auto', width: '100%' }}>
+
+    <h1 style={{ color: '#5051f9', fontSize: '25px', marginTop:"100px" }}> No Layout For this Venue, Please Upload First!</h1>
+  </div>:
         <div className="drawing-canvas">
+        
+         
       {backgroundImage && (
         <img
           src={URL.createObjectURL(backgroundImage)}
@@ -955,6 +1060,8 @@ useEffect(() => {
 </Layer>
 
       </Stage>
+      </div>
+}
       </div>)}
   
         {/* Render the layout popup when showLayoutPopup is true */}
