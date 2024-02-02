@@ -682,3 +682,13 @@ input#agreeTerms {
   font-size: larger;
   
 }
+
+.messages{
+color:white;
+font-size:23px;
+margin-top: 100px;
+border: 1px solid #5051f9;
+padding: 40px;
+
+  
+}

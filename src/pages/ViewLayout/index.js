@@ -129,6 +129,7 @@ const ViewLayout = ({ isOpen, onRequestClose }) => {
     if (url) {
       loadImage();
     }
+    
   }, [url, canvasRef.current, isOpen, hoveredBoxIndex]);
 
   useEffect(() => {

@@ -50,7 +50,7 @@ function Canvas() {
     const [fetchedCalled, setFetchedCalled] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [venueChanged,setVenueChanged] = useState(localStorage.getItem('venueChanged'))
-  
+    const [noState,setNoState]=useState(false);
   
     const fetch = async () => {
       try {
@@ -144,7 +144,7 @@ function Canvas() {
        // Load canvas image only if the component is initialized and fetchedCalled is true
     if (localStorage.getItem('isInitialized') && fetchedCalled) {
       loadCanvasImage();
-      setIsLoading(false)
+      
     }
     }
       )
@@ -154,7 +154,7 @@ function Canvas() {
        // Load canvas image only if the component is initialized and fetchedCalled is true
     
       loadCanvasImage();
-      setIsLoading(false)
+      
     
     },[venueChanged]
       )
@@ -176,8 +176,7 @@ function Canvas() {
       
         const savedCanvasState = (localStorage.getItem('canvasState'));
         const loadedBackgroundImage = localStorage.getItem('canvasBackgroundImage');
-        
-    
+   
         if (loadedBackgroundImage) {
           const img = new Image();
     
@@ -221,14 +220,18 @@ function Canvas() {
             reader.readAsDataURL(loadedBackgroundImage);
           }
         }
+      
     
         const parsedCanvasState = JSON.parse(savedCanvasState);
         setBoxes(parsedCanvasState.boxes || []);
         // ... (restore other state variables)
        setFetchedCalled(false)
        setIsLoading(false);
-      } else {
+      }
+      else {
         console.log("No saved canvas state");
+        setNoState(true);
+        setIsLoading(false);
       }
     }
 
@@ -387,7 +390,7 @@ async function table() {
 
 useEffect(() => {
   if (backgroundImage || myBackgroundImage) {
-    setIsLoading(false)
+    
     const img = new Image();
     img.src = backgroundImage ? URL.createObjectURL(backgroundImage) : `data:image/jpeg;base64,${myBackgroundImage}`;
     img.onload = () => {
@@ -682,42 +685,6 @@ useEffect(() => {
         }
       };
       
-      // const handleResizeDragEnd = (e, box) => {
-      //   const stage = stageRef.current.getStage();
-      
-      //   if (stage) {
-      //     const scale = stage.scaleX(); // Consider the current scale of the stage
-      
-      //     // Calculate the initial position of the resizing handle relative to the box
-      //     const initialHandleX = box.width - 10;
-      //     const initialHandleY = box.height - 10;
-      
-      //     // Calculate the movement of the handle during dragging
-      //     const handleMovementX = (e.target.x() - initialHandleX) / scale;
-      //     const handleMovementY = (e.target.y() - initialHandleY) / scale;
-      
-      //     // Calculate the new width and height based on the handle movement
-      //     const newWidth = Math.max(0, box.width + handleMovementX);
-      //     const newHeight = Math.max(0, box.height + handleMovementY);
-      
-      //     const updatedBoxes = boxes.map((b) =>
-      //       b.label === box.label
-      //         ? {
-      //             ...b,
-      //             width: newWidth,
-      //             height: newHeight,
-      //           }
-      //         : b
-      //     );
-      
-      //     setBoxes(updatedBoxes);
-      //   }
-      // };
-      
-      
-      
-      
-      
       
       
       const updateTableStatus = () => {
@@ -970,11 +937,8 @@ useEffect(() => {
      <div >
     
 
-     
-     {!backgroundImage && !myBackgroundImage?<div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: 'auto', width: '100%' }}>
-
-    <h1 style={{ color: '#5051f9', fontSize: '25px', marginTop:"100px" }}> No Layout For this Venue, Please Upload First!</h1>
-  </div>:
+  
+    
         <div className="drawing-canvas">
         
          
@@ -1061,7 +1025,8 @@ useEffect(() => {
 
       </Stage>
       </div>
-}
+
+
       </div>)}
   
         {/* Render the layout popup when showLayoutPopup is true */}

@@ -497,7 +497,7 @@ const fetchData = async (venueId) => {
       ):
       <div style={{ display: 'flex', flexDirection:"column", justifyContent: 'center', alignItems: 'center', height: 'auto', width:"100%"}}>
      
-      <h1 style={{color:'#5051f9', fontSize:"20px"}}>No Event Yet , Add New!</h1>
+      <h1 className='messages'>No Event Yet , Add New!</h1>
     </div>)
                           }
                   </div>
@@ -603,7 +603,7 @@ const fetchData = async (venueId) => {
                           ):
                           <div style={{ display: 'flex', flexDirection:"column", justifyContent: 'center', alignItems: 'center', height: 'auto', width:"100%"}}>
                          
-                          <h1 style={{color:'#5051f9', fontSize:"20px"}}> No Booking Available For This Venue!</h1>
+                          <h1 className='messages'> No Booking Available For This Venue!</h1>
                         </div>)
                         }
  </div>
