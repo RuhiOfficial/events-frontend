@@ -481,7 +481,7 @@ console.log(data.event_desc,"data ==============>>>>>")
                     errors={form?.errors?.["no_of_seats"]}
                     value={form?.values?.["no_of_seats"]}
                     style={{color:"white"}}
-                   
+                     min="1"
                     size="md"
                     variant="fill"
                   />

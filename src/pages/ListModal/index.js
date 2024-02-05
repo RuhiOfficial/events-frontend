@@ -131,6 +131,13 @@ const fetch = async () => {
 
 
 
+
+
+
+
+
+
+
 const handleListItemClick = async (venueId) => {
     // Update the cookie with the clicked venueId
     Cookies.set('venueId', venueId);
