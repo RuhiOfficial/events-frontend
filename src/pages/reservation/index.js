@@ -1,3 +1,6 @@
+
+
+
 // Import necessary libraries and styles
 import React, { useMemo,useEffect,useState } from 'react';
 import { useTable, useGlobalFilter, usePagination } from 'react-table';
@@ -35,7 +38,7 @@ const sections = [
 ];
 
 
-function Reservartion() {
+function Reservation() {
   const [isSectionOpen, setIsSectionOpen] = useState(false);
   const [isTableOpen, setIsTableOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
@@ -64,11 +67,7 @@ function Reservartion() {
     }
   };
   
-  const [sectionListUpdated, setSectionListUpdated] = useState(false);
-
-  const updateSectionList = () => {
-    setSectionListUpdated((prev) => !prev);
-  };
+  
   
   
   
@@ -149,12 +148,6 @@ function Reservartion() {
       </Draggable>
     );
   };
-
-  
-
-
-
-
   
   
    ///////////Table List///////////////
@@ -165,7 +158,7 @@ useEffect(()=>{
 async function section() {
  const req = {
    data:{
-     venue_id:vid,
+     venue_id:25,
    }
  }
  await getSectionList(req)
@@ -205,15 +198,14 @@ async function section() {
 
 
   return (
-    <div className="flex flex-col font-roboto items-center justify-start mx-auto w-full">
-    <div className="backdrop-opacity-[0.5] bg-gray-900    w-full">
-    <div className='p-[50px] m-[40px] bg-[#1f2327] bg-blue_gray-900_01'>
+   
+    <div className='p-[50px] m-[50px] bg-[#1f2327]'>
       <div  className='flex justify-between items-center'>
       <Text
                     className="md:text-3xl sm:text-[25px] text-[20px] text-white-A700 w-auto"
                     size="txtPoppins"
                   >
-                   SECTION 
+                   TABLE
                   </Text>
              
      
@@ -228,7 +220,6 @@ async function section() {
     >
     Add Section
     </Button>
-
     <Button
     className=" ml-3 mr-3 cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm "
     color="indigo_A400"
@@ -238,49 +229,34 @@ async function section() {
     Add Table
     </Button>
 
-    
-
     <Section isOpen={isSectionOpen} onRequestClose={closeModal} />
     </div>
     </div>
-    {isLoading ? (
-  // Loading state
-  <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: 'auto', width: '100%' }}>
-    <ScaleLoader css={override} color={'#5051f9'} loading={isLoading} />
-    <h1 style={{ color: '#5051f9', fontSize: '20px' }}> Loading!</h1>
-  </div>
-) : (
-  tableList.length !==0?(
-  // Content when not loading
-  <DragDropContext onDragEnd={onDragEnd}>
-    <div className="mx-auto mt-8">
-      {tableList.map((section) => (
-        <div key={section.section_id} className="flex items-center justify-between p-4 grey-border mb-4">
-          <div>
-            <h2 className="text-lg font-bold white">{section.section_name}</h2>
-            <Droppable droppableId={section.section_id.toString()} direction="horizontal">
-              {(provided) => (
-                <div ref={provided.innerRef} {...provided.droppableProps} className="flex mt-2 white">
-                  {section.tables.length > 0 ? (
-                    // Render tables if available
-                    section.tables.map((table, index) => (
-                      <DraggableTableName
-                        key={`${section.id}-${table.table_id}`}
-                        name={table.table_name}
-                        index={index}
-                        onClick={() => {
-                          console.log("table index is clicked ", index);
-                        }}
-                      />
-                    ))
-                  ) : (
-                    // Render a message or other content when no tables are available
-                    <p className='messages'>No tables available for this section</p>
-                  )}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
+    <ScaleLoader css={override} size={50} color={'#5051f9'} loading={isLoading} />
+                          {!isLoading && (
+    <DragDropContext onDragEnd={onDragEnd}>
+      <div className="mx-auto mt-8">
+        {tableList.map((section) => (
+          <div key={section.section_id} className="flex items-center justify-between p-4 grey-border mb-4">
+            <div>
+              <h2 className="text-lg font-bold white">{section.section_name}</h2>
+              <Droppable droppableId={section.section_id.toString()} direction="horizontal">
+        {(provided) => (
+          <div ref={provided.innerRef} {...provided.droppableProps} className="flex mt-2 white">
+            {section.tables.map((table, index) => (
+              <DraggableTableName
+                key={`${section.id}-${table.table_id}`}// Ensure a unique key
+                name={table.table_name}
+                index={index}
+                onClick={() => {
+                  console.log("table index is clicked ", index);
+                }}
+              />
+            ))}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
             </div>
             <div className="flex items-center justify">
             <div className="flex items-center justify">
@@ -297,7 +273,7 @@ async function section() {
 </button>
 
 
-<AddTable isTableOpen={isTableOpen} onRequestTableClose={closeTableModal} updateSectionList={updateSectionList}/>
+<AddTable isTableOpen={isTableOpen} onRequestTableClose={closeTableModal} />
 <DeleteSection isOpen={isDeleteOpen} onRequestClose={closeDeleteModal} sectionId={deleteSectionId}/>
 <EditSection isOpen={isEditSectionOpen} onRequestClose={closeEditSectionModal} sectionId={editSectionId} />
 </div>
@@ -307,19 +283,11 @@ async function section() {
         ))}
       </div>
     </DragDropContext>
-  ):
-  <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: 'auto', width: '100%' }}>
-    
-    <h1 className='messages'> No Section List Available For This Venue!</h1>
-  </div>
                           )}
     </div>
-   </div>
-   </div>
+   
   
   );
 }
 
-export default Reservartion
-
-
+export default Reservation
