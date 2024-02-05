@@ -165,7 +165,7 @@ const LoginScreenPage = () => {
           suffix={
             <Img
               className="ml-[35px] my-auto cursor-pointer"
-              src={showPassword ? "images/img_eye_hide.svg" : "images/img_eye.svg"}
+              src={showPassword ? "images/img_eye.svg" : "images/img.svg"}
               alt="button"
               onClick={() => setShowPassword(!showPassword)}
             />
