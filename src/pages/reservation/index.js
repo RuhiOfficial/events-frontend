@@ -6,7 +6,7 @@ import React, { useMemo,useEffect,useState } from 'react';
 import { useTable, useGlobalFilter, usePagination } from 'react-table';
 import { matchSorter } from 'match-sorter';
 import 'tailwindcss/tailwind.css'; // Import Tailwind CSS
-import { Button ,Text} from 'components';
+import { Button ,Text,Img} from 'components';
 import Section from 'pages/Section';
 import AddTable from 'pages/AddTable';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
@@ -15,6 +15,8 @@ import EditSection from 'pages/EditSection';
 import { getSectionList } from 'service/api';
 import { css } from '@emotion/react';
 import { ScaleLoader } from 'react-spinners';
+import { MdEdit } from "react-icons/md";
+import { RiDeleteBin5Fill } from "react-icons/ri";
 
 const override = css`
   display: block;
@@ -261,15 +263,11 @@ async function section() {
             <div className="flex items-center justify">
             <div className="flex items-center justify">
 
-<button className="mx-2 text-blue-500 hover:text-blue-700" onClick={()=>{openEditSectionModal(section.section_id)}}>
-  <span role="img" aria-label="Edit" >
-    ✏️
-  </span>
+<button className="mx-2 text-[white] hover:text-blue-700 text-[25px]" onClick={()=>{openEditSectionModal(section.section_id)}}>
+  <MdEdit />
 </button>
-<button className="mx-2 text-red-500 hover:text-red-700 " onClick={()=>{openDeleteModal(section.section_id)}}>
-  <span role="img" aria-label="Delete">
-    🗑️
-  </span>
+<button className="mx-2 text-[white] hover:text-red-700 text-[25px]" onClick={()=>{openDeleteModal(section.section_id)}}>
+<RiDeleteBin5Fill />
 </button>
 
 
