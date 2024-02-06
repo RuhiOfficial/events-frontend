@@ -11,6 +11,7 @@ import Section from 'pages/Section';
 import AddTable from 'pages/AddTable';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import DeleteSection from 'pages/DeleteSection';
+import DeleteTable from 'pages/DeleteTable';
 import EditSection from 'pages/EditSection';
 import { getSectionList } from 'service/api';
 import { css } from '@emotion/react';
@@ -25,30 +26,20 @@ const override = css`
 `;
 
 
-const sections = [
-  {
-    id: 1,
-    sectionName: 'Section 1',
-    tables: ['Table 1', 'Table 2', 'Table 3'],
-  },
-  {
-    id: 2,
-    sectionName: 'Section 2',
-    tables: ['Table 4', 'Table 5', 'Table 6'],
-  },
-  // Add more sections as needed
-];
+
 
 
 function Reservation() {
   const [isSectionOpen, setIsSectionOpen] = useState(false);
   const [isTableOpen, setIsTableOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [isDeleteTableOpen, setIsDeleteTableOpen] = useState(false);
   const [isEditSectionOpen, setIsEditSectionOpen] = useState(false);
   const [editSectionId, setEditSectionId] = useState(null);
   const [deleteSectionId, setDeleteSectionId] = useState();
+  const [deleteTableId, setDeleteTableId] = useState();
   const vid=localStorage.getItem('Venue')
-  const [sectionsData, setSectionsData] = useState(sections);
+  
   const [tableList,setTableList]=useState([])
   const [isLoading, setIsLoading] = useState(true);
 
@@ -69,14 +60,6 @@ function Reservation() {
     }
   };
   
-  
-  
-  
-  
-  
-
-
-
   const openModal = () => {
     setIsSectionOpen(true);
   };
@@ -101,6 +84,18 @@ function Reservation() {
   const closeDeleteModal = () => {
     setDeleteSectionId(null)
     setIsDeleteOpen(false);
+    section();
+  };
+
+  const openDeleteTableModal = (tableId) => {
+    console.log(tableId,"id of table from function ==>>>")
+    setDeleteTableId(tableId)
+    setIsDeleteTableOpen(true);
+  };
+
+  const closeDeleteTableModal = () => {
+    setDeleteTableId(null)
+    setIsDeleteTableOpen(false);
     section();
   };
 
@@ -250,8 +245,9 @@ async function section() {
                 key={`${section.id}-${table.table_id}`}// Ensure a unique key
                 name={table.table_name}
                 index={index}
-                onClick={() => {
-                  console.log("table index is clicked ", index);
+            
+                onClick={(index)=>{
+                  openDeleteTableModal(index)
                 }}
               />
             ))}
@@ -272,6 +268,8 @@ async function section() {
 
 
 <AddTable isTableOpen={isTableOpen} onRequestTableClose={closeTableModal} />
+<DeleteTable isOpen={isDeleteTableOpen} onRequestClose={closeDeleteTableModal} tableId={deleteTableId}/>
+
 <DeleteSection isOpen={isDeleteOpen} onRequestClose={closeDeleteModal} sectionId={deleteSectionId}/>
 <EditSection isOpen={isEditSectionOpen} onRequestClose={closeEditSectionModal} sectionId={editSectionId} />
 </div>

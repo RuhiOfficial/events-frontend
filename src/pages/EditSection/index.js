@@ -62,22 +62,7 @@ function EditSection({ isOpen, onRequestClose, sectionId }) {
     }
   }
 
-  const people = [
-        {
-          name: 'T1',
-          price:'2000'
-        },
-        {
-          name: 'T2',
-         price:'3000'
-        },
-        {
-          name: 'T3',
-          price:'3000'
-        },
-        // More people...
-      ];
-      
+  
 
   return (
     <Modal
@@ -159,72 +144,6 @@ function EditSection({ isOpen, onRequestClose, sectionId }) {
                 />
               </div>
 
-
-
-              <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-              <div className="flex flex-col w-full">
-        <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">             <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                 <tr>
-                                      <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Price
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Action
-                    </th>
-                   
-                    {/* <th scope="col" className="relative px-6 py-3">
-                      <span className="sr-only">Edit</span>
-                    </th> */}
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {people.map(person => (
-                    <tr key={person.name}>
-                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm white text-center">{person.name}</div>
-                       
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm white text-center">{person.price}</div>
-                       
-                      </td>
-                    
-                    
-                      <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                          Edit
-                        </a>
-
-                        <a href="#" className="text-indigo-600 hover:text-indigo-900 ml-5">
-                          Delete
-                        </a>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-                </div>
-                
-
               <div className="flex flex-col items-start justify-start w-full mt-20">
                 <Button
                   className="common-pointer cursor-pointer font-bold leading-[normal] min-w-[459px] sm:min-w-full text-center text-xl w-full"
@@ -248,43 +167,3 @@ function EditSection({ isOpen, onRequestClose, sectionId }) {
 }
 
 export default EditSection;
-
-// import React from 'react'
-
-// function EditSection() {
-//   const people = [
-//     {
-//       name: 'Jane Cooper',
-//       title: 'Regional Paradigm Technician',
-//       department: 'Optimization',
-//       role: 'Admin',
-//       email: 'jane.cooper@example.com',
-//       image: 'https://bit.ly/33HnjK0',
-//     },
-//     {
-//       name: 'John Doe',
-//       title: 'Regional Paradigm Technician',
-//       department: 'Optimization',
-//       role: 'Tester',
-//       email: 'john.doe@example.com',
-//       image: 'https://bit.ly/3I9nL2D',
-//     },
-//     {
-//       name: 'Veronica Lodge',
-//       title: 'Regional Paradigm Technician',
-//       department: 'Optimization',
-//       role: ' Software Engineer',
-//       email: 'veronica.lodge@example.com',
-//       image: 'https://bit.ly/3vaOTe1',
-//     },
-//     // More people...
-//   ];
-  
-
-//     return (
-//     
-//     );
-  
-// }
-
-// export default EditSection
