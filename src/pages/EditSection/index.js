@@ -153,7 +153,7 @@ function EditSection({ isOpen, onRequestClose, sectionId }) {
                   color="blue_600_indigo_900"
                   onClick={editSection}
                 >
-                  Edit
+                  Update
                 </Button>
               </div>
             </div>
