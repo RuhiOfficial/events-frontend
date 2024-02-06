@@ -13,7 +13,7 @@ import Canvas from "pages/Canvas";
 import Reservation from "pages/reservation";
 import ViewLayout from "pages/ViewLayout";
 import TicketReservations from "pages/TicketReservations";
-
+import Calender from "pages/Calender";
 const ProjectRoutes = () => {
   const auth = localStorage.getItem("Name");
   console.log(auth);
@@ -30,6 +30,7 @@ const ProjectRoutes = () => {
               <Route path="/reservation" element={<Reservation/>}/>
               <Route path="/view" element={<ViewLayout/>}/>
               <Route path="/tickets" element={<TicketReservations/>}/>
+              <Route path="/calender" element={<Calender/>}/>
               
               {/* <Route path="/modal" element={<Modal />} /> */}
             </Routes>

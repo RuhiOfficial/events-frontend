@@ -692,3 +692,27 @@ padding: 40px;
 
   
 }
+
+/* calendar css */
+.event-calendar {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+}
+
+.calendar-container {
+  width: 60%;
+}
+
+.events-container {
+  width: 35%;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 8px;
+}
