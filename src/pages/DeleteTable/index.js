@@ -96,7 +96,7 @@ function DeleteTable({ isOpen, onRequestClose ,tableId}) {
                     className="md:text-3xl sm:text-[28px] text-[20px] text-white-A700 w-auto"
                     size="txtPoppins"
                   >
-                  Do you want to delete this ?
+                  Do you want to delete this Table ?
                   </Text>
                 </div>
               

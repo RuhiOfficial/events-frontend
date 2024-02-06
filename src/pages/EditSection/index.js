@@ -4,10 +4,11 @@ import * as yup from 'yup';
 import { Button, Input, Text } from 'components';
 import { updateSection, sectionById } from 'service/api';
 import { ToastContainer, toast } from 'react-toastify';
-
+import { RiDeleteBin5Fill } from "react-icons/ri";
 function EditSection({ isOpen, onRequestClose, sectionId }) {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
+  const [hoveredButtonIndex, setHoveredButtonIndex] = useState(null);
 
   useEffect(() => {
     loadSection();
@@ -44,7 +45,14 @@ function EditSection({ isOpen, onRequestClose, sectionId }) {
       toast.error('Something Went Wrong!');
     }
   }
-
+  async function handleDeleteButtonClick() {
+    // Make your delete API call here
+    if (hoveredButtonIndex !== null) {
+      console.log(`Deleting section with ID: ${people[hoveredButtonIndex].id}`);
+      // Add your delete API logic here
+    }
+    setHoveredButtonIndex(null);
+  }
   async function loadSection() {
     try {
       const res = await sectionById({ data: { id: sectionId } });
@@ -62,7 +70,21 @@ function EditSection({ isOpen, onRequestClose, sectionId }) {
     }
   }
 
-  
+  const people = [
+    {
+      name: 'T1',
+      id:1,
+    },
+    {
+      name: 'T2',
+      id:2,
+    },
+    {
+      name: 'T3',
+      id:3,
+    },
+    // More people...
+  ];
 
   return (
     <Modal
@@ -143,6 +165,38 @@ function EditSection({ isOpen, onRequestClose, sectionId }) {
                   variant="fill"
                 />
               </div>
+
+              <div className="flex flex-row items-start justify-start mt-[38px] w-full overflow-x-auto">
+  <div className="flex space-x-4 ">
+  {people.map((person, index) => (
+            <div
+              key={person.id}
+              className="p-2 bg-[#5051f9] rounded-md shadow-md relative"
+              onMouseEnter={() => setHoveredButtonIndex(index)}
+              onMouseLeave={() => setHoveredButtonIndex(null)}
+            >
+
+             
+              {hoveredButtonIndex === index? (
+                 <Button
+                 className="text-[20px] white"
+                 onClick={handleDeleteButtonClick}><RiDeleteBin5Fill/></Button>
+                // <div className="absolute top-0 right-0 p-2 bg-red-500 text-white rounded">
+                //   <Button onClick={handleDeleteButtonClick}><RiDeleteBin5Fill/></Button>
+                // </div>
+              ): <Button
+              className="text-sm white"
+              onClick={() => console.log(person.id, 'clicked')}
+            >
+              {person.name}
+            </Button>} 
+            </div>
+          ))}
+  </div>
+</div>
+
+
+
 
               <div className="flex flex-col items-start justify-start w-full mt-20">
                 <Button

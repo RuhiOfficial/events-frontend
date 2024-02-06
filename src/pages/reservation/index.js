@@ -33,11 +33,10 @@ function Reservation() {
   const [isSectionOpen, setIsSectionOpen] = useState(false);
   const [isTableOpen, setIsTableOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const [isDeleteTableOpen, setIsDeleteTableOpen] = useState(false);
   const [isEditSectionOpen, setIsEditSectionOpen] = useState(false);
   const [editSectionId, setEditSectionId] = useState(null);
   const [deleteSectionId, setDeleteSectionId] = useState();
-  const [deleteTableId, setDeleteTableId] = useState();
+  
   const vid=localStorage.getItem('Venue')
   
   const [tableList,setTableList]=useState([])
@@ -60,6 +59,14 @@ function Reservation() {
     }
   };
   
+  
+  
+  
+  
+  
+
+
+
   const openModal = () => {
     setIsSectionOpen(true);
   };
@@ -87,15 +94,14 @@ function Reservation() {
     section();
   };
 
-  const openDeleteTableModal = (tableId) => {
-    console.log(tableId,"id of table from function ==>>>")
-    setDeleteTableId(tableId)
-    setIsDeleteTableOpen(true);
+  const openDeleteTableModal = (sectionId) => {
+    setDeleteSectionId(sectionId)
+    setIsDeleteOpen(true);
   };
 
   const closeDeleteTableModal = () => {
-    setDeleteTableId(null)
-    setIsDeleteTableOpen(false);
+    setDeleteSectionId(null)
+    setIsDeleteOpen(false);
     section();
   };
 
@@ -245,9 +251,10 @@ async function section() {
                 key={`${section.id}-${table.table_id}`}// Ensure a unique key
                 name={table.table_name}
                 index={index}
-            
-                onClick={(index)=>{
-                  openDeleteTableModal(index)
+                
+              
+                onClick={() => {
+                  console.log("table index is clicked ", index);
                 }}
               />
             ))}
@@ -268,8 +275,6 @@ async function section() {
 
 
 <AddTable isTableOpen={isTableOpen} onRequestTableClose={closeTableModal} />
-<DeleteTable isOpen={isDeleteTableOpen} onRequestClose={closeDeleteTableModal} tableId={deleteTableId}/>
-
 <DeleteSection isOpen={isDeleteOpen} onRequestClose={closeDeleteModal} sectionId={deleteSectionId}/>
 <EditSection isOpen={isEditSectionOpen} onRequestClose={closeEditSectionModal} sectionId={editSectionId} />
 </div>
