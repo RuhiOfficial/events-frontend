@@ -366,7 +366,7 @@ const fetchData = async (venueId) => {
                                       className="text-sm text-white-A700 tracking-[0.14px]"
                                       size="txtPoppinsSemiBold14"
                                     >
-                                      Admissions
+                                      Event Count 
                                     </Text>
                                   </div>
                                 </div>
@@ -401,7 +401,7 @@ const fetchData = async (venueId) => {
                                   className="md:text-3xl sm:text-[28px] text-[32px] text-white-A700"
                                   size="txtPoppinsSemiBold32"
                                 >
-                                  22
+                                  $22
                                 </Text>
                               </div>
                               </div>
