@@ -381,9 +381,9 @@ async function timezone() {
                     Add Venue
                   </Text>
                 </div>
-                <span className="modal-close" style={{color:"white",fontSize:"xx-large"}}  onClick={onClose}>
+                <Button className="modal-close" style={{color:"white",fontSize:"xx-large"}}  onClick={onClose}>
             &times;
-          </span>
+          </Button>
 
                 </div>
                

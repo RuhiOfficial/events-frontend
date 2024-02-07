@@ -14,6 +14,17 @@ import ImageComponent from 'components/ImageComponent.js';
 import ImageUploader from 'components/ImageUploader'
 
 const EventModal = ({ isEventOpen, onEventClose } ) => {
+
+  const handleCloseModal = () => {
+    // Close the modal
+    resetForm();
+  
+   
+     onEventClose();
+    
+    // Reset the form
+  
+  };
     const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [startTime, setStartTime] = useState(null);
@@ -70,6 +81,33 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
 
       });
 
+      const resetForm = () => {
+        form.resetForm({
+          name: "",
+          featured_image: "",
+          date_from: "",
+          date_to: "",
+          time_from: "",
+          time_to: "",
+          event_type: "",
+          event_day: "",
+          event_organiser: "",
+          event_desc: "",
+          facebook_event_url: "",
+          event_status: "",
+        });
+        setStartDate(null);
+        setEndDate(null);
+        setStartTime(null);
+        setEndTime(null);
+        setFormattedStartTime(null);
+        setFormattedEndTime(null);
+        setSelectedEventType(null);
+        setSelectedImage(null);
+      };
+      
+
+      
       const form = useForm(
         {
         
@@ -102,7 +140,7 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
           data: {
           venue_id:vid,
           name: data?.name,
-          featured_image: selectedImage,
+          featured_image: selectedImage?selectedImage:"https://png.pngtree.com/thumb_back/fh260/background/20230328/pngtree-party-dance-neon-light-background-image_2120481.jpg",
           date_from: startDate,
           date_to:endDate,
           time_from: formattedStartTime,
@@ -127,7 +165,7 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
             
             toast.success("Event is added Succesfully!");
             setTimeout(() => {
-              window.location.href="/"
+              // window.location.href="/"
             }, 2000);
           
           })
@@ -191,7 +229,7 @@ async function eventType() {
 
   return (
     <div className={`modal ${isEventOpen ? 'flex' : 'hidden'}`}>  
-      <div className="modal-overlay " onClick={onEventClose}></div>
+      <div className="modal-overlay " onClick={handleCloseModal}></div>
       <div className="modal-container fixed top-0 left-0 h-screen w-screen flex items-center justify-center overflow-auto">
         <div className="modal-content bg-white p-4 rounded-lg shadow-md w-full sm:w-1/2 max-h-screen overflow-auto">
           
@@ -211,9 +249,9 @@ async function eventType() {
                     Add Event
                   </Text>
                 </div>
-                <span className="modal-close" style={{color:"white",fontSize:"xx-large"}}  onClick={onEventClose}>
+                <Button className="modal-close" style={{color:"white",fontSize:"xx-large"}}  onClick={handleCloseModal}>
             &times;
-          </span>
+          </Button>
 
                 </div>
                
@@ -247,7 +285,7 @@ async function eventType() {
  <div className="flex flex-col items-start justify-start w-full
  border-b border-white-700_99 border-solid ">
 
-   <DateRangePicker startDate={startDate} endDate={endDate} onChange={handleDateChange}
+   <DateRangePicker startDate={startDate} endDate={endDate}  onChange={handleDateChange}
     className=" border-b border-white-700_99 border-solid w-full bg-[#292e34] " />
    
        
@@ -349,7 +387,7 @@ async function eventType() {
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
                     name="facebook_event_url"
-                    placeholder="Event Facebook URL"
+                    placeholder="Event  URL"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
                     wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     

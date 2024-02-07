@@ -4,20 +4,31 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../../pages/Custom.css'; // Custom styles for DateRangePicker
 
-const CustomInput = ({ value, onClick }) => (
-  <input
-    type="text"
-    value={value}
-    onClick={onClick}
-    readOnly
-    placeholder="Select Date"
-    className="rounded-md px-3 py-2 border-b border-gray-300 focus:outline-none focus:border-blue-500"
-  />
-);
-
 const DateRangePicker = ({ startDate, endDate, onChange }) => {
   const [selectedStartDate, setSelectedStartDate] = useState(startDate);
   const [selectedEndDate, setSelectedEndDate] = useState(endDate);
+
+  const CustomInputStartDate = ({ value, onClick }) => (
+    <input
+      type="text"
+      value={value}
+      onClick={onClick}
+      readOnly
+      placeholder="Start Date"
+      className="rounded-md px-3 py-2 border-b border-gray-300 focus:outline-none focus:border-blue-500"
+    />
+  );
+
+  const CustomInputEndDate = ({ value, onClick }) => (
+    <input
+      type="text"
+      value={value}
+      onClick={onClick}
+      readOnly
+      placeholder="End Date"
+      className="rounded-md px-3 py-2 border-b border-gray-300 focus:outline-none focus:border-blue-500"
+    />
+  );
 
   const handleStartDateChange = (date) => {
     setSelectedStartDate(date);
@@ -37,7 +48,7 @@ const DateRangePicker = ({ startDate, endDate, onChange }) => {
         selectsStart
         startDate={selectedStartDate}
         endDate={selectedEndDate}
-        customInput={<CustomInput />}
+        customInput={<CustomInputStartDate />}
         dateFormat="yyyy-MM-dd"
         showTimeInput={false}
       />
@@ -48,7 +59,7 @@ const DateRangePicker = ({ startDate, endDate, onChange }) => {
         startDate={selectedStartDate}
         endDate={selectedEndDate}
         minDate={selectedStartDate}
-        customInput={<CustomInput />}
+        customInput={<CustomInputEndDate />}
         dateFormat="yyyy-MM-dd"
         showTimeInput={false}
       />

@@ -80,6 +80,7 @@ const fetchData = async (venueId) => {
     try {
       const res = await getEvent(req);
       console.log(res.data,"list of events on the bases of venue id ")
+      
       setEventList(res.data.data);
      
       setIsEventLoading(false);
