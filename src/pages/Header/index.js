@@ -51,10 +51,18 @@ function Header() {
   }, []);
 
 
+  const showDropdown = () => {
+    setDropdownOpen(true);
+  };
+
+  const hideDropdown = () => {
+    setDropdownOpen(false);
+  };
+
     const openModal = async() => {
     
       setIsModalOpen(true);
-
+      
     
 
 
@@ -63,6 +71,8 @@ function Header() {
   
     const closeModal = () => {
       setIsModalOpen(false);
+      setDropdownOpen(false)
+
     };
   
     const toggleDropdown = () => {
@@ -157,11 +167,11 @@ function Header() {
                       </Text>
                     </div>
             <div className="relative">
-                 <button
-                    type="button"
-                    onClick={toggleDropdown}
-                    className="inline-flex items-center justify-center h-full px-2 text-gray-600  border-gray-100 hover:text-gray-700 rounded-r-md hover:bg-gray-50"
-                >
+            <button
+        type="button"
+        onMouseEnter={showDropdown}
+        className="inline-flex items-center justify-center h-full px-2 text-gray-600 border-gray-100 hover:text-gray-700 rounded-r-md hover:bg-gray-50"
+      >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="w-4 h-4"
@@ -179,7 +189,13 @@ function Header() {
                 </button>
 
                 {isDropdownOpen && (
-          <div className="absolute right-0 z-10 w-56 mt-4 origin-top-right bg-white border border-gray-100 rounded-md shadow-lg">
+            //    <div onMouseEnter={showDropdown}
+            //    onMouseLeave={hideDropdown}
+            //    className="absolute top-full left-0 bg-white border border-gray-200 rounded-md shadow-lg"
+            //  >
+          <div  onMouseEnter={showDropdown}
+          onMouseLeave={hideDropdown}
+          className="absolute right-0 z-10 w-56 mt-4 origin-top-right bg-white border border-gray-100 rounded-md shadow-lg">
             <div className="p-2 flex flex-col items-center bg-[#333441] border border-gray-100">
               {/* <a
                 href="#"
@@ -211,6 +227,7 @@ function Header() {
                             
             </div>
           </div>
+          // </div>
         )}
             </div>
         </div>
