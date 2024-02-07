@@ -4,6 +4,17 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../../pages/Custom.css'; // Custom styles for DateRangePicker
 
+const CustomInput = ({ value, onClick }) => (
+  <input
+    type="text"
+    value={value}
+    onClick={onClick}
+    readOnly
+    placeholder="Select Date"
+    className="rounded-md px-3 py-2 border-b border-gray-300 focus:outline-none focus:border-blue-500"
+  />
+);
+
 const DateRangePicker = ({ startDate, endDate, onChange }) => {
   const [selectedStartDate, setSelectedStartDate] = useState(startDate);
   const [selectedEndDate, setSelectedEndDate] = useState(endDate);
@@ -11,7 +22,6 @@ const DateRangePicker = ({ startDate, endDate, onChange }) => {
   const handleStartDateChange = (date) => {
     setSelectedStartDate(date);
     onChange(date, selectedEndDate);
-    
   };
 
   const handleEndDateChange = (date) => {
@@ -27,10 +37,8 @@ const DateRangePicker = ({ startDate, endDate, onChange }) => {
         selectsStart
         startDate={selectedStartDate}
         endDate={selectedEndDate}
-        placeholderText="Start Date"
+        customInput={<CustomInput />}
         dateFormat="yyyy-MM-dd"
-        className="rounded-l-md px-3 py-2 border-b border-gray-300 focus:outline-none focus:border-blue-500 flex-grow"
-    
         showTimeInput={false}
       />
       <DatePicker
@@ -40,10 +48,8 @@ const DateRangePicker = ({ startDate, endDate, onChange }) => {
         startDate={selectedStartDate}
         endDate={selectedEndDate}
         minDate={selectedStartDate}
-        placeholderText="End Date"
+        customInput={<CustomInput />}
         dateFormat="yyyy-MM-dd"
-        className="rounded-r-md px-3 py-2 border-b border-gray-300 focus:outline-none focus:border-blue-500 flex-grow"
-       
         showTimeInput={false}
       />
     </div>
