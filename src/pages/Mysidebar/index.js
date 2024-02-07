@@ -48,8 +48,14 @@ function Mysidebar({children}) {
         {
           imgSrc: setting, // Assuming customers is the import of your image file
           href: "/tickets",
-          active: window.location.pathname === "/",
+          active: window.location.pathname === "/tickets",
           altText: "tickets ", // Add alt text for accessibility
+        },
+        {
+          imgSrc: customers, // Assuming customers is the import of your image file
+          href: "/calender",
+          active: window.location.pathname === "/calender",
+          altText: "calender ", // Add alt text for accessibility
         },
         // {
         //   imgSrc: admissions, // Assuming customers is the import of your image file
