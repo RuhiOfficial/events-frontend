@@ -716,3 +716,25 @@ ul {
 li {
   margin-bottom: 8px;
 }
+
+
+/* calender css */
+.rbc-off-range-bg {
+  background:#1E1D1D!important;
+}
+.rbc-today {
+  background-color:transparent!important;
+ 
+}
+
+.backimage{
+  
+
+  
+    background-image: 'url("https://images.unsplash.com/photo-1556035511-3168381ea4d4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bmlnaHQlMjBjbHVifGVufDB8fDB8fHww")';
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+ 
+  
+}

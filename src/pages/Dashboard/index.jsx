@@ -188,7 +188,13 @@ const fetchData = async (venueId) => {
     // Add more columns as needed
   ];
 
-  
+  const cardStyles = {
+    boxShadow: '0 0 20px rgba(218, 80, 170, 0.8)', // Adjust the shadow properties as needed
+    borderRadius: '8px',
+    padding: '16px',
+    // Set the desired background color
+    // Other styling properties...
+  };
 
   useEffect(()=>{
     loadBooking();
@@ -231,10 +237,29 @@ const fetchData = async (venueId) => {
   // )
 
   
+  const dashboardStyles = {
+    backgroundImage: 'url("https://images.unsplash.com/photo-1556035511-3168381ea4d4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bmlnaHQlMjBjbHVifGVufDB8fDB8fHww")', // Replace with your image URL
+    backgroundSize: 'cover',
+    position: 'relative',
+  };
+
+  const backdropStyles = {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundImage: 'url("https://images.unsplash.com/photo-1556035511-3168381ea4d4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bmlnaHQlMjBjbHVifGVufDB8fDB8fHww")', // Replace with your image URL
+    backgroundSize: 'cover',
+    filter: 'blur(10px)', // Adjust the blur intensity
+    zIndex: -1,
+  };
+
   return (
     <>
     < div className={`relative ${isModalOpen || isEventModalOpen ? 'filter blur' : ''}`}>
-    
+    <div style={backdropStyles}></div>
       <div className="flex flex-col font-roboto items-center justify-start mx-auto w-full">
         <div className="backdrop-opacity-[0.5] bg-gray-900  flex flex-col items-center justify-end   w-full">
           <div className="flex md:flex-col flex-row  items-start justify-between mx-auto md:px-5 w-full">
@@ -309,7 +334,7 @@ const fetchData = async (venueId) => {
                                 </Text>
                               </div>
                             </div>
-                            <div className="bg-blue_gray-900_01 flex flex-col items-start justify-end sm:ml-[0] p-[7px] rounded w-full">
+                            <div style ={cardStyles}  className="bg-blue_gray-900_01 flex flex-col items-start justify-end sm:ml-[0] p-[7px] rounded w-full">
                               <div className="flex flex-col gap-[25px] items-start justify-start ml-3 md:ml-[0] mt-3 w-[58%] md:w-full">
                                 <div className="flex flex-row gap-5 items-start justify-between w-full">
                                   <div className="bg-indigo-A400 flex flex-col items-start justify-start p-1 rounded w-8">
@@ -871,7 +896,8 @@ const fetchData = async (venueId) => {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    
     <Modal isOpen={isModalOpen} onClose={closeModal} />
     <EventModal isEventOpen={isEventModalOpen} onEventClose={closeEventModal} />
 
