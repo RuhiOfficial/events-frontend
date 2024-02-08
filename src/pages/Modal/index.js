@@ -89,6 +89,16 @@ const Modal = ({ isOpen, onClose }) => {
 }, []);
 
 
+const cardStyles = {
+  boxShadow: '0 0 20px rgba(255, 105, 180, 0.8)', // Bright pink shadow
+  borderRadius: '8px',
+  padding: '16px',
+  
+  // Set the desired background color
+  // Other styling properties...
+};
+
+
 
      async function addvenue(data) {
 
@@ -371,7 +381,7 @@ async function timezone() {
            
           <div className="flex flex-col font-poppins items-center justify-start mx-auto w-full ">
             <div className="bg-no-repeat flex flex-col items-center justify-start p-10 md:p-5 w-full">
-              <div className="bg-[#292e34] flex flex-col items-start justify-start max-w-[716px] p-[3.5rem] rounded-[24px] w-full ">
+              <div style={cardStyles} className="bg-[#292e34] flex flex-col items-start justify-start max-w-[716px] p-[3.5rem] rounded-[24px] w-full ">
                 <div className='text-center w-full flex justify-between items-center'>
                 <div className="flex flex-col items-center justify-center w-[534px] sm:w-full">
                   <Text
@@ -393,7 +403,7 @@ async function timezone() {
                         name="input"
                         placeholder="Name"
                         className="capitalize font-roboto p-0  placeholder-white-900 text-base text-left w-full h-[50px] pl-4 "
-                        wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                        wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                         style={{color:"white"}}
                         onChange={(e) => {
                           form.handleChange("name", e);
@@ -413,7 +423,7 @@ async function timezone() {
                     name="input"
                     placeholder="Email"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     type="email"
                     onChange={(e) => {
                       form.handleChange("email", e);
@@ -432,7 +442,7 @@ async function timezone() {
                     name="input"
                     placeholder="Contact No"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     type="tel"
                     onChange={(e) => {
                       form.handleChange("phone", e);
@@ -449,7 +459,7 @@ async function timezone() {
                 
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                 <SelectBox
-                   className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
+                   className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border-b border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
                    placeholderClassName="text-gray-600"
                    isMulti={false}
                    name="country"
@@ -464,7 +474,7 @@ async function timezone() {
                
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                 <SelectBox
-                   className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
+                   className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border-b border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
                    placeholderClassName="text-gray-600"
                    isMulti={false}
                    name="state"
@@ -478,7 +488,7 @@ async function timezone() {
 
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                 <SelectBox
-                   className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
+                   className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border-b border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
                    placeholderClassName="text-gray-600"
                    isMulti={false}
                    name="city"
@@ -494,7 +504,7 @@ async function timezone() {
                     name="input"
                     placeholder="Zipcode"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
                       form.handleChange("zipcode", e);
@@ -512,7 +522,7 @@ async function timezone() {
                     name="input"
                     placeholder="Address"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
                       form.handleChange("address", e);
@@ -530,7 +540,7 @@ async function timezone() {
                     name="input"
                     placeholder="Tax"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
                       form.handleChange("tax", e);
@@ -546,7 +556,7 @@ async function timezone() {
 
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                 <SelectBox
-                   className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
+                   className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border-b border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
                    placeholderClassName="text-gray-600"
                    isMulti={false}
                    name="venue_type"
@@ -559,7 +569,7 @@ async function timezone() {
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                 <SelectBox
-                   className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
+                   className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border-b border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
                    placeholderClassName="text-gray-600"
                    isMulti={false}
                    name="timezone"
@@ -576,7 +586,7 @@ async function timezone() {
                     name="input"
                     placeholder="Website"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
                       form.handleChange("website", e);
@@ -594,7 +604,7 @@ async function timezone() {
                     name="input"
                     placeholder="Currency"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
                       form.handleChange("currency", e);
@@ -612,7 +622,7 @@ async function timezone() {
                     name="input"
                     placeholder="Capacity"
                     className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
-                    wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                    wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
                       form.handleChange("capacity", e);

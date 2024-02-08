@@ -76,7 +76,7 @@ const Calender = () => {
   };
 
   const globalStyles = {
-    color: 'white',
+    color: 'rgba(218, 80, 170, 0.8)',
     borderRadius: '8px',
     height: '87vh',
     marginLeft:"20px",
@@ -96,9 +96,9 @@ const Calender = () => {
   left: '100px', // Adjust the left position as needed
   width: 'calc(100% - 40px)', // Adjust the width to match the calendar width
   height: 'calc(100% - 40px)', // Adjust the height to match the calendar height
-  backgroundImage: 'url("https://images.unsplash.com/photo-1556035511-3168381ea4d4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bmlnaHQlMjBjbHVifGVufDB8fDB8fHww")',
-  backgroundSize: 'cover',
-  filter: 'blur(40px)', // Adjust the blur intensity
+  // backgroundImage: 'url("https://images.unsplash.com/photo-1556035511-3168381ea4d4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bmlnaHQlMjBjbHVifGVufDB8fDB8fHww")',
+  // backgroundSize: 'cover',
+  // filter: 'blur(40px)', // Adjust the blur intensity
 };
   
 

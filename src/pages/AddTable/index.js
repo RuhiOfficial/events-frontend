@@ -121,7 +121,14 @@ const handleSectionChange = (selectedOption) => {
                     toast.error("Something Went Wrong!");
                   });
               }
-             
+              const cardStyles = {
+                boxShadow: '0 0 20px rgba(255, 105, 180, 0.8)', // Bright pink shadow
+                borderRadius: '8px',
+                padding: '16px',
+                
+                // Set the desired background color
+                // Other styling properties...
+              };
     
   return (
     <Modal
@@ -151,7 +158,7 @@ const handleSectionChange = (selectedOption) => {
            
                   <div className="flex flex-col font-poppins items-center justify-start mx-auto w-full ">
                      <div className="bg-no-repeat flex flex-col items-center justify-start p-10 md:p-5 w-full">
-                        <div className="bg-[#292e34] flex flex-col items-start justify-start max-w-[716px] p-[3.5rem] rounded-[24px] w-full ">
+                        <div style={cardStyles} className="bg-[#292e34] flex flex-col items-start justify-start max-w-[716px] p-[3.5rem] rounded-[24px] w-full ">
                          <div className='text-center w-full flex justify-between items-center'>
                            <div className="flex flex-col items-center justify-center w-[534px] sm:w-full">
                             <Text
@@ -168,7 +175,7 @@ const handleSectionChange = (selectedOption) => {
                                                                                                                                                          
                          <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                 <SelectBox
-                   className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
+                   className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border-b border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
                    placeholderClassName="text-gray-600"
                    isMulti={false}
                    name="country"
@@ -184,7 +191,7 @@ const handleSectionChange = (selectedOption) => {
                                  name="input"
                                  placeholder=" Table Name"
                                  className="capitalize font-roboto p-0  placeholder-white-900 text-base text-left w-full h-[50px] pl-4 "
-                                 wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                                 wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                                  style={{color:"white"}}
                                  onChange={(e) => {
                                    form.handleChange("name", e);
@@ -204,7 +211,7 @@ const handleSectionChange = (selectedOption) => {
                              name="input"
                              placeholder="No Of Seats "
                              className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
-                             wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                             wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                              type="number"
                              onChange={(e) => {
                                form.handleChange("no_of_seats", e);
@@ -223,7 +230,7 @@ const handleSectionChange = (selectedOption) => {
                              name="input"
                              placeholder="Minimum Order"
                              className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
-                             wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
+                             wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                              type="number"
                              onChange={(e) => {
                                form.handleChange("minimum_order", e);

@@ -501,7 +501,14 @@ useEffect(() => {
     
   
     // ...
-
+    const cardStyles = {
+      boxShadow: '0 0 20px rgba(255, 105, 180, 0.8)', // Bright pink shadow
+      borderRadius: '8px',
+      padding: '16px',
+      backgroundColor:'transparent'
+      // Set the desired background color
+      // Other styling properties...
+    };
 
     /////////////Modal////////
     const openModal = () => {
@@ -885,10 +892,11 @@ useEffect(() => {
    
 
     
-        <div style={{ display: 'flex', flexDirection: 'column', marginTop: '40px' }}>
+        {/* <div  style={{ display: 'flex', flexDirection: 'column', marginTop: '40px' }}> */}
         {/* <button className="buttons" onClick={openLayoutPopup}>
           New Layout
         </button> */}
+        <div className='canvas-button' style={cardStyles}>
         <Button
          className="cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm"
             color="indigo_A400"
@@ -939,7 +947,7 @@ useEffect(() => {
 
   
     
-        <div className="drawing-canvas">
+        <div className="drawing-canvas" style={cardStyles}>
         
          
       {backgroundImage && (

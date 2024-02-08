@@ -63,8 +63,9 @@ color: #fff!important;
 }
 
 .active-menu {
-  background-color: #3F51B5;
+  background-color: #007bff;
 }
+
 
 /* DateRangePicker.css */
 .react-datepicker {
@@ -168,7 +169,7 @@ input.tp_inputBox{
   height:fit-content;
   margin-top: 50px;
   margin-left: 100px;
-  border:2px solid white;
+  
 }
 .myCard{
 border:2px solid  #282c34;
@@ -736,5 +737,21 @@ li {
     background-position: center;
     background-repeat: no-repeat;
  
+  
+}
+
+
+.myHeader{
+  padding: 15px;
+  font-size: xx-large;
+  margin-right: 20px;
+  
+}
+
+
+.canvas-button{
+  display:flex;
+  flex-direction: column;
+  margin-top: 40px;
   
 }

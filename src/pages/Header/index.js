@@ -123,14 +123,26 @@ function Header() {
       // For simplicity, I'm using placeholder images from placekitten.com
       return `https://placekitten.com/100/100?text=${letter}`;
     };
+
+
+    const textStyles = {
+  background: '-webkit-linear-gradient(left, #ff6eff, #c70039)', // Gradient from pink to dark pink
+  WebkitBackgroundClip: 'text',
+  WebkitTextFillColor: 'transparent',
+  textShadow: '0 0 10px rgba(0, 0, 0, 0.7)', // Dark glow effect
+  // Other styling properties...
+};
+
+    
     
   return (
     <div>
         
-         <header className="bg-[#3f51b5] flex  flex-row md:gap-5 items-center  w-[100] justify-between ">
-            
-            <div style={{display:"flex",alignItems:"center"}}>
-            <h1 style={{padding:"15px",color:"white",fontSize:"xx-large",marginRight:"20px"}} > <Link to="/" className='eqlogo'>vM</Link></h1>
+         {/* <header   className="bg-[#3f51b5] flex  flex-row md:gap-5 items-center  w-[100] justify-between "> */}
+                   <header className="bg-[#16191c] flex  flex-row md:gap-5 items-center  w-[100] justify-between ">
+  
+            <div style={textStyles}>
+            <h1  className='myHeader' > <Link to="/" className='eqlogo'>vM</Link></h1>
             {/* <DatePicker
         selected={selectedDate}
         onChange={handleDateChange}
@@ -141,9 +153,6 @@ function Header() {
       /> */}
             </div>
         
-        
-
-         
               <div className="max-w-md  p-4">
     
     </div>
@@ -159,9 +168,9 @@ function Header() {
                         src="images/img_rectangle6.png"
                         alt="rectangleSix"
                       />
-                      <Text
+                      <Text style={textStyles}
                         className="text-base text-right text-white-A700 w-auto mr-3"
-                        size="txtRubikRomanMedium16"
+                        size="txtRubikRoman42"
                       >
                        {name}
                       </Text>
