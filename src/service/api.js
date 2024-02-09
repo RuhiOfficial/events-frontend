@@ -17,7 +17,7 @@ const API_URLS = {
   GET_LAYOUT: `${COMMON_URL}get_layout`,
   GET_LOCALSTORAGE: `${COMMON_URL}get_layout_box`,
   GET_BOOKING_LIST:`${COMMON_URL}ticketbooking`,
-  GET_SECTION_BY_ID:`${COMMON_URL}section_list`,
+  GET_SECTION_BY_ID:`${COMMON_URL}listsection`,
   GET_CANVAS_TABLE:`${COMMON_URL}eventTable`,
   POST_STATE:`${COMMON_URL}list_states`,
   POST_SIGNUP_USER: `${COMMON_URL}signupUser`,
@@ -32,7 +32,10 @@ const API_URLS = {
   POST_SINGLE_VENUE:`${COMMON_URL}venue_detail`,
   POST_BOOK_TICKETS:`${COMMON_URL}ticketbooking`,
   DELETE_SECTION: `${COMMON_URL}sections`,
+  DELETE_TABLE: `${COMMON_URL}eventTable`,
+  DELETE_EVENT: `${COMMON_URL}event_delete`,
   UPDATE_SECTION: `${COMMON_URL}sections_update`,
+  UPDATE_EVENT: `${COMMON_URL}events_update`,
 
 
 };
@@ -74,7 +77,7 @@ const API_URLS = {
   
 
   export const sectionById = (payload) =>
-  apis.get(`${API_URLS.GET_SECTION_BY_ID}?id=${payload.data.id}`, payload);
+  apis.get(`${API_URLS.GET_SECTION_BY_ID}?id=${payload.data.id}&venue_id=${payload.data.venue_id}`, payload);
 
   export const getLayout = (payload) =>
   apis.get(`${API_URLS.GET_LAYOUT}?venue_id=${payload.data.venue_id}`, payload);
@@ -84,6 +87,12 @@ const API_URLS = {
 
   export const deleteSection = (payload) =>
   apis.delete(`${API_URLS.DELETE_SECTION}?id=${payload.data.id}`, payload);
+
+  export const deleteTable = (payload) =>
+  apis.delete(`${API_URLS.DELETE_TABLE}?id=${payload.data.id}`, payload);
+
+  export const deleteEvent = (payload) =>
+  apis.delete(`${API_URLS.DELETE_EVENT}?id=${payload.data.id}&venue_id=${payload.data.venue_id}`, payload);
 
   export const updateSection = (payload) =>
   apis.post(`${API_URLS.UPDATE_SECTION}?id=${payload.data.id}`, payload);

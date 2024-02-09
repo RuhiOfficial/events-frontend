@@ -2,14 +2,18 @@ import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import * as yup from 'yup';
 import { Button, Input, Text } from 'components';
-import { updateSection, sectionById } from 'service/api';
+import { updateSection, sectionById,deleteTable } from 'service/api';
 import { ToastContainer, toast } from 'react-toastify';
 import { RiDeleteBin5Fill } from "react-icons/ri";
+
+
+
 function EditSection({ isOpen, onRequestClose, sectionId }) {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [hoveredButtonIndex, setHoveredButtonIndex] = useState(null);
-
+  const [tableList, setTableList] = useState([]);
+ 
   useEffect(() => {
     loadSection();
   }, [sectionId]);
@@ -48,43 +52,57 @@ function EditSection({ isOpen, onRequestClose, sectionId }) {
   async function handleDeleteButtonClick() {
     // Make your delete API call here
     if (hoveredButtonIndex !== null) {
-      console.log(`Deleting section with ID: ${people[hoveredButtonIndex].id}`);
+      const vid=localStorage.getItem('Venue');
+     const id = `${tableList[hoveredButtonIndex].id}`
+  
+      try {
+        const res = await deleteTable({ data: { id:id} });
+        toast.success("Table is deleted Succesfully!");
+        loadSection()
+  
+        // Check if the response data is not empty
+        
+      } catch (err) {
+        console.error(err);
+      }
+    
+  
+      
+
+
+
+
+
+
+
+
+      // console.log(`Deleting section with ID: ${tableList[hoveredButtonIndex].id}`);
       // Add your delete API logic here
     }
     setHoveredButtonIndex(null);
   }
   async function loadSection() {
+    const vid=localStorage.getItem('Venue');
+    console.log(vid,"venue id ==>>>/")
+
     try {
-      const res = await sectionById({ data: { id: sectionId } });
-      console.log('Fetched Data:', res.data);
+      const res = await sectionById({ data: { id: sectionId ,venue_id:vid} });
+      console.log('Fetched Data:', res.data.data);
 
       // Check if the response data is not empty
       if (res.data) {
         // Update the state
        
-        setName(res.data.name);
-        setPrice(res.data.price);
+        setName(res.data.data.name);
+        setPrice(res.data.data.price);
+        setTableList(res.data.data.tables)
       }
     } catch (err) {
       console.error(err);
     }
   }
 
-  const people = [
-    {
-      name: 'T1',
-      id:1,
-    },
-    {
-      name: 'T2',
-      id:2,
-    },
-    {
-      name: 'T3',
-      id:3,
-    },
-    // More people...
-  ];
+  
 
   return (
     <Modal
@@ -168,7 +186,7 @@ function EditSection({ isOpen, onRequestClose, sectionId }) {
 
               <div className="flex flex-row items-start justify-start mt-[38px] w-full overflow-x-auto">
   <div className="flex space-x-4 ">
-  {people.map((person, index) => (
+  {tableList.map((person, index) => (
             <div
               key={person.id}
               className="p-2 bg-[#5051f9] rounded-md shadow-md relative"
@@ -188,7 +206,7 @@ function EditSection({ isOpen, onRequestClose, sectionId }) {
               className="text-sm white"
               onClick={() => console.log(person.id, 'clicked')}
             >
-              {person.name}
+              {person.table_name}
             </Button>} 
             </div>
           ))}

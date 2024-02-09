@@ -26,14 +26,14 @@ const override = css`
 `;
 
 
-const cardStyles = {
-  boxShadow: '0 0 20px rgba(255, 105, 180, 0.8)', // Bright pink shadow
-  borderRadius: '8px',
-  padding: '16px',
-  backgroundColor:'transparent'
-  // Set the desired background color
-  // Other styling properties...
-};
+// const cardStyles = {
+//   boxShadow: '0 0 20px rgba(255, 105, 180, 0.8)', // Bright pink shadow
+//   borderRadius: '8px',
+//   padding: '16px',
+//   backgroundColor:'transparent'
+//   // Set the desired background color
+//   // Other styling properties...
+// };
 
 
 function Reservation() {
@@ -209,10 +209,10 @@ async function section() {
 
   return (
     <div className="flex flex-col font-roboto items-center justify-start mx-auto w-full">
-    <div  style={cardStyles} className="backdrop-opacity-[0.5] bg-gray-900  flex flex-col items-center justify-end   w-full">
+    <div  className="backdrop-opacity-[0.5] bg-gray-900  flex flex-col items-center justify-end   w-full">
     <div   className="flex md:flex-col flex-row  items-start justify-between mx-auto md:px-5 w-full">
     
-    <div className='p-[18px] m-[40px] bg-[#1f2327] w-full' style={cardStyles}>
+    <div className='p-[18px] m-[40px] bg-[#1f2327] w-full' >
       <div  className='flex justify-between items-center'>
       <Text
                     className="md:text-3xl sm:text-[25px] text-[20px] text-white-A700 w-auto"

@@ -89,15 +89,15 @@ const Modal = ({ isOpen, onClose }) => {
 }, []);
 
 
-const cardStyles = {
-  boxShadow: '0 0 20px rgba(255, 105, 180, 0.8)', // Bright pink shadow
-  borderRadius: '8px',
-  padding: '16px',
-  
-  // Set the desired background color
-  // Other styling properties...
-};
 
+// const cardStyles = {
+//   boxShadow: '0 0 20px rgba(255, 105, 180, 0.8)', // Bright pink shadow
+//   borderRadius: '8px',
+//   padding: '16px',
+  
+//   // Set the desired background color
+//   // Other styling properties...
+// };
 
 
      async function addvenue(data) {
@@ -381,7 +381,7 @@ async function timezone() {
            
           <div className="flex flex-col font-poppins items-center justify-start mx-auto w-full ">
             <div className="bg-no-repeat flex flex-col items-center justify-start p-10 md:p-5 w-full">
-              <div style={cardStyles} className="bg-[#292e34] flex flex-col items-start justify-start max-w-[716px] p-[3.5rem] rounded-[24px] w-full ">
+              <div  className="bg-[#292e34] flex flex-col items-start justify-start max-w-[716px] p-[3.5rem] rounded-[24px] w-full ">
                 <div className='text-center w-full flex justify-between items-center'>
                 <div className="flex flex-col items-center justify-center w-[534px] sm:w-full">
                   <Text

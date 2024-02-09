@@ -23,14 +23,14 @@ const TicketReservations = () => {
   const [index, setIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-  const cardStyles = {
-    boxShadow: '0 0 20px rgba(255, 105, 180, 0.8)', // Bright pink shadow
-    borderRadius: '8px',
-    padding: '16px',
-    backgroundColor:'transparent'
-    // Set the desired background color
-    // Other styling properties...
-  };
+  // const cardStyles = {
+  //   boxShadow: '0 0 20px rgba(255, 105, 180, 0.8)', // Bright pink shadow
+  //   borderRadius: '8px',
+  //   padding: '16px',
+  //   backgroundColor:'transparent'
+  //   // Set the desired background color
+  //   // Other styling properties...
+  // };
 
   useEffect(() => {
     const loadBooking = async () => {
@@ -119,7 +119,7 @@ const TicketReservations = () => {
   return (
 
     <div className="flex flex-col font-roboto items-center justify-start mx-auto w-full">
-    <div  style={cardStyles} className="backdrop-opacity-[0.5] bg-gray-900  flex flex-col items-center justify-end   w-full">
+    <div  className="backdrop-opacity-[0.5] bg-gray-900  flex flex-col items-center justify-end   w-full">
     <div   className="flex md:flex-col flex-row  items-start justify-between mx-auto md:px-5 w-full">
     
       {isLoading ? (
@@ -129,7 +129,7 @@ const TicketReservations = () => {
         </div>
       ) : ( 
           data.length!==0?(
-            <div  style={cardStyles} className="bg-blue_gray-900_01 flex flex-col font-poppins  justify-start sm:px-5 px-[26px] rounded shadow-bs1 m-10 w-full">
+            <div  className="bg-blue_gray-900_01 flex flex-col font-poppins  justify-start sm:px-5 px-[26px] rounded shadow-bs1 m-10 w-full">
       <div className="flex-1 overflow-x-auto  ">
         <div className='grid gap-x-8 gap-y-4'>
 

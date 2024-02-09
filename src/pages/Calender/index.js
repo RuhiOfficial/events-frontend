@@ -2,6 +2,7 @@
 // EventCalendar.js
 
 import React, { useState, useEffect } from 'react';
+import { Button } from 'components';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
@@ -9,6 +10,7 @@ import { getEvent } from 'service/api';
 import SingleEvent from 'pages/SingleEvent';
 import "../Custom.css"
 const localizer = momentLocalizer(moment);
+
 
 const CustomEvent = ({ event, onSelectEvent, isHovered, onMouseEnter, onMouseLeave }) => {
   const startDate = new Date(event.date_from);
@@ -82,7 +84,7 @@ const Calender = () => {
     marginLeft:"20px",
     marginTop:"30px",
     width: '97%',
-    boxShadow: '0 0 75px 10px rgba(218, 80, 170, 0.8)',
+ 
     position: 'relative',
     fontSize: '18px'
   };
@@ -139,9 +141,9 @@ const Calender = () => {
           <button onClick={closeModal}>Close</button>
         </div>
       )} */}
-<div style={backgroundImageStyles}></div>
+{/* <div style={backgroundImageStyles}></div> */}
 
-      <Calendar
+ <Calendar
         localizer={localizer}
         events={eventList.map((event) => ({
           ...event,
@@ -180,6 +182,7 @@ const Calender = () => {
 };
 
 const CustomToolbar = (toolbar) => {
+  
   const goToBack = () => {
     toolbar.onNavigate('PREV');
   };
@@ -197,8 +200,11 @@ const CustomToolbar = (toolbar) => {
   };
 
   return (
-    <div className="rbc-toolbar">
-      <span className="rbc-btn-group">
+    <div className="rbc-toolbar flex justify-between">
+      <div>
+
+     
+      <span className="rbc-btn-group ">
         <button type="button" onClick={goToBack} style={{color:'white'}}>
           {'<'}
         </button>
@@ -209,7 +215,21 @@ const CustomToolbar = (toolbar) => {
           {'>'}
         </button>
       </span>
+      </div>
+      <div>
       <span className="rbc-toolbar-label">{toolbar.label}</span>
+    </div>
+    <div>
+    <Button
+                              className="cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm "
+                              color="white"
+                              size="sm"
+                              onClick={()=>{window.location.href="/allEvents"}}
+                              style={{color:'white'}}
+                            >
+                              View All
+                            </Button>
+    </div>
     </div>
   );
 };

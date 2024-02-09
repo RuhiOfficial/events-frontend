@@ -39,16 +39,13 @@ const DashboardPage = () => {
   const [isSingleEventModalOpen,setIsSingleEventModalOpen]=useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const[venueId,setVenueId]=useState(null);
-  const[eventList,setEventList]=useState([]);
-  const[eventId,setEventId]=useState();
-  const[date,setDate]=useState([]);
-  const[ticketList,setTicketList]=useState([]);
+  const [venueId,setVenueId]=useState(null);
+  const [eventList,setEventList]=useState([]);
+  const [eventId,setEventId]=useState();
+  const [date,setDate]=useState([]);
+  const [ticketList,setTicketList]=useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isEventLoading, setIsEventLoading] = useState(true);
-
-
-
 
   const settings = {
     dots: true,
@@ -191,14 +188,14 @@ const fetchData = async (venueId) => {
     // Add more columns as needed
   ];
 
-  const cardStyles = {
-    boxShadow: '0 0 20px rgba(255, 105, 180, 0.8)', // Bright pink shadow
-    borderRadius: '8px',
-    padding: '16px',
-    backgroundColor:'transparent'
-    // Set the desired background color
-    // Other styling properties...
-  };
+  // const cardStyles = {
+  //   boxShadow: '0 0 20px rgba(255, 105, 180, 0.8)', // Bright pink shadow
+  //   borderRadius: '8px',
+  //   padding: '16px',
+  //   backgroundColor:'transparent'
+  //   // Set the desired background color
+  //   // Other styling properties...
+  // };
   
 
   useEffect(()=>{
@@ -311,7 +308,7 @@ const fetchData = async (venueId) => {
                            className="md:flex-1 sm:flex-col flex-row gap-6 grid sm:grid-cols-1 md:grid-cols-2 grid-cols-4 w-full md:w-full"
                             orientation="horizontal"
                           >
-                            <div style ={cardStyles}  className="bg-blue_gray-900_01 flex flex-col items-start justify-end sm:ml-[0] p-[7px] rounded w-full">
+                            <div  className="bg-blue_gray-900_01 flex flex-col items-start justify-end sm:ml-[0] p-[7px] rounded w-full">
                               <div className="flex flex-col gap-6 items-start justify-start ml-3 md:ml-[0] mt-3 w-1/2 md:w-full">
                                 <div className="flex flex-row gap-4 items-start justify-between w-full">
                                   <Img
@@ -342,7 +339,7 @@ const fetchData = async (venueId) => {
                                 </Text>
                               </div>
                             </div>
-                            <div style ={cardStyles}  className="bg-blue_gray-900_01 flex flex-col items-start justify-end sm:ml-[0] p-[7px] rounded w-full">
+                            <div  className="bg-blue_gray-900_01 flex flex-col items-start justify-end sm:ml-[0] p-[7px] rounded w-full">
                               <div className="flex flex-col gap-[25px] items-start justify-start ml-3 md:ml-[0] mt-3 w-[58%] md:w-full">
                                 <div className="flex flex-row gap-5 items-start justify-between w-full">
                                   <div className="bg-indigo-A400 flex flex-col items-start justify-start p-1 rounded w-8">
@@ -377,7 +374,7 @@ const fetchData = async (venueId) => {
                                 </Text>
                               </div>
                             </div>
-                            <div style ={cardStyles}  className="bg-blue_gray-900_01 flex flex-col items-start justify-end sm:ml-[0] p-[7px] rounded w-full">
+                            <div  className="bg-blue_gray-900_01 flex flex-col items-start justify-end sm:ml-[0] p-[7px] rounded w-full">
                               <div className="flex flex-col gap-[25px] items-start justify-start ml-3 md:ml-[0] mt-3 w-[54%] md:w-full">
                                 <div className="flex flex-row gap-5 items-start justify-between w-full">
                                   <div className="bg-indigo-A400 flex flex-col h-8 items-center justify-start p-[5px] rounded w-8">
@@ -412,7 +409,7 @@ const fetchData = async (venueId) => {
                                 </Text>
                               </div>
                             </div>
-                            <div  style ={cardStyles}  className="bg-blue_gray-900_01 flex flex-col items-start justify-end sm:ml-[0] p-[7px] rounded w-full">
+                            <div   className="bg-blue_gray-900_01 flex flex-col items-start justify-end sm:ml-[0] p-[7px] rounded w-full">
                               <div className="flex flex-col gap-[25px] items-start justify-start md:ml-[0] ml-[11px] mt-[11px] w-[47%] md:w-full">
                                 <div className="flex flex-row gap-4 items-end justify-start w-full">
                                   <div className="bg-indigo-A400 flex flex-col h-8 items-center justify-start p-[5px] rounded w-8">
@@ -449,7 +446,7 @@ const fetchData = async (venueId) => {
 
 
                       </div>
-                      <div  style={cardStyles} className="bg-blue_gray-900_01 flex flex-col font-poppins  justify-start sm:px-5 px-[26px] rounded shadow-bs1 w-full">
+                      <div   className="bg-blue_gray-900_01 flex flex-col font-poppins  justify-start sm:px-5 px-[26px] rounded shadow-bs1 w-full">
                         <div className="flex flex-col gap-10  justify-start py-9 w-full">
                         <div className="flex flex-row md:gap-10 justify-start w-auto md:w-full">
                             <div className="w-full flex justify-between">
@@ -538,8 +535,8 @@ const fetchData = async (venueId) => {
                                          </div>
                                        </div>
                                      </div>
-                    <div style={cardStyles} className="flex md:flex-1 flex-col font-poppins gap-[18px] items-center justify-start md:mt-0 mt-[78px] w-[24%] md:w-full">
-                      <div  style={cardStyles} className="bg-blue_gray-900_01 flex flex-col items-start justify-center p-4 rounded shadow-bs3 w-full">
+                    <div className="flex md:flex-1 flex-col font-poppins gap-[18px] items-center justify-start md:mt-0 mt-[78px] w-[24%] md:w-full">
+                      <div  className="bg-blue_gray-900_01 flex flex-col items-start justify-center p-4 rounded shadow-bs3 w-full">
                         <Text
                           className="text-[22px] sm:text-lg text-white-A700 md:text-xl"
                           size="txtPoppinsSemiBold22"
@@ -597,7 +594,7 @@ const fetchData = async (venueId) => {
                         </div>
                       </div>
 
-                      <div  style={cardStyles} className="bg-blue_gray-900_01 flex flex-col items-center justify-start p-3.5 rounded shadow-bs3 w-full">
+                      <div className="bg-blue_gray-900_01 flex flex-col items-center justify-start p-3.5 rounded shadow-bs3 w-full">
                         <div className="flex flex-row items-start justify-between mb-24 w-[99%] md:w-full">
                           <Text
                             className="text-[15px] text-white-A700"
@@ -618,7 +615,7 @@ const fetchData = async (venueId) => {
 
                     {/*  */}
 
-                  <div style={cardStyles} className="flex md:flex-col flex-row gap-[22px] items-end justify-between w-full">
+                  <div  className="flex md:flex-col flex-row gap-[22px] items-end justify-between w-full">
                     <div className="flex md:flex-1 flex-col gap-[21px] items-center justify-start w-full md:w-full">
 
                       <div className="bg-blue_gray-900_01 flex flex-col font-poppins  justify-start sm:px-5 px-[26px] rounded shadow-bs1 w-full">
@@ -650,11 +647,11 @@ const fetchData = async (venueId) => {
 {/*  */}
 
 
-                  <List style={cardStyles}
+                  <List 
                     className="sm:flex-col flex-row font-poppins gap-[41px] grid md:grid-cols-1 grid-cols-2 justify-center w-full"
                     orientation="horizontal"
                   >
-                    <div  style={cardStyles} className="bg-blue_gray-900_01 flex flex-1 flex-col items-center justify-end p-[22px] sm:px-5 rounded shadow-bs4 w-full">
+                    <div className="bg-blue_gray-900_01 flex flex-1 flex-col items-center justify-end p-[22px] sm:px-5 rounded shadow-bs4 w-full">
                       <div className="flex flex-col gap-[27px] items-start justify-start mt-0.5 w-[96%] md:w-full">
                         <Text
                           className="text-[22px] sm:text-lg text-white-A700 md:text-xl"
@@ -762,7 +759,7 @@ const fetchData = async (venueId) => {
                         </div>
                       </div>
                     </div>
-                    <div  style={cardStyles} className="bg-blue_gray-900_01 flex flex-1 flex-col items-center justify-end p-[22px] sm:px-5 rounded shadow-bs4 w-full">
+                    <div   className="bg-blue_gray-900_01 flex flex-1 flex-col items-center justify-end p-[22px] sm:px-5 rounded shadow-bs4 w-full">
                       <div className="flex flex-col gap-[27px] items-start justify-start mt-0.5 w-[96%] md:w-full">
                         <Text
                           className="text-[22px] sm:text-lg text-white-A700 md:text-xl"
