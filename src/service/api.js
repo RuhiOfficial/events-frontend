@@ -97,6 +97,9 @@ const API_URLS = {
   export const updateSection = (payload) =>
   apis.post(`${API_URLS.UPDATE_SECTION}?id=${payload.data.id}`, payload);
 
+  export const updateEvent = (payload) =>
+  apis.post(`${API_URLS.UPDATE_EVENT}?id=${payload.data.id}&venue_id=${payload.data.venue_id}`, payload);
+
   export const postCities = (payload) =>
   apis.post(API_URLS.POST_CITY, {
     ...payload,

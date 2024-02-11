@@ -2,7 +2,7 @@ import React,{useEffect,useState} from 'react';
 import * as yup from "yup";
 import { Button, Img, Input, Text,SelectBox } from "components";
 import useForm from 'hooks/useForm';
-import {postAddEvent,getEventType,getSingleEvent } from "service/api";
+import {updateEvent,getEventType,getSingleEvent } from "service/api";
 import {  ToastContainer,toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -208,37 +208,51 @@ const cid= localStorage.getItem("LoginId");
   
   
 
-  // async function editSection() {
-  //   // Check if both name and price are defined
-  //   if (name === undefined || price === undefined) {
+  async function handleEdit() {
+    // Check if both name and price are defined
+    // if (name === undefined || price === undefined) {
      
-  //     return;
-  //   }
+    //   return;
+    // }
 
-  //   const req = {
-  //     data: {
-  //       id: eventId,
-  //       name: name,
-  //       price: price,
-  //     },
-  //   };
+    const req = {
+      data: {
+        id: eventId,
+        venue_id:vid,
+        name:name,
+        featured_image:featuredImage,
+        date_from:startDate,
+        date_to:endDate,
+        time_from:formattedStartTime,
+        time_to:formattedEndTime,
+        event_type:selectedEventTypeValue,
+        event_desc:description,
+        facebook_event_url: url,
+        event_status:status,
+        event_organiser:organiser,
 
-  //   try {
-  //     const res = await updateSection(req);
-  //     console.log(res);
 
-  //     toast.success('Section is updated Successfully!');
-  //     setTimeout(() => {
-  //       onRequestClose();
-  //       setName("");
-  //       setPrice("");
-  //       // window.location.href = '/reservation';
-  //     }, 3000);
-  //   } catch (err) {
-  //     console.error(err);
-  //     toast.error('Something Went Wrong!');
-  //   }
-  // }
+
+
+      },
+    };
+
+    try {
+      const res = await updateEvent(req);
+      console.log(res);
+
+      toast.success('Event is updated Successfully!');
+      setTimeout(() => {
+        onRequestClose();
+        // setName("");
+        // setPrice("");
+        // window.location.href = '/reservation';
+      }, 3000);
+    } catch (err) {
+      console.error(err);
+      toast.error('Something Went Wrong!');
+    }
+  }
 
            /////////Event_Type/////////
       
@@ -500,10 +514,7 @@ console.log(selectedEventType,"selected event type ",eventId ,"=====>>>>>>>>>>>>
                   
                   style={{ color: 'white' ,borderBottom:"1px solid white " }}
                   onChange={(e) => {
-                    
-
-                    
-                    setName(e.target.value);
+                   setOrganiser(e.target.value);
                   }}
                   value={organiser}
                   size="md"
@@ -599,9 +610,9 @@ console.log(selectedEventType,"selected event type ",eventId ,"=====>>>>>>>>>>>>
                     size="md"
                     variant="gradient"
                     color="blue_600_indigo_900"
-                    // onClick={() => {
-                    //   form.handleSubmit(addEvent);
-                    // }}
+                    onClick={
+                      handleEdit
+                    }
                   >
                     Update
                   </Button>
