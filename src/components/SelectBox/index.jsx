@@ -14,7 +14,7 @@ const SelectBox = React.forwardRef(
       placeholderClassName = "",
       isMulti = false,
       onChange,
-      value = "",
+      value: propValue = "", // Rename the value prop to avoid conflicts
       errors = [],
       indicator,
       shape = "",
@@ -25,7 +25,12 @@ const SelectBox = React.forwardRef(
     },
     ref,
   ) => {
-    const [selectedVal, setSelectedVal] = React.useState(value);
+    const [selectedVal, setSelectedVal] = React.useState(propValue); // Use propValue as initial state
+
+    React.useEffect(() => {
+      // Update selectedVal when the propValue changes
+      setSelectedVal(propValue);
+    }, [propValue]);
 
     const handleChange = (data) => {
       setSelectedVal(data);
@@ -83,7 +88,6 @@ const SelectBox = React.forwardRef(
               color: "inherit",
               margin: "0",
               padding: "0",
-              // height: "0",
             }),
             valueContainer: (provided) => ({
               ...provided,
@@ -118,7 +122,7 @@ const SelectBox = React.forwardRef(
         {children}
       </>
     );
-  },
+  }
 );
 
 SelectBox.propTypes = {
@@ -142,4 +146,5 @@ SelectBox.defaultProps = {
   options: [],
   onChange: () => {},
 };
+
 export { SelectBox };

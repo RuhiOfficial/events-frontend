@@ -40,8 +40,10 @@ function EditEvent({ isOpen, onRequestClose, eventId }) {
  const [selectedEventType, setSelectedEventType] = useState(null);
  const vid= localStorage.getItem("Venue");
  const [eventDay, setEventDay] = useState(null);
+ const [type, setType] = useState(null);
  const [response, setResponse] = useState([]);
-
+ const[featuredImage,setFeaturedImage]=useState(null)
+  const[flag,setFlag]=useState(null)
  
 
 
@@ -71,9 +73,34 @@ const handleTimeToChange = (end) => {
 };
 
 const handleEventTypeChange = (selectedOption) => {
-  setSelectedEventType(selectedOption);
-  setSelectedEventTypeValue(selectedOption ? selectedOption.value : null);
+  console.log('Selected Option:', selectedOption);
+
+  if (selectedOption) {
+    // Check if the selected option contains only the value
+    if (selectedOption.label === undefined) {
+      // Search for the corresponding option in eventTypeList
+      const updatedEventType = eventTypeList.find(
+        (option) => option.value === selectedOption.value
+      );
+
+      // Update the state with the found option
+      setSelectedEventType((prev) => updatedEventType || prev);
+      setSelectedEventTypeValue(selectedOption.value);
+    } else {
+      // If the selected option has both label and value, update the state
+      setSelectedEventType(selectedOption);
+      setSelectedEventTypeValue(selectedOption.value);
+    }
+  } else {
+    // If selected option is null, reset the state
+    setSelectedEventType(null);
+    setSelectedEventTypeValue(null);
+  }
 };
+
+
+
+
 
 
 
@@ -81,9 +108,105 @@ const cid= localStorage.getItem("LoginId");
 
 
  
+  // useEffect(() => {
+  //   async function loadEvent() {
+   
+
+  //     try {
+  //       const res = await getSingleEvent({ data: { id: eventId} });
+  //       console.log('Fetched Data For Single Event :', res.data);
+  
+  //       // Check if the response data is not empty
+  //       if (res.data) {
+  //         // Update the state
+  //        setResponse(res.data);
+  //         setName(res.data.name);
+  //         setOrganiser(res.data.event_organiser)
+  //         setDescription(res.data.event_desc);
+  //         setUrl(res.data.facebook_event_url)
+  //         setStatus(res.data.event_status)
+  //         const startDateObject = new Date(res.data.date_from);
+  //         const endDateObject = new Date(res.data.date_to);
+         
+  //         const startTimeMoment = moment(res.data.time_from, 'hh:mm A');
+  //         const endTimeMoment = moment(res.data.time_to, 'hh:mm A');
+  
+  //         // Set the initial values for the DateRangePicker and TimePicker
+  //         setStartDate(startDateObject);
+  //         setEndDate(endDateObject);
+  //         setStartTime(startTimeMoment.toDate());
+  //         setEndTime(endTimeMoment.toDate());
+  //         setType(res.data.eventType)
+  //        // Find the option with the matching event_type ID
+  //        const selectedEventTypeOption = eventTypeList.find(
+  //         (option) => option.value === res.data.event_type
+  //       );
+  
+  //       // Set the selected option
+  //       setSelectedEventType(selectedEventTypeOption);
+  
+          
+          
+  //       return res.data;
+  //         // setPrice(res.data.data.price);
+  //         // setTableList(res.data.data.tables)
+  //       }
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  //   }
+  //   loadEvent();
+  // }, [eventId,eventTypeList]);
+
+
   useEffect(() => {
+    async function loadEvent() {
+      try {
+        const res = await getSingleEvent({ data: { id: eventId } });
+        console.log('Fetched Data For Single Event:', res.data);
+  
+        if (res.data) {
+          setResponse(res.data);
+          setName(res.data.name);
+          setOrganiser(res.data.event_organiser);
+          setDescription(res.data.event_desc);
+          setUrl(res.data.facebook_event_url);
+          setStatus(res.data.event_status);
+  
+          const startDateObject = new Date(res.data.date_from);
+          const endDateObject = new Date(res.data.date_to);
+          const startTimeMoment = moment(res.data.time_from, 'hh:mm A');
+          const endTimeMoment = moment(res.data.time_to, 'hh:mm A');
+  
+          setStartDate(startDateObject);
+          setEndDate(endDateObject);
+          setStartTime(startTimeMoment.toDate());
+          setEndTime(endTimeMoment.toDate());
+          setType(res.data.eventType);
+  
+          // Find the option with the matching event_type ID
+          const selectedEventTypeOption = eventTypeList.find(
+            (option) => option.value === res.data.event_type
+          );
+
+          // Set the selected option
+          setSelectedEventType(selectedEventTypeOption);
+          setSelectedEventTypeValue(selectedEventTypeOption ? selectedEventTypeOption.value : null);
+          setFeaturedImage(res.data.featured_image)
+          return res.data;
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  
     loadEvent();
-  }, [eventId]);
+  }, [eventId, eventTypeList]);
+  
+  // Remove the second useEffect block that handles selectedEventType
+
+  
+  
 
   // async function editSection() {
   //   // Check if both name and price are defined
@@ -129,6 +252,7 @@ const cid= localStorage.getItem("LoginId");
 useEffect(()=>{
   eventType();
 },[])
+
 async function eventType() {
   const req = {};
 
@@ -163,69 +287,41 @@ async function eventType() {
     });
 }
 useEffect(() => {
-  // Find the option with the matching event_type ID
-  const selectedEventTypeOption = eventTypeList.find(
-    (option) => option.value === response.event_type
-  );
+  // Log or debug statements for tracking the state changes
+  console.log('selectedEventType:', selectedEventType);
+}, [selectedEventType]);
 
-  console.log(selectedEventTypeOption, "options=====>>");
 
-  // Set the selected option after the component has rendered
-  setSelectedEventType(selectedEventTypeOption);
-}, [eventTypeList, response.event_type]); // Add dependencies as needed
+// useEffect(() => {
+//   // Find the option with the matching event_type ID
+//   console.log(response.event_type,"type ====>>> from use effect ==>>")
+//   console.log(flag ,"initial value ");
+//   const selectedEventTypeOption = eventTypeList.find(
+//     (option) => option.value === response.event_type
+//   );
 
-  async function loadEvent() {
-   
+//   console.log(selectedEventTypeOption, "options=====>>");
 
-    try {
-      const res = await getSingleEvent({ data: { id: eventId} });
-      console.log('Fetched Data For Single Event :', res.data);
+//   // Set the selected option after the component has rendered
+//   setSelectedEventType(selectedEventTypeOption);
+ 
 
-      // Check if the response data is not empty
-      if (res.data) {
-        // Update the state
-       setResponse(res.data);
-        setName(res.data.name);
-        setOrganiser(res.data.event_organiser)
-        setDescription(res.data.event_desc);
-        setUrl(res.data.facebook_event_url)
-        setStatus(res.data.event_status)
-        const startDateObject = new Date(res.data.date_from);
-        const endDateObject = new Date(res.data.date_to);
-       
-        const startTimeMoment = moment(res.data.time_from, 'hh:mm A');
-        const endTimeMoment = moment(res.data.time_to, 'hh:mm A');
-
-        // Set the initial values for the DateRangePicker and TimePicker
-        setStartDate(startDateObject);
-        setEndDate(endDateObject);
-        setStartTime(startTimeMoment.toDate());
-        setEndTime(endTimeMoment.toDate());
-       // Find the option with the matching event_type ID
-//        const selectedEventTypeOption = eventTypeList.find(
-//         (option) => option.value === res.data.event_type
-//       );
-// console.log(selectedEventTypeOption,"options=====>>")
-//       // Set the selected option
-//       setSelectedEventType(selectedEventTypeOption);
-
-        
-        
   
-        // setPrice(res.data.data.price);
-        // setTableList(res.data.data.tables)
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  }
+// },[selectedEventType,response.event_type]); // Add dependencies as needed
+
+
+console.log(selectedEventType,"selected event type ",eventId ,"=====>>>>>>>>>>>>>>> this ===>>")
+  
 
  
-  console.log(selectedEventType,"type value idss===>>")
+  console.log(selectedEventType,"final event type =====>>>>>")
   return (
     <Modal
       isOpen={isOpen}
-      onRequestClose={onRequestClose}
+      onRequestClose={()=>{
+      
+        onRequestClose()
+      }}
       contentLabel="Example Modal"
       style={{
         overlay: {
@@ -289,7 +385,8 @@ useEffect(() => {
                 </div>
                <div className="flex flex-row items-center justify-between mt-[38px] w-full">
 
-               <ImageUploader onChange={handleImageSelect} />
+               <ImageUploader imageUrl={featuredImage} onChange={handleImageSelect} />
+
               
                <div >
 
