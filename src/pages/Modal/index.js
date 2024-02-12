@@ -464,26 +464,31 @@ async function timezone() {
                   {/* {/ Add more input fields as needed /} */}
                 </div>
                 
-                <div className="flex flex-col items-start justify-start mt-[38px] w-full">
+                <div className="flex flex-col  items-start justify-start mt-[38px] w-full">
                 <select
-                id="country"
-                name="country"
-                className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border-b border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
-                onChange={(e) => {
-                  form.handleChange("country_id", e.target.value);
-                }}
-                value={form.values.country_id}
-              >
-                <option value="">Select Country...</option>
-                {countryList.map((country) => (
-                  <option key={country.value} value={country.value}>
-                    {country.label}
-                  </option>
-                ))}
-              </select>
+  id="country"
+  name="country"
+  className="capitalize font-roboto p-0 placeholder:text-gray-500 text-base text-left w-full common-pointer bg-[#292e34] p-[18px] text-white-A700 border-t-0 border-r-0 border-l-0 border-b-2 border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none"
+  onChange={(e) => {
+    form.handleChange("country_id", e.target.value);
+  }}
+  value={form.values.country_id}
+  
+  
+
+>
+  <option value="" disabled hidden>Select Country...</option>
+  {countryList.map((country) => (
+    <option key={country.value} value={country.value}>
+      {country.label}
+    </option>
+  ))}
+
+</select>
+
 
               
-                <SelectBox
+                {/* <SelectBox
                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border-b border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
                    placeholderClassName="text-gray-600"
                    isMulti={false}
@@ -496,7 +501,7 @@ async function timezone() {
                     form.handleChange("country_id", selectedOption?.value); // Assuming "country_id" is the corresponding form field
                   }}
                 
-                 />
+                 /> */}
                 </div>
                 
                
