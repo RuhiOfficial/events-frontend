@@ -168,7 +168,7 @@ useEffect(()=>{
 async function section() {
  const req = {
    data:{
-     venue_id:25,
+     venue_id:vid,
    }
  }
  await getSectionList(req)
@@ -282,7 +282,6 @@ async function section() {
 <button className="mx-2 text-[white] hover:text-red-700 text-[25px]" onClick={()=>{openDeleteModal(section.section_id)}}>
 <RiDeleteBin5Fill />
 </button>
-
 
 <AddTable isTableOpen={isTableOpen} onRequestTableClose={closeTableModal} />
 <DeleteSection isOpen={isDeleteOpen} onRequestClose={closeDeleteModal} sectionId={deleteSectionId}/>

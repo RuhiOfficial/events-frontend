@@ -10,6 +10,13 @@ import { useNavigate } from "react-router-dom";
 import "../Custom.css";
 
 const Modal = ({ isOpen, onClose }) => {
+  const handleCloseModal = () => {
+    // Reset the form when closing the modal
+    form.resetForm();
+    
+    // Close the modal
+    onClose();
+  };
   
  const cid= localStorage.getItem("companyId");
 //  console.log(cid,"customer id is ===>>>")
@@ -371,7 +378,7 @@ async function timezone() {
 
   return (
     <div className={`modal ${isOpen ? 'flex' : 'hidden'}`}>  
-      <div className="modal-overlay " onClick={onClose}></div>
+      <div className="modal-overlay " onClick={handleCloseModal}></div>
       <div className="modal-container fixed top-0 left-0 h-screen w-screen flex items-center justify-center overflow-auto">
         <div className="modal-content bg-white p-4 rounded-lg shadow-md w-full sm:w-1/2 max-h-screen overflow-auto">
           
@@ -391,7 +398,7 @@ async function timezone() {
                     Add Venue
                   </Text>
                 </div>
-                <Button className="modal-close" style={{color:"white",fontSize:"xx-large"}}  onClick={onClose}>
+                <Button className="modal-close" style={{color:"white",fontSize:"xx-large"}}  onClick={handleCloseModal}>
             &times;
           </Button>
 
@@ -422,7 +429,7 @@ async function timezone() {
                   <Input
                     name="input"
                     placeholder="Email"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
+                    className=" font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
                     wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     type="email"
                     onChange={(e) => {
@@ -441,7 +448,7 @@ async function timezone() {
                   <Input
                     name="input"
                     placeholder="Contact No"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
+                    className=" font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
                     wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     type="tel"
                     onChange={(e) => {
@@ -458,6 +465,24 @@ async function timezone() {
                 </div>
                 
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
+                <select
+                id="country"
+                name="country"
+                className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border-b border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
+                onChange={(e) => {
+                  form.handleChange("country_id", e.target.value);
+                }}
+                value={form.values.country_id}
+              >
+                <option value="">Select Country...</option>
+                {countryList.map((country) => (
+                  <option key={country.value} value={country.value}>
+                    {country.label}
+                  </option>
+                ))}
+              </select>
+
+              
                 <SelectBox
                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border-b border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
                    placeholderClassName="text-gray-600"
@@ -466,7 +491,10 @@ async function timezone() {
                    options={countryList}
                    isSearchable={true}
                    placeholder="Select Country..."
-                   onChange={handleCountryChange}
+                   onChange={(selectedOption) => {
+                    handleCountryChange(selectedOption);
+                    form.handleChange("country_id", selectedOption?.value); // Assuming "country_id" is the corresponding form field
+                  }}
                 
                  />
                 </div>
@@ -503,7 +531,7 @@ async function timezone() {
                   <Input
                     name="input"
                     placeholder="Zipcode"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
+                    className=" font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
                     wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
@@ -521,7 +549,7 @@ async function timezone() {
                   <Input
                     name="input"
                     placeholder="Address"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
+                    className=" font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
                     wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
@@ -539,7 +567,7 @@ async function timezone() {
                   <Input
                     name="input"
                     placeholder="Tax"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
+                    className=" font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
                     wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
@@ -585,7 +613,7 @@ async function timezone() {
                   <Input
                     name="input"
                     placeholder="Website"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
+                    className=" font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
                     wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
@@ -603,7 +631,7 @@ async function timezone() {
                   <Input
                     name="input"
                     placeholder="Currency"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
+                    className=" font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
                     wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
@@ -621,7 +649,7 @@ async function timezone() {
                   <Input
                     name="input"
                     placeholder="Capacity"
-                    className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
+                    className=" font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
                     wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
                     
                     onChange={(e) => {
