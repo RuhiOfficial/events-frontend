@@ -1,10 +1,9 @@
-// DateRangePicker.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../../pages/Custom.css'; // Custom styles for DateRangePicker
 
-const DateRangePicker = ({ startDate, endDate, onChange }) => {
+const DateRangePicker = ({ startDate, endDate, onChange, onReset }) => {
   const [selectedStartDate, setSelectedStartDate] = useState(startDate);
   const [selectedEndDate, setSelectedEndDate] = useState(endDate);
 
@@ -39,6 +38,20 @@ const DateRangePicker = ({ startDate, endDate, onChange }) => {
     setSelectedEndDate(date);
     onChange(selectedStartDate, date);
   };
+
+  const resetDatePicker = () => {
+    setSelectedStartDate(null);
+    setSelectedEndDate(null);
+    // You can add additional reset logic if needed
+    onReset();
+  };
+
+  useEffect(() => {
+    // Reset the DateRangePicker when the modal is closed
+    if (!startDate && !endDate) {
+      resetDatePicker();
+    }
+  }, [startDate, endDate]);
 
   return (
     <div className="flex justify-between">

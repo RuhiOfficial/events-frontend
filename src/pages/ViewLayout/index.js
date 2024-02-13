@@ -1,6 +1,14 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import { getLayout } from 'service/api';
+import { ScaleLoader } from 'react-spinners';
+import { css } from '@emotion/react';
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 const ViewLayout = ({ isOpen, onRequestClose }) => {
   const [response, setResponse] = useState([]);
@@ -9,7 +17,7 @@ const ViewLayout = ({ isOpen, onRequestClose }) => {
   const [imgHeight, setImgHeight] = useState();
   const [url, setUrl] = useState();
   const [hoveredBoxIndex, setHoveredBoxIndex] = useState(null);
-
+  const [isLoading, setIsLoading] = useState(true);
   const fetch = async () => {
     const vid = localStorage.getItem('Venue');
     const req = {
@@ -128,6 +136,7 @@ const ViewLayout = ({ isOpen, onRequestClose }) => {
 
     if (url) {
       loadImage();
+      setIsLoading(false)
     }
     
   }, [url, canvasRef.current, isOpen, hoveredBoxIndex]);
@@ -186,6 +195,12 @@ const handleCanvasClick = (event) => {
         },
       }}
     >
+      {isLoading ? (
+        <div style={{ display: 'flex', flexDirection:"column", justifyContent: 'center', alignItems: 'center', height: 'auto', width:"100%"}}>
+          <ScaleLoader css={override} color={'#5051f9'} loading={isLoading} />
+          <h1 style={{color:'#5051f9', fontSize:"20px"}}> Loading!</h1>
+        </div>
+      ) : (  
       <canvas
         ref={canvasRef}
         width={imgWidth || 1000}
@@ -193,7 +208,7 @@ const handleCanvasClick = (event) => {
         style={{ border: '1px solid #ccc' }}
         onMouseMove={handleMouseMove}
         onClick={handleCanvasClick}
-      ></canvas>
+      ></canvas>)}
     </Modal>
   );
 };

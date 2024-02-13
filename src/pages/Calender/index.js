@@ -9,8 +9,16 @@ import moment from 'moment';
 import { getEvent } from 'service/api';
 import SingleEvent from 'pages/SingleEvent';
 import "../Custom.css"
+import { css } from '@emotion/react';
+import { ScaleLoader } from 'react-spinners';
+
 const localizer = momentLocalizer(moment);
 
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 const CustomEvent = ({ event, onSelectEvent, isHovered, onMouseEnter, onMouseLeave }) => {
   const startDate = new Date(event.date_from);
@@ -48,7 +56,7 @@ const Calender = () => {
   const [eventList, setEventList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hoveredEventId, setHoveredEventId] = useState(null);
-
+  const [isLoading, setIsLoading] = useState(true);
   const openModal = (event) => {
     setSelectedEvent(event);
     setSelectedEventId(event.id);
@@ -113,6 +121,7 @@ const Calender = () => {
       try {
         const res = await getEvent(req);
         setEventList(res.data.data);
+        setIsLoading(false)
       } catch {
         console.error('Unable to fetch the Event List');
       }
@@ -142,7 +151,13 @@ const Calender = () => {
         </div>
       )} */}
 {/* <div style={backgroundImageStyles}></div> */}
-
+{isLoading ? (
+        <div style={{ display: 'flex', flexDirection:"column", justifyContent: 'center', alignItems: 'center', height: 'auto', width:"100%"}}>
+          <ScaleLoader css={override} color={'#5051f9'} loading={isLoading} />
+          
+          <h1 style={{color:'#5051f9', fontSize:"20px"}}> Loading!</h1>
+        </div>
+      ) :(
  <Calendar
         localizer={localizer}
         events={eventList.map((event) => ({
@@ -172,12 +187,14 @@ const Calender = () => {
         onSelectEvent={handleSelectEvent}
      
         dateCellWrapper={dateCellWrapper}
-      />
+      />)}
       
 
 
       <SingleEvent isOpen={isModalOpen} onRequestClose={closeModal} eventId={selectedEventId} />
-    </div>
+   
+   
+           </div>
   );
 };
 

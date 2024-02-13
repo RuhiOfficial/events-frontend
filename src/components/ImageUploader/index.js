@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FiCamera } from 'react-icons/fi';
 
-const ImageUploader = ({ onChange, imageUrl }) => {
+const ImageUploader = React.forwardRef(({ onChange, imageUrl }, ref) => {
   const [image, setImage] = useState(imageUrl);
 
   useEffect(() => {
@@ -24,6 +24,20 @@ const ImageUploader = ({ onChange, imageUrl }) => {
       reader.readAsDataURL(file);
     }
   };
+
+  const resetImage = () => {
+    setImage(null);
+    onChange(null);
+  };
+
+  // Expose the resetImage function through the ref
+  useEffect(() => {
+    if (ref) {
+      ref.current = {
+        resetImage,
+      };
+    }
+  }, [ref, resetImage]);
 
   return (
     <div>
@@ -69,6 +83,6 @@ const ImageUploader = ({ onChange, imageUrl }) => {
       </label>
     </div>
   );
-};
+});
 
 export default ImageUploader;

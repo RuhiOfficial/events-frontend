@@ -14,7 +14,14 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import ImageUploader from 'components/ImageUploader'
+import { css } from '@emotion/react';
+import { ScaleLoader } from 'react-spinners';
 
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 
 function EditEvent({ isOpen, onRequestClose, eventId }) {
@@ -44,7 +51,7 @@ function EditEvent({ isOpen, onRequestClose, eventId }) {
  const [response, setResponse] = useState([]);
  const[featuredImage,setFeaturedImage]=useState(null)
   const[flag,setFlag]=useState(null)
- 
+  const [isLoading, setIsLoading] = useState(true);
 
 
  const handleImageSelect = (imageUrl) => {
@@ -161,11 +168,14 @@ const cid= localStorage.getItem("LoginId");
 
   useEffect(() => {
     async function loadEvent() {
+      setIsLoading(true)
       try {
         const res = await getSingleEvent({ data: { id: eventId } });
         console.log('Fetched Data For Single Event:', res.data);
   
         if (res.data) {
+          setIsLoading(false);
+          
           setResponse(res.data);
           setName(res.data.name);
           setOrganiser(res.data.event_organiser);
@@ -331,34 +341,38 @@ console.log(selectedEventType,"selected event type ",eventId ,"=====>>>>>>>>>>>>
   console.log(selectedEventType,"final event type =====>>>>>")
   return (
     <Modal
-      isOpen={isOpen}
-      onRequestClose={()=>{
-      
-        onRequestClose()
-      }}
-      contentLabel="Example Modal"
-      style={{
-        overlay: {
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        },
-        content: {
-          top: '50%',
-          left: '50%',
-          right: 'auto',
-          bottom: 'auto',
-          marginRight: '-50%',
-          transform: 'translate(-50%, -50%)',
-          background: 'none',
-          border: 'none',
-          padding: 0,
-          overflow: 'auto',
-        },
-      }}
-    >
+    isOpen={isOpen}
+    onRequestClose={onRequestClose}
+    contentLabel="Example Modal"
+    style={{
+      overlay: {
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      },
+      content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        background: 'none',
+        border: 'none',
+        padding: 0,
+        overflow: 'auto',
+      },
+    }}
+  >
      
       <div className="flex flex-col font-poppins items-center justify-start mx-auto w-full ">
         <div className="flex flex-col font-poppins items-center justify-start mx-auto w-full ">
           <div className="bg-no-repeat flex flex-col items-center justify-start p-10 md:p-5 w-full">
+          {isLoading ? (
+        <div style={{ display: 'flex', flexDirection:"column", justifyContent: 'center', alignItems: 'center', height: 'auto', width:"100%"}}>
+          <ScaleLoader css={override} color={'#5051f9'} loading={isLoading} />
+          
+          <h1 style={{color:'#5051f9', fontSize:"20px"}}> Loading!</h1>
+        </div>
+      ) :(
           <div className="bg-[#292e34] flex flex-col items-start justify-start max-w-[716px] p-[3.5rem] rounded-[24px] w-full ">
                 <div className='text-center w-full flex justify-between items-center'>
                 <div className="flex flex-col items-center justify-center w-[534px] sm:w-full">
@@ -617,7 +631,7 @@ console.log(selectedEventType,"selected event type ",eventId ,"=====>>>>>>>>>>>>
                     Update
                   </Button>
                 </div>
-              </div>
+              </div>)}
           </div>
         </div>
       </div>

@@ -5,7 +5,14 @@ import { Button, Input, Text } from 'components';
 import { updateSection, sectionById,deleteTable } from 'service/api';
 import { ToastContainer, toast } from 'react-toastify';
 import { RiDeleteBin5Fill } from "react-icons/ri";
+import { css } from '@emotion/react';
+import { ScaleLoader } from 'react-spinners';
 
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 
 function EditSection({ isOpen, onRequestClose, sectionId }) {
@@ -13,7 +20,7 @@ function EditSection({ isOpen, onRequestClose, sectionId }) {
   const [price, setPrice] = useState('');
   const [hoveredButtonIndex, setHoveredButtonIndex] = useState(null);
   const [tableList, setTableList] = useState([]);
- 
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     loadSection();
   }, [sectionId]);
@@ -82,20 +89,24 @@ function EditSection({ isOpen, onRequestClose, sectionId }) {
     setHoveredButtonIndex(null);
   }
   async function loadSection() {
+    setIsLoading(true)
     const vid=localStorage.getItem('Venue');
-    console.log(vid,"venue id ==>>>/")
+    
 
     try {
+      
       const res = await sectionById({ data: { id: sectionId ,venue_id:vid} });
-      console.log('Fetched Data:', res.data.data);
-
-      // Check if the response data is not empty
+     
+      
+      
       if (res.data) {
+        setIsLoading(false)
         // Update the state
        
         setName(res.data.data.name);
         setPrice(res.data.data.price);
         setTableList(res.data.data.tables)
+        
       }
     } catch (err) {
       console.error(err);
@@ -103,7 +114,6 @@ function EditSection({ isOpen, onRequestClose, sectionId }) {
   }
 
   
-
   return (
     <Modal
       isOpen={isOpen}
@@ -131,8 +141,16 @@ function EditSection({ isOpen, onRequestClose, sectionId }) {
       <div className="flex flex-col font-poppins items-center justify-start mx-auto w-full ">
         <div className="flex flex-col font-poppins items-center justify-start mx-auto w-full ">
           <div className="bg-no-repeat flex flex-col items-center justify-start p-10 md:p-5 w-full">
+          {isLoading ? (
+        <div style={{ display: 'flex', flexDirection:"column", justifyContent: 'center', alignItems: 'center', height: 'auto', width:"100%"}}>
+          <ScaleLoader css={override} color={'#5051f9'} loading={isLoading} />
+          
+          <h1 style={{color:'#5051f9', fontSize:"20px"}}> Loading!</h1>
+        </div>
+      ) :(
             <div className="bg-[#292e34] flex flex-col items-start justify-start max-w-[716px] p-[3.5rem] rounded-[24px] w-full ">
-              <div className="text-center w-full flex justify-between items-center">
+             
+              <div className='text-center w-full flex justify-between items-center'>
                 <div className="flex flex-col items-center justify-center w-[534px] sm:w-full">
                   <Text
                     className="md:text-3xl sm:text-[28px] text-[32px] text-white-A700 w-auto"
@@ -141,7 +159,12 @@ function EditSection({ isOpen, onRequestClose, sectionId }) {
                     Edit Section
                   </Text>
                 </div>
-              </div>
+                <Button className="modal-close" style={{color:"white",fontSize:"xx-large"}}  onClick={onRequestClose}>
+            &times;
+          </Button>
+
+                </div>
+          
 
               <div className="flex flex-col items-start justify-start mt-[38px] w-full">
               <input
@@ -152,13 +175,6 @@ function EditSection({ isOpen, onRequestClose, sectionId }) {
                   style={{ color: 'white' , borderColor:"white"}}
                   onChange={(e) => {
                     
-
-                    if (e.target) {
-                      console.log('Value changed:', e.target.value);
-                      // Your logic here
-                    }
-
-                    console.log('Name changed:', e.target.value);
                     setName(e.target.value);
                   }}
                   value={name}
@@ -175,8 +191,7 @@ function EditSection({ isOpen, onRequestClose, sectionId }) {
                   wrapClassName=" common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
                   style={{ color: 'white',borderColor:"white" }}
                   onChange={(e) => {
-                    console.log('Price changed:', e.target.value);
-                    setPrice(e.target.value);
+                     setPrice(e.target.value);
                   }}
                   value={price}
                   size="md"
@@ -229,6 +244,7 @@ function EditSection({ isOpen, onRequestClose, sectionId }) {
                 </Button>
               </div>
             </div>
+      )}
           </div>
         </div>
       </div>

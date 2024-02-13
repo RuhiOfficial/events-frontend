@@ -180,7 +180,9 @@ function SingleEvent({ isOpen, onRequestClose, eventId }) {
 
 
   async function loadSection() {
+    setIsLoading(true)
     try {
+
       const res = await getSingleEvent({ data: { id: eventId } });
       console.log('Fetched Data from the single event page is :', res.data);
 
@@ -189,7 +191,8 @@ function SingleEvent({ isOpen, onRequestClose, eventId }) {
         // Update the state
        
         setData(res.data);
-        setIsLoading(false)
+        
+       setIsLoading(false)
         // setPrice(res.data.price);
       }
     } catch (err) {
@@ -213,6 +216,19 @@ console.log(data.event_desc,"data ==============>>>>>")
 
 
   
+  const handleCloseModal = () => {
+    // Reset ImageUploader by calling its reset function
+  
+    // Close the modal
+    onRequestClose()
+   
+    setFormattedStartTime(null);
+    setArrivalTime(null)
+    
+     // Reset the form when closing the modal
+     form.resetForm();
+    
+  };
   
 
 
@@ -221,7 +237,7 @@ console.log(data.event_desc,"data ==============>>>>>")
   return (
     <Modal
       isOpen={isOpen}
-      onRequestClose={onRequestClose}
+      onRequestClose={handleCloseModal}
       contentLabel="Example Modal"
       style={{
         overlay: {
@@ -262,14 +278,20 @@ console.log(data.event_desc,"data ==============>>>>>")
                           {!isLoading && ( */}
                <div className="bg-[#292e34] flex flex-col items-start justify-start p-[3.5rem] rounded-[24px] w-full ">
                  <div className='text-center w-full flex justify-between items-center'>
-                 <div className="flex flex-col items-center justify-center w-[800px] sm:w-full">
-                   <Text
+                 <div className='text-center w-full flex justify-between items-center'>
+                <div className="flex flex-col items-center justify-center w-[700px] sm:w-full">
+                  <Text
                     className="md:text-3xl sm:text-[28px] text-[32px] text-white-A700 w-auto"
                     size="txtPoppins"
                   >
-                   {data.name}
+                    
+                    {data.name}
                   </Text>
-                  
+                </div>
+                <Button className="modal-close" style={{color:"white",fontSize:"xx-large"}}  onClick={handleCloseModal}>
+            &times;
+          </Button>
+
                 </div>
               
 

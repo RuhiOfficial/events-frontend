@@ -471,6 +471,7 @@ async function timezone() {
   className="capitalize font-roboto p-0 placeholder:text-gray-500 text-base text-left w-full common-pointer bg-[#292e34] p-[18px] text-white-A700 border-t-0 border-r-0 border-l-0 border-b-2 border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none"
   onChange={(e) => {
     form.handleChange("country_id", e.target.value);
+    states(e.target.value);
   }}
   value={form.values.country_id}
   
@@ -486,51 +487,58 @@ async function timezone() {
 
 </select>
 
-
-              
-                {/* <SelectBox
-                   className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border-b border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
-                   placeholderClassName="text-gray-600"
-                   isMulti={false}
-                   name="country"
-                   options={countryList}
-                   isSearchable={true}
-                   placeholder="Select Country..."
-                   onChange={(selectedOption) => {
-                    handleCountryChange(selectedOption);
-                    form.handleChange("country_id", selectedOption?.value); // Assuming "country_id" is the corresponding form field
-                  }}
-                
-                 /> */}
-                </div>
+ </div>
                 
                
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                <SelectBox
-                   className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border-b border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
-                   placeholderClassName="text-gray-600"
-                   isMulti={false}
-                   name="state"
-                   options={stateList}
-                   isSearchable={true}
-                   placeholder="Select State..."
-                   onChange={handleStateChange}
                 
-                 />
+                 <select
+  id="state"
+  name="state"
+  className="capitalize font-roboto p-0 placeholder:text-gray-500 text-base text-left w-full common-pointer bg-[#292e34] p-[18px] text-white-A700 border-t-0 border-r-0 border-l-0 border-b-2 border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none"
+  onChange={(e) => {
+    form.handleChange("state_id", e.target.value);
+    cities(e.target.value);
+  }}
+  value={form.values.state_id}
+  
+  
+
+>
+  <option value="" disabled hidden>Select State...</option>
+  {stateList.map((state) => (
+    <option key={state.value} value={state.value}>
+      {state.label}
+    </option>
+  ))}
+
+</select>
+
                 </div>
 
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                <SelectBox
-                   className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border-b border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
-                   placeholderClassName="text-gray-600"
-                   isMulti={false}
-                   name="city"
-                   options={cityList}
-                   isSearchable={true}
-                   placeholder="Select City..."
-                   onChange={handleCityChange}
-                
-                 />
+               
+
+<select
+  id="city"
+  name="city"
+  className="capitalize font-roboto p-0 placeholder:text-gray-500 text-base text-left w-full common-pointer bg-[#292e34] p-[18px] text-white-A700 border-t-0 border-r-0 border-l-0 border-b-2 border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none"
+  onChange={(e) => {
+    form.handleChange("city_id", e.target.value);
+  }}
+  value={form.values.city_id}
+  
+  
+
+>
+  <option value="" disabled hidden>Select City...</option>
+  {cityList.map((city) => (
+    <option key={city.value} value={city.value}>
+      {city.label}
+    </option>
+  ))}
+
+</select>
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -588,30 +596,52 @@ async function timezone() {
                 </div>
 
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                <SelectBox
-                   className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border-b border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
-                   placeholderClassName="text-gray-600"
-                   isMulti={false}
-                   name="venue_type"
-                  options={venueTypeList}
-                   isSearchable={true}
-                   placeholder="Select Venue Type..."
-                   onChange={handleVenueTypeChange}
-                
-                 />
+               
+                          <select
+            id="venue_type"
+            name="venue_type"
+            className="capitalize font-roboto p-0 placeholder:text-gray-500 text-base text-left w-full common-pointer bg-[#292e34] p-[18px] text-white-A700 border-t-0 border-r-0 border-l-0 border-b-2 border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none"
+            onChange={(e) => {
+              form.handleChange("venue_type", e.target.value);
+            }}
+            value={form.values.venue_type}
+            
+            
+
+          >
+            <option value="" disabled hidden>Select Venue Type...</option>
+            {venueTypeList.map((venue) => (
+              <option key={venue.value} value={venue.value}>
+                {venue.label}
+              </option>
+            ))}
+
+          </select>
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                <SelectBox
-                   className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border-b border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
-                   placeholderClassName="text-gray-600"
-                   isMulti={false}
-                   name="timezone"
-                  options={timezoneList}
-                   isSearchable={true}
-                   placeholder="Select Timezone..."
-                   onChange={handleTimezoneChange}
-                
-                 />
+              
+
+              <select
+              id="timezone"
+              name="timezone"
+              className="capitalize font-roboto p-0 placeholder:text-gray-500 text-base text-left w-full common-pointer bg-[#292e34] p-[18px] text-white-A700 border-t-0 border-r-0 border-l-0 border-b-2 border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none"
+              onChange={(e) => {
+              form.handleChange("timezone", e.target.value);
+              }}
+              value={form.values.timezone}
+
+
+
+              >
+              <option value="" disabled hidden>Select Timezone...</option>
+              {timezoneList.map((timezone) => (
+              <option key={timezone.value} value={timezone.value}>
+              {timezone.label}
+              </option>
+              ))}
+
+              </select>
+
                 </div>
               
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">

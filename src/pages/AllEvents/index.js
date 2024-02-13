@@ -9,6 +9,7 @@ import { MdEdit } from "react-icons/md";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import DeleteEvent from 'pages/DeleteEvent';
 import EditEvent from 'pages/EditEvent';
+import { stubTrue } from 'lodash';
 
 
 
@@ -69,6 +70,7 @@ const AllEvents = () => {
 
   useEffect(() => {
     const fetchData=async()=>{
+      
     const req = { 
         data:{venue_id:venueId }};
   

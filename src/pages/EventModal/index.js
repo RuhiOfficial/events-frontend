@@ -1,5 +1,5 @@
 // Modal.js
-import React,{useEffect,useState} from 'react';
+import React,{useEffect,useState,useRef} from 'react';
 import * as yup from "yup";
 import { Button, Img, Input, Text,SelectBox } from "components";
 import useForm from 'hooks/useForm';
@@ -14,17 +14,29 @@ import ImageComponent from 'components/ImageComponent.js';
 import ImageUploader from 'components/ImageUploader'
 
 const EventModal = ({ isEventOpen, onEventClose } ) => {
+  const imageUploaderRef = useRef();
+ const datePickerRef =useRef();
+ const handleCloseModal = () => {
+  // Reset ImageUploader by calling its reset function
+  if (imageUploaderRef.current && imageUploaderRef.current.resetImage) {
+    imageUploaderRef.current.resetImage();
+  }
 
-  const handleCloseModal = () => {
-    // Close the modal
-    resetForm();
-  
-   
-     onEventClose();
-    
-    // Reset the form
-  
-  };
+  // Reset the DateRangePicker
+  if (datePickerRef.current && datePickerRef.current.resetDatePicker) {
+    datePickerRef.current.resetDatePicker();
+  }
+
+  // Close the modal
+  onEventClose();
+
+  // Reset the form only when the modal is closed
+  resetForm();
+};
+
+
+
+
     const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [startTime, setStartTime] = useState(null);
@@ -71,6 +83,15 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
     setFormattedEndTime(formattedTime)
   };
 
+  useEffect(() => {
+    // Reset the DateRangePicker when the modal is closed
+    if (!isEventOpen) {
+      // Reset logic for other state if needed
+      setStartDate(null);
+      setEndDate(null);
+    }
+  }, [isEventOpen]);
+
   
  const cid= localStorage.getItem("LoginId");
  console.log(cid,"customer id is ===>>>")
@@ -84,7 +105,7 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
       // date_to: yup.string().required("Date is required"),
       // time_from: yup.string().required("Time is required"),
       // time_to: yup.string().required("Time is required"),
-      // event_type: yup.string().required("Event type is required"),
+       event_type: yup.string().required("Event type is required"),
       event_organiser: yup.string().required("Event Organiser is required"),
   
       event_desc: yup.string().required("Description is required"),
@@ -176,7 +197,7 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
             
             toast.success("Event is added Succesfully!");
             setTimeout(() => {
-              // window.location.href="/"
+               window.location.href="/"
             }, 2000);
           
           })
@@ -288,7 +309,10 @@ async function eventType() {
                 </div>
                <div className="flex flex-row items-center justify-between mt-[38px] w-full">
 
-               <ImageUploader onChange={handleImageSelect} />
+               <ImageUploader
+          ref={imageUploaderRef} // Attach the ref to ImageUploader
+          onChange={handleImageSelect}
+        />
               
                <div >
 
@@ -296,9 +320,17 @@ async function eventType() {
  <div className="flex flex-col items-start justify-start w-full
  border-b border-white-700_99 border-solid ">
 
-   <DateRangePicker startDate={startDate} endDate={endDate}  onChange={handleDateChange}
-    className=" border-b border-white-700_99 border-solid w-full bg-[#292e34] " />
-   
+<DateRangePicker
+              ref={datePickerRef}
+              startDate={startDate}
+              endDate={endDate}
+              onChange={handleDateChange}
+              onReset={() => {
+                // Handle any additional reset logic for DateRangePicker if needed
+                console.log('DateRangePicker reset');
+              }}
+              className=" border-b border-white-700_99 border-solid w-full bg-[#292e34]"
+            />
        
  </div>
  
@@ -326,17 +358,29 @@ async function eventType() {
  
 
  <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                <SelectBox
-                   className="font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border-b border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
-                   placeholderClassName="text-gray-600"
-                   isMulti={false}
-                   name="eventType"
-                   options={eventTypeList}
-                   isSearchable={true}
-                   placeholder="Select Event Type..."
-                   onChange={handleEventTypeChange}
-                
-                 />
+               
+
+                <select
+                  id="eventType"
+                  name="eventType"
+                  className="capitalize font-roboto p-0 placeholder:text-gray-500 text-base text-left w-full common-pointer bg-[#292e34] p-[18px] text-white-A700 border-t-0 border-r-0 border-l-0 border-b-2 border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none"
+                  onChange={(e) => {
+                    form.handleChange("event_type", e.target.value);
+                    setSelectedEventType(e.target.value)
+                  }}
+                  value={form.values.event_type}
+                  
+                  
+
+                >
+                  <option value="" disabled hidden>Select Event Type...</option>
+                  {eventTypeList.map((event) => (
+                    <option key={event.value} value={event.value}>
+                      {event.label}
+                    </option>
+                  ))}
+
+                </select>
                   {/* Add more input fields as needed */}
                 </div>
                 {selectedEventType == "3"?
