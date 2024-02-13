@@ -245,13 +245,8 @@ async function section() {
     <Section isOpen={isSectionOpen} onRequestClose={closeModal} />
     </div>
     </div>
-    {isLoading ? (
-        <div style={{ display: 'flex', flexDirection:"column", justifyContent: 'center', alignItems: 'center', height: 'auto', width:"100%"}}>
-          <ScaleLoader css={override} color={'#5051f9'} loading={isLoading} />
-          
-          <h1 style={{color:'#5051f9', fontSize:"20px"}}> Loading!</h1>
-        </div>
-      ) :(
+    <ScaleLoader css={override} size={50} color={'#5051f9'} loading={isLoading} />
+                          {!isLoading && (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="mx-auto mt-8">
         {tableList.map((section) => (

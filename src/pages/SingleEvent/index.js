@@ -310,9 +310,10 @@ console.log(data.event_desc,"data ==============>>>>>")
                         </div>
                         <div className='w-8/12'>
                         <div  className='flex flex-row items-start justify-between mt-[18px] w-full'>
-                      <div className='border border-white-700_99 border-solid w-[49%] bg-[#292e34] h-[51px]'>
-                      <DatePicker placeholder={customDate} onChange={handleDateChange} 
-                         className=" font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4   " />
+                      <div className='border p-3 border-white-700_99 border-solid w-[49%] bg-[#292e34] h-[51px] justify-center text-center text-[white]'>
+                        {customDate}
+                      {/* <DatePicker placeholder={customDate} onChange={handleDateChange} 
+                         className=" font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4   " /> */}
                       </div>
                        
 
