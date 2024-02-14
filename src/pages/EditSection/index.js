@@ -249,7 +249,17 @@ function EditSection({ isOpen, onRequestClose, sectionId }) {
         </div>
       </div>
 
-      <ToastContainer />
+      <ToastContainer
+     
+      style={{
+         
+        top: '0%',
+        left: '80%',
+        transform: 'translateX(-50%)',
+        
+        
+      }}
+    />
     </Modal>
   );
 }

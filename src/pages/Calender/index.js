@@ -11,14 +11,15 @@ import SingleEvent from 'pages/SingleEvent';
 import "../Custom.css"
 import { css } from '@emotion/react';
 import { ScaleLoader } from 'react-spinners';
-
 const localizer = momentLocalizer(moment);
+
 
 const override = css`
   display: block;
   margin: 0 auto;
   border-color: red;
 `;
+
 
 const CustomEvent = ({ event, onSelectEvent, isHovered, onMouseEnter, onMouseLeave }) => {
   const startDate = new Date(event.date_from);
@@ -192,9 +193,7 @@ const Calender = () => {
 
 
       <SingleEvent isOpen={isModalOpen} onRequestClose={closeModal} eventId={selectedEventId} />
-   
-   
-           </div>
+    </div>
   );
 };
 

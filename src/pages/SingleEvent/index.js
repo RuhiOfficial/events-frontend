@@ -15,6 +15,7 @@ import DOB from 'components/Dob';
 import { css } from '@emotion/react';
 import { ScaleLoader } from 'react-spinners';
 import ViewLayout from 'pages/ViewLayout';
+import NumberInput from "react-number-input";
 
 const override = css`
   display: block;
@@ -78,7 +79,24 @@ function SingleEvent({ isOpen, onRequestClose, eventId }) {
 
 
 
-  
+  const bookingNotesList = [
+    { value: 'birthday', label: 'Birthday Celebration' },
+    { value: 'anniversary', label: 'Anniversary' },
+    { value: 'business', label: 'Business Meeting' },
+    { value: 'wedding', label: 'Wedding Reception' },
+    { value: 'graduation', label: 'Graduation Party' },
+    { value: 'holiday', label: 'Holiday Celebration' },
+    { value: 'promotion', label: 'Job Promotion' },
+    { value: 'retirement', label: 'Retirement Party' },
+    { value: 'farewell', label: 'Farewell Gathering' },
+    { value: 'engagement', label: 'Engagement Party' },
+    { value: 'baby_shower', label: 'Baby Shower' },
+    { value: 'reunion', label: 'Family Reunion' },
+    { value: 'conference', label: 'Conference Meeting' },
+    { value: 'product_launch', label: 'Product Launch' },
+    { value: 'award_ceremony', label: 'Award Ceremony' },
+    { value: 'others', label: 'Others' },
+  ];
 
 
   const form = useForm(
@@ -113,7 +131,7 @@ function SingleEvent({ isOpen, onRequestClose, eventId }) {
 
   async function bookTicket(data) {
    
-
+console.log("data from api is ====>>>")
     const req = {
       data: {
       venue_id:venueId,
@@ -126,7 +144,7 @@ function SingleEvent({ isOpen, onRequestClose, eventId }) {
       no_of_seats:data?.no_of_seats,
       arrival_time:formattedStartTime,
       dob:dob,
-      section:"hello",
+      section:mySection,
       
       },
     };
@@ -232,8 +250,7 @@ console.log(data.event_desc,"data ==============>>>>>")
   
 
 
-
-
+ 
   return (
     <Modal
       isOpen={isOpen}
@@ -310,10 +327,10 @@ console.log(data.event_desc,"data ==============>>>>>")
                         </div>
                         <div className='w-8/12'>
                         <div  className='flex flex-row items-start justify-between mt-[18px] w-full'>
-                      <div className='border p-3 border-white-700_99 border-solid w-[49%] bg-[#292e34] h-[51px] justify-center text-center text-[white]'>
-                        {customDate}
-                      {/* <DatePicker placeholder={customDate} onChange={handleDateChange} 
-                         className=" font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4   " /> */}
+                      <div className='border border-white-700_99 border-solid w-[49%] bg-[#292e34] h-[51px]'>
+                        <h1 style={{color:"white"}}  className=" font-roboto p-0  placeholder-white-900 text-base text-center h-[50px] p-3   ">{customDate}</h1>
+                      {/* <DatePicker placeholder={customDate} onChange={handleDateChange}  */}
+    {/*                      className=" font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4   " /> */}
                       </div>
                        
 
@@ -365,7 +382,7 @@ console.log(data.event_desc,"data ==============>>>>>")
                         name="Preffered Section"
                         placeholder="Preffered Section"
                         className=" font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4 "
-                        wrapClassName=" common-pointer border border-white-700_99 border-solid w-[49%] bg-[#292e34]"
+                        wrapClassName={mySection?(" common-pointer border border-[#d2ae38] border-solid w-[49%] bg-[#292e34]"):("common-pointer border border-white-700_99 border-solid w-[49%] bg-[#292e34]")}
                         style={{color:"white"}}
                        
                         errors={form?.errors?.section}
@@ -487,27 +504,56 @@ console.log(data.event_desc,"data ==============>>>>>")
                         size="md"
                         variant="fill"
                 />
-
+ {/* <Select
+        id="booking_notes"
+        name="booking_notes"
+        className="capitalize font-roboto p-0 text-base text-left w-full common-pointer bg-[#292e34] p-[10px] text-white-A700 border-t-0 border-r-0 border-l-0 border-b border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none"
+        options={bookingNotesList}
+        placeholder="Booking Notes..."
+        isSearchable={false}
+        onChange={handleCountryChange}
+        value={bookingNotesList.find((option) => option.value === book_notes)}
+        // styles={selectStyle}
+      />
+                                   
+                                   */}
+                                  {/* <select  style={{color:"white"}} id="booking_note_select" name="booking_note" className="capitalize font-roboto  pl-4 text-base text-left w-full common-pointer bg-[#292e34]  text-white-A700 border border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none h-[51px]"  onChange={(e) => {
+                          form.handleChange("booking_note", e);
+                          if (e.target.value === 'other') {
+                            document.getElementById('booking_note_textarea').style.display = 'block';
+                        } else {
+                            document.getElementById('booking_note_textarea').style.display = 'none';
+                        }
+                        }}>
+                                  <option value="" className="text-darkgray ">Select a booking note</option>
+                                  <option value="birthday" >Birthday Celebration</option>
+                                  <option value="anniversary">Anniversary Party</option>
+                                  <option value="graduation">Graduation Dinner</option>
+                                  <option value="other">Other</option>
+                                  </select>
+                                  <textarea id="booking_note_textarea" name="other_event_note" className="capitalize font-roboto p-0  text-base text-left w-full common-pointer bg-[#292e34] p-[18px] text-white-A700 border border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none mt-5" placeholder="Your occasion or special request?" style={{ display: 'none' }} />
+                             */}
                 
                 </div>
                
                 <div className="flex flex-col items-start justify-start mt-[18px] w-full">
-                  <Input
-                    name="input"
-                    placeholder="No of Guests "
-                    className=" font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
-                    wrapClassName="common-pointer border-[2px] rounded-[20px] border-[#d2ae38] border-solid w-full bg-[#292e34]"
-                    type="number"
-                    onChange={(e) => {
-                      form.handleChange("no_of_seats", e);
-                    }}
-                    errors={form?.errors?.["no_of_seats"]}
-                    value={form?.values?.["no_of_seats"]}
-                    style={{color:"white"}}
-                     min="1"
-                    size="md"
-                    variant="fill"
-                  />
+                <Input
+  name="input"
+  placeholder="No of Guests"
+  className="font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
+  wrapClassName="common-pointer border-[2px] rounded-[20px] border-[#d2ae38] border-solid w-full bg-[#292e34]"
+  type="number"
+  onChange={(e) => {
+    form.handleChange("no_of_seats", e);
+  }}
+  errors={form?.errors?.["no_of_seats"]}
+  value={form?.values?.["no_of_seats"]}
+  style={{ color: "white" }}
+  min="1"
+  size="md"
+  variant="fill"
+/>
+
                  
                 </div>
               
