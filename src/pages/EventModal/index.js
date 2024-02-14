@@ -10,10 +10,12 @@ import DateRangePicker from 'components/DateRangePicker';
 import TimePicker from 'components/Timepicker';
 import moment from 'moment';
 import ImageComponent from 'components/ImageComponent.js';
-
+import Select from "react-select";
 import ImageUploader from 'components/ImageUploader'
 
 const EventModal = ({ isEventOpen, onEventClose } ) => {
+  const [resetSelectKey, setResetSelectKey] = useState(0);
+  const [resetSelect, setResetSelect] = useState(false);
   const imageUploaderRef = useRef();
  const datePickerRef =useRef();
  const handleCloseModal = () => {
@@ -32,7 +34,20 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
 
   // Reset the form only when the modal is closed
   resetForm();
+  form.resetForm()
+  setSelectedEventType("")
+  setResetSelect(true);
+  setResetSelectKey((prevKey) => prevKey + 1);
 };
+
+// This effect will run when resetSelectBox changes
+useEffect(() => {
+  // Reset the state when resetSelect changes
+  if (resetSelect) {
+    setSelectedEventType("");
+    setResetSelect(false);
+  }
+}, [resetSelect]);
 
 
 
@@ -55,7 +70,45 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
   
  };
 
+const selectStyle= {
+  control: (provided, state) => ({
+    ...provided,
+    border: "none",
+     // Add optional bottom border
+    backgroundColor: "transparent",
+    marginBottom:0,
+    boxShadow: state.isFocused ? "none" : provided.boxShadow, // Remove boxShadow on focus
+   
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: "#fff",
+  }),
+  placeholder: (provided) => ({
+    ...provided,
+    color: "#656c79",
+    fontSize: 16,
+    padding:0
+    
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isSelected ? "#5051f9" : "#292e34",
+    color: state.isSelected ? "#fafafa" : "#fff",
+  }),
+  dropdownIndicator: (provided) => ({
+    ...provided,
+    color: "#fff",
+    "&:hover": {
+      color: "#fff",
+    },
+  }),
+  menu: (provided) => ({
+    ...provided,
+    backgroundColor: "#656c79", // Set the background color of the dropdown menu
+  }),
 
+}
 //  const cardStyles = {
 //   boxShadow: '0 0 20px rgba(255, 105, 180, 0.8)', // Bright pink shadow
 //   borderRadius: '8px',
@@ -177,7 +230,7 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
           date_to:endDate,
           time_from: formattedStartTime,
           time_to:formattedEndTime,
-          event_type:selectedEventType,
+          event_type:selectedEventType.value,
           event_day:data?.event_day,
           event_organiser: data?.event_organiser,
           event_desc: data?.event_desc,
@@ -359,11 +412,28 @@ async function eventType() {
 
  <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                
-
-                <select
+ <Select
+            key={resetSelectKey} // Force re-mount when key changes
+            id="eventType"
+            name="eventType"
+            className=" capitalize font-roboto p-0 text-base text-left w-full common-pointer bg-[#292e34] p-[10px] text-white-A700 border-t-0 border-r-0 border-l-0 border-b border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none"
+            options={eventTypeList}
+            placeholder="Select Event Type..."
+            isSearchable={false}
+            onChange={handleEventTypeChange}
+            value={eventTypeList.find((option) => option.value === selectedEventType)}
+            styles={selectStyle}
+           ></Select>
+                {/* <select
                   id="eventType"
                   name="eventType"
-                  className="capitalize font-roboto p-0 placeholder:text-gray-500 text-base text-left w-full common-pointer bg-[#292e34] p-[18px] text-white-A700 border-t-0 border-r-0 border-l-0 border-b-2 border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none"
+                  style={{
+                    placeholder: {
+                      color: "red",
+                      fontSize: 12,
+                      fontWeight: "bold",
+                    },}}
+                  className="capitalize font-roboto p-0 text-base text-left w-full common-pointer bg-[#292e34] p-[18px] text-white-A700 border-t-0 border-r-0 border-l-0 border-b-2 border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none"
                   onChange={(e) => {
                     form.handleChange("event_type", e.target.value);
                     setSelectedEventType(e.target.value)
@@ -373,17 +443,17 @@ async function eventType() {
                   
 
                 >
-                  <option value="" disabled hidden>Select Event Type...</option>
+                  <option value="" disabled hidden className="placeholder-text-gray-500">Select Event Type...</option>
                   {eventTypeList.map((event) => (
                     <option key={event.value} value={event.value}>
                       {event.label}
                     </option>
                   ))}
 
-                </select>
+                </select> */}
                   {/* Add more input fields as needed */}
                 </div>
-                {selectedEventType == "3"?
+                {selectedEventType?.value == "3"?
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                 <Input
                   name="event_day"

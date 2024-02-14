@@ -281,7 +281,8 @@ border-bottom: #d2d6dc;
 .event-image {
   width: 400px;
   height: 300px;
-
+  
+  padding-right: 15px;
   border-radius: 30px;
   margin-top: 15px;
 }
@@ -755,3 +756,52 @@ li {
   margin-top: 40px;
   
 }
+
+
+select {
+  /* Add other styles as needed */
+  color: white; /* Text color for selected option */
+  background-color: #292e34; /* Background color */
+  border: 2px solid white; /* Border color */
+  /* Add other styles as needed */
+}
+
+select option[disabled]:first-child {
+  color: gray; /* Change the placeholder color here */
+}
+.placeholder-option {
+  color: grey!important; /* Adjust the color as needed */
+}
+
+/* Custom styles for number input */
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+}
+
+/* Custom styles for number input up button */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Increase the size and set background color for up and down buttons */
+input[type="number"]::-webkit-inner-spin-button {
+  background-color: goldenrod; /* Set your desired background color */
+  height: 100%; /* Adjust the height as needed */
+}
+
+input[type="number"]::-webkit-outer-spin-button {
+  background-color: goldenrod; /* Set your desired background color */
+  height: 100%; /* Adjust the height as needed */
+}
+
+/* Assuming your placeholder is inside a select with ID eventType */
+#eventType::placeholder {
+  color: #999; /* Set your desired placeholder color here */
+}
+
+
+
+/* CustomSelect.css */
+

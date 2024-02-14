@@ -359,6 +359,7 @@ console.log(selectedEventType,"selected event type ",eventId ,"=====>>>>>>>>>>>>
         border: 'none',
         padding: 0,
         overflow: 'auto',
+        maxHeight: '100vh', // Set a max height for the content
       },
     }}
   >
@@ -636,7 +637,17 @@ console.log(selectedEventType,"selected event type ",eventId ,"=====>>>>>>>>>>>>
         </div>
       </div>
 
-      <ToastContainer />
+      <ToastContainer
+    
+      style={{
+       
+        top: '50%',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        
+        
+      }}
+    />
     </Modal>
   );
 }

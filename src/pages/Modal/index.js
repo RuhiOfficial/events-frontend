@@ -8,6 +8,7 @@ import {  ToastContainer,toast } from "react-toastify";
 
 import { useNavigate } from "react-router-dom";
 import "../Custom.css";
+import Select from 'react-select';
 
 const Modal = ({ isOpen, onClose }) => {
   const handleCloseModal = () => {
@@ -16,6 +17,7 @@ const Modal = ({ isOpen, onClose }) => {
     
     // Close the modal
     onClose();
+    setResetSelectKey((prevKey) => prevKey + 1);
   };
   
  const cid= localStorage.getItem("companyId");
@@ -31,7 +33,7 @@ const Modal = ({ isOpen, onClose }) => {
  const [selectedVenueType, setSelectedVenueType] = useState(null);
  const [timezoneList, setTimezoneList] = useState([]);
  const [selectedTimezone, setSelectedTimezone] = useState(null);
-  
+ const [resetSelectKey, setResetSelectKey] = useState(0);
 
   
       const formValidationSchema = yup.object().shape({
@@ -96,15 +98,46 @@ const Modal = ({ isOpen, onClose }) => {
 }, []);
 
 
+const selectStyle= {
+  control: (provided, state) => ({
+    ...provided,
+    border: "none",
+     // Add optional bottom border
+    backgroundColor: "transparent",
+    marginBottom:0,
+    boxShadow: state.isFocused ? "none" : provided.boxShadow, // Remove boxShadow on focus
+   
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: "#fff",
+  }),
+  placeholder: (provided) => ({
+    ...provided,
+    color: "#656c79",
+    fontSize: 16,
+    padding:0
+    
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isSelected ? "#5051f9" : "#292e34",
+    color: state.isSelected ? "#fafafa" : "#fff",
+  }),
+  dropdownIndicator: (provided) => ({
+    ...provided,
+    color: "#fff",
+    "&:hover": {
+      color: "#fff",
+    },
+  }),
+  menu: (provided) => ({
+    ...provided,
+    backgroundColor: "#656c79", // Set the background color of the dropdown menu
+  }),
 
-// const cardStyles = {
-//   boxShadow: '0 0 20px rgba(255, 105, 180, 0.8)', // Bright pink shadow
-//   borderRadius: '8px',
-//   padding: '16px',
-  
-//   // Set the desired background color
-//   // Other styling properties...
-// };
+}
+
 
 
      async function addvenue(data) {
@@ -117,14 +150,14 @@ const Modal = ({ isOpen, onClose }) => {
             email: data?.email,
             phone: data?.phone,
             cid: cid,
-            country_id:selectedCountry,
-            state_id:selectedState,
-            city_id:selectedCity,
+            country_id:selectedCountry.value,
+            state_id:selectedState.value,
+            city_id:selectedCity.value,
             zipcode: data?.zipcode,
             address: data?.address,
             tax: data?.tax,
-            venue_type:selectedVenueType,
-            timezone:selectedTimezone,
+            venue_type:selectedVenueType.value,
+            timezone:selectedTimezone.value,
             website:data?.website,
             currency:data?.currency,
             capacity: data?.capacity,
@@ -164,7 +197,7 @@ const Modal = ({ isOpen, onClose }) => {
 const handleCountryChange = (selectedOption) => {
 
   setSelectedCountry(selectedOption);
-  states(selectedOption);
+  states(selectedOption.value);
 };
 
 async function country() {
@@ -206,7 +239,7 @@ async function country() {
 const handleStateChange = (selectedOption) => {
 
   setSelectedState(selectedOption);
-  cities(selectedOption)
+  cities(selectedOption.value)
 };
 
 
@@ -465,7 +498,7 @@ async function timezone() {
                 </div>
                 
                 <div className="flex flex-col  items-start justify-start mt-[38px] w-full">
-                <select
+                {/* <select
   id="country"
   name="country"
   className="capitalize font-roboto p-0 placeholder:text-gray-500 text-base text-left w-full common-pointer bg-[#292e34] p-[18px] text-white-A700 border-t-0 border-r-0 border-l-0 border-b-2 border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none"
@@ -485,14 +518,27 @@ async function timezone() {
     </option>
   ))}
 
-</select>
+</select> */}
+
+<Select
+            key={resetSelectKey} // Force re-mount when key changes
+            id="country"
+            name="country"
+            className=" capitalize font-roboto p-0 text-base text-left w-full common-pointer bg-[#292e34] p-[10px] text-white-A700 border-t-0 border-r-0 border-l-0 border-b border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none"
+            options={countryList}
+            placeholder="Select Country..."
+            isSearchable={false}
+            onChange={handleCountryChange}
+            value={countryList.find((option) => option.value === selectedCountry)}
+            styles={selectStyle}
+           ></Select>
 
  </div>
                 
                
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                 
-                 <select
+                 {/* <select
   id="state"
   name="state"
   className="capitalize font-roboto p-0 placeholder:text-gray-500 text-base text-left w-full common-pointer bg-[#292e34] p-[18px] text-white-A700 border-t-0 border-r-0 border-l-0 border-b-2 border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none"
@@ -512,33 +558,45 @@ async function timezone() {
     </option>
   ))}
 
-</select>
+</select> */}
+
+<Select
+            key={resetSelectKey} // Force re-mount when key changes
+            id="state"
+            name="state"
+            className=" capitalize font-roboto p-0 text-base text-left w-full common-pointer bg-[#292e34] p-[10px] text-white-A700 border-t-0 border-r-0 border-l-0 border-b border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none"
+            options={stateList}
+            placeholder="Select State..."
+            isSearchable={false}
+            onChange={handleStateChange}
+            value={stateList.find((option) => option.value === selectedState)}
+            styles={selectStyle}
+           ></Select>
+
 
                 </div>
 
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                
 
-<select
-  id="city"
-  name="city"
-  className="capitalize font-roboto p-0 placeholder:text-gray-500 text-base text-left w-full common-pointer bg-[#292e34] p-[18px] text-white-A700 border-t-0 border-r-0 border-l-0 border-b-2 border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none"
-  onChange={(e) => {
-    form.handleChange("city_id", e.target.value);
-  }}
-  value={form.values.city_id}
-  
-  
 
->
-  <option value="" disabled hidden>Select City...</option>
-  {cityList.map((city) => (
-    <option key={city.value} value={city.value}>
-      {city.label}
-    </option>
-  ))}
 
-</select>
+
+<Select
+            key={resetSelectKey} // Force re-mount when key changes
+            id="city"
+            name="city"
+            className=" capitalize font-roboto p-0 text-base text-left w-full common-pointer bg-[#292e34] p-[10px] text-white-A700 border-t-0 border-r-0 border-l-0 border-b border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none"
+            options={cityList}
+            placeholder="Select City..."
+            isSearchable={false}
+            onChange={handleCityChange}
+            value={cityList.find((option) => option.value === selectedCity)}
+            styles={selectStyle}
+           ></Select>
+
+
+
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   <Input
@@ -597,50 +655,41 @@ async function timezone() {
 
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                
-                          <select
+        
+
+          <Select
+            key={resetSelectKey} // Force re-mount when key changes
             id="venue_type"
             name="venue_type"
-            className="capitalize font-roboto p-0 placeholder:text-gray-500 text-base text-left w-full common-pointer bg-[#292e34] p-[18px] text-white-A700 border-t-0 border-r-0 border-l-0 border-b-2 border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none"
-            onChange={(e) => {
-              form.handleChange("venue_type", e.target.value);
-            }}
-            value={form.values.venue_type}
-            
-            
+            className=" capitalize font-roboto p-0 text-base text-left w-full common-pointer bg-[#292e34] p-[10px] text-white-A700 border-t-0 border-r-0 border-l-0 border-b border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none"
+            options={venueTypeList}
+            placeholder="Select Venue Type ..."
+            isSearchable={false}
+            onChange={handleVenueTypeChange}
+            value={venueTypeList.find((option) => option.value === selectedVenueType)}
+            styles={selectStyle}
+           ></Select>
 
-          >
-            <option value="" disabled hidden>Select Venue Type...</option>
-            {venueTypeList.map((venue) => (
-              <option key={venue.value} value={venue.value}>
-                {venue.label}
-              </option>
-            ))}
-
-          </select>
                 </div>
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
               
 
-              <select
-              id="timezone"
+          
+
+              <Select
+            key={resetSelectKey} // Force re-mount when key changes
+            id="timezone"
               name="timezone"
-              className="capitalize font-roboto p-0 placeholder:text-gray-500 text-base text-left w-full common-pointer bg-[#292e34] p-[18px] text-white-A700 border-t-0 border-r-0 border-l-0 border-b-2 border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none"
-              onChange={(e) => {
-              form.handleChange("timezone", e.target.value);
-              }}
-              value={form.values.timezone}
+            className=" capitalize font-roboto p-0 text-base text-left w-full common-pointer bg-[#292e34] p-[10px] text-white-A700 border-t-0 border-r-0 border-l-0 border-b border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none"
+            options={timezoneList}
+            placeholder="Select Timezone ..."
+            isSearchable={false}
+            onChange={handleTimezoneChange}
+            value={timezoneList.find((option) => option.value === timezone)}
+            styles={selectStyle}
+           ></Select>
 
 
-
-              >
-              <option value="" disabled hidden>Select Timezone...</option>
-              {timezoneList.map((timezone) => (
-              <option key={timezone.value} value={timezone.value}>
-              {timezone.label}
-              </option>
-              ))}
-
-              </select>
 
                 </div>
               
