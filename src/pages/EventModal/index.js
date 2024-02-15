@@ -37,6 +37,8 @@ const EventModal = ({ isEventOpen, onEventClose } ) => {
   form.resetForm()
   setSelectedEventType("")
   setResetSelect(true);
+  setSelectedWeekdays("");
+  setLoweredData("");
   setResetSelectKey((prevKey) => prevKey + 1);
 };
 
@@ -63,8 +65,12 @@ useEffect(() => {
   const [eventTypeList, setEventTypeList] = useState([]);
  const [selectedEventType, setSelectedEventType] = useState(null);
  const vid= localStorage.getItem("Venue");
+ const weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-  console.log(selectedImage,"selected image is ")
+ const [selectedWeekdays, setSelectedWeekdays] = useState([]);
+ const [loweredData, setLoweredData] = useState([]);
+
+ 
   const handleImageSelect = (imageUrl) => {
     setSelectedImage(imageUrl);
   
@@ -109,16 +115,26 @@ const selectStyle= {
   }),
 
 }
-//  const cardStyles = {
-//   boxShadow: '0 0 20px rgba(255, 105, 180, 0.8)', // Bright pink shadow
-//   borderRadius: '8px',
-//   padding: '16px',
+
+
+
+useEffect(()=>{
+  if(selectedWeekdays){
+    const data= selectedWeekdays.map(item => item.toLowerCase())
+    setLoweredData(data);
+  }
+ 
+},[selectedWeekdays])
   
-//   // Set the desired background color
-//   // Other styling properties...
-// };
 
-
+const handleCheckboxChange = (weekday) => {
+  if (selectedWeekdays.includes(weekday)) {
+    setSelectedWeekdays(selectedWeekdays.filter((selected) => selected !== weekday));
+  } else {
+    setSelectedWeekdays([...selectedWeekdays, weekday]);
+  }
+  
+};
   const handleDateChange = (start, end) => {
     setStartDate(start);
     setEndDate(end);
@@ -147,7 +163,7 @@ const selectStyle= {
 
   
  const cid= localStorage.getItem("LoginId");
- console.log(cid,"customer id is ===>>>")
+ console.log(selectedWeekdays,"selected weekdays id is ===>>>")
 
   /////////// Validations ////////////////
       const formValidationSchema = yup.object().shape({
@@ -231,7 +247,7 @@ const selectStyle= {
           time_from: formattedStartTime,
           time_to:formattedEndTime,
           event_type:selectedEventType?.value,
-          event_day:data?.event_day,
+          event_day:loweredData,
           event_organiser: data?.event_organiser,
           event_desc: data?.event_desc,
           facebook_event_url: data?.facebook_event_url,
@@ -250,7 +266,7 @@ const selectStyle= {
             
             toast.success("Event is added Succesfully!");
             setTimeout(() => {
-             window.location.href="/"
+            //  window.location.href="/"
             }, 2000);
           
           })
@@ -424,6 +440,8 @@ async function eventType() {
             value={eventTypeList.find((option) => option.value === selectedEventType)}
             styles={selectStyle}
            ></Select>
+
+
                 {/* <select
                   id="eventType"
                   name="eventType"
@@ -455,7 +473,30 @@ async function eventType() {
                 </div>
                 {selectedEventType?.value == "3"?
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                <Input
+                <ul className='flex flex-row'>
+        {weekdays.map((weekday) => (
+          <li key={weekday} className=" items-center space-x-2 mr-6">
+            <input
+              type="checkbox"
+              id={`checkbox-${weekday}`}
+              className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              checked={selectedWeekdays.includes(weekday)}
+              onChange={() => handleCheckboxChange(weekday)}
+            />
+            
+            <label htmlFor={`checkbox-${weekday}`} className="text-gray-700 ">
+              {weekday}
+            </label>
+          </li>
+        ))}
+      </ul>
+               
+                
+                
+                
+                
+                
+                {/* <Input
                   name="event_day"
                   placeholder="Event Day"
                   className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
@@ -469,7 +510,7 @@ async function eventType() {
                   style={{color:"white"}}
                   size="md"
                   variant="fill"
-                />
+                /> */}
                 {/* Add more input fields as needed */}
               </div>:null}
                 

@@ -1,5 +1,5 @@
-// new 
-// EventCalendar.js
+// // // new 
+// // // EventCalendar.js
 
 import React, { useState, useEffect } from 'react';
 import { Button } from 'components';
@@ -26,12 +26,14 @@ const CustomEvent = ({ event, onSelectEvent, isHovered, onMouseEnter, onMouseLea
   const endDate = new Date(event.date_to);
 
   const eventStyle = {
-    backgroundColor: isHovered ? '#FF4081' : '#00BCD4', // Vibrant colors
+    backgroundColor: isHovered ? '#9c3e7c' : 'transparent', // Vibrant colors
     borderRadius: '8px',
-    padding: '10px',
-    marginBottom: '10px',
+    padding: '1px',
+    marginBottom: '1px',
     transition: 'background-color 0.3s',
     cursor: 'pointer',
+    height:"auto",
+    
   };
 
   return (
@@ -40,13 +42,12 @@ const CustomEvent = ({ event, onSelectEvent, isHovered, onMouseEnter, onMouseLea
       onClick={() => onSelectEvent(event)}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      
     >
       <strong>{event.name}</strong>
       <br />
-      {/* <span>{`Start: ${moment(startDate).format('MMMM D, YYYY HH:mm')}`}</span>
-      <br />
-      <span>{`End: ${moment(endDate).format('MMMM D, YYYY HH:mm')}`}</span>
-      <br /> */}
+      
+     
     </div>
   );
 };
@@ -89,7 +90,7 @@ const Calender = () => {
   const globalStyles = {
     color: 'rgba(218, 80, 170, 0.8)',
     borderRadius: '8px',
-    height: '87vh',
+    height: '100vh',
     marginLeft:"20px",
     marginTop:"30px",
     width: '97%',
@@ -160,6 +161,7 @@ const Calender = () => {
         </div>
       ) :(
  <Calendar
+ 
         localizer={localizer}
         events={eventList.map((event) => ({
           ...event,
@@ -182,12 +184,26 @@ const Calender = () => {
               onMouseLeave={handleLeaveEvent}
             />
           ),
+          
         }}
         style={globalStyles}
         popup
         onSelectEvent={handleSelectEvent}
-     
-        dateCellWrapper={dateCellWrapper}
+        eventPropGetter={(event, start, end, isSelected) => {
+          const style = {
+            zIndex: isSelected ? 1 : 0,
+            backgroundColor: isSelected ? '#9c3e7c' : 'blue',
+            borderRadius: '8px',
+            padding: '4px',
+            marginBottom: '2px',
+            transition: 'background-color 0.3s',
+            cursor: 'pointer',
+            height: 'auto',
+          };
+      
+          return { style };
+        }}
+      
       />)}
       
 
@@ -250,3 +266,214 @@ const CustomToolbar = (toolbar) => {
 };
 
 export default Calender;
+
+
+
+// // EventCalendar.js
+
+// import React,{useState,useEffect}from 'react';
+// import { Calendar, momentLocalizer } from 'react-big-calendar';
+// import 'react-big-calendar/lib/css/react-big-calendar.css';
+// import moment from 'moment';
+// import { Img } from 'components';
+// import { getEvent } from 'service/api';
+
+// const localizer = momentLocalizer(moment);
+
+
+// const eventsWithImages = [
+//     {
+//       id: 1,
+//       title: 'Meeting',
+//       start: new Date(2024, 1, 7, 10, 0),
+//       end: new Date(2024, 1, 7, 12, 0),
+//       image: 'https://base-prod.rspb-prod.magnolia-platform.com/.imaging/focalpoint/_WIDTH_x_HEIGHT_/dam/jcr:13b44ec2-6678-4ed5-a33d-f9ea29995ae6/85954576-People-silhouette-by-tree-at-sunset.jpg', // Add the image URL
+//     },
+//     {
+//         id: 2,
+//         title: 'Second',
+//         start: new Date(2024, 1, 7, 10, 0),
+//         end: new Date(2024, 1, 7, 12, 0),
+//         image: 'https://base-prod.rspb-prod.magnolia-platform.com/.imaging/focalpoint/_WIDTH_x_HEIGHT_/dam/jcr:13b44ec2-6678-4ed5-a33d-f9ea29995ae6/85954576-People-silhouette-by-tree-at-sunset.jpg', // Add the image URL
+//       },
+//     // Add more events with images as needed
+//   ];
+//   const CustomEvent = ({ event }) => (
+//     <div className='h-[20px]' key={event.id}>
+//       <strong>{event.name}</strong>
+//       <br />
+      
+      
+//       <hr />
+//     </div>
+//   );
+  
+
+//   const eventStyleGetter = (event, start, end, isSelected) => {
+//     const backgroundColor = isSelected ? '#3174ad' : '#7FDBFF'; // Selected and regular events background color
+//     const style = {
+//       backgroundColor,
+//       borderRadius: '5px',
+//       opacity: 0.8,
+//       color: 'white',
+//       border: '0',
+//       display: 'block',
+//     };
+//     return {
+//       style,
+//     };
+//   };
+// const toolbarStyle = {
+//     color: 'white',
+//     background: '#333', // Change to your preferred background color
+//     borderRadius: '5px',
+//   };
+//   const buttonStyle = {
+//     color: 'white',
+   
+//     background: 'transparent',
+//     cursor: 'pointer',
+//   };
+//   const globalStyles = {
+//     color: 'white',
+//     background: '#333', // Change to your preferred background color
+//     borderRadius: '5px',
+//   };
+// const Calender = () => {
+//   const [eventList, setEventList] = useState([]);
+//   const [isModalOpen, setIsModalOpen] = useState(false);
+//   const [hoveredEventId, setHoveredEventId] = useState(null);
+//   const [isLoading, setIsLoading] = useState(true);
+
+
+
+//   const formatDate = (dateString) => {
+//     const isoFormat = moment(dateString, moment.ISO_8601, true);
+  
+//     if (isoFormat.isValid()) {
+//       return isoFormat.toDate();
+//     }
+  
+//     // If ISO format parsing fails, try a more flexible parsing approach
+//     const parsedDate = moment(dateString, ['YYYY-MM-DDTHH:mm:ss.SSSZ', 'YYYY-MM-DD'], true);
+  
+//     if (parsedDate.isValid()) {
+//       return parsedDate.toDate();
+//     }
+  
+//     // If parsing still fails, log an error and return null
+//     console.error(`Unable to parse date: ${dateString}`);
+//     return null;
+//   };
+  
+  
+  
+      
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       const venueId = localStorage.getItem('Venue');
+//       const req = { data: { venue_id: venueId } };
+
+//       try {
+//         const res = await getEvent(req);
+//         setEventList(res.data.data);
+        
+//       } catch {
+//         console.error('Unable to fetch the Event List');
+//       }
+//     };
+
+//     fetchData();
+//   }, []);
+
+//     <div>
+//     <h1>Event List</h1>
+//     {eventList.map((event) => (
+//       <CustomEvent key={event.id} event={event} />
+//     ))}
+//   </div>
+
+//       return (
+//         <div style={{ height: '100vh', background: '#222', padding: '20px' }}>
+//           <h2 style={{ textAlign: 'center', marginBottom: '20px', color: 'white' }}>
+//             {moment().format('MMMM D, YYYY')}
+//           </h2>
+//           <style>
+//             {`
+              
+    
+//               .rbc-today {
+//                 background-color: #cab39f !important;
+              
+              
+//               }
+//             `}
+//           </style>
+//           <Calendar
+//         localizer={localizer}
+//         events={eventList.map((event) => ({
+//                     ...event,
+//                     start: formatDate(event.date_from),
+//                     end: formatDate(event.date_to),
+                   
+//                   }))}
+//         startAccessor="start"
+//         endAccessor="end"
+//         views={['month', 'week', 'day']}
+//         defaultView="month"
+//         eventPropGetter={eventStyleGetter}
+//         components={{
+//           toolbar: CustomToolbar,
+//           event: CustomEvent, // Use a custom component for event rendering
+//         }}
+//         style={globalStyles}
+//         step={15}
+//         showMultiDayTimes
+  
+
+//         popup
+//       />
+//         </div>
+//       );
+// };
+
+
+// // CustomToolbar component
+// const CustomToolbar = (toolbar) => {
+//   const goToBack = () => {
+//     toolbar.onNavigate('PREV');
+//   };
+
+//   const goToNext = () => {
+//     toolbar.onNavigate('NEXT');
+//   };
+
+//   const goToToday = () => {
+//     toolbar.onNavigate('TODAY');
+//   };
+
+//   const changeView = (view) => {
+//     toolbar.onView(view);
+//   };
+
+//   return (
+//     <div className="rbc-toolbar " >
+//       <span className="rbc-btn-group">
+//         <button type="button" onClick={goToBack} style={buttonStyle}>
+//           {'<'}
+//         </button>
+//         <button type="button" onClick={goToToday} style={buttonStyle}>
+//           Today
+//         </button>
+//         <button type="button" onClick={goToNext} style={buttonStyle}>
+//           {'>'}
+//         </button>
+//       </span>
+//       <span className="rbc-toolbar-label">{toolbar.label}</span>
+    
+//     </div>
+//   );
+// };
+
+// export default Calender;

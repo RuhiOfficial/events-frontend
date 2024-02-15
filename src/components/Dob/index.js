@@ -19,19 +19,23 @@ const DateComponent = ({ dob, onChange, placeholder }) => {
   };
 
   return (
-    <DatePicker
-      selected={selectedDate}
-      onChange={handleDateChange}
-      selectsStart
-      showMonthDropdown
-      showYearDropdown
-      placeholderText={placeholder}
-      dateFormat="yyyy-MM-dd"
-      className="rounded-l-md px-3 py-2 border-b border-gray-300 focus:outline-none focus:border-blue-500 flex-grow"
-      showTimeInput={false}
-      popperClassName="dark-popper"
-      utcOffset={new Date().getTimezoneOffset()}
-    />
+<DatePicker
+  selected={selectedDate}
+  onChange={handleDateChange}
+  selectsStart
+  showMonthDropdown
+  showYearDropdown
+  placeholderText={placeholder}
+  dateFormat="yyyy-MM-dd"
+  className="rounded-l-md px-3 py-2 border-b border-gray-300 focus:outline-none focus:border-blue-500 flex-grow"
+  showTimeInput={false}
+  popperClassName="light-popper"
+  utcOffset={new Date().getTimezoneOffset()}
+  yearDropdownItemNumber={200}  // Adjust the number of visible years as needed
+  scrollableYearDropdown  // Enable scrollable year dropdown
+  dropdownMode="scroll"
+/>
+
   );
 };
 
