@@ -158,7 +158,7 @@ const selectStyle= {
       // date_to: yup.string().required("Date is required"),
       // time_from: yup.string().required("Time is required"),
       // time_to: yup.string().required("Time is required"),
-       event_type: yup.string().required("Event type is required"),
+      //  event_type: yup.string().required("Event type is required"),
       event_organiser: yup.string().required("Event Organiser is required"),
   
       event_desc: yup.string().required("Description is required"),
@@ -230,7 +230,7 @@ const selectStyle= {
           date_to:endDate,
           time_from: formattedStartTime,
           time_to:formattedEndTime,
-          event_type:selectedEventType.value,
+          event_type:selectedEventType?.value,
           event_day:data?.event_day,
           event_organiser: data?.event_organiser,
           event_desc: data?.event_desc,
@@ -250,13 +250,13 @@ const selectStyle= {
             
             toast.success("Event is added Succesfully!");
             setTimeout(() => {
-               window.location.href="/"
+              //  window.location.href="/"
             }, 2000);
           
           })
           .catch((err) => {
             console.error(err);
-            toast.error("Something Went Wrong!");
+            toast.error(err);
           });
       }
 
@@ -575,6 +575,7 @@ async function eventType() {
                     color="blue_600_indigo_900"
                     onClick={() => {
                       form.handleSubmit(addEvent);
+                     
                     }}
                   >
                     Add 

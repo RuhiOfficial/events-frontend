@@ -643,7 +643,17 @@ console.log(data.event_desc,"data ==============>>>>>")
 
           </div>
      
-      <ToastContainer />
+          <ToastContainer
+    
+    style={{
+     
+      top: '70%',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      
+      
+    }}
+  />
       <ViewLayout isOpen={isModalOpen} onRequestClose={closeModal} />
     </Modal>
     

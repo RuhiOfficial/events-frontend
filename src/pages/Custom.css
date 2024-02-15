@@ -805,3 +805,16 @@ input[type="number"]::-webkit-outer-spin-button {
 
 /* CustomSelect.css */
 
+.sidebar-img{
+  width:28px!important
+}
+
+.custom-btn {
+  color: white;
+  transition: color 0.3s ease; /* Adding a smooth transition effect */
+
+  /* Hover effect */
+  &:hover {
+    color: blue;
+  }
+}

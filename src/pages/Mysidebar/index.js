@@ -9,10 +9,14 @@ import { Link } from 'react-router-dom';
 
 import Dash from "../../assets/images/dashboard.png"
 import customers from "../../assets/images/customer.png"
-import reservations from "../../assets/images/Group4.png"
+
 import setting from "../../assets/images/Group5.png"
 import admissions from "../../assets/images/Group6.png"
 import inventory from "../../assets/images/Group7.png"
+import Calendar from '../../assets/images/calendar.png';
+import Reservation from '../../assets/images/reservation.png';
+import Layout from '../../assets/images/layout.png';
+import Clipboard from '../../assets/images/clipboard.png';
 
 // import { children } from 'cheerio/lib/api/traversing';
 
@@ -33,42 +37,31 @@ function Mysidebar({children}) {
           altText: "Dashboard", // Add alt text for accessibility
         },
         {
-          imgSrc: reservations, // Assuming customers is the import of your image file
+          imgSrc: Reservation, // Assuming customers is the import of your image file
           href: "/reservation",
           active: window.location.pathname === "/reservation",
           altText: "reservation", // Add alt text for accessibility
         },
         {
-          imgSrc: customers, // Assuming customers is the import of your image file
+          imgSrc: Layout, // Assuming customers is the import of your image file
           href: "/canvas",
           active: window.location.pathname === "/canvas",
           altText: "Canvas", // Add alt text for accessibility
         },
         
         {
-          imgSrc: setting, // Assuming customers is the import of your image file
+          imgSrc: Clipboard, // Assuming customers is the import of your image file
           href: "/tickets",
           active: window.location.pathname === "/tickets",
           altText: "tickets ", // Add alt text for accessibility
         },
         {
-          imgSrc: customers, // Assuming customers is the import of your image file
+          imgSrc: Calendar, // Assuming customers is the import of your image file
           href: "/calender",
           active: window.location.pathname === "/calender",
           altText: "calender ", // Add alt text for accessibility
         },
-        // {
-        //   imgSrc: admissions, // Assuming customers is the import of your image file
-        //   href: "/admissions",
-        //   active: window.location.pathname === "/admissions",
-        //   altText: "admissions", // Add alt text for accessibility
-        // },
-        // {
-        //   imgSrc: inventory, // Assuming customers is the import of your image file
-        //   href: "/inventory",
-        //   active: window.location.pathname === "/inventory",
-        //   altText: "inventory", // Add alt text for accessibility
-        // },
+       
       ]
 
 
@@ -109,7 +102,7 @@ function Mysidebar({children}) {
                >
                  <Link to={menu.href}>
                    <div className="tooltip-container">
-                     <img src={menu.imgSrc} alt={menu.altText} />
+                     <img src={menu.imgSrc} alt={menu.altText} className='sidebar-img' />
                      <span className="tooltip-text">{menu.altText}</span>
                    </div>
                  </Link>

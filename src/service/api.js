@@ -12,7 +12,7 @@ const API_URLS = {
   GET_EVENT: `${COMMON_URL}event`,
   GET_SINGLE_EVENT:`${COMMON_URL}event_single_list`,
   
-  GET_SECTION: `${COMMON_URL}listsection`,
+  GET_SECTION: `${COMMON_URL}list_section_by_venueid`,
   GET_SECTION_LIST: `${COMMON_URL}data-table`,
   GET_LAYOUT: `${COMMON_URL}get_layout`,
   GET_LOCALSTORAGE: `${COMMON_URL}get_layout_box`,

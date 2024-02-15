@@ -221,7 +221,7 @@ const CustomToolbar = (toolbar) => {
 
      
       <span className="rbc-btn-group ">
-        <button type="button" onClick={goToBack} style={{color:'white'}}>
+        <button type="button" onClick={goToBack}  className="custom-btn">
           {'<'}
         </button>
         <button type="button" onClick={goToToday} style={{color:'white'}}>
