@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import "../Custom.css";
 import Select from 'react-select';
 
+
 const Modal = ({ isOpen, onClose }) => {
   const handleCloseModal = () => {
     // Reset the form when closing the modal

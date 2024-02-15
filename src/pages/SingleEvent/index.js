@@ -16,7 +16,7 @@ import { css } from '@emotion/react';
 import { ScaleLoader } from 'react-spinners';
 import ViewLayout from 'pages/ViewLayout';
 import NumberInput from "react-number-input";
-
+import Select from 'react-select';
 const override = css`
   display: block;
   margin: 0 auto;
@@ -38,6 +38,7 @@ function SingleEvent({ isOpen, onRequestClose, eventId }) {
     const [mySection, setMySection] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [bookingNotes, setBookingNotes] = useState(null);
    
     useEffect(()=>{
       (localStorage.removeItem('Section'));
@@ -98,6 +99,51 @@ function SingleEvent({ isOpen, onRequestClose, eventId }) {
     { value: 'others', label: 'Others' },
   ];
 
+  const selectStyle= {
+    control: (provided, state) => ({
+      ...provided,
+      border: "none",
+       // Add optional bottom border
+      backgroundColor: "transparent",
+      marginBottom:0,
+      boxShadow: state.isFocused ? "none" : provided.boxShadow, // Remove boxShadow on focus
+     
+    }),
+    singleValue: (provided) => ({
+      ...provided,
+      color: "#fff",
+    }),
+    placeholder: (provided) => ({
+      ...provided,
+      color: "#656c79",
+      fontSize: 16,
+      padding:0
+      
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isSelected ? "#5051f9" : "#292e34",
+      color: state.isSelected ? "#fafafa" : "#fff",
+    }),
+    dropdownIndicator: (provided) => ({
+      ...provided,
+      color: "#fff",
+      "&:hover": {
+        color: "#fff",
+      },
+    }),
+    menu: (provided) => ({
+      ...provided,
+      backgroundColor: "#656c79", // Set the background color of the dropdown menu
+    }),
+  
+  }
+
+  const handleBookingChange = (selectedOption) => {
+
+    setBookingNotes(selectedOption);
+    
+  }; 
 
   const form = useForm(
     {
@@ -140,7 +186,7 @@ console.log("data from api is ====>>>")
       last_name: data?.last_name,
       phone:data?.phone,
       email:data?.email,
-      booking_note: data?.booking_note,
+      booking_note: bookingNotes?.label,
       no_of_seats:data?.no_of_seats,
       arrival_time:formattedStartTime,
       dob:dob,
@@ -251,6 +297,7 @@ console.log(data.event_desc,"data ==============>>>>>")
 
 
  
+  console.log(bookingNotes,"notes for the booking is =====>>")
   return (
     <Modal
       isOpen={isOpen}
@@ -489,7 +536,7 @@ console.log(data.event_desc,"data ==============>>>>>")
                                 </div>
                 <div className="flex flex-col items-start justify-start mt-[18px] w-full">
                 
-                  <Input
+                  {/* <Input
                         name="input"
                         placeholder=" Booking Notes?"
                         className=" font-roboto p-0  placeholder-white-900 text-base text-left w-full h-[50px] pl-4 "
@@ -503,20 +550,34 @@ console.log(data.event_desc,"data ==============>>>>>")
                       
                         size="md"
                         variant="fill"
-                />
- {/* <Select
-        id="booking_notes"
-        name="booking_notes"
-        className="capitalize font-roboto p-0 text-base text-left w-full common-pointer bg-[#292e34] p-[10px] text-white-A700 border-t-0 border-r-0 border-l-0 border-b border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none"
-        options={bookingNotesList}
-        placeholder="Booking Notes..."
-        isSearchable={false}
-        onChange={handleCountryChange}
-        value={bookingNotesList.find((option) => option.value === book_notes)}
-        // styles={selectStyle}
-      />
-                                   
-                                   */}
+                /> */}
+ <Select
+  id="booking_notes"
+  name="booking_notes"
+  className="capitalize font-roboto h-[51] p-0 text-base text-left w-full common-pointer bg-[#292e34] p-[10px] text-white-A700 border border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none"
+  options={bookingNotesList}
+  placeholder="Booking Notes..."
+  isSearchable={false}
+  onChange={handleBookingChange}
+  value={
+     // assuming you have a label property in bookingNotes
+    bookingNotesList.find((option) => option.value === bookingNotes)
+  }
+  styles={selectStyle}
+/>
+
+{bookingNotes?.value === "others" ? (
+  <textarea
+    rows=""
+    cols=""
+    className="capitalize font-roboto p-0  text-base text-left w-full common-pointer bg-[#292e34] p-[18px] text-white-A700 border border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none mt-5"
+    placeholder="Your occasion or special request?"
+    onChange={(e) => {
+      setBookingNotes({ value: "others", label: e.target.value });
+    }}
+  ></textarea>
+) : null}
+
                                   {/* <select  style={{color:"white"}} id="booking_note_select" name="booking_note" className="capitalize font-roboto  pl-4 text-base text-left w-full common-pointer bg-[#292e34]  text-white-A700 border border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none h-[51px]"  onChange={(e) => {
                           form.handleChange("booking_note", e);
                           if (e.target.value === 'other') {
