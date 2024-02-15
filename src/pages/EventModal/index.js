@@ -250,7 +250,7 @@ const selectStyle= {
             
             toast.success("Event is added Succesfully!");
             setTimeout(() => {
-              //  window.location.href="/"
+             window.location.href="/"
             }, 2000);
           
           })
