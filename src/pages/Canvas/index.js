@@ -117,11 +117,6 @@ function Canvas() {
     //   await  fetch()
     
 
-      
-        
-        
-
-
     //   }
       
     // }, [venueChanged]);
@@ -942,7 +937,43 @@ useEffect(() => {
     
         <div className="drawing-canvas" >
         
-         
+        {!backgroundImage && !myBackgroundImage && (
+        <Stage width={1000} height={800}>
+        <Layer>
+          {/* Grid lines */}
+          {Array.from({ length: 10 }, (_, i) => (
+            <Rect
+              key={i}
+              x={i * 111}
+              y={0}
+              width={1}
+              height={700}
+              fill="gray"
+            />
+          ))}
+          {Array.from({ length: 8 }, (_, i) => (
+            <Rect
+              key={i}
+              x={0}
+              y={i * 100}
+              width={1000}
+              height={1}
+              fill="gray"
+            />
+          ))}
+
+          {/* Display message in red */}
+          <KonvaText
+            x={350}  // Adjust x-coordinate as needed
+            y={300}  // Adjust y-coordinate as needed
+            text="Please upload Layout!"
+            fill="pink"
+            fontSize={30}
+            align="center"
+          />
+        </Layer>
+      </Stage>
+        )}
       {backgroundImage && (
         <img
           src={URL.createObjectURL(backgroundImage)}

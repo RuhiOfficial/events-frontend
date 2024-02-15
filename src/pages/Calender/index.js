@@ -219,7 +219,6 @@ const CustomToolbar = (toolbar) => {
     <div className="rbc-toolbar flex justify-between">
       <div>
 
-     
       <span className="rbc-btn-group ">
         <button type="button" onClick={goToBack}  className="custom-btn">
           {'<'}
