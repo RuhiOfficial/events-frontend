@@ -247,7 +247,7 @@ const handleCheckboxChange = (weekday) => {
           time_from: formattedStartTime,
           time_to:formattedEndTime,
           event_type:selectedEventType?.value,
-          event_day:loweredData,
+          event_day:selectedWeekdays,
           event_organiser: data?.event_organiser,
           event_desc: data?.event_desc,
           facebook_event_url: data?.facebook_event_url,

@@ -49,6 +49,7 @@ function Canvas() {
     const [imageLoaded, setImageLoaded] = useState(false);
     const [fetchedCalled, setFetchedCalled] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [check, setCheck] = useState(false);
     const [venueChanged,setVenueChanged] = useState(localStorage.getItem('venueChanged'))
     const [noState,setNoState]=useState(false);
   
@@ -79,6 +80,8 @@ function Canvas() {
           'canvasState',
           JSON.stringify({ backgroundImage, boxes /* ...other state variables */ })
         );
+       
+       
         setFetchedCalled(true)
         }
         console.log('Fetch successful');
@@ -88,7 +91,14 @@ function Canvas() {
       }
     };
     
-
+    const con= localStorage.getItem('canvasBackgroundImage');
+    console.log(con,"con is ===>>")
+    useEffect(()=>{
+      if(!con){
+        setCheck(true);
+              }
+    },[])
+   
     useEffect(async() => {
       // Check if the component has already been initialized
       const isInitialized = localStorage.getItem('isInitialized');
@@ -168,7 +178,7 @@ function Canvas() {
 
     // }
       if (savedCanvasState || fetchedCalled ) {
-      
+      setIsLoading(true)
         const savedCanvasState = (localStorage.getItem('canvasState'));
         const loadedBackgroundImage = localStorage.getItem('canvasBackgroundImage');
    
@@ -177,7 +187,7 @@ function Canvas() {
     
           if (loadedBackgroundImage.startsWith('data:image')) {
             // If it's a base64 string, set it as the src
-            img.src = loadedBackgroundImage;
+             img.src = loadedBackgroundImage;
     
             img.onload = () => {
               // Convert the loaded image to a base64 string
@@ -405,7 +415,7 @@ useEffect(() => {
   
     // ...
   
-
+console.log(check,"check is =====>>")
     /////////////Modal////////
     const openModal = () => {
         console.log("openModal")
@@ -845,7 +855,7 @@ useEffect(() => {
     
         <div className="drawing-canvas" >
         
-        {!backgroundImage && !myBackgroundImage && (
+        {!backgroundImage && !myBackgroundImage  && check && (
         <Stage width={1000} height={800}>
         <Layer>
           {/* Grid lines */}

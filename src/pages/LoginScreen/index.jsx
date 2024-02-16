@@ -178,7 +178,7 @@ const LoginScreenPage = () => {
                 </div>
                 <div className="flex flex-col items-start justify-start w-auto sm:w-full">
                   <Button
-                    className="common-pointer cursor-pointer font-bold leading-[normal] min-w-[459px] sm:min-w-full text-center text-xl w-[558px]"
+                    className="common-pointer cursor-pointer font-bold leading-[normal] w-full sm:min-w-full text-center text-xl "
                     onClick={() => {
                       form1.handleSubmit(login);
                     }}
