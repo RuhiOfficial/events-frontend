@@ -116,8 +116,8 @@ const LoginScreenPage = () => {
             >
               Log In
             </Text>
-            <div className="flex flex-col h-[304px] md:h-auto items-start justify-start mt-[38px] w-auto sm:w-full ">
-              <div className="flex flex-col gap-5 items-end justify-center w-auto sm:w-full">
+            <div className="flex flex-col h-[304px] md:h-auto items-start justify-start mt-[38px] w-full sm:w-full ">
+              <div className="flex flex-col gap-5 items-end justify-center w-full sm:w-full">
                 <div className="flex flex-col gap-3.5 items-start justify-start pb-[19px] w-full">
                   <Text
                     className="text-base text-gray-700"
@@ -176,7 +176,7 @@ const LoginScreenPage = () => {
           variant="fill"
         ></Input>
                 </div>
-                <div className="flex flex-col items-start justify-start w-auto sm:w-full">
+                <div className="flex flex-col items-start justify-start w-full sm:w-full">
                   <Button
                     className="common-pointer cursor-pointer font-bold leading-[normal] w-full sm:min-w-full text-center text-xl "
                     onClick={() => {
