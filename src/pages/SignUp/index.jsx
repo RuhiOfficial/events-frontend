@@ -214,7 +214,7 @@ const handleVenueTypeChange = (selectedOption) => {
                     Sign Up
                   </Text>
                 </div>
-                <div className="flex sm:flex-col flex-row gap-6 items-start justify-start w-[100%] sm:w-full">
+                <div className="flex sm:flex-col flex-row gap-6 items-start justify-start w-full sm:w-full">
                   <div className="flex flex-col gap-2.5 items-center justify-start w-[48%] sm:w-full">
                     <div className="flex flex-col items-start justify-start pb-[3px] pr-[3px] w-full">
                       <Text
@@ -264,7 +264,7 @@ const handleVenueTypeChange = (selectedOption) => {
                     ></Input>
                   </div>
                 </div>
-                <div className="flex sm:flex-col flex-row gap-6 items-start justify-start w-[100%] sm:w-full">
+                <div className="flex sm:flex-col flex-row gap-6 items-start justify-start w-full sm:w-full">
                   <div className="flex flex-col gap-2.5 items-center justify-start w-[48%] sm:w-full">
                     <div className="flex flex-col items-start justify-start pb-[3px] pr-[3px] w-full">
                       <Text
@@ -342,7 +342,7 @@ const handleVenueTypeChange = (selectedOption) => {
                     ></Input>
                   </div>
                 </div>
-                <div className="flex flex-col gap-1 items-start justify-start w-[558px] sm:w-full">
+                <div className="flex flex-col gap-1 items-start justify-start w-full sm:w-full">
                   <div className="flex flex-col font-poppins items-start justify-end w-full">
                     <Text
                       className="text-base text-gray-700"
@@ -370,7 +370,7 @@ const handleVenueTypeChange = (selectedOption) => {
                   
                   />
                 </div>
-                <div className="flex flex-col gap-1 items-start justify-start w-[558px] sm:w-full">
+                <div className="flex flex-col gap-1 items-start justify-start w-full sm:w-full">
                   <div className="flex flex-col items-start justify-start pb-0.5 pr-0.5 w-full">
                     <Text
                       className="text-base text-gray-700"
@@ -391,7 +391,7 @@ const handleVenueTypeChange = (selectedOption) => {
                     ></Input>
                   </div>
                 </div>
-                <div className="flex flex-col gap-1 items-start justify-start w-[558px] sm:w-full">
+                <div className="flex flex-col gap-1 items-start justify-start w-full sm:w-full">
                   <div className="flex flex-col items-start justify-start pb-[3px] pr-[3px] w-full">
                     <Text
                       className="text-base text-gray-700"
@@ -421,7 +421,7 @@ const handleVenueTypeChange = (selectedOption) => {
                     />
                   </div>
                 </div>
-                <div className="flex flex-col gap-1 items-start justify-start w-[558px] sm:w-full">
+                <div className="flex flex-col gap-1 items-start justify-start w-full sm:w-full">
                   <div className="flex flex-col items-start justify-start pb-[3px] pr-[3px] w-full">
                     <Text
                       className="text-base text-gray-700"
@@ -445,7 +445,7 @@ const handleVenueTypeChange = (selectedOption) => {
                   ></Input>
                 </div>
                 <Button
-                  className="common-pointer cursor-pointer font-bold leading-[normal] min-w-[558px] sm:min-w-full rounded-[32px] text-center text-xl"
+                  className="common-pointer cursor-pointer font-bold leading-[normal]  sm:min-w-full rounded-[32px] text-center text-xl w-full"
                   onClick={() => {
                     form.handleSubmit(createanaccount);
                   }}
