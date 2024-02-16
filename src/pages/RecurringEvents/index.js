@@ -8,7 +8,7 @@ import { ScaleLoader } from 'react-spinners';
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import DeleteEvent from 'pages/DeleteEvent';
-import EditEvent from 'pages/EditEvent';
+import EditRecurringEvent from 'pages/EditRecurringEvent';
 import { stubTrue } from 'lodash';
 
 
@@ -244,8 +244,8 @@ const formatReadableDate = (isoDate) => {
 
       <Button
         id="recurringEventsButton"
-        className="cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm bg-[green]"
-        color="indigo_A400"
+        className="cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm bg-[green] text-[white]"
+        
         size="sm"
         onClick={() => {
           window.location.href = '/RecurringEvents';
@@ -354,7 +354,7 @@ const formatReadableDate = (isoDate) => {
         </div>
       </div>
       <DeleteEvent isOpen={isDeleteOpen} onRequestClose={closeDeleteModal} eventId={deleteEventId} />
-      <EditEvent isOpen={isEditOpen} onRequestClose={closeEditModal} eventId={editEventId} />
+      <EditRecurringEvent isOpen={isEditOpen} onRequestClose={closeEditModal} eventId={editEventId} />
 
     </div>
     

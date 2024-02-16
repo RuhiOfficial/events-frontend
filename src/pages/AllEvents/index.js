@@ -226,8 +226,8 @@ const formatReadableDate = (isoDate) => {
 
                           <div className='flex flex-row m-10 '>
                           <Button
-                              className="cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm mr-10 bg-[green]"
-                              color="indigo_A400"
+                              className="cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm mr-10 bg-[green] text-[white]"
+                            
                               size="sm"
                                onClick={()=>{
                                 window.location.href="/allEvents"

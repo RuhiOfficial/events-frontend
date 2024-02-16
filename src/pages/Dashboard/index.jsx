@@ -46,6 +46,7 @@ const DashboardPage = () => {
   const [ticketList,setTicketList]=useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isEventLoading, setIsEventLoading] = useState(true);
+  const [customDate,setCustomDate]=useState()
 
   const settings = {
     dots: true,
@@ -261,6 +262,30 @@ const fetchData = async (venueId) => {
     background: '-webkit-linear-gradient(left, #ff6eff, #c70039)', // Gradient from pink to dark pink
     // Other styling properties...
   };
+
+  useEffect(() => {
+    // Convert the given date string to a JavaScript Date object
+    const rawDate= eventList.date_from;
+ const dateBeforeTString= rawDate?rawDate.split('T')[0]:null;
+
+
+
+ 
+
+    const dateObject = new Date(dateBeforeTString);
+
+    const options = {
+      weekday: 'short', // Short day name (Sun)
+      month: 'short',   // Short month name (Jan)
+      day: 'numeric',   // Day of the month (04)
+      year: 'numeric',  // Full year (2024)
+    };
+    
+    const formattedDate = dateObject.toLocaleDateString('en-US', options);
+    
+   
+    setCustomDate(formattedDate);
+  }, [data.date_from]);
   return (
     <>
     < div className={`relative ${isModalOpen || isEventModalOpen ? 'filter blur' : ''}`}>
@@ -507,6 +532,12 @@ const fetchData = async (venueId) => {
           size="txtPoppinsSemiBold23"
         >
           {item.name}
+        </Text>
+        <Text
+          className="text-lg text-white-A700"
+          size="txtPoppinsMedium18"
+        >
+          {customDate}
         </Text>
         <Text
           className="text-lg text-white-A700"

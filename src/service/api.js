@@ -10,9 +10,11 @@ const API_URLS = {
   GET_TIMEZONE: `${COMMON_URL}timezone`,
   GET_COUNTRIES: `${COMMON_URL}list_countries`,
   GET_EVENT: `${COMMON_URL}event`,
+ 
   GET_GENERAL_EVENT: `${COMMON_URL}regular_events`,
   GET_RECURRING_EVENT: `${COMMON_URL}recurring_events`,
   GET_SINGLE_EVENT:`${COMMON_URL}event_single_list`,
+  GET_SINGLE_RECURRING_EVENT:`${COMMON_URL}event_single_list_recurring`,
   
   GET_SECTION: `${COMMON_URL}list_section_by_venueid`,
   GET_SECTION_LIST: `${COMMON_URL}data-table`,
@@ -38,7 +40,7 @@ const API_URLS = {
   DELETE_EVENT: `${COMMON_URL}event_delete`,
   UPDATE_SECTION: `${COMMON_URL}sections_update`,
   UPDATE_EVENT: `${COMMON_URL}events_update`,
-
+  UPDATE_RECURRING_EVENT: `${COMMON_URL}event`,
 
 };
 
@@ -80,6 +82,8 @@ const API_URLS = {
 
   export const getSingleEvent = (payload) =>
   apis.get(`${API_URLS.GET_SINGLE_EVENT}?id=${payload.data.id}`, payload);
+  export const getSingleRecurringEvent = (payload) =>
+  apis.get(`${API_URLS.GET_SINGLE_RECURRING_EVENT}?id=${payload.data.id}`, payload);
 
   
 
@@ -106,6 +110,10 @@ const API_URLS = {
 
   export const updateEvent = (payload) =>
   apis.post(`${API_URLS.UPDATE_EVENT}?id=${payload.data.id}&venue_id=${payload.data.venue_id}`, payload);
+
+  export const updateRecurringEvent = (payload) =>
+  apis.post(`${API_URLS.UPDATE_RECURRING_EVENT}`, payload);
+
 
   export const postCities = (payload) =>
   apis.post(API_URLS.POST_CITY, {
