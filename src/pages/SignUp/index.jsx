@@ -205,10 +205,10 @@ const handleVenueTypeChange = (selectedOption) => {
         >
           <div className="flex flex-col items-center justify-start mb-2.5 w-[41%] md:w-full">
             <div className="bg-white-A700 flex flex-col items-start justify-start max-w-[661px] p-12 md:px-10 sm:px-5 rounded-[24px] w-full">
-              <div className="flex flex-col gap-6 items-start justify-start w-auto sm:w-full">
+              <div className="flex flex-col gap-6 items-start justify-start w-full sm:w-full">
                 <div className="flex flex-col items-center justify-center w-[534px] sm:w-full">
                   <Text
-                    className="md:text-3xl sm:text-[28px] text-[32px] text-blue_gray-900 w-auto"
+                    className="md:text-3xl sm:text-[28px] text-[32px] text-blue_gray-900 w-full"
                     size="txtPoppinsMedium32"
                   >
                     Sign Up
@@ -317,7 +317,7 @@ const handleVenueTypeChange = (selectedOption) => {
                   </div>
                 </div>
                 <div className="flex flex-col items-center justify-start pb-2 w-full">
-                  <div className="flex flex-col gap-1 items-start justify-start w-[558px] sm:w-full">
+                  <div className="flex flex-col gap-1 items-start justify-start w-full sm:w-full">
                     <div className="flex flex-col items-start justify-start pb-0.5 pr-0.5 w-full ">
                       <Text
                         className="text-base text-gray-700"
@@ -457,7 +457,7 @@ const handleVenueTypeChange = (selectedOption) => {
                 </Button>
                 <div className="flex flex-col items-center justify-center  p-0.5 w-full sm:w-full">
               <Text
-                className="common-pointer text-base text-center text-gray-700 underline w-auto "
+                className="common-pointer text-base text-center text-gray-700 underline w-full "
                 size="txtPoppinsRegular16"
                 onClick={() => navigate("/")}
               >
