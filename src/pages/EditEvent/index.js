@@ -192,6 +192,8 @@ const cid= localStorage.getItem("LoginId");
           setEndDate(endDateObject);
           setStartTime(startTimeMoment.toDate());
           setEndTime(endTimeMoment.toDate());
+          setFormattedStartTime(res.data.time_from);
+          setFormattedEndTime(res.data.time_to);
           setType(res.data.eventType);
   
           // Find the option with the matching event_type ID

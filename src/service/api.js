@@ -11,6 +11,7 @@ const API_URLS = {
   GET_COUNTRIES: `${COMMON_URL}list_countries`,
   GET_EVENT: `${COMMON_URL}event`,
   GET_GENERAL_EVENT: `${COMMON_URL}regular_events`,
+  GET_RECURRING_EVENT: `${COMMON_URL}recurring_events`,
   GET_SINGLE_EVENT:`${COMMON_URL}event_single_list`,
   
   GET_SECTION: `${COMMON_URL}list_section_by_venueid`,
@@ -52,6 +53,8 @@ const API_URLS = {
   apis.get(`${API_URLS.GET_EVENT}?venue_id=${payload.data.venue_id}`, payload);
   export const getGeneralEvent = (payload) =>
   apis.get(`${API_URLS.GET_GENERAL_EVENT}?venue_id=${payload.data.venue_id}`, payload);
+  export const getRecurringEvent = (payload) =>
+  apis.get(`${API_URLS.GET_RECURRING_EVENT}?venue_id=${payload.data.venue_id}`, payload);
   
   export const getCanvasTable = (payload) =>
   apis.get(`${API_URLS.GET_CANVAS_TABLE}?venue_id=${payload.data.venue_id}`, payload);

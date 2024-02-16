@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useTable, usePagination, useGlobalFilter } from 'react-table';
-import { getBookingList ,getEvent} from 'service/api';
+import { getBookingList ,getEvent,getRecurringEvent} from 'service/api';
 import { Button,Text ,Img} from 'components';
 import '../Custom.css';
 import { css } from '@emotion/react';
@@ -34,6 +34,11 @@ const RecurringEvents = () => {
   const [editEventId, setEditEventId] = useState();
 
 
+
+
+  
+
+ 
 
   const openDeleteModal = (eventId) => {
     setDeleteEventId(eventId)
@@ -75,7 +80,7 @@ const RecurringEvents = () => {
         data:{venue_id:venueId }};
   
       try {
-        const res = await getEvent(req);
+        const res = await getRecurringEvent(req);
         console.log(res.data,"list of events on the bases of venue id ")
         
         setData(res.data.data);
@@ -224,26 +229,30 @@ const formatReadableDate = (isoDate) => {
         <div className='grid gap-x-8 gap-y-4'>
 
 
-                          <div className='flex flex-row '>
-                          <Button
-                              className="cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm"
-                              color="indigo_A400"
-                              size="sm"
-                               onClick={()=>{
-                                window.location.href="/allEvents"
-                               }}
-                            >
-                              General Events
-                            </Button>
+        <div className='flex flex-row m-10 '>
+        <Button
+        id="generalEventsButton"
+        className="cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm mr-10"
+        color="indigo_A400"
+        size="sm"
+        onClick={() => {
+          window.location.href = '/AllEvents';
+        }}
+      >
+        General Events
+      </Button>
 
-                            <Button
-                              className="cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm"
-                              color="indigo_A400"
-                              size="sm"
-                              // onClick={openEventModal}
-                            >
-                              Recurring Events
-                            </Button>
+      <Button
+        id="recurringEventsButton"
+        className="cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm bg-[green]"
+        color="indigo_A400"
+        size="sm"
+        onClick={() => {
+          window.location.href = '/RecurringEvents';
+        }}
+      >
+        Recurring Events
+      </Button>
      
   </div>
 
