@@ -468,56 +468,8 @@ console.log(selectedEventType,"selected event type ",eventId ,"=====>>>>>>>>>>>>
 
  
 
- <div className="flex flex-col items-start justify-start mt-[38px] w-full">
  
-<SelectBox
-  className="font-roboto p-0 placeholder:text-white-900 text-base text-left w-full common-pointer border-b border-solid w-full bg-[#292e34] p-[18px] text-white-A700"
-  placeholderClassName="text-gray-600"
-  isMulti={false}
-  name="eventType"
-  options={eventTypeList}
-  isSearchable={true}
-  placeholder="Select Event Type..."
-  onChange={handleEventTypeChange}
-  value={selectedEventType} // Make sure selectedEventType is set correctly
-/>
-
-  </div>
-                {selectedEventType?.value == "3"?
-                <div className="flex flex-col items-start justify-start mt-[38px] w-full">
-                {/* <Input
-                  name="event_day"
-                  placeholder="Event Day"
-                  className="capitalize font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
-                  wrapClassName="common-pointer border-b border-white-700_99 border-solid w-full bg-[#292e34]"
-                  
-                  // onChange={(e) => {
-                  //   form.handleChange("event_day", e);
-                  // }}
-                  // errors={form?.errors?.["event_day"]}
-                  // value={form?.values?.["event_day"]}
-                  style={{color:"white"}}
-                  size="md"
-                  variant="fill"
-                /> */}
-                 <input
-                  name="event_day"
-                  placeholder="Event Day"
-                  className="common-pointer border-[transparent]  w-full bg-[#292e34]  font-roboto p-0 placeholder-white-900 text-base text-left w-full h-[50px] pl-4 common-pointer w-full bg-[#292e34] "
-                  
-                  style={{ color: 'white' ,borderBottom:"1px solid white " }}
-                  onChange={(e) => {
-                    
-
-                    
-                    setEventDay(e.target.value);
-                  }}
-                  value={eventDay}
-                  size="md"
-                  variant="fill"
-                />
-                {/* Add more input fields as needed */}
-              </div>:null}
+                
                 
                 <div className="flex flex-col items-start justify-start mt-[38px] w-full">
                   

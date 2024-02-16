@@ -64,7 +64,7 @@ function EditSection({ isOpen, onRequestClose, sectionId }) {
   
       try {
         const res = await deleteTable({ data: { id:id} });
-        toast.success("Table is deleted Succesfully!");
+        // toast.success("Table is deleted Succesfully!");
         loadSection()
   
         // Check if the response data is not empty
@@ -251,14 +251,14 @@ function EditSection({ isOpen, onRequestClose, sectionId }) {
 
       <ToastContainer
      
-      style={{
+      // style={{
          
-        top: '0%',
-        left: '80%',
-        transform: 'translateX(-50%)',
+      //   top: '0%',
+      //   left: '80%',
+      //   transform: 'translateX(-50%)',
         
         
-      }}
+      // }}
     />
     </Modal>
   );

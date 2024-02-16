@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useTable, usePagination, useGlobalFilter } from 'react-table';
-import { getBookingList ,getEvent,getGeneralEvent} from 'service/api';
+import { getBookingList ,getEvent} from 'service/api';
 import { Button,Text ,Img} from 'components';
 import '../Custom.css';
 import { css } from '@emotion/react';
@@ -21,7 +21,7 @@ const override = css`
 
 
 
-const AllEvents = () => {
+const RecurringEvents = () => {
     const storedVenueId = localStorage.getItem('Venue');
     const [venueId, setVenueId] = useState(storedVenueId)
   const [data, setData] = useState([]);
@@ -75,7 +75,7 @@ const AllEvents = () => {
         data:{venue_id:venueId }};
   
       try {
-        const res = await getGeneralEvent(req);
+        const res = await getEvent(req);
         console.log(res.data,"list of events on the bases of venue id ")
         
         setData(res.data.data);
@@ -240,9 +240,7 @@ const formatReadableDate = (isoDate) => {
                               className="cursor-pointer font-inter font-semibold leading-[normal] min-w-[128px] rounded-lg text-center text-sm"
                               color="indigo_A400"
                               size="sm"
-                              onClick={()=>{
-                                window.location.href="/recurringEvents"
-                               }}
+                              // onClick={openEventModal}
                             >
                               Recurring Events
                             </Button>
@@ -382,4 +380,4 @@ const formatReadableDate = (isoDate) => {
   );
 };
 
-export default AllEvents;
+export default RecurringEvents;
