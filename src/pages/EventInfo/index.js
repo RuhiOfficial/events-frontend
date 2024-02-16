@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import { getSingleEvent } from 'service/api';
 import useForm from 'hooks/useForm';
 import moment from 'moment';
-import { updateSection,postBookTickets } from 'service/api';
+
 import { ToastContainer, toast } from 'react-toastify';
 import { Button, Img, Line, List, Text ,Input} from "components";
 import "react-datepicker/dist/react-datepicker.css";
@@ -17,6 +17,7 @@ import { ScaleLoader } from 'react-spinners';
 import ViewLayout from 'pages/ViewLayout';
 import NumberInput from "react-number-input";
 import Select from 'react-select';
+import SingleEvent from 'pages/SingleEvent';
 const override = css`
   display: block;
   margin: 0 auto;
@@ -182,63 +183,9 @@ function EventInfo({ isOpen, onRequestClose, eventId }) {
 
 
 
-  async function bookTicket(data) {
-   
-console.log("data from api is ====>>>")
-    const req = {
-      data: {
-      venue_id:venueId,
-      event_id:eventId,
-      first_name:data?.first_name,
-      last_name: data?.last_name,
-      phone:data?.phone,
-      email:data?.email,
-      booking_note: bookingNotes?.label,
-      no_of_seats:data?.no_of_seats,
-      arrival_time:formattedStartTime,
-      dob:dob,
-      section:mySection,
-      
-      },
-    };
-
-    try {
-      const res = await postBookTickets(req);
-      console.log("i hit the api ==>>")
-      console.log(res);
-
-      toast.success('Ticket has been Booked  Successfully!');
-      setTimeout(() => {
-        onRequestClose();
-         window.location.href = '/';
-      }, 3000);
-    } catch (err) {
-      console.error(err);
-      toast.error('Something Went Wrong!');
-    }
-  }
-
-  const handleDateChange = (start) => {
-    console.log(start,"testing is now done")
-    setStartDate(start);
-  
-  };
-  const handleDobChange = (start) => {
-    console.log(start,"testing is now done")
-    setDob(start);
-  
-  };
-  
-
-  const handleTimeChange = (start) => {
-    const formattedTime = moment(start).format('hh:mm A');
-    setArrivalTime(start);
-    setFormattedStartTime(formattedTime)
-    
-  };
-
  
 
+  
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -393,14 +340,14 @@ console.log(data.event_desc,"data ==============>>>>>")
                               Table Selection
                             </Button> */}
                                 </div>
-                                <div  className='flex flex-row items-start justify-between mt-[18px] w-full
-                                resize-none border border-white p-2 rounded-md  h-[220px]  text-white font-roboto p-0  placeholder-white-900 text-base text-left h-[130px]  pl-4 
+                                <div  className='flex flex-row items-start justify-between mt-[10px] w-full
+                                resize-none  p-2 rounded-md    text-white font-roboto p-0  placeholder-white-900 text-base text-left   pl-4 
                                 w-full h-[100%] bg-[#292e34]'>
                      
                 
-  <p style={{color:"white"}}  className=" font-roboto p-0  placeholder-white-900 text-base text-left h-[90px] p-3   ">
-    <h1 className='font-roboto mb-5'> Start Date :- {customDate} </h1>
-    <h1 className='font-roboto mb-5'> End Date :- {customEndDate}</h1>
+  <p style={{color:"white"}}  className=" font-roboto p-0  placeholder-white-900 text-xl text-left p-3   ">
+    
+    <h1 className='font-roboto mb-5'> Date :- {customDate}</h1>
     <h1 className='font-roboto mb-5'> Description :- {data.event_desc}</h1>
     <h1 className='font-roboto mb-5'> Organiser :- {data.event_organiser}</h1>
     <h1 className='font-roboto mb-5'> Status :- {data.event_status}</h1>
@@ -421,199 +368,7 @@ console.log(data.event_desc,"data ==============>>>>>")
                 
 
 
-                <div  className='flex flex-row items-start justify-between mt-[18px] w-full'>
-                        {/* <Input
-                        name="Preffered Section"
-                        placeholder="Preffered Section"
-                        className=" font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4 "
-                        wrapClassName={mySection?(" common-pointer border border-[#d2ae38] border-solid w-[49%] bg-[#292e34]"):("common-pointer border border-white-700_99 border-solid w-[49%] bg-[#292e34]")}
-                        style={{color:"white"}}
-                       
-                        errors={form?.errors?.section}
-                        value={mySection}
-                      
-                        size="md"
-                        variant="fill"
-                /> */}
-
-                <div className='w-[49%] h-[51px]'> 
-                {/* <TimePicker 
-                          onChange={handleTimeChange}
-                          value={arrivalTime}
-                          placeholder="Arrival Time"
-                          className="custom-timepicker border  text-left h-full  w-full text-base " 
-                        /> */}
-                </div>
-                                    
-
-      
-                                </div>
-
-
-                                <div  className='flex flex-row items-start justify-between mt-[18px] w-full'>
-                        {/* <Input
-                        name="firstName"
-                        placeholder="First Name"
-                        className="font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4 "
-                        wrapClassName=" common-pointer border border-white-700_99 border-solid w-[49%] bg-[#292e34]"
-                        style={{color:"white"}}
-                        onChange={(e) => {
-                          form.handleChange("first_name", e);
-                        }}
-                        errors={form?.errors?.["first_name"]}
-                        value={form?.values?.["first_name"]}
-                      
-                        size="md"
-                        variant="fill"
-                /> */}
-         {/* <Input
-                        name="lastName"
-                        placeholder="Last Name"
-                        className="font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4 "
-                        wrapClassName=" common-pointer border border-white-700_99 border-solid w-[49%] bg-[#292e34]"
-                        style={{color:"white"}}
-                        onChange={(e) => {
-                          form.handleChange("last_name", e);
-                        }}
-                        errors={form?.errors?.["last_name"]}
-                        value={form?.values?.["last_name"]}
-                      
-                        size="md"
-                        variant="fill"
-                /> */}
-                                    
-                       
-                                </div>
-                                <div  className='flex flex-row items-start justify-between mt-[18px] w-full'>
-                        {/* <Input
-                        name="ContactNo"
-                        placeholder="Contact No"
-                        className=" font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4 "
-                        wrapClassName=" common-pointer border border-white-700_99 border-solid w-[49%] bg-[#292e34]"
-                        style={{color:"white"}}
-                        onChange={(e) => {
-                          form.handleChange("phone", e);
-                        }}
-                        errors={form?.errors?.phone}
-                        value={form?.values?.phone}
-                      
-                        size="md"
-                        variant="fill"
-                /> */}
-         {/* <Input
-                        name="email"
-                        type="email"
-                        placeholder="Email"
-                        className=" font-roboto p-0  placeholder-white-900 text-base text-left h-[50px]  pl-4 "
-                        wrapClassName=" common-pointer border border-white-700_99 border-solid w-[49%] bg-[#292e34]"
-                        style={{color:"white"}}
-                        onChange={(e) => {
-                          form.handleChange("email", e);
-                        }}
-                        errors={form?.errors?.email}
-                        value={form?.values?.email}
-                      
-                        size="md"
-                        variant="fill"
-                />
-                                     */}
-                       
-                                </div>
-                                <div  className='flex flex-row items-start justify-between mt-[18px] w-full'>
-                                {/* <div className='border border-white-700_99 border-solid w-[49%] bg-[#292e34] h-[51px]'>
-                              
-                                <DOB placeholder='DOB' onChange={handleDobChange}  utcOffset={new Date().getTimezoneOffset()}/>
-
-                                
-</div> */}
-                      
-        
-                                    
-                       
-                                </div>
-                <div className="flex flex-col items-start justify-start mt-[18px] w-full">
-                
-                  {/* <Input
-                        name="input"
-                        placeholder=" Booking Notes?"
-                        className=" font-roboto p-0  placeholder-white-900 text-base text-left w-full h-[50px] pl-4 "
-                        wrapClassName="common-pointer border border-white-700_99 border-solid w-full bg-[#292e34]"
-                        style={{color:"white"}}
-                        onChange={(e) => {
-                          form.handleChange("booking_note", e);
-                        }}
-                        errors={form?.errors?.["booking_note"]}
-                        value={form?.values?.["booking_note"]}
-                      
-                        size="md"
-                        variant="fill"
-                /> */}
- {/* <Select
-  id="booking_notes"
-  name="booking_notes"
-  className="capitalize font-roboto h-[51] p-0 text-base text-left w-full common-pointer bg-[#292e34] p-[10px] text-white-A700 border border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none"
-  options={bookingNotesList}
-  placeholder="Booking Notes..."
-  isSearchable={false}
-  onChange={handleBookingChange}
-  value={
-     // assuming you have a label property in bookingNotes
-    bookingNotesList.find((option) => option.value === bookingNotes)
-  }
-  styles={selectStyle}
-/>
-
-{bookingNotes?.value === "others" ? (
-  <textarea
-    rows=""
-    cols=""
-    className="capitalize font-roboto p-0  text-base text-left w-full common-pointer bg-[#292e34] p-[18px] text-white-A700 border border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none mt-5"
-    placeholder="Your occasion or special request?"
-    onChange={(e) => {
-      setBookingNotes({ value: "others", label: e.target.value });
-    }}
-  ></textarea>
-) : null} */}
-
-                                  {/* <select  style={{color:"white"}} id="booking_note_select" name="booking_note" className="capitalize font-roboto  pl-4 text-base text-left w-full common-pointer bg-[#292e34]  text-white-A700 border border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none h-[51px]"  onChange={(e) => {
-                          form.handleChange("booking_note", e);
-                          if (e.target.value === 'other') {
-                            document.getElementById('booking_note_textarea').style.display = 'block';
-                        } else {
-                            document.getElementById('booking_note_textarea').style.display = 'none';
-                        }
-                        }}>
-                                  <option value="" className="text-darkgray ">Select a booking note</option>
-                                  <option value="birthday" >Birthday Celebration</option>
-                                  <option value="anniversary">Anniversary Party</option>
-                                  <option value="graduation">Graduation Dinner</option>
-                                  <option value="other">Other</option>
-                                  </select>
-                                  <textarea id="booking_note_textarea" name="other_event_note" className="capitalize font-roboto p-0  text-base text-left w-full common-pointer bg-[#292e34] p-[18px] text-white-A700 border border-[white] outline-none focus:border-b-2 focus:border-[white] focus:ring-0 appearance-none mt-5" placeholder="Your occasion or special request?" style={{ display: 'none' }} />
-                             */}
-                
-                </div>
-               
-                <div className="flex flex-col items-start justify-start mt-[18px] w-full">
-                {/* <Input
-  name="input"
-  placeholder="No of Guests"
-  className="font-roboto p-0 placeholder:text-white-900 text-base text-left w-full h-[50px] pl-4"
-  wrapClassName="common-pointer border-[2px] rounded-[20px] border-[#d2ae38] border-solid w-full bg-[#292e34]"
-  type="number"
-  onChange={(e) => {
-    form.handleChange("no_of_seats", e);
-  }}
-  errors={form?.errors?.["no_of_seats"]}
-  value={form?.values?.["no_of_seats"]}
-  style={{ color: "white" }}
-  min="1"
-  size="md"
-  variant="fill"
-/> */}
-
-                 
-                </div>
+         
               
                 
                 
@@ -625,9 +380,9 @@ console.log(data.event_desc,"data ==============>>>>>")
                     size="md"
                     variant="gradient"
                     color="blue_600_indigo_900"
-                    onClick={() => {
-                      form.handleSubmit(bookTicket);
-                    }}
+                    
+                    onClick={
+                        openModal }
                   >
                     Book Now
                   </Button>
@@ -637,7 +392,7 @@ console.log(data.event_desc,"data ==============>>>>>")
             </div>
           </div>
           )}
-
+<SingleEvent isOpen={isModalOpen} onRequestClose={closeModal} eventId={eventId} />
           </div>
      
           <ToastContainer
@@ -651,7 +406,7 @@ console.log(data.event_desc,"data ==============>>>>>")
       
     }}
   />
-      <ViewLayout isOpen={isModalOpen} onRequestClose={closeModal} />
+      {/* <ViewLayout isOpen={isModalOpen} onRequestClose={closeModal} /> */}
     </Modal>
     
   );
