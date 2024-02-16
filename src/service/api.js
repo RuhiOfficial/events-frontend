@@ -38,6 +38,8 @@ const API_URLS = {
   DELETE_SECTION: `${COMMON_URL}sections`,
   DELETE_TABLE: `${COMMON_URL}eventTable`,
   DELETE_EVENT: `${COMMON_URL}event_delete`,
+  DELETE_RECURRING_EVENT: `${COMMON_URL}event_delete`,
+  
   UPDATE_SECTION: `${COMMON_URL}sections_update`,
   UPDATE_EVENT: `${COMMON_URL}events_update`,
   UPDATE_RECURRING_EVENT: `${COMMON_URL}event`,
@@ -104,6 +106,9 @@ const API_URLS = {
 
   export const deleteEvent = (payload) =>
   apis.delete(`${API_URLS.DELETE_EVENT}?id=${payload.data.id}&venue_id=${payload.data.venue_id}`, payload);
+
+  export const deleteRecurringEvent = (payload) =>
+  apis.delete(`${API_URLS.DELETE_RECURRING_EVENT}?id=${payload.data.id}&venue_id=${payload.data.venue_id}&type="recurring"`, payload);
 
   export const updateSection = (payload) =>
   apis.post(`${API_URLS.UPDATE_SECTION}?id=${payload.data.id}`, payload);
